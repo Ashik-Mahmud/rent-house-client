@@ -1,8 +1,23 @@
+import { Route, Routes } from "react-router-dom";
+import Home from "./pages/Home/Home";
+import Houses from "./pages/Houses/Houses";
+import Footer from "./shared/Footer";
+import Header from "./shared/Header";
+import NotFoundPage from "./shared/NotFoundPage";
 function App() {
   return (
-    <div className="App text-center py-32">
-      <h1 className="text-3xl">Hello TypeScript</h1>
-      <button className="btn btn-primary">Demo button</button>
+    <div className="App font-open font-medium">
+      <Header />
+      <Routes>
+        {/* Pages Routes */}
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/houses" element={<Houses />} />
+
+        {/* Validation Route */}
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+      <Footer />
     </div>
   );
 }

@@ -3,12 +3,13 @@ module.exports ={
     content: [
       "./src/**/*.{js,jsx,ts,tsx}",
     ],
-    fontFamily: {
-        sans: ['Open Sans', 'sans-serif'],
-        poppins: ['Poppins', 'sans-serif'],
-      },
+   
     theme: {
       extend: {},
+      fontFamily: {
+        open: ['Open Sans', 'sans-serif'],
+        poppins: ['poppins', 'sans-serif'],
+      },
     },
     plugins: [require("daisyui")], 
     daisyui: {
