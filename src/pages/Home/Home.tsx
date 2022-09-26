@@ -1,14 +1,15 @@
-import Button from "../../components/Button";
+import BestHouses from "./BestHouse/BestHouses";
+import CallToAction from "./CallToAction";
+import Hero from "./Hero";
 
 type Props = {};
 
 const Home = (props: Props) => {
   return (
     <section>
-      <div className="text-center py-10">
-        <h3 className="text-4xl font-poppins font-bold">Welcome to HOME</h3>
-        <Button>Get Started</Button>
-      </div>
+      <Hero />
+      <BestHouses />
+      <CallToAction />
     </section>
   );
 };
