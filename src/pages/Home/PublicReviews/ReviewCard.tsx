@@ -1,9 +1,12 @@
-import { BsFillStarFill } from "react-icons/bs";
+import { BsFillChatRightQuoteFill, BsFillStarFill } from "react-icons/bs";
 type Props = {};
 const ReviewCard = (props: Props) => {
   return (
     <div className="reviewCard rounded  p-4">
-      <div className="review-content  text-gray-700 my-3 font-poppins text-[15px] text-center leading-6 bg-base-200 p-4 rounded-md mb-6">
+      <div className="review-content  text-gray-700 my-3 font-poppins text-[15px] text-center leading-6 bg-base-300 p-4 rounded-md mb-6">
+        <div className="quote text-2xl  m-4">
+          <BsFillChatRightQuoteFill />
+        </div>
         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates
         nisi, saepe odit reprehenderit deserunt officiis! Laborum commodi,
         maiores ad mollitia quod accusamus dolorem ipsam recusandae quo dolores

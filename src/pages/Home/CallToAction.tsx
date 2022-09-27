@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
 type Props = {};
 
@@ -15,9 +16,9 @@ const CallToAction = (props: Props) => {
           <h1 className="text-4xl font-bold text-center my-4 text-white">
             Do you have a houses for sale or rent?
           </h1>
-          <button className="btn btn-success mr-7">
+          <Link to="/register" className="btn btn-success mr-7">
             Create Account to List here
-          </button>
+          </Link>
         </div>
       </div>
       <ReactTooltip />
