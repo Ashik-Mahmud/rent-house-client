@@ -34,7 +34,7 @@ const BestHouses = (props: Props) => {
                 <p className="text-gray-500">Price: 1,000,000</p>
               </div>
               <div className="card-actions">
-                <button className="btn btn-primary">View Details</button>
+                <button className="btn btn-success">View Details</button>
               </div>
             </div>
           </div>
@@ -57,7 +57,7 @@ const BestHouses = (props: Props) => {
                 <p className="text-gray-500">Price: 1,000,000</p>
               </div>
               <div className="card-actions">
-                <button className="btn btn-primary">View Details</button>
+                <button className="btn btn-success">View Details</button>
               </div>
             </div>
           </div>
@@ -81,7 +81,7 @@ const BestHouses = (props: Props) => {
                 <p className="text-gray-500">Price: 1,000,000</p>
               </div>
               <div className="card-actions">
-                <button className="btn btn-primary">View Details</button>
+                <button className="btn btn-success">View Details</button>
               </div>
             </div>
           </div>
@@ -105,7 +105,7 @@ const BestHouses = (props: Props) => {
                 <p className="text-gray-500">Price: 1,000,000</p>
               </div>
               <div className="card-actions">
-                <button className="btn btn-primary">View Details</button>
+                <button className="btn btn-success">View Details</button>
               </div>
             </div>
           </div>
