@@ -1,3 +1,4 @@
+import ReactTooltip from "react-tooltip";
 type Props = {};
 
 const CallToAction = (props: Props) => {
@@ -13,6 +14,7 @@ const CallToAction = (props: Props) => {
           </button>
         </div>
       </div>
+      <ReactTooltip />
     </div>
   );
 };

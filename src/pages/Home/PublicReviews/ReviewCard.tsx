@@ -2,7 +2,7 @@ import { BsFillStarFill } from "react-icons/bs";
 type Props = {};
 const ReviewCard = (props: Props) => {
   return (
-    <div className="reviewCard rounded bg-slate-50 p-4">
+    <div className="reviewCard rounded bg-slate-50 p-4 m-4">
       <div className="review-content text-base text-gray-700 my-3 font-poppins">
         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates
         nisi, saepe odit reprehenderit deserunt officiis! Laborum commodi,

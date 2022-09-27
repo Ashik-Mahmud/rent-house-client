@@ -1,3 +1,7 @@
+import Slider from "react-slick";
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
+import slickSettings from "../../../configs/slickConfig";
 import ReviewCard from "./ReviewCard";
 type Props = {};
 const PublicReviews = (props: Props) => {
@@ -15,12 +19,14 @@ const PublicReviews = (props: Props) => {
           </p>
         </div>
         {/* Reviews Content */}
-        <div className="reviews-content grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7">
+        <div className="reviews-content grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7"></div>
+        <Slider {...slickSettings}>
           <ReviewCard />
           <ReviewCard />
           <ReviewCard />
           <ReviewCard />
-        </div>
+          <ReviewCard />
+        </Slider>
       </div>
     </div>
   );

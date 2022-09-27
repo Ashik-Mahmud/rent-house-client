@@ -1,8 +1,32 @@
+import { Link, NavLink } from "react-router-dom";
+
 type Props = {};
 
 const Header = (props: Props) => {
+  const NavbarMenus = (
+    <>
+      <li tabIndex={0}>
+        <NavLink to="/houses" className="justify-between">
+          Find Houses
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/reviews">Public Reviews</NavLink>
+      </li>
+      <li>
+        <NavLink to="/blogs">Blogs</NavLink>
+      </li>
+      <li>
+        <NavLink to="/about">About</NavLink>
+      </li>
+      <li>
+        <NavLink to="/contact">Contact</NavLink>
+      </li>
+    </>
+  );
+
   return (
-    <header className="bg-base-200 py-3">
+    <header className="bg-base-200 py-3 uppercase">
       <div className="navbar container mx-auto">
         <div className="navbar-start">
           <div className="dropdown">
@@ -26,76 +50,48 @@ const Header = (props: Props) => {
               tabIndex={0}
               className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
             >
+              {NavbarMenus}
+            </ul>
+          </div>
+          <Link to="/" className="btn btn-ghost normal-case text-xl">
+            hasHouse?
+          </Link>
+        </div>
+        <div className="navbar-center hidden lg:flex">
+          <ul className="menu menu-horizontal p-0">{NavbarMenus}</ul>
+        </div>
+        <div className="navbar-end">
+          <div className="form-control mr-4">
+            <input
+              type="text"
+              placeholder="Search"
+              className="input input-bordered"
+            />
+          </div>
+          <div className="dropdown dropdown-end">
+            <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+              <div className="w-10 rounded-full">
+                <img src="https://placeimg.com/80/80/people" alt="" />
+              </div>
+            </label>
+            <ul
+              tabIndex={0}
+              className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
+            >
               <li>
-                <a href="/">Item 1</a>
-              </li>
-              <li tabIndex={0}>
-                <a href="/" className="justify-between">
-                  Parent
-                  <svg
-                    className="fill-current"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" />
-                  </svg>
+                <a className="justify-between" href="/">
+                  Profile
+                  <span className="badge">New</span>
                 </a>
-                <ul className="p-2">
-                  <li>
-                    <a href="/">Submenu 1</a>
-                  </li>
-                  <li>
-                    <a href="/">Submenu 2</a>
-                  </li>
-                </ul>
               </li>
               <li>
-                <a href="/">Item 3</a>
+                <a href="/">Settings</a>
+              </li>
+              <li>
+                <a href="/">Logout</a>
               </li>
             </ul>
           </div>
-          <a href="/" className="btn btn-ghost normal-case text-xl">
-            daisyUI
-          </a>
-        </div>
-        <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal p-0">
-            <li>
-              <a href="/">Item 1</a>
-            </li>
-            <li tabIndex={0}>
-              <a href="/">
-                Parent
-                <svg
-                  className="fill-current"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
-                </svg>
-              </a>
-              <ul className="p-2">
-                <li>
-                  <a href="/">Submenu 1</a>
-                </li>
-                <li>
-                  <a href="/">Submenu 2</a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a href="/">Item 3</a>
-            </li>
-          </ul>
-        </div>
-        <div className="navbar-end">
-          <a href="/" className="btn">
-            Get started
-          </a>
         </div>
       </div>
     </header>
