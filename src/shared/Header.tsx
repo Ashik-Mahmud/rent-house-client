@@ -30,6 +30,10 @@ const Header = (props: Props) => {
           </small>
         </Link>
       </li>
+
+      <Link className="btn btn-md btn-success ml-10" to={"/login"}>
+        Login
+      </Link>
     </>
   );
 
@@ -68,6 +72,7 @@ const Header = (props: Props) => {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal p-0">{NavbarMenus}</ul>
         </div>
+
         <div className="navbar-end">
           <div className="form-control mr-4">
             <input
@@ -76,7 +81,7 @@ const Header = (props: Props) => {
               className="input input-bordered"
             />
           </div>
-          <div className="dropdown dropdown-end">
+          {/* <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
                 <img src="https://placeimg.com/80/80/people" alt="" />
@@ -99,7 +104,7 @@ const Header = (props: Props) => {
                 <a href="/">Logout</a>
               </li>
             </ul>
-          </div>
+          </div> */}
         </div>
       </div>
     </header>
