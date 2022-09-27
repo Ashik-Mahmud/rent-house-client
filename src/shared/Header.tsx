@@ -22,6 +22,14 @@ const Header = (props: Props) => {
       <li>
         <NavLink to="/contact">Contact</NavLink>
       </li>
+      <li>
+        <Link to="/dashboard">
+          Dashboard{" "}
+          <small className="badge badge-xs badge-success text-xs font-poppins absolute right-0 top-0 text-[.6rem] font-thin">
+            New
+          </small>
+        </Link>
+      </li>
     </>
   );
 

@@ -1,19 +1,17 @@
+import SectionTitle from "../../../components/SectionTItle";
+
 type Props = {};
 
 const BestHouses = (props: Props) => {
   return (
     <div>
       <div className="container mx-auto">
-        <div className="flex flex-col items-center justify-center py-20 px-96">
-          <h1 className="text-4xl font-bold text-center my-4">
-            Top 4 Best Houses
-          </h1>
-          <p className="text-center">
-            We have a huge collection of houses and apartments for sale and
-            rent. You can choose your dream house from our huge collection of
-            houses and apartments.
-          </p>
-        </div>
+        <SectionTitle
+          title="Top 4 Best Houses"
+          desc=" We have a huge collection of houses and apartments for sale and rent.
+        You can choose your dream house from our huge collection of houses and
+        apartments."
+        />
       </div>
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
