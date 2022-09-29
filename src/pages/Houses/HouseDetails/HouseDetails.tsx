@@ -4,6 +4,7 @@ import { FiMaximize2 } from "react-icons/fi";
 import { GoHome } from "react-icons/go";
 import { MdReportGmailerrorred } from "react-icons/md";
 import Address from "./Address";
+import BookNow from "./BookNow";
 import Gallery from "./Gallery";
 import Others from "./Others";
 import Owner from "./Owner";
@@ -163,9 +164,17 @@ const HouseDetails = (props: Props) => {
           </div>
         </div>
         <div className="book-now text-center mb-8">
-          <button className="btn btn-lg btn-success">Book Now</button>
+          <label
+            htmlFor="book-now-modal"
+            className="btn btn-lg btn-success modal-button"
+          >
+            Book Now
+          </label>
         </div>
       </section>
+
+      {/* Modals */}
+      <BookNow />
       <QuestionModal />
       <ReviewModal />
     </>
