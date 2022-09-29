@@ -22,9 +22,10 @@ const Hero = (props: Props) => {
 
   return (
     <section
-      className="hero min-h-[60vh]"
+      className="hero min-h-[70vh]"
       style={{
         backgroundImage: `url(${images[current]})`,
+        clipPath: `ellipse(102% 100% at 48.96% 0%)`,
       }}
     >
       <div className="hero-overlay bg-opacity-90"></div>

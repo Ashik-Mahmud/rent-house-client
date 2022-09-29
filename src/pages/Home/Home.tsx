@@ -1,3 +1,4 @@
+import Statistic from "../Statistic";
 import BestHouses from "./BestHouse/BestHouses";
 import CallToAction from "./CallToAction";
 import CreateAccountSec from "./CreateAccountSec";
@@ -11,6 +12,7 @@ const Home = (props: Props) => {
   return (
     <section>
       <Hero />
+      <Statistic />
       <BestHouses />
       <WhyUs />
       <PublicReviews />
