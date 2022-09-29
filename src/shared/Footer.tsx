@@ -2,7 +2,10 @@ type Props = {};
 
 const Footer = (props: Props) => {
   return (
-    <footer className="bg-base-200 text-base-content font-open">
+    <footer
+      className=" text-base-content font-open font-medium bg-base-200 relative p-20 pt-32"
+      style={{ clipPath: `ellipse(75% 100% at 59.75% 100%)` }}
+    >
       <div className="footer p-10  mx-auto container">
         <div>
           <span className="footer-title">Services</span>

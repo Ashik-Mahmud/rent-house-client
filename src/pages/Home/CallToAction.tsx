@@ -1,27 +1,54 @@
-import { Link } from "react-router-dom";
-import ReactTooltip from "react-tooltip";
+import { BsEnvelopeOpen, BsTelephoneOutbound } from "react-icons/bs";
+import { RiFeedbackLine } from "react-icons/ri";
 type Props = {};
-
 const CallToAction = (props: Props) => {
   return (
-    <div
-      className="mt-20 hero"
-      style={{
-        backgroundImage: `url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrpbfb-yOxLqRb_RLYHvlmHcF12BVnvAKw8QE7BfkD&s")`,
-      }}
-    >
-      <div className="hero-overlay bg-opacity-60"></div>
-      <div className="container mx-auto">
-        <div className="flex flex-col items-center justify-center py-20">
-          <h1 className="text-4xl font-bold text-center my-4 text-white">
-            Do you have a houses for sale or rent?
-          </h1>
-          <Link to="/register" className="btn btn-success mr-7">
-            Create Account to List here
-          </Link>
+    <div>
+      <div className="container mx-auto p-20 -mb-48 z-50 relative">
+        <div className="call-to-action-cards flex  justify-center gap-10">
+          <div className="call-to-action-card shadow-lg bg-gray-50 p-10 text-center rounded-lg  flex-1">
+            <div className="call-to-action-card__icon text-4xl grid justify-center py-4 ">
+              <BsTelephoneOutbound />
+            </div>
+            <div className="call-to-action-card__content">
+              <h3 className="call-to-action-card__title">Call Us</h3>
+              <p className="call-to-action-card__text text-success mt-3">
+                +1 234 567 8900
+              </p>
+            </div>
+          </div>
+          <div className="call-to-action-card shadow-lg bg-gray-50 p-10 text-center rounded-lg  flex-1">
+            <div className="call-to-action-card__icon text-4xl grid justify-center py-4 ">
+              <BsEnvelopeOpen />
+            </div>
+            <div className="call-to-action-card__content">
+              <h3 className="call-to-action-card__title">
+                Get Contact Support
+              </h3>
+              <a
+                href="/"
+                className="btn btn-success btn-lg capitalize text-sm mt-4"
+              >
+                Contact Support
+              </a>
+            </div>
+          </div>
+          <div className="call-to-action-card shadow-lg bg-gray-50 p-10 text-center rounded-lg flex-1">
+            <div className="call-to-action-card__icon text-4xl grid justify-center py-4 ">
+              <RiFeedbackLine />
+            </div>
+            <div className="call-to-action-card__content">
+              <h3 className="call-to-action-card__title">Leave a Feedback</h3>
+              <a
+                href="/"
+                className="btn btn-success btn-lg capitalize text-sm mt-4"
+              >
+                Send Feedback
+              </a>
+            </div>
+          </div>
         </div>
       </div>
-      <ReactTooltip />
     </div>
   );
 };

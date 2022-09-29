@@ -4,7 +4,12 @@ type Props = {};
 
 const Login = (props: Props) => {
   return (
-    <div className="flex justify-center p-20">
+    <div
+      className="flex justify-center p-20 bg-cover"
+      style={{
+        backgroundImage: `url(${require("../../assets/images/bg.png")})`,
+      }}
+    >
       <div>
         <div className="hero-content flex-col lg:flex-row-reverse shadow-lg border rounded-lg p-10 ">
           <div className="text-center lg:text-left max-w-md">

@@ -13,7 +13,7 @@ import Header from "./shared/Header";
 import NotFoundPage from "./shared/NotFoundPage";
 function App() {
   return (
-    <div className="App font-open font-medium">
+    <div className="App font-open font-medium bg-cover bg-center">
       <Header />
       <Routes>
         {/* Pages Routes */}
