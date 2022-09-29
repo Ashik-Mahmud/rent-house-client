@@ -1,5 +1,6 @@
 import { BsArrowDownRight } from "react-icons/bs";
 import { GiBed, GiShower } from "react-icons/gi";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 type Props = {};
@@ -44,9 +45,12 @@ const HouseCard = (props: Props) => {
             Type: <span className="font-semibold">Rent</span>
           </li>
         </ul>
-        <button className="btn bg-base-200 btn-sm btn-ghost border flex items-center gap-3">
+        <Link
+          to="/house/4334232"
+          className="btn bg-base-200 btn-sm btn-ghost border flex items-center gap-3"
+        >
           View Details <BsArrowDownRight />
-        </button>
+        </Link>
       </div>
     </HouseCardContainer>
   );

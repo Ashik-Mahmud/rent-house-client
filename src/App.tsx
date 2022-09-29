@@ -6,6 +6,7 @@ import Blogs from "./pages/Blogs";
 import Contact from "./pages/Contact";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Home from "./pages/Home/Home";
+import HouseDetails from "./pages/Houses/HouseDetails";
 import Houses from "./pages/Houses/Houses";
 import Reviews from "./pages/Reviews";
 import Footer from "./shared/Footer";
@@ -20,6 +21,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/houses" element={<Houses />} />
+        {/* Single House Route */}
+        <Route path="/house/:houseId" element={<HouseDetails />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/reviews" element={<Reviews />} />
