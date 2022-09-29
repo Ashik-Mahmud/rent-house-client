@@ -1,4 +1,5 @@
 import FilterSidebar from "./FilterSidebar";
+import HouseCard from "./HouseCard";
 
 type Props = {};
 
@@ -9,7 +10,7 @@ const Houses = (props: Props) => {
         <div className="house-title text-center py-5 font-bold">
           <h2 className="text-3xl">Welcome to HOUSES</h2>
         </div>
-        <div className="house-content flex gap-10">
+        <div className="house-content flex items-start gap-10">
           {/* Filters Sidebar */}
           <FilterSidebar />
           {/* Filters Sidebar end */}
@@ -38,7 +39,41 @@ const Houses = (props: Props) => {
                     </div>
                   </div>
                 </div>
-                <h2 className="text-2xl font-bold">Houses</h2>
+                <h2 className="text-2xl font-bold">Most Popular</h2>
+              </div>
+
+              {/* Houses Main Content */}
+              <div className="house-main-content p-6 grid grid-cols-4 gap-6">
+                <HouseCard />
+                <HouseCard />
+                <HouseCard />
+                <HouseCard />
+                <HouseCard />
+                <HouseCard />
+                <HouseCard />
+                <HouseCard />
+                <HouseCard />
+                <HouseCard />
+                <HouseCard />
+                <HouseCard />
+              </div>
+              {/* House Main Content End */}
+              {/* pagination */}
+              <div className="pagination flex justify-center py-10">
+                <div className="btn-group ">
+                  <button className="w-10 h-10 rounded-full cursor-pointer text-xl font-bold font-poppins">
+                    1
+                  </button>
+                  <button className="w-10 h-10 rounded-full cursor-pointer text-xl font-bold font-poppins btn-active">
+                    2
+                  </button>
+                  <button className="w-10 h-10 rounded-full cursor-pointer text-xl font-bold font-poppins">
+                    3
+                  </button>
+                  <button className="w-10 h-10 rounded-full cursor-pointer text-xl font-bold font-poppins">
+                    4
+                  </button>
+                </div>
               </div>
             </div>
           </div>

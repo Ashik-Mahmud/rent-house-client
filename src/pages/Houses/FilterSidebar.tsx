@@ -164,7 +164,7 @@ const FilterSidebar = (props: Props) => {
       </div>
 
       {/* Sidebar */}
-      <div className="house-content-left  border p-6 bg-white shadow rounded-md">
+      <div className="house-content-left sticky top-10  border p-6 bg-white shadow rounded-md">
         <div className="house-content-left-title flex items-center justify-between">
           <h2 className="text-xl font-bold">Filters Houses</h2>
           <label
@@ -175,7 +175,7 @@ const FilterSidebar = (props: Props) => {
             <RiEqualizerLine />
           </label>
         </div>
-        <div className="filters">
+        <div className="filters ">
           {/* Filter by District */}
           <div className="filter-by-name border  rounded p-3 relative mt-10">
             <div className="filter-by-name-title absolute -top-4 bg-white border rounded p-1">
