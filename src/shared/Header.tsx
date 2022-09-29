@@ -38,7 +38,7 @@ const Header = (props: Props) => {
   );
 
   return (
-    <header className="bg-base-200 py-3 uppercase">
+    <header className="bg-base-200 py-3 uppercase shadow-lg">
       <div className="navbar container mx-auto">
         <div className="navbar-start">
           <div className="dropdown">

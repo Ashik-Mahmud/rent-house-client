@@ -6,10 +6,10 @@ type Props = {};
 const Houses = (props: Props) => {
   return (
     <section id="houses">
-      <div className="container mx-auto pb-20">
-        <div className="house-title text-center py-5 font-bold">
+      <div className="container mx-auto pb-20 pt-20">
+        {/* <div className="house-title text-center font-bold p-6 bg-white my-5 rounded shadow">
           <h2 className="text-3xl">Welcome to HOUSES</h2>
-        </div>
+        </div> */}
         <div className="house-content flex items-start gap-10">
           {/* Filters Sidebar */}
           <FilterSidebar />

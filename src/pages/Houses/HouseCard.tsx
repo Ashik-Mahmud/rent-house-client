@@ -6,11 +6,11 @@ type Props = {};
 
 const HouseCard = (props: Props) => {
   return (
-    <HouseCardContainer className="card  bg-base-100 shadow-xl rounded border p-1 font-poppins cursor-pointer">
+    <HouseCardContainer className="card group  bg-base-100 shadow-xl rounded border p-1 font-poppins cursor-pointer">
       <span className="text-sm absolute top-3 left-3 z-20 badge badge-ghost category transition-all">
         Duplex
       </span>
-      <figure className="rounded overflow-hidden relative">
+      <figure className="rounded overflow-hidden relative shadow">
         <img
           src="https://placeimg.com/400/225/arch"
           alt="Shoes"
@@ -32,15 +32,15 @@ const HouseCard = (props: Props) => {
         </ul>
       </figure>
       <div className="card-body p-3 px-4">
-        <h2 className="text-lg font-bold text-gray-900">Rajbar New Villa</h2>
+        <h2 className="text-lg font-bold text-gray-900 ">Rajbar New Villa</h2>
         <ul className="text-sm font-poppins flex flex-col gap-2">
-          <li>
+          <li className="transition-all group-hover:tracking-wide">
             Location: <span className="font-semibold">Rangpur City</span>
           </li>
-          <li>
+          <li className="transition-all group-hover:tracking-wide">
             Price: <span className="font-semibold">12,524/m</span>
           </li>
-          <li>
+          <li className="transition-all group-hover:tracking-wide">
             Type: <span className="font-semibold">Rent</span>
           </li>
         </ul>
