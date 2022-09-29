@@ -6,7 +6,7 @@ import Blogs from "./pages/Blogs";
 import Contact from "./pages/Contact";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Home from "./pages/Home/Home";
-import HouseDetails from "./pages/Houses/HouseDetails";
+import HouseDetails from "./pages/Houses/HouseDetails/HouseDetails";
 import Houses from "./pages/Houses/Houses";
 import Reviews from "./pages/Reviews";
 import Footer from "./shared/Footer";

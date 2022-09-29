@@ -29,6 +29,7 @@
     "react-slick": "^0.29.0",
     "react-slider": "^2.0.4",
     "react-spinner": "^0.2.7",
+    "react-stars": "^2.2.5",
     "react-tooltip": "^4.2.21",
     "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.6",
@@ -60,6 +61,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-stars": "^2.2.1",
     "@types/styled-components": "^5.1.26",
     "autoprefixer": "^10.4.12",
     "postcss": "^8.4.16",
