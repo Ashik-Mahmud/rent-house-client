@@ -6,7 +6,7 @@ const Houses = (props: Props) => {
   return (
     <section id="houses">
       <div className="container mx-auto pb-20">
-        <div className="house-title text-center py-10 font-bold">
+        <div className="house-title text-center py-5 font-bold">
           <h2 className="text-3xl">Welcome to HOUSES</h2>
         </div>
         <div className="house-content flex gap-10">
