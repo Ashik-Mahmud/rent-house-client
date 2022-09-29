@@ -1,0 +1,6 @@
+.horizontal-slider .track:first-child {
+  background-color: #80ced1;
+}
+.horizontal-slider .track:nth-child(3) {
+  background-color: #80ced1;
+}
