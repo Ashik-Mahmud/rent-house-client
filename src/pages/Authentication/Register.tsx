@@ -15,7 +15,8 @@ const Register = (props: Props) => {
           <div className="card flex-shrink-0 w-full max-w-sm  ">
             <div className="card-body">
               <div className="card-header mb-3">
-                <h3 className="text-2xl">Register your Account</h3>
+                <h3 className="font-bold text-2xl">Register</h3>
+                <h3 className="text-2xl">For List Your Houses Here</h3>
               </div>
 
               <div className="form-control">

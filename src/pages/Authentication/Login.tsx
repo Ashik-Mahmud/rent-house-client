@@ -54,9 +54,9 @@ const Login = (props: Props) => {
                 <button className="btn btn-success">Login</button>
               </div>
               <p className="my-2">
-                Don't have account?{" "}
+                Don't have an account?{" "}
                 <Link to="/register" className="text-success">
-                  Create
+                  Create for free
                 </Link>
               </p>
             </div>
