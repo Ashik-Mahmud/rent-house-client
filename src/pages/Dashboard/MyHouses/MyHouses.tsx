@@ -27,20 +27,29 @@ const MyHouses = (props: Props) => {
               <th className="py-3 text-left">Price</th>
               <th className="py-3 text-left">Type</th>
               <th className="py-3 text-left">Status</th>
-              <th className="py-3 text-left">Likes</th>
-              <th className="py-3 text-left">Reviews</th>
-              <th className="py-3 text-left">Questions</th>
-              <th className="py-3 text-left">Reports</th>
-              <th className="py-3 text-left">Update</th>
-              <th className="py-3 text-left">Delete</th>
+              <th className="py-3 text-left w-5">Likes</th>
+              <th className="py-3 text-left w-5">Revi..</th>
+              <th className="py-3 text-left w-5">Ques..</th>
+              <th className="py-3 text-left w-5">Repo..</th>
+              <th className="py-3 text-left w-5">View</th>
+              <th className="py-3 text-left w-5">Upd..</th>
+              <th className="py-3 text-left w-5">Del..</th>
             </tr>
           </thead>
           <tbody>
             <HouseRow />
             <HouseRow />
             <HouseRow />
+            <HouseRow />
+            <HouseRow />
+            <HouseRow />
+            <HouseRow />
           </tbody>
         </table>
+      </div>
+      <div className="pagination">
+        <button className="btn btn-ghost">Previous</button>
+        <button className="btn btn-ghost">Next</button>
       </div>
     </div>
   );

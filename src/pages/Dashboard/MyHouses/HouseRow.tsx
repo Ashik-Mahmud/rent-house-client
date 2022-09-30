@@ -1,4 +1,4 @@
-import { AiFillDelete, AiFillEdit } from "react-icons/ai";
+import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
 type Props = {};
@@ -15,7 +15,9 @@ const HouseRow = (props: Props) => {
       <td className="py-3">$1,200</td>
       <td className="py-3">Apartment</td>
       <td className="py-3">Pending</td>
-      <td>1544</td>
+      <td>
+        <div className="badge badge-secondary">1544</div>
+      </td>
       <td className="py-3">
         <Link
           data-tip="View Reviews"
@@ -25,7 +27,7 @@ const HouseRow = (props: Props) => {
           10
         </Link>
       </td>
-      <td className="py-3">
+      <td className="py-3 ">
         <Link
           data-tip="View Questions"
           to="/"
@@ -34,7 +36,7 @@ const HouseRow = (props: Props) => {
           40
         </Link>
       </td>
-      <td className="py-3">
+      <td className="py-3 ">
         <Link
           data-tip="View Reports"
           to="/"
@@ -43,7 +45,16 @@ const HouseRow = (props: Props) => {
           5
         </Link>
       </td>
-      <td className="py-3">
+      <td className="py-3 ">
+        <Link
+          data-tip="View House"
+          to="/"
+          className="btn btn-xs btn-circle btn-primary flex items-center gap-2 text-xs tooltip"
+        >
+          <AiFillEye />
+        </Link>
+      </td>
+      <td className="py-3 ">
         <Link
           data-tip="Edit House"
           to="/"
@@ -52,11 +63,11 @@ const HouseRow = (props: Props) => {
           <AiFillEdit />
         </Link>
       </td>
-      <td className="py-3">
+      <td className="py-3 ">
         <Link
           data-tip="Delete House"
           to="/"
-          className="btn btn-xs btn-circle btn-error flex items-center gap-2 text-xs tooltip"
+          className="btn btn-xs btn-circle btn-error flex items-center gap-2 text-xs tooltip tooltip-left"
         >
           <AiFillDelete />
         </Link>
