@@ -4,7 +4,7 @@ import { FiMaximize2 } from "react-icons/fi";
 import { GoHome } from "react-icons/go";
 import { MdReportGmailerrorred } from "react-icons/md";
 import Address from "./Address";
-import BookNow from "./BookNow";
+import BookNow from "./BookNowModal";
 import Gallery from "./Gallery";
 import Others from "./Others";
 import Owner from "./Owner";

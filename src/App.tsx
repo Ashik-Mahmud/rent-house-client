@@ -2,12 +2,13 @@ import { Route, Routes } from "react-router-dom";
 import About from "./pages/About";
 import Login from "./pages/Authentication/Login";
 import Register from "./pages/Authentication/Register";
-import Blogs from "./pages/Blogs";
 import Contact from "./pages/Contact";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Home from "./pages/Home/Home";
+import Blogs from "./pages/Houses/Blogs/Blogs";
 import HouseDetails from "./pages/Houses/HouseDetails/HouseDetails";
 import Houses from "./pages/Houses/Houses";
+import Pricing from "./pages/Pricing";
 import Reviews from "./pages/Reviews";
 import Footer from "./shared/Footer";
 import Header from "./shared/Header";
@@ -29,6 +30,7 @@ function App() {
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/pricing" element={<Pricing />} />
 
         {/* Dashboard Routes */}
         <Route path="/dashboard" element={<Dashboard />} />

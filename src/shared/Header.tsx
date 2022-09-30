@@ -14,6 +14,9 @@ const Header = (props: Props) => {
         <NavLink to="/reviews">Public Reviews</NavLink>
       </li>
       <li>
+        <NavLink to="/pricing">Pricing</NavLink>
+      </li>
+      <li>
         <NavLink to="/blogs">Blogs</NavLink>
       </li>
       <li>

@@ -1,7 +1,7 @@
 import {
-  BiBookmarks,
   BiCard,
   BiEnvelope,
+  BiKey,
   BiPhoneIncoming,
   BiUser,
 } from "react-icons/bi";
@@ -18,8 +18,7 @@ const BookNow = (props: Props) => {
             Congratulations you come across to book this house.
           </h3>
           <p className="py-4">
-            For books this house you will get you bit charge for maintaining
-            this website and make this features more helpful for you.
+            Please fill up the form below and we will contact you
           </p>
           <div className="modal-body">
             {/* Name */}
@@ -75,6 +74,28 @@ const BookNow = (props: Props) => {
               </div>
               {/* End */}
             </div>
+            {/* Password */}
+            <div className="name border  rounded p-3 pb-1 relative mt-10 flex-1">
+              <div className="name-title absolute -top-4 bg-white border rounded p-1">
+                <h3 className="text-xs font-poppins flex items-center gap-3">
+                  Put your Password{" "}
+                </h3>
+              </div>
+              <div className="input-group flex items-center my-1 border p-3 rounded-md mt-2">
+                <div className="icon">
+                  <BiKey />
+                </div>
+                <input
+                  type="password"
+                  className="form-control outline-none pl-4 w-full"
+                  placeholder="Password"
+                />
+              </div>
+              <small className="text-gray-400 text-xs">
+                It used for login not your card password
+              </small>
+            </div>
+            {/* End */}
             {/* Card Number */}
             <div className="name border  rounded p-3 relative mt-10 flex-1">
               <div className="name-title absolute -top-4 bg-white border rounded p-1">
@@ -92,29 +113,25 @@ const BookNow = (props: Props) => {
               </div>
             </div>
             {/* End */}
-            {/* Notes Number */}
-            <div className="name border  rounded p-3 relative mt-10 flex-1">
-              <div className="name-title absolute -top-4 bg-white border rounded p-1">
-                <h3 className="text-xs font-poppins">Put your Notes</h3>
-              </div>
-              <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
-                <div className="icon">
-                  <BiBookmarks />
-                </div>
-                <input
-                  type="text"
-                  className="form-control outline-none pl-4 w-full"
-                  placeholder="Notes"
-                />
-              </div>
+            <div className="my-3 flex items-center gap-2 font-poppins mt-6">
+              <input
+                type="checkbox"
+                name="permission"
+                className="checkbox"
+                id="permission"
+              />{" "}
+              <label htmlFor="permission">
+                Accept all the Condition & Policy
+              </label>
             </div>
-            {/* End */}
           </div>
           <div className="modal-action">
             <label htmlFor="book-now-modal" className="btn btn-warning">
               Cancel
             </label>
-            <button className="btn btn-primary">Pay 100 tk for Details</button>
+            <button className="btn btn-primary">
+              Pay 100 tk for Details & Track
+            </button>
           </div>
         </div>
       </div>
