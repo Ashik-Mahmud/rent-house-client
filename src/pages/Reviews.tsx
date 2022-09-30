@@ -8,7 +8,7 @@ const Reviews = (props: Props) => {
     <section>
       <div className="container mx-auto py-10 text-center">
         <SectionTitle
-          title="Total Reviews"
+          title="What Satisfied Customers says?"
           desc="Yah! here you will get all the reviews which one public leave for us"
         />
         <div className="review-content grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">

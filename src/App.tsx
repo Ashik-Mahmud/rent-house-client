@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import About from "./pages/About";
 import Login from "./pages/Authentication/Login";
 import Register from "./pages/Authentication/Register";
@@ -14,9 +14,10 @@ import Footer from "./shared/Footer";
 import Header from "./shared/Header";
 import NotFoundPage from "./shared/NotFoundPage";
 function App() {
+  const location = useLocation();
   return (
     <div className="App font-open font-medium bg-cover bg-center bg-[#F5F6FA]">
-      <Header />
+      {!location.pathname.includes("dashboard") && <Header />}
       <Routes>
         {/* Pages Routes */}
         <Route path="/" element={<Home />} />
@@ -38,7 +39,8 @@ function App() {
         {/* Validation Route */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-      <Footer />
+
+      {!location.pathname.includes("dashboard") && <Footer />}
     </div>
   );
 }
