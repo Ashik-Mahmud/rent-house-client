@@ -1,9 +1,11 @@
 import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
-type Props = {};
+type Props = {
+  approved?: boolean;
+};
 
-const HouseRow = (props: Props) => {
+const HouseRow = ({ approved }: Props) => {
   return (
     <tr className="border-b border-gray-200">
       <td className="py-3">H-1234</td>
@@ -14,7 +16,13 @@ const HouseRow = (props: Props) => {
       <td className="py-3">10001</td>
       <td className="py-3">$1,200</td>
       <td className="py-3">Apartment</td>
-      <td className="py-3">Pending</td>
+      <td className="py-3">
+        <div
+          className={`badge badge-${approved ? "success" : "warning"} text-xs `}
+        >
+          {approved ? "Approved" : "Pending"}
+        </div>
+      </td>
       <td>
         <div className="badge badge-secondary">1544</div>
       </td>

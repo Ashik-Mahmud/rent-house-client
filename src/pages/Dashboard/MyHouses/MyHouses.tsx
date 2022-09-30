@@ -41,7 +41,7 @@ const MyHouses = (props: Props) => {
             <HouseRow />
             <HouseRow />
             <HouseRow />
-            <HouseRow />
+            <HouseRow approved={true} />
             <HouseRow />
             <HouseRow />
           </tbody>

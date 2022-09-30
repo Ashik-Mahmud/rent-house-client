@@ -109,7 +109,7 @@ const Dashboard = (props: Props) => {
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content p-5">
           {/*  <!-- Page content here --> */}
-          <div className="dashboard-header bg-white p-2 rounded shadow flex items-center justify-between sticky top-1">
+          <div className="dashboard-header bg-white p-2 rounded shadow flex items-center justify-between sticky top-1 z-50">
             <div className="flex items-center gap-3">
               <label
                 htmlFor="my-drawer-2"
