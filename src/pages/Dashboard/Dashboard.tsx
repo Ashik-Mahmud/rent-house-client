@@ -1,11 +1,90 @@
-import { BiPlus } from "react-icons/bi";
-import { BsGrid } from "react-icons/bs";
-import { Link } from "react-router-dom";
-import DashboardContent from "./Dashboard/DashboardContent";
+import { AiOutlineUser } from "react-icons/ai";
+import { BiPlus, BiUser } from "react-icons/bi";
+import {
+  BsBookFill,
+  BsCardChecklist,
+  BsGear,
+  BsGrid,
+  BsHeart,
+  BsHouse,
+  BsMessenger,
+} from "react-icons/bs";
+import { Link, Outlet } from "react-router-dom";
 
 type Props = {};
 
 const Dashboard = (props: Props) => {
+  const menuArray = [
+    {
+      id: 1,
+      title: "Dashboard",
+      icon: <BsGrid />,
+      link: "/dashboard",
+    },
+    {
+      id: 2,
+      title: "My Houses",
+      icon: <BsHouse />,
+      link: "/dashboard/houses",
+    },
+    {
+      id: 3,
+      title: "Add House",
+      icon: <BiPlus />,
+      link: "/dashboard/houses/add",
+    },
+    {
+      id: 4,
+      title: "My Bookings",
+      icon: <BsBookFill />,
+      link: "/dashboard/bookings",
+    },
+    {
+      id: 5,
+      title: "My Reviews",
+      icon: <BsHeart />,
+      link: "/dashboard/reviews",
+    },
+
+    {
+      id: 6,
+      title: "Profile",
+      icon: <BiUser />,
+      link: "/dashboard/profile",
+    },
+
+    {
+      id: 7,
+      title: "Payments",
+      icon: <BsCardChecklist />,
+      link: "/dashboard/payments",
+    },
+    {
+      id: 8,
+      title: "Messages",
+      icon: <BsMessenger />,
+      link: "/dashboard/messages",
+    },
+    {
+      id: 9,
+      title: "Settings",
+      icon: <BsGear />,
+      link: "/dashboard/settings",
+    },
+    {
+      id: 10,
+      title: "Users",
+      icon: <AiOutlineUser />,
+      link: "/dashboard/users",
+    },
+    {
+      id: 11,
+      title: "Blogs",
+      icon: <BsBookFill />,
+      link: "/dashboard/blogs",
+    },
+  ];
+
   return (
     <div className="grid place-items-center ">
       <div className="drawer drawer-mobile">
@@ -60,19 +139,33 @@ const Dashboard = (props: Props) => {
           </div>
 
           {/* Dashboard Content */}
-          <DashboardContent />
+          <Outlet />
         </div>
         <div className="drawer-side">
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-          <ul className="menu p-4 overflow-y-auto w-80 bg-base-100 text-base-content">
+          <ul className="menu p-4 overflow-y-auto w-80 bg-[#081A51] text-base-content ">
+            <div className="logo text-center">
+              <Link
+                to="/"
+                className="text-3xl font-poppins my-5 block text-success font-bold"
+              >
+                hasHouse?
+              </Link>
+              <button className="btn btn-warning btn-xs mb-5">Logout</button>
+            </div>
             {/*  <!-- Sidebar content here --> */}
-
-            <li>
-              <a href="/">Sidebar Item 1</a>
-            </li>
-            <li>
-              <a href="/">Sidebar Item 2</a>
-            </li>
+            {menuArray.map((item) => (
+              <li key={item.id}>
+                <Link to={item.link} className="menu-item text-white">
+                  <span className="menu-btn">
+                    <span className="btn btn-ghost rounded-full btn-sm">
+                      {item.icon}
+                    </span>
+                  </span>
+                  <span className="menu-title">{item.title}</span>
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
       </div>

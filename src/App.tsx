@@ -3,7 +3,18 @@ import About from "./pages/About";
 import Login from "./pages/Authentication/Login";
 import Register from "./pages/Authentication/Register";
 import Contact from "./pages/Contact";
+import AddHouse from "./pages/Dashboard/AddHouse/AddHouse";
 import Dashboard from "./pages/Dashboard/Dashboard";
+import DashboardContent from "./pages/Dashboard/Dashboard/DashboardContent";
+import Messages from "./pages/Dashboard/Messages/Messages";
+import MyBlogs from "./pages/Dashboard/MyBlogs/MyBlogs";
+import MyBookings from "./pages/Dashboard/MyBookings/MyBookings";
+import MyHouses from "./pages/Dashboard/MyHouses/MyHouses";
+import MyReviews from "./pages/Dashboard/MyReviews/MyReviews";
+import Payments from "./pages/Dashboard/Payments/Payments";
+import Profile from "./pages/Dashboard/Profile/Profile";
+import Settings from "./pages/Dashboard/Settings/Settings";
+import Users from "./pages/Dashboard/Users/Users";
 import Home from "./pages/Home/Home";
 import Blogs from "./pages/Houses/Blogs/Blogs";
 import HouseDetails from "./pages/Houses/HouseDetails/HouseDetails";
@@ -22,6 +33,7 @@ function App() {
         {/* Pages Routes */}
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
+        MyBlogs
         <Route path="/houses" element={<Houses />} />
         {/* Single House Route */}
         <Route path="/house/:houseId" element={<HouseDetails />} />
@@ -32,10 +44,20 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/pricing" element={<Pricing />} />
-
         {/* Dashboard Routes */}
-        <Route path="/dashboard" element={<Dashboard />} />
-
+        <Route path="/dashboard" element={<Dashboard />}>
+          <Route index element={<DashboardContent />} />
+          <Route path="houses" element={<MyHouses />} />
+          <Route path="houses/add" element={<AddHouse />} />
+          <Route path="bookings" element={<MyBookings />} />
+          <Route path="reviews" element={<MyReviews />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="payments" element={<Payments />} />
+          <Route path="messages" element={<Messages />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="users" element={<Users />} />
+          <Route path="blogs" element={<MyBlogs />} />
+        </Route>
         {/* Validation Route */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
