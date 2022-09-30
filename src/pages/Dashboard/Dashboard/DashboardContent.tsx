@@ -1,3 +1,7 @@
+import BarCharts from "./BarCharts";
+import RecentBookings from "./RecentBookings";
+import UsersCharts from "./UsersCharts";
+
 type Props = {};
 
 const DashboardContent = (props: Props) => {
@@ -89,6 +93,18 @@ const DashboardContent = (props: Props) => {
         </div>
       </div>
       {/* End */}
+
+      {/* Recent Bookings */}
+      <div className="my-5">
+        <RecentBookings />
+      </div>
+      {/* End */}
+      {/* Charts Area */}
+
+      <div className="charts gap-6 shadow my-5 grid grid-cols-1 md:grid-cols-2 ">
+        <UsersCharts />
+        <BarCharts />
+      </div>
     </div>
   );
 };

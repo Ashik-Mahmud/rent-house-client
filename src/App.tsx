@@ -3,7 +3,9 @@ import About from "./pages/About";
 import Login from "./pages/Authentication/Login";
 import Register from "./pages/Authentication/Register";
 import Contact from "./pages/Contact";
+import AddBlog from "./pages/Dashboard/AddBlog/AddBlog";
 import AddHouse from "./pages/Dashboard/AddHouse/AddHouse";
+import AdminHouses from "./pages/Dashboard/AdminHouses/AdminHouses";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import DashboardContent from "./pages/Dashboard/Dashboard/DashboardContent";
 import Messages from "./pages/Dashboard/Messages/Messages";
@@ -13,6 +15,7 @@ import MyHouses from "./pages/Dashboard/MyHouses/MyHouses";
 import MyReviews from "./pages/Dashboard/MyReviews/MyReviews";
 import Payments from "./pages/Dashboard/Payments/Payments";
 import Profile from "./pages/Dashboard/Profile/Profile";
+import PurchaseHouse from "./pages/Dashboard/PurchaseHouse/PurchaseHouse";
 import Settings from "./pages/Dashboard/Settings/Settings";
 import Users from "./pages/Dashboard/Users/Users";
 import Home from "./pages/Home/Home";
@@ -47,16 +50,27 @@ function App() {
         {/* Dashboard Routes */}
         <Route path="/dashboard" element={<Dashboard />}>
           <Route index element={<DashboardContent />} />
+
+          {/* Users Routes */}
           <Route path="houses" element={<MyHouses />} />
           <Route path="houses/add" element={<AddHouse />} />
           <Route path="bookings" element={<MyBookings />} />
+
+          {/* Common Routes */}
           <Route path="reviews" element={<MyReviews />} />
           <Route path="profile" element={<Profile />} />
-          <Route path="payments" element={<Payments />} />
-          <Route path="messages" element={<Messages />} />
           <Route path="settings" element={<Settings />} />
+
+          {/* Customers Routes */}
+          <Route path="payments" element={<Payments />} />
+          <Route path="purchase/bookings" element={<PurchaseHouse />} />
+
+          {/* Admin Routes */}
+          <Route path="messages" element={<Messages />} />
           <Route path="users" element={<Users />} />
           <Route path="blogs" element={<MyBlogs />} />
+          <Route path="blogs/add" element={<AddBlog />} />
+          <Route path="admin/houses" element={<AdminHouses />} />
         </Route>
         {/* Validation Route */}
         <Route path="*" element={<NotFoundPage />} />

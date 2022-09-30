@@ -83,6 +83,24 @@ const Dashboard = (props: Props) => {
       icon: <BsBookFill />,
       link: "/dashboard/blogs",
     },
+    {
+      id: 12,
+      title: "Add Blog",
+      icon: <BiPlus />,
+      link: "/dashboard/blogs/add",
+    },
+    {
+      id: 13,
+      title: "Houses",
+      icon: <BsHouse />,
+      link: "/dashboard/admin/houses",
+    },
+    {
+      id: 14,
+      title: "Bookings",
+      icon: <BsBookFill />,
+      link: "/dashboard/purchase/bookings",
+    },
   ];
 
   return (
