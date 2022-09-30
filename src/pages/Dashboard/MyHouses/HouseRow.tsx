@@ -1,0 +1,68 @@
+import { AiFillDelete, AiFillEdit } from "react-icons/ai";
+import { Link } from "react-router-dom";
+
+type Props = {};
+
+const HouseRow = (props: Props) => {
+  return (
+    <tr className="border-b border-gray-200">
+      <td className="py-3">H-1234</td>
+      <td className="py-3">House 1</td>
+      <td className="py-3">123 Main St</td>
+
+      <td className="py-3">NY</td>
+      <td className="py-3">10001</td>
+      <td className="py-3">$1,200</td>
+      <td className="py-3">Apartment</td>
+      <td className="py-3">Pending</td>
+      <td>1544</td>
+      <td className="py-3">
+        <Link
+          data-tip="View Reviews"
+          to="/"
+          className="btn btn-xs btn-circle btn-info flex items-center gap-2 text-xs tooltip"
+        >
+          10
+        </Link>
+      </td>
+      <td className="py-3">
+        <Link
+          data-tip="View Questions"
+          to="/"
+          className="btn btn-xs btn-circle btn-accent flex items-center gap-2 text-xs tooltip"
+        >
+          40
+        </Link>
+      </td>
+      <td className="py-3">
+        <Link
+          data-tip="View Reports"
+          to="/"
+          className="btn btn-xs btn-circle btn-warning flex items-center gap-2 text-xs tooltip"
+        >
+          5
+        </Link>
+      </td>
+      <td className="py-3">
+        <Link
+          data-tip="Edit House"
+          to="/"
+          className="btn btn-xs btn-circle btn-success flex items-center gap-2 text-xs tooltip"
+        >
+          <AiFillEdit />
+        </Link>
+      </td>
+      <td className="py-3">
+        <Link
+          data-tip="Delete House"
+          to="/"
+          className="btn btn-xs btn-circle btn-error flex items-center gap-2 text-xs tooltip"
+        >
+          <AiFillDelete />
+        </Link>
+      </td>
+    </tr>
+  );
+};
+
+export default HouseRow;
