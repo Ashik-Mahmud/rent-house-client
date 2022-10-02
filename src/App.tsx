@@ -12,7 +12,9 @@ import Messages from "./pages/Dashboard/Messages/Messages";
 import MyBlogs from "./pages/Dashboard/MyBlogs/MyBlogs";
 import MyBookings from "./pages/Dashboard/MyBookings/MyBookings";
 import MyHouses from "./pages/Dashboard/MyHouses/MyHouses";
+import AddReview from "./pages/Dashboard/MyReviews/AddReview";
 import MyReviews from "./pages/Dashboard/MyReviews/MyReviews";
+import UserReviews from "./pages/Dashboard/MyReviews/UserReviews";
 import Payments from "./pages/Dashboard/Payments/Payments";
 import Profile from "./pages/Dashboard/Profile/Profile";
 import PurchaseHouse from "./pages/Dashboard/PurchaseHouse/PurchaseHouse";
@@ -27,6 +29,7 @@ import Reviews from "./pages/Reviews";
 import Footer from "./shared/Footer";
 import Header from "./shared/Header";
 import NotFoundPage from "./shared/NotFoundPage";
+
 function App() {
   const location = useLocation();
   return (
@@ -57,7 +60,11 @@ function App() {
           <Route path="bookings" element={<MyBookings />} />
 
           {/* Common Routes */}
-          <Route path="reviews" element={<MyReviews />} />
+          <Route path="reviews" element={<MyReviews />}>
+            <Route path="add-review" element={<AddReview />} />
+            <Route path="my-reviews" element={<UserReviews />} />
+            <Route index element={<UserReviews />} />
+          </Route>
           <Route path="profile" element={<Profile />} />
           <Route path="settings" element={<Settings />} />
 
