@@ -1,4 +1,4 @@
-import { BiSearchAlt2 } from "react-icons/bi";
+import { BiChevronLeft, BiChevronRight, BiSearchAlt2 } from "react-icons/bi";
 import PaymentRow from "./PaymentRow";
 
 type Props = {};
@@ -29,6 +29,8 @@ const Payments = (props: Props) => {
                 <tr>
                   <th></th>
                   <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
                   <th>House ID</th>
                   <th>House</th>
                   <th>Transaction ID</th>
@@ -43,6 +45,38 @@ const Payments = (props: Props) => {
                 <PaymentRow />
               </tbody>
             </table>
+          </div>
+          <div className="pagination flex items-center gap-3 justify-end mt-5">
+            <a
+              href="/"
+              className="pagination__link w-7 h-7 grid place-items-center btn-ghost rounded-full"
+            >
+              <BiChevronLeft />
+            </a>
+            <a
+              href="/"
+              className="pagination__link w-7 h-7 grid place-items-center btn-ghost btn-active rounded-full"
+            >
+              1
+            </a>
+            <a
+              href="/ "
+              className="pagination__link w-7 h-7 grid place-items-center btn-ghost rounded-full"
+            >
+              2
+            </a>
+            <a
+              href="/"
+              className="pagination__link w-7 h-7 grid place-items-center btn-ghost rounded-full"
+            >
+              3
+            </a>
+            <a
+              href="/"
+              className="pagination__link w-7 h-7 grid place-items-center btn-ghost rounded-full"
+            >
+              <BiChevronRight />
+            </a>
           </div>
         </div>
       </div>

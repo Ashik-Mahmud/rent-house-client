@@ -9,11 +9,13 @@ const PaymentRow = (props: Props) => {
     <tr>
       <th>1</th>
       <td>Cy Ganderton</td>
+      <td>Casn@gmail.com</td>
+      <td>+88045485484</td>
       <td>H-43323</td>
       <td>Quality Control </td>
       <td>dasf4343324</td>
       <td>
-        <div className="badge badge-success">success</div>
+        <div className="badge badge-success">paid</div>
       </td>
       <td>
         <Link
@@ -26,7 +28,8 @@ const PaymentRow = (props: Props) => {
       </td>
       <td>
         <button
-          className="text-center text-error text-lg tooltip"
+          disabled
+          className="text-center text-gray-300 text-lg tooltip"
           data-tip="Delete Payment"
         >
           <BiTrash />
