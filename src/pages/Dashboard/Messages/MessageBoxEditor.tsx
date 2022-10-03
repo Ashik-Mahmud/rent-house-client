@@ -1,9 +1,9 @@
 import "quill/dist/quill.snow.css";
 import { useEffect } from "react";
 import { useQuill } from "react-quilljs";
-type Props = {};
+type Props = { setMessageVal: (val: string) => void };
 
-const MessageBoxEditor = (props: Props) => {
+const MessageBoxEditor = ({ setMessageVal }: Props) => {
   const modules = {
     toolbar: [
       [{ size: ["small", false, "large", "huge"] }],
@@ -41,10 +41,10 @@ const MessageBoxEditor = (props: Props) => {
   useEffect(() => {
     if (quill) {
       quill.on("text-change", () => {
-        console.log(quillRef.current.firstChild.innerHTML);
+        setMessageVal(quillRef.current.firstChild.innerHTML);
       });
     }
-  }, [quill, quillRef]);
+  }, [quill, quillRef, setMessageVal]);
 
   return (
     <div style={{ width: "100%", height: 250 }}>

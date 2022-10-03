@@ -32,10 +32,10 @@ const Hero = (props: Props) => {
       <div className="hero-content text-center text-neutral-content">
         <div className="px-60">
           <h1 className="mb-5 text-5xl font-bold">
-            Welcome To the <span className="text-success"> hasHouse?</span>
+            Welcome To the <span className="text-success"> houseLagbe?</span>
           </h1>
           <p className="mb-5">
-            <b className="text-success">hasHouse?</b> one of the best platform
+            <b className="text-success">houseLagbe?</b> one of the best platform
             to find your dream house in the best price and location in the
             Bangladesh. We have a huge collection of houses and apartments for
             sale and rent. You can choose your dream house from our huge

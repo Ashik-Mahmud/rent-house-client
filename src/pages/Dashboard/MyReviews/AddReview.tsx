@@ -23,7 +23,7 @@ const AddReview = (props: Props) => {
                 id="content"
                 cols={4}
                 className="w-full p-5 border outline-none rounded"
-                placeholder="What's your mind about this hasHouse?"
+                placeholder="What's your mind about this houseLagbe?"
                 rows={6}
               ></textarea>
             </div>

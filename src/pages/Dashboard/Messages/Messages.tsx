@@ -6,6 +6,8 @@ type Props = {};
 const Messages = (props: Props) => {
   const [roles, setRoles] = useState<String>("");
   const [userType, setUserType] = useState<String>("");
+  const [messageVal, setMessageVal] = useState<String>("");
+  console.log(messageVal);
   return (
     <div>
       <div className="p-5 my-4 bg-white">
@@ -125,7 +127,7 @@ const Messages = (props: Props) => {
                 </h3>
               </div>
               <div className="my-1 rounded-md mt-6">
-                <MessageBoxEditor />
+                <MessageBoxEditor setMessageVal={setMessageVal} />
               </div>
             </div>
             <div className=" mt-5 justify-end flex">

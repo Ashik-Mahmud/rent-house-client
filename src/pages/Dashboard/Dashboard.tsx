@@ -118,8 +118,8 @@ const Dashboard = (props: Props) => {
                 <BsGrid />
               </label>
               <span className="text-2xl font-bold font-poppins px-3">
-                Welcome to <span className="text-success">hasHouse?</span> Admin
-                Panel
+                Welcome to <span className="text-success">houseLagbe?</span>{" "}
+                Admin Panel
               </span>
             </div>
             <div className="flex items-center gap-5">
@@ -167,7 +167,7 @@ const Dashboard = (props: Props) => {
                 to="/"
                 className="text-3xl font-poppins my-5 block text-success font-bold"
               >
-                hasHouse?
+                houseLagbe?
               </Link>
               <button className="btn btn-warning btn-xs mb-5">Logout</button>
             </div>

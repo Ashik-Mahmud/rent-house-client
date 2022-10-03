@@ -69,7 +69,7 @@ const Header = (props: Props) => {
             </ul>
           </div>
           <Link to="/" className="btn btn-ghost normal-case text-xl">
-            hasHouse?
+            HouseLagbe?
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
