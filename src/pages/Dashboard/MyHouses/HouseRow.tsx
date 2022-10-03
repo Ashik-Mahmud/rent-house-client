@@ -29,7 +29,7 @@ const HouseRow = ({ approved }: Props) => {
       <td className="py-3">
         <Link
           data-tip="View Reviews"
-          to="/"
+          to="/dashboard/houses/reviews/3423"
           className="btn btn-xs btn-circle btn-info flex items-center gap-2 text-xs tooltip"
         >
           10
@@ -38,7 +38,7 @@ const HouseRow = ({ approved }: Props) => {
       <td className="py-3 ">
         <Link
           data-tip="View Questions"
-          to="/"
+          to="/dashboard/houses/questions/3423"
           className="btn btn-xs btn-circle btn-accent flex items-center gap-2 text-xs tooltip"
         >
           40
@@ -47,7 +47,7 @@ const HouseRow = ({ approved }: Props) => {
       <td className="py-3 ">
         <Link
           data-tip="View Reports"
-          to="/"
+          to="/dashboard/houses/reports/3423"
           className="btn btn-xs btn-circle btn-warning flex items-center gap-2 text-xs tooltip"
         >
           5
@@ -56,7 +56,7 @@ const HouseRow = ({ approved }: Props) => {
       <td className="py-3 ">
         <Link
           data-tip="View House"
-          to="/"
+          to="/house/43342323"
           className="btn btn-xs btn-circle btn-primary flex items-center gap-2 text-xs tooltip"
         >
           <AiFillEye />

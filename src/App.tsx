@@ -11,7 +11,10 @@ import DashboardContent from "./pages/Dashboard/Dashboard/DashboardContent";
 import Messages from "./pages/Dashboard/Messages/Messages";
 import MyBlogs from "./pages/Dashboard/MyBlogs/MyBlogs";
 import MyBookings from "./pages/Dashboard/MyBookings/MyBookings";
+import HouseQuestions from "./pages/Dashboard/MyHouses/HouseQuestions/HouseQuestions";
+import HouseReviews from "./pages/Dashboard/MyHouses/HouseReviews/HouseReviews";
 import MyHouses from "./pages/Dashboard/MyHouses/MyHouses";
+import ReportedHouses from "./pages/Dashboard/MyHouses/ReportedHouses/ReportedHouses";
 import UpdateHouse from "./pages/Dashboard/MyHouses/UpdateHouse";
 import AddReview from "./pages/Dashboard/MyReviews/AddReview";
 import MyReviews from "./pages/Dashboard/MyReviews/MyReviews";
@@ -60,6 +63,12 @@ function App() {
           <Route path="houses/add" element={<AddHouse />} />
           <Route path="bookings" element={<MyBookings />} />
           <Route path="houses/edit/:houseId" element={<UpdateHouse />} />
+          <Route path="houses/reviews/:houseId" element={<HouseReviews />} />
+          <Route
+            path="houses/questions/:houseId"
+            element={<HouseQuestions />}
+          />
+          <Route path="houses/reports/:houseId" element={<ReportedHouses />} />
 
           {/* Common Routes */}
           <Route path="reviews" element={<MyReviews />}>
