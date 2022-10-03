@@ -7,7 +7,10 @@ const Users = (props: Props) => {
     <div>
       <div className="users-area p-5 my-4 bg-white">
         <div className="title flex items-center justify-between ">
-          <h2 className="text-2xl font-bold">Total Users</h2>
+          <div className="flex items-center gap-2">
+            <h1 className="text-2xl font-bold">Users Management</h1>
+            <small className="badge badge-success">Admin</small>
+          </div>
           <div className="flex items-center gap-3">
             <div className="active-user">
               <span className="bg-green-500 w-3 h-3 rounded-full inline-block mr-2"></span>

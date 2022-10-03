@@ -3,13 +3,14 @@ import About from "./pages/About";
 import Login from "./pages/Authentication/Login";
 import Register from "./pages/Authentication/Register";
 import Contact from "./pages/Contact";
-import AddBlog from "./pages/Dashboard/AddBlog/AddBlog";
 import AddHouse from "./pages/Dashboard/AddHouse/AddHouse";
 import AdminHouses from "./pages/Dashboard/AdminHouses/AdminHouses";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import DashboardContent from "./pages/Dashboard/Dashboard/DashboardContent";
 import Messages from "./pages/Dashboard/Messages/Messages";
+import AddBlog from "./pages/Dashboard/MyBlogs/AddBlog/AddBlog";
 import MyBlogs from "./pages/Dashboard/MyBlogs/MyBlogs";
+import UsersBlogs from "./pages/Dashboard/MyBlogs/UsersBlogs";
 import MyBookings from "./pages/Dashboard/MyBookings/MyBookings";
 import HouseQuestions from "./pages/Dashboard/MyHouses/HouseQuestions/HouseQuestions";
 import HouseReviews from "./pages/Dashboard/MyHouses/HouseReviews/HouseReviews";
@@ -86,8 +87,12 @@ function App() {
           {/* Admin Routes */}
           <Route path="messages" element={<Messages />} />
           <Route path="users" element={<Users />} />
-          <Route path="blogs" element={<MyBlogs />} />
-          <Route path="blogs/add" element={<AddBlog />} />
+          <Route path="blogs" element={<MyBlogs />}>
+            <Route index element={<UsersBlogs />} />
+            <Route path="users-blogs" element={<UsersBlogs />} />
+            <Route path="add" element={<AddBlog />} />
+          </Route>
+
           <Route path="admin/houses" element={<AdminHouses />} />
         </Route>
         {/* Validation Route */}
