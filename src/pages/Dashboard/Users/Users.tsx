@@ -1,5 +1,5 @@
-import { BsChevronLeft, BsChevronRight, BsPen, BsTrash } from "react-icons/bs";
-
+import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
+import UserRow from "./UserRow";
 type Props = {};
 
 const Users = (props: Props) => {
@@ -27,41 +27,17 @@ const Users = (props: Props) => {
                 <th className="text-left">Name</th>
                 <th className="text-left">Email</th>
                 <th className="text-left">Phone</th>
-                <th className="text-left">Role</th>
+                <th className="text-left">Address</th>
+                <th className="text-left">Social Handle</th>
+                <th className="text-left w-60">Role</th>
                 <th className="text-left">Status</th>
                 <th className="text-left">Action</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td className="text-left">John Doe</td>
-                <td className="text-left">
-                  <span className="text-gray-500">jhon@doe.com</span>
-                </td>
-                <td className="text-left">
-                  <span className="text-gray-500">01700000000</span>
-                </td>
-                <td className="text-left">
-                  <span className="text-gray-500">Customer</span>
-                </td>
-                <td className="text-left">
-                  <span className="text-green-500">Active</span>
-                </td>
-                <td className="text-left">
-                  <div className="flex items-center gap-3">
-                    <button className="">
-                      <span className="w-5 h-5 flex items-center justify-center">
-                        <BsPen />
-                      </span>
-                    </button>
-                    <button className="">
-                      <span className="w-5 h-5 flex items-center justify-center">
-                        <BsTrash />
-                      </span>
-                    </button>
-                  </div>
-                </td>
-              </tr>
+              <UserRow />
+              <UserRow />
+              <UserRow />
             </tbody>
           </table>
           <div className="pagination mt-5 flex items-center gap-6">
