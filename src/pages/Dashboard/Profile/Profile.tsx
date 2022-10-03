@@ -18,9 +18,12 @@ const Profile = (props: Props) => {
     <>
       <div>
         <div className="profile p-5 my-5 bg-white">
-          <h2 className="text-2xl font-bold">
-            <span className="text-success">Ashik Mahmud's</span> Profile{" "}
-          </h2>
+          <div className="flex items-center gap-2">
+            <h2 className="text-2xl font-bold">
+              <span className="text-success">Ashik Mahmud's</span> Profile{" "}
+            </h2>
+            <small className="badge badge-success">all</small>
+          </div>
           <div className="profile-content py-10">
             <div className="flex items-center justify-between">
               <div className="profile-image rounded-full  w-32 h-32 relative  ">

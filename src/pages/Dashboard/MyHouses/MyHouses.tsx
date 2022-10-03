@@ -6,7 +6,10 @@ const MyHouses = (props: Props) => {
   return (
     <div className="p-10 my-5 bg-white rounded shadow">
       <div className="title flex items-center justify-between mb-3">
-        <h1 className="text-2xl font-bold">My Houses</h1>
+        <div className="flex items-center gap-2">
+          <h1 className="text-2xl font-bold">My Houses</h1>
+          <small className="badge badge-success">House Holder</small>
+        </div>
         <input
           type="search"
           name="search-field"

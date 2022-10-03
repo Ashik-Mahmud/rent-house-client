@@ -8,7 +8,10 @@ const MyReviews = (props: Props) => {
     <div>
       <div className="p-4 my-5 bg-white">
         <div className="title flex items-center justify-between">
-          <h3 className="text-2xl font-bold">My Reviews</h3>
+          <div className="flex items-center gap-2">
+            <h1 className="text-2xl font-bold">My Reviews</h1>
+            <small className="badge badge-success">all</small>
+          </div>
           <div className="flex items-center rounded overflow-hidden">
             <Link
               className={`p-3 font-poppins rounded-none ${

@@ -8,7 +8,10 @@ const Payments = (props: Props) => {
     <div>
       <div className="p-5 my-4 bg-white">
         <div className="flex items-center justify-between">
-          <h3 className="text-2xl font-bold">Payments</h3>
+          <div className="flex items-center gap-2">
+            <h1 className="text-2xl font-bold">Payments</h1>
+            <small className="badge badge-success">House Holder</small>
+          </div>
           <div className="flex items-center justify-between gap-2  border p-3 rounded">
             <div className="flex items-center gap-2">
               <div className="icon">

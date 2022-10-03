@@ -7,7 +7,10 @@ type Props = {};
 const AddHouse = (props: Props) => {
   return (
     <div className="p-5 my-5 bg-white rounded">
-      <h1 className="text-2xl font-bold">Add House</h1>
+      <div className="flex items-center gap-2">
+        <h1 className="text-2xl font-bold">Add House</h1>
+        <small className="badge badge-success">House Holder</small>
+      </div>
       <div className="mt-5">
         <form>
           <div className="flex flex-col md:flex-row gap-3">

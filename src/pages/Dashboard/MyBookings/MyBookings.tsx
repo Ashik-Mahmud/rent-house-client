@@ -7,7 +7,10 @@ const MyBookings = (props: Props) => {
   return (
     <div>
       <div className="myBookings p-5 my-7 bg-white">
-        <h3 className="text-2xl font-bold">My Bookings</h3>
+        <div className="flex items-center gap-2">
+          <h1 className="text-2xl font-bold">My Bookings</h1>
+          <small className="badge badge-success">Customer</small>
+        </div>
         <div className="myBookings__content my-5">
           <div className="overflow-x-auto">
             <table className="table w-full">
