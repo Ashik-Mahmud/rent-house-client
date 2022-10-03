@@ -65,7 +65,7 @@ const HouseRow = ({ approved }: Props) => {
       <td className="py-3 ">
         <Link
           data-tip="Edit House"
-          to="/"
+          to="/dashboard/houses/edit/4343"
           className="btn btn-xs btn-circle btn-success flex items-center gap-2 text-xs tooltip"
         >
           <AiFillEdit />

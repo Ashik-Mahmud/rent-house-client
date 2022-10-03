@@ -12,6 +12,7 @@ import Messages from "./pages/Dashboard/Messages/Messages";
 import MyBlogs from "./pages/Dashboard/MyBlogs/MyBlogs";
 import MyBookings from "./pages/Dashboard/MyBookings/MyBookings";
 import MyHouses from "./pages/Dashboard/MyHouses/MyHouses";
+import UpdateHouse from "./pages/Dashboard/MyHouses/UpdateHouse";
 import AddReview from "./pages/Dashboard/MyReviews/AddReview";
 import MyReviews from "./pages/Dashboard/MyReviews/MyReviews";
 import UserReviews from "./pages/Dashboard/MyReviews/UserReviews";
@@ -58,6 +59,7 @@ function App() {
           <Route path="houses" element={<MyHouses />} />
           <Route path="houses/add" element={<AddHouse />} />
           <Route path="bookings" element={<MyBookings />} />
+          <Route path="houses/edit/:houseId" element={<UpdateHouse />} />
 
           {/* Common Routes */}
           <Route path="reviews" element={<MyReviews />}>
