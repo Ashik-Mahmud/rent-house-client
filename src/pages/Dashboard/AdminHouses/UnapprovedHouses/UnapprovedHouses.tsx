@@ -44,6 +44,18 @@ const UnapprovedHouses = (props: Props) => {
               </tbody>
             </table>
           </div>
+          {/* Pagination */}
+          <div className="pagination flex items-center justify-end my-3">
+            <a href="/" className="btn btn-circle btn-ghost btn-sm">
+              1
+            </a>
+            <a href="/" className="btn btn-circle btn-ghost btn-sm btn-active">
+              2
+            </a>
+            <a href="/" className="btn btn-circle btn-ghost btn-sm">
+              3
+            </a>
+          </div>
         </div>
       </div>
     </div>
