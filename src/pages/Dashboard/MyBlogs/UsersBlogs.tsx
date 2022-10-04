@@ -1,5 +1,6 @@
 import { BiEdit, BiTrash } from "react-icons/bi";
 import { BsEye } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 type Props = {};
 
@@ -53,9 +54,12 @@ const UsersBlogs = (props: Props) => {
                 </td>
                 <td>
                   <div className="flex items-center gap-6">
-                    <span className="text-lg cursor-pointer">
+                    <Link
+                      to="/dashboard/blogs/update"
+                      className="text-lg cursor-pointer"
+                    >
                       <BiEdit />
-                    </span>
+                    </Link>
                     <span className="text-error text-lg cursor-pointer">
                       <BiTrash />
                     </span>

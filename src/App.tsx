@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import DashboardContent from "./pages/Dashboard/Dashboard/DashboardContent";
 import Messages from "./pages/Dashboard/Messages/Messages";
 import AddBlog from "./pages/Dashboard/MyBlogs/AddBlog/AddBlog";
+import UpdateBlogs from "./pages/Dashboard/MyBlogs/AddBlog/UpdateBlogs";
 import MyBlogs from "./pages/Dashboard/MyBlogs/MyBlogs";
 import UsersBlogs from "./pages/Dashboard/MyBlogs/UsersBlogs";
 import MyBookings from "./pages/Dashboard/MyBookings/MyBookings";
@@ -90,6 +91,7 @@ function App() {
           <Route path="blogs" element={<MyBlogs />}>
             <Route index element={<UsersBlogs />} />
             <Route path="users-blogs" element={<UsersBlogs />} />
+            <Route path="update" element={<UpdateBlogs />} />
             <Route path="add" element={<AddBlog />} />
           </Route>
 
