@@ -46,18 +46,24 @@ const UnapprovedRow = (props: Props) => {
         <div className="badge badge-ghost">Pending</div>
       </td>
       <td>
-        <Link to="" className="tooltip" data-tip="View House">
+        <Link to="/house/4334232" className="tooltip" data-tip="View House">
           <BsEyeFill />
         </Link>
       </td>
       <td>
         <div className="flex items-center gap-2">
-          <button className="flex items-center gap-1 bg-success rounded px-2">
+          <label
+            htmlFor="permission-yes-modal"
+            className="flex items-center gap-1 bg-success rounded px-2 cursor-pointer"
+          >
             <BiCheck /> <small>Approved</small>
-          </button>
-          <button className="flex items-center gap-2 bg-warning rounded px-2">
+          </label>
+          <label
+            htmlFor="permission-no-modal"
+            className="flex items-center gap-2 bg-warning rounded px-2 cursor-pointer"
+          >
             &times; <small>Rejected</small>{" "}
-          </button>
+          </label>
         </div>
       </td>
       <td>
