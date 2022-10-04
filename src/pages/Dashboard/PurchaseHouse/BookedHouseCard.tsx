@@ -8,14 +8,19 @@ const BookedHouseCard = (props: Props) => {
       </figure>
       <div className="card-body">
         <h2 className="card-title">
-          Shoes!
+          Rajbar New Villa
           <div className="badge badge-success">Booked</div>
         </h2>
-        <p>If a dog chews shoes whose shoes does he choose?</p>
-        <div className="card-actions justify-end">
-          <div className="badge badge-outline">Fashion</div>
-          <div className="badge badge-outline">Products</div>
-        </div>
+        <small>Rangpur, Dhaka</small>
+        <ul className="text-sm font-poppins">
+          <li>
+            Price - <b>1200/m</b>
+          </li>
+          <li>
+            Type - <b>Rent</b>
+          </li>
+        </ul>
+
         <div className="mt-5">
           <button className="btn btn-ghost rounded">View</button>
           <label
