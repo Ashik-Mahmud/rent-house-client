@@ -5,6 +5,9 @@ import Register from "./pages/Authentication/Register";
 import Contact from "./pages/Contact";
 import AddHouse from "./pages/Dashboard/AddHouse/AddHouse";
 import AdminHouses from "./pages/Dashboard/AdminHouses/AdminHouses";
+import ApprovedHouses from "./pages/Dashboard/AdminHouses/ApprovedHouses/ApprovedHouses";
+import RejectedHouses from "./pages/Dashboard/AdminHouses/RejectedHouses/RejectedHouses";
+import UnapprovedHouses from "./pages/Dashboard/AdminHouses/UnapprovedHouses/UnapprovedHouses";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import DashboardContent from "./pages/Dashboard/Dashboard/DashboardContent";
 import Messages from "./pages/Dashboard/Messages/Messages";
@@ -95,7 +98,12 @@ function App() {
             <Route path="add" element={<AddBlog />} />
           </Route>
 
-          <Route path="admin/houses" element={<AdminHouses />} />
+          <Route path="admin/houses" element={<AdminHouses />}>
+            <Route index element={<UnapprovedHouses />} />
+            <Route path="approved" element={<ApprovedHouses />} />
+            <Route path="unapproved" element={<UnapprovedHouses />} />
+            <Route path="rejected" element={<RejectedHouses />} />
+          </Route>
         </Route>
         {/* Validation Route */}
         <Route path="*" element={<NotFoundPage />} />
