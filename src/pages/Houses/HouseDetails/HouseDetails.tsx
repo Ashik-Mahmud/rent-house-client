@@ -10,6 +10,7 @@ import Others from "./Others";
 import Owner from "./Owner";
 import Question from "./Question";
 import QuestionModal from "./QuestionModal";
+import ReportModal from "./ReportModal";
 import ReviewModal from "./ReviewModal";
 import Reviews from "./Reviews";
 
@@ -36,12 +37,13 @@ const HouseDetails = (props: Props) => {
                 <h2 className="text-2xl font-bold">Rajbari New Villa</h2>
               </div>
               <div className="flex items-center gap-2">
-                <div
+                <label
+                  htmlFor="send-report-modal"
                   className="report tooltip flex items-center gap-2 btn btn-ghost"
                   data-tip="Report House"
                 >
                   <MdReportGmailerrorred /> Report
-                </div>
+                </label>
                 <div
                   className="heart tooltip flex items-center gap-2 btn btn-ghost"
                   data-tip="Loved House"
@@ -177,6 +179,7 @@ const HouseDetails = (props: Props) => {
       <BookNow />
       <QuestionModal />
       <ReviewModal />
+      <ReportModal />
     </>
   );
 };
