@@ -1,8 +1,9 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 
 type Props = {};
 
 const MyBlogs = (props: Props) => {
+  const location = useLocation();
   return (
     <div>
       <div className="p-5 my-5 bg-white">
@@ -14,12 +15,23 @@ const MyBlogs = (props: Props) => {
           </div>
           <div className="flex items-center rounded overflow-hidden">
             <Link
-              className="bg-success py-2 px-4"
+              className={`py-2 px-4 ${
+                location.pathname.includes("users-blogs")
+                  ? "bg-success"
+                  : "bg-base-300"
+              }`}
               to="/dashboard/blogs/users-blogs"
             >
               Blogs
             </Link>
-            <Link className="bg-base-300 py-2 px-4" to="/dashboard/blogs/add">
+            <Link
+              className={` py-2 px-4 ${
+                location.pathname.includes("blogs/add")
+                  ? "bg-success"
+                  : "bg-base-300"
+              }`}
+              to="/dashboard/blogs/add"
+            >
               Add Blog
             </Link>
           </div>
