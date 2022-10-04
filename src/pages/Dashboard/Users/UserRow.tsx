@@ -41,13 +41,13 @@ const UserRow = (Props: Props) => {
             <select
               name=""
               id=""
-              className="outline-none cursor-pointer  rounded-md"
+              className="outline-none cursor-pointer  rounded-md w-24"
             >
               <option value="">Customer</option>
               <option value="">Admin</option>
               <option value="">User - House Holder</option>
             </select>
-            <div className=" select-none flex items-center gap-3">
+            <div className=" select-none flex items-center gap-1">
               <span
                 className="text-success cursor-pointer text-2xl tooltip"
                 data-tip="Save Changes"
@@ -68,7 +68,36 @@ const UserRow = (Props: Props) => {
         )}
       </td>
       <td className="text-left">
-        <span className="text-green-500">Active</span>
+        {isEdit ? (
+          <div className="flex items-center gap-2 ">
+            <select
+              name=""
+              id=""
+              className="outline-none cursor-pointer  rounded-md w-24"
+            >
+              <option value="">Active</option>
+              <option value="">Inactive</option>
+              <option value="">Block</option>
+            </select>
+            <div className=" select-none flex items-center gap-1">
+              <span
+                className="text-success cursor-pointer text-2xl tooltip"
+                data-tip="Save Changes"
+              >
+                <BsCheck2 />
+              </span>
+              <span
+                onClick={() => setIsEdit(false)}
+                className="text-danger cursor-pointer text-2xl tooltip text-error"
+                data-tip="Cancel Changes"
+              >
+                &times;
+              </span>
+            </div>
+          </div>
+        ) : (
+          <span className="text-green-500">Active</span>
+        )}
       </td>
       <td className="text-left">
         <div className="flex items-center gap-3">

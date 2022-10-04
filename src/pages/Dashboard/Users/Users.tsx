@@ -32,8 +32,8 @@ const Users = (props: Props) => {
                 <th className="text-left">Phone</th>
                 <th className="text-left">Address</th>
                 <th className="text-left">Social Handle</th>
-                <th className="text-left w-60">Role</th>
-                <th className="text-left">Status</th>
+                <th className="text-left w-36">Role</th>
+                <th className="text-left  w-36">Status</th>
                 <th className="text-left">Action</th>
               </tr>
             </thead>
