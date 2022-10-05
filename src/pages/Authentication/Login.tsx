@@ -1,21 +1,29 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PulseLoader } from "react-spinners";
+import { useAppDispatch } from "../../app/store";
+import { setAuthInformation } from "../../features/AuthSlice";
 import { useLoginAuthMutation } from "../../services/AuthApi";
 
 type Props = {};
 
 const Login = (props: Props) => {
+  /* From AuthAPI */
   const [loginAuth, { data, isLoading, isSuccess, error }] =
     useLoginAuthMutation();
+
+  //react hook form
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  //Handle Form
   const loginForm = handleSubmit(async (formData) => {
     await loginAuth(formData);
   });
@@ -29,8 +37,11 @@ const Login = (props: Props) => {
     /* If Success */
     if (isSuccess) {
       console.log(data);
+      navigate("/dashboard/profile");
+      dispatch(setAuthInformation({ user: data?.user, token: data?.token }));
+      toast.success("Login Success");
     }
-  }, [isSuccess, error, data]);
+  }, [isSuccess, error, data, navigate, dispatch]);
   return (
     <div
       className="flex justify-center p-20 bg-cover"
