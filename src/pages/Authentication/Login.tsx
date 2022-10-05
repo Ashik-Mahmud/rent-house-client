@@ -1,8 +1,36 @@
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { PulseLoader } from "react-spinners";
+import { useLoginAuthMutation } from "../../services/AuthApi";
 
 type Props = {};
 
 const Login = (props: Props) => {
+  const [loginAuth, { data, isLoading, isSuccess, error }] =
+    useLoginAuthMutation();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const loginForm = handleSubmit(async (formData) => {
+    await loginAuth(formData);
+  });
+
+  /* Handle Another Options */
+  useEffect(() => {
+    /* If Error */
+    if (error) {
+      toast.error((error as any).data.message);
+    }
+    /* If Success */
+    if (isSuccess) {
+      console.log(data);
+    }
+  }, [isSuccess, error, data]);
   return (
     <div
       className="flex justify-center p-20 bg-cover"
@@ -20,7 +48,10 @@ const Login = (props: Props) => {
             />
           </div>
           <div className="divider lg:divider-horizontal">+</div>
-          <div className="card flex-shrink-0 w-full max-w-sm  ">
+          <form
+            onSubmit={loginForm}
+            className="card flex-shrink-0 w-full max-w-sm  "
+          >
             <div className="card-body">
               <div className="card-header mb-3">
                 <h3 className="text-2xl">Login to Account</h3>
@@ -33,17 +64,39 @@ const Login = (props: Props) => {
                   type="text"
                   placeholder="email"
                   className="input input-bordered"
+                  {...register("email", {
+                    required: true,
+                    pattern: /^\S+@\S+$/i,
+                  })}
                 />
+                {errors.email?.type === "required" && (
+                  <small className="text-xs py-1 text-error font-poppins">
+                    {" "}
+                    Email field is required.{" "}
+                  </small>
+                )}
+                {errors.email?.type === "pattern" && (
+                  <small className="text-xs py-1 text-error font-poppins">
+                    {" "}
+                    Put valid email{" "}
+                  </small>
+                )}
               </div>
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Password</span>
                 </label>
                 <input
-                  type="text"
+                  type="password"
                   placeholder="password"
                   className="input input-bordered"
+                  {...register("password", { required: true })}
                 />
+                {errors.password?.type === "required" && (
+                  <small className="text-xs text-error font-poppins py-1">
+                    Password field is required
+                  </small>
+                )}
                 <label className="label">
                   <a href="/" className="label-text-alt link link-hover">
                     Forgot password?
@@ -51,7 +104,13 @@ const Login = (props: Props) => {
                 </label>
               </div>
               <div className="form-control mt-6">
-                <button className="btn btn-success">Login</button>
+                {isLoading ? (
+                  <button className="btn btn-success">
+                    <PulseLoader size={8} />
+                  </button>
+                ) : (
+                  <button className="btn btn-success">Login</button>
+                )}
               </div>
               <p className="my-2">
                 Don't have an account?{" "}
@@ -60,7 +119,7 @@ const Login = (props: Props) => {
                 </Link>
               </p>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
