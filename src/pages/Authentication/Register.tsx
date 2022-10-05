@@ -1,24 +1,37 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
+import PulseLoader from "react-spinners/PulseLoader";
 import { UserInterface } from "../../interfaces/UserInterface";
+import { useRegisterAuthMutation } from "../../services/AuthApi";
+
 type Props = {};
 
-const Register = (props: Props) => {
+const RegisterAuth = (props: Props) => {
+  const [registerAuth, { isLoading, error }] = useRegisterAuthMutation();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<UserInterface>();
-  const registerForm = handleSubmit((data) => {
-    if (data.password === data.confirmPassword) {
-      console.log(data);
-    } else {
-      toast("Password does not match", {
-        type: "error",
+  const registerForm = handleSubmit(async (formData) => {
+    if (formData.password === formData.confirmPassword) {
+      await registerAuth({
+        ...formData,
+        confirmPassword: undefined,
       });
+    } else {
+      toast.error("Password does not match");
     }
   });
+
+  useEffect(() => {
+    if (error) {
+      toast.error((error as any).data.message);
+    }
+  }, [error]);
 
   return (
     <div
@@ -127,7 +140,11 @@ const Register = (props: Props) => {
               </div>
               <div className="form-control mt-6">
                 <button type="submit" className="btn btn-success">
-                  Create Account
+                  {isLoading ? (
+                    <PulseLoader color="#000" size={8} />
+                  ) : (
+                    "Create Account"
+                  )}
                 </button>
               </div>
               <p className="my-2">
@@ -152,4 +169,4 @@ const Register = (props: Props) => {
   );
 };
 
-export default Register;
+export default RegisterAuth;

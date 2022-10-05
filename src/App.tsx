@@ -1,7 +1,7 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import About from "./pages/About";
 import Login from "./pages/Authentication/Login";
-import Register from "./pages/Authentication/Register";
+import RegisterAuth from "./pages/Authentication/Register";
 import Contact from "./pages/Contact";
 import AddHouse from "./pages/Dashboard/AddHouse/AddHouse";
 import AdminHouses from "./pages/Dashboard/AdminHouses/AdminHouses";
@@ -56,7 +56,7 @@ function App() {
         {/* Single House Route */}
         <Route path="/house/:houseId" element={<HouseDetails />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/register" element={<RegisterAuth />} />
         <Route path="/reviews" element={<Reviews />} />
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/about" element={<About />} />

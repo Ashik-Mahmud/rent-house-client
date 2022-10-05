@@ -1,20 +1,34 @@
 /* Init RTK Query for Auth API */
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import {
+  BaseQueryFn,
+  createApi,
+  FetchArgs,
+  fetchBaseQuery,
+} from "@reduxjs/toolkit/query/react";
 
 type UserType = {
-  id: number;
+  id?: number;
   name: string;
   email: string;
   password: string;
   confirmPassword?: string;
 };
 
+interface CustomError {
+  data: {
+    message: string;
+    success: boolean;
+  };
+  status: number;
+}
 export const authApi = createApi({
   reducerPath: "authApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api/v1" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "http://localhost:5000/api/v1",
+  }) as BaseQueryFn<string | FetchArgs, unknown, CustomError, {}>,
   endpoints: (builder) => ({
-    register: builder.mutation({
-      query: (body: UserType) => ({
+    registerAuth: builder.mutation<void, UserType>({
+      query: (body) => ({
         url: "/users/create",
         method: "POST",
         body,
@@ -40,7 +54,7 @@ export const authApi = createApi({
 });
 
 export const {
-  useRegisterMutation,
+  useRegisterAuthMutation,
   useLoginMutation,
   useLogoutMutation,
   useGetUserQuery,
