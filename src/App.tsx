@@ -27,6 +27,9 @@ import UserReviews from "./pages/Dashboard/MyReviews/UserReviews";
 import Payments from "./pages/Dashboard/Payments/Payments";
 import Profile from "./pages/Dashboard/Profile/Profile";
 import PurchaseHouse from "./pages/Dashboard/PurchaseHouse/PurchaseHouse";
+import ForBlogsRequest from "./pages/Dashboard/RequestFromUsers/ForBlogsRequest";
+import ForHouseHolderRequest from "./pages/Dashboard/RequestFromUsers/ForHouseHolderRequest";
+import RequestFromUsers from "./pages/Dashboard/RequestFromUsers/RequestFromUsers";
 import Settings from "./pages/Dashboard/Settings/Settings";
 import Users from "./pages/Dashboard/Users/Users";
 import Home from "./pages/Home/Home";
@@ -97,6 +100,18 @@ function App() {
             <Route path="update" element={<UpdateBlogs />} />
             <Route path="add" element={<AddBlog />} />
           </Route>
+          <Route path="request-from-users" element={<RequestFromUsers />}>
+            <Route
+              path="for-house-holder"
+              element={<ForHouseHolderRequest />}
+            />
+            <Route path="for-blogs" element={<ForBlogsRequest />} />
+            <Route index element={<ForBlogsRequest />} />
+          </Route>
+          <Route
+            path="request-from-users/for-house-holder"
+            element={<ForHouseHolderRequest />}
+          />
 
           <Route path="admin/houses" element={<AdminHouses />}>
             <Route index element={<UnapprovedHouses />} />

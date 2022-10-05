@@ -8,6 +8,7 @@ import {
   BsHeart,
   BsHouse,
   BsMessenger,
+  BsReceipt,
 } from "react-icons/bs";
 import { Link, Outlet } from "react-router-dom";
 
@@ -83,12 +84,12 @@ const Dashboard = (props: Props) => {
       icon: <BsBookFill />,
       link: "/dashboard/blogs",
     },
-    /* {
+    {
       id: 12,
-      title: "Add Blog",
-      icon: <BiPlus />,
-      link: "/dashboard/blogs/add",
-    }, */
+      title: "Request From Users",
+      icon: <BsReceipt />,
+      link: "/dashboard/request-from-users",
+    },
     {
       id: 13,
       title: "Houses",
