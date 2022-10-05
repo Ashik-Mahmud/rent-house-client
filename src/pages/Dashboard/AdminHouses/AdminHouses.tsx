@@ -16,7 +16,10 @@ const AdminHouses = (props: Props) => {
             <Link
               to="/dashboard/admin/houses/unapproved"
               className={`p-4 text-lg font-poppins rounded-none ${
-                pathname.includes("unapproved") ? "bg-success" : "bg-base-300"
+                pathname.includes("unapproved") ||
+                pathname === "/dashboard/admin/houses"
+                  ? "bg-success"
+                  : "bg-base-300"
               } border-r`}
             >
               Unapproved Houses <div className="badge badge-ghost">5</div>

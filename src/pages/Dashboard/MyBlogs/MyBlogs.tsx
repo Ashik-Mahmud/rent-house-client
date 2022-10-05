@@ -16,7 +16,8 @@ const MyBlogs = (props: Props) => {
           <div className="flex items-center rounded overflow-hidden">
             <Link
               className={`py-2 px-4 ${
-                location.pathname.includes("users-blogs")
+                location.pathname.includes("users-blogs") ||
+                location.pathname === "/dashboard/blogs"
                   ? "bg-success"
                   : "bg-base-300"
               }`}

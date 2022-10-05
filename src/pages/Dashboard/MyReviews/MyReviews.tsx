@@ -15,7 +15,10 @@ const MyReviews = (props: Props) => {
           <div className="flex items-center rounded overflow-hidden">
             <Link
               className={`p-3 font-poppins rounded-none ${
-                pathname.includes("my-reviews") ? "bg-success" : "bg-base-300"
+                pathname.includes("my-reviews") ||
+                pathname === "/dashboard/reviews"
+                  ? "bg-success"
+                  : "bg-base-300"
               } `}
               to="/dashboard/reviews/my-reviews"
             >
