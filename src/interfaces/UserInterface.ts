@@ -15,3 +15,13 @@ export interface UserInterface {
   created_at: Date;
   updated_at: Date;
 }
+
+export interface authUserInterface {
+  user: {
+    id: number;
+    name: string;
+    email: string;
+  };
+  token: string;
+  isAuthenticated?: boolean;
+}

@@ -1,16 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import Cookies from "universal-cookie";
+import { authUserInterface } from "../interfaces/UserInterface";
 const cookies = new Cookies();
 
-interface authUserInterface {
-  user: {
-    id: number;
-    name: string;
-    email: string;
-  };
-  token: string;
-  isAuthenticated?: boolean;
-}
 const initialState: authUserInterface = {
   user: {
     id: 0,

@@ -1,14 +1,17 @@
 import formatDistance from "date-fns/formatDistance";
 import { BiCamera, BiEdit } from "react-icons/bi";
 import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
-import Cookies from "universal-cookie";
+import useAuth from "../../../hooks/useAuth";
+import { authUserInterface } from "../../../interfaces/UserInterface";
 import ImageChangeModal from "./ImageChangeModal";
 import ProfileModal from "./ProfileModal";
 type Props = {};
 
 const Profile = (props: Props) => {
-  const cookies = new Cookies();
-  console.log(cookies.get("user"));
+  const [user] = useAuth<authUserInterface>({});
+
+  console.log(user);
+
   const dateDistance = formatDistance(
     new Date(),
     new Date("Mon Oct 03 2022 15:21:46"),
