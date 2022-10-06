@@ -7,6 +7,7 @@ type Props = {};
 const Settings = (props: Props) => {
   const { updatedUser } = useAuth<authUserInterface | any>({});
   const role = updatedUser?.role;
+  const isVerify = updatedUser?.isVerified;
 
   return (
     <div>
@@ -20,18 +21,37 @@ const Settings = (props: Props) => {
                 <h3 className="text-xl font-bold text-center sm:text-left">
                   If you want to get Blogs writing authority
                 </h3>
-                <button className="btn btn-success rounded-full mt-4  sm:mt-0">
-                  Request For Blog
-                </button>
+
+                {isVerify ? (
+                  <button className="btn btn-success rounded-full mt-4  sm:mt-0">
+                    Request For Blog
+                  </button>
+                ) : (
+                  <button
+                    className="btn btn-warning pointer-events-none rounded-full mt-4  sm:mt-0 tooltip"
+                    data-tip="Verify First"
+                  >
+                    Verify Account to Get Request
+                  </button>
+                )}
               </div>
               {role === "customer" && (
                 <div className="req-for-blog flex items-center  my-8 bg-base-200 p-5 rounded-lg flex-col justify-center sm:justify-between sm:flex-row">
                   <h3 className="text-xl font-bold text-center sm:text-left">
                     If you want to get House Holder Account
                   </h3>
-                  <button className="btn btn-success rounded-full mt-4 sm:mt-0">
-                    Request For House Holder Account
-                  </button>
+                  {isVerify ? (
+                    <button className="btn btn-success rounded-full mt-4 sm:mt-0">
+                      Request For House Holder Account
+                    </button>
+                  ) : (
+                    <button
+                      className="btn btn-warning pointer-events-none rounded-full mt-4  sm:mt-0 tooltip"
+                      data-tip="Verify First"
+                    >
+                      Verify Account to Get Request
+                    </button>
+                  )}
                 </div>
               )}
             </>
