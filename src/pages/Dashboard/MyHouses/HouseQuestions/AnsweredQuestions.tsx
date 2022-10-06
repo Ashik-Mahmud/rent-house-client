@@ -87,7 +87,7 @@ const AnsweredQuestions = (props: Props) => {
         </div>
         {/* End */}
         {/* Pagination */}
-        <div className="flex items-center justify-between  text-sm mt-10">
+        <div className="flex-col sm:flex-row flex items-center justify-between  text-sm mt-10">
           <div className="flex items-center gap-4">
             <span className="text-gray-600">Show</span>
             <select className="select select-bordered w-20 select-xs">

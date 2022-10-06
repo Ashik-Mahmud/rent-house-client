@@ -12,18 +12,18 @@ const HouseQuestions = (props: Props) => {
       <div>
         <div className="p-5 my-4 bg-white">
           {/* Houses Card */}
-          <div className="card card-side bg-base-100 p-3 border py-1">
+          <div className="card sm:card-side bg-base-100 p-3 border py-1">
             <figure>
               <img
                 src="https://placeimg.com/200/280/arch"
                 alt="Movie"
-                className="h-32 rounded-md"
+                className="w-full h-40 sm:h-32  rounded-md"
               />
             </figure>
             <div className="card-body">
               <h2 className="card-title">Rajbari New Villa</h2>
               <p className="card-subtitle text-gray-500">Rajbar, Rangpur</p>
-              <ul className="flex items-center gap-5">
+              <ul className="flex items-center gap-5 flex-wrap">
                 <li>
                   Price - <div className="badge badge-ghost">1200/m</div>
                 </li>

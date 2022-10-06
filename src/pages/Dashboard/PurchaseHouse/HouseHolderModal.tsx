@@ -17,30 +17,30 @@ const HouseHolderModal = (props: Props) => {
           <div className="modal-body mt-5">
             <div className="overflow-x-auto">
               <table className="table w-full">
-                <tbody>
+                <thead>
                   <tr>
                     <th>Name</th>
-                    <td>Ashik Mahmud</td>
+                    <th>Ashik Mahmud</th>
                   </tr>
-
+                </thead>
+                <tbody>
                   <tr>
-                    <th>Email</th>
+                    <td>Email</td>
                     <td>
                       <a href="mailto:ashik@gmail.com">ashik@gmail.com</a>
                     </td>
                   </tr>
-
                   <tr>
-                    <th>Phone</th>
+                    <td>Phone</td>
                     <td>
                       <a href="cel:0178454545">01548745452</a>
                     </td>
                   </tr>
-
                   <tr>
-                    <th>Social Media</th>
+                    <td>Social Media</td>
                     <td>
                       <div className="flex items-center gap-3">
+                        {" "}
                         <a href="/">
                           <BsFacebook />
                         </a>
@@ -48,11 +48,14 @@ const HouseHolderModal = (props: Props) => {
                           <BsTwitter />
                         </a>
                         <a href="/">
-                          <BsInstagram />
+                          <BsInstagram />{" "}
                         </a>
-                      </div>
-                    </td>{" "}
+                      </div>{" "}
+                    </td>
                   </tr>
+                  {/* 
+                
+                 */}
                 </tbody>
               </table>
             </div>

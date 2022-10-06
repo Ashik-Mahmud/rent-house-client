@@ -10,7 +10,7 @@ const AnsweredModal = (props: Props) => {
         id="answered-question-modal"
         className="modal-toggle"
       />
-      <div className="modal modal-bottom sm:modal-middle">
+      <div className="modal modal-middle sm:modal-middle">
         <div className="modal-box w-11/12 max-w-5xl">
           <h3 className="font-bold text-xl">Answered to this Question</h3>
 

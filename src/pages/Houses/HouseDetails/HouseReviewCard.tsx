@@ -12,7 +12,7 @@ const HouseReviewCard = (props: Props) => {
         rem, sint numquam dolor obcaecati eos. <br />
         <span className="text-success cursor-pointer text-sm">see more</span>
       </div>
-      <p className="card-body">
+      <div className="card-body">
         <small>Reviewed by </small>
         <b>Ashik Mahmud</b>
         <div className="stars flex items-center gap-2">
@@ -22,7 +22,7 @@ const HouseReviewCard = (props: Props) => {
           <BsStarFill />
           <BsStarFill />
         </div>
-      </p>
+      </div>
     </div>
   );
 };
