@@ -1,28 +1,29 @@
 export interface UserInterface {
-  id: number;
+  _id: number;
   name: string;
   email: string;
-  password: string;
-  confirmPassword?: string;
-  address: string;
-  phone: string;
+  address?: string;
+  phone?: string;
   role: string;
-  facebookLink: string;
-  twitterLink: string;
-  instagramLink: string;
+  isVerified: boolean;
+  facebookLink?: string;
+  twitterLink?: string;
+  instagramLink?: string;
+  blogAllowed: boolean;
   avatar: string;
   status: string;
-  created_at: Date;
-  updated_at: Date;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface authUserInterface {
-  user?: {
-    id: number;
-    name: string;
-    email: string;
-    avatar: string;
-  };
-  token: string;
+  user: UserInterface | undefined;
+  token: string | undefined;
   isAuthenticated?: boolean;
+}
+
+export interface LoginAuthState {
+  success: boolean;
+  token: string | undefined;
+  user: UserInterface | undefined;
 }

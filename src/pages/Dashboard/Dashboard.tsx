@@ -19,7 +19,8 @@ import {
   BsReceipt,
 } from "react-icons/bs";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../app/store";
+import Cookies from "universal-cookie";
+import { useAppDispatch, useAppSelector } from "../../app/store";
 import { logout } from "../../features/AuthSlice";
 import useAuth from "../../hooks/useAuth";
 
@@ -121,16 +122,21 @@ const Dashboard = (props: Props) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const [user, setUser] = useAuth<authUserInterface | any>({});
+  const cookies = new Cookies();
   /* Handle Logout */
 
   const dispatch = useAppDispatch();
+  const { user: newUser } = useAppSelector((state) => state.auth);
+
   const handleLogout = () => {
     setUser(null);
     dispatch(logout());
-    toast.success("Logout Successfully");
     navigate("/login");
+    toast.success("Logout Successfully");
   };
-  console.log(user);
+
+  const cookieUser = cookies.get("user");
+  console.log(user, newUser, "Cookie User", cookieUser);
 
   return (
     <>

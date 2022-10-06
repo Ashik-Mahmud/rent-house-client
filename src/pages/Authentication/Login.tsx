@@ -25,7 +25,11 @@ const Login = (props: Props) => {
   const dispatch = useAppDispatch();
   //Handle Form
   const loginForm = handleSubmit(async (formData) => {
-    await loginAuth(formData);
+    try {
+      await loginAuth(formData);
+    } catch (err) {
+      console.log(err);
+    }
   });
 
   /* Handle Another Options */
@@ -41,6 +45,7 @@ const Login = (props: Props) => {
       toast.success("Login Success");
     }
   }, [isSuccess, error, data, navigate, dispatch]);
+
   return (
     <div
       className="flex justify-center p-20 bg-cover"

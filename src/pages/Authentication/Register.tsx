@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import PulseLoader from "react-spinners/PulseLoader";
-import { UserInterface } from "../../interfaces/UserInterface";
 import { useRegisterAuthMutation } from "../../services/AuthApi";
 
 type Props = {};
@@ -14,11 +13,19 @@ const RegisterAuth = (props: Props) => {
 
   const navigate = useNavigate();
 
+  type registerFormType = {
+    name: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+  };
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<UserInterface>();
+  } = useForm<registerFormType>();
+
   const registerForm = handleSubmit(async (formData) => {
     if (formData.password === formData.confirmPassword) {
       await registerAuth({

@@ -5,10 +5,21 @@ const cookies = new Cookies();
 
 const initialState: authUserInterface = {
   user: {
-    id: 0,
+    _id: 0,
     name: "",
     email: "",
     avatar: "",
+    isVerified: false,
+    role: "",
+    status: "",
+    blogAllowed: false,
+    address: "",
+    phone: "",
+    facebookLink: "",
+    twitterLink: "",
+    instagramLink: "",
+    createdAt: "",
+    updatedAt: "",
   },
   token: "",
   isAuthenticated: false,
@@ -28,13 +39,8 @@ const AuthSlice = createSlice({
       cookies.set("user", state);
     },
     logout: (state: authUserInterface) => {
-      state.user = {
-        id: 0,
-        name: "",
-        email: "",
-        avatar: "",
-      };
-      state.token = "";
+      state.user = undefined;
+      state.token = undefined;
       state.isAuthenticated = false;
       cookies.remove("user");
     },

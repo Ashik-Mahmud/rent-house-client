@@ -5,6 +5,9 @@ import {
   FetchArgs,
   fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react";
+import Cookies from "universal-cookie";
+import { LoginAuthState, UserInterface } from "../interfaces/UserInterface";
+const cookies = new Cookies();
 
 type UserType = {
   id?: number;
@@ -12,6 +15,16 @@ type UserType = {
   email: string;
   password: string;
   confirmPassword?: string;
+};
+
+type LoginType = {
+  email?: string;
+  password?: string;
+};
+
+type getUserType = {
+  success: boolean;
+  data: UserInterface;
 };
 
 interface CustomError {
@@ -25,7 +38,16 @@ export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:5000/api/v1",
+    prepareHeaders(headers, api) {
+      const cookie = cookies.get("user");
+      const token = cookie?.token;
+      if (token) {
+        headers.set("authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
   }) as BaseQueryFn<string | FetchArgs, unknown, CustomError, {}>,
+  tagTypes: ["GetUser"],
   endpoints: (builder) => ({
     registerAuth: builder.mutation<void, UserType>({
       query: (body) => ({
@@ -34,21 +56,17 @@ export const authApi = createApi({
         body,
       }),
     }),
-    loginAuth: builder.mutation({
+    loginAuth: builder.mutation<LoginAuthState | null, LoginType>({
       query: (body) => ({
         url: "/users/login",
         method: "POST",
         body,
       }),
     }),
-    logout: builder.mutation({
-      query: () => ({
-        url: "/auth/logout",
-        method: "POST",
-      }),
-    }),
-    getUser: builder.query({
-      query: () => "/auth/user",
+
+    getUser: builder.query<getUserType, string>({
+      query: (id) => `/users/me/${id}`,
+      providesTags: ["GetUser"],
     }),
   }),
 });
@@ -56,6 +74,5 @@ export const authApi = createApi({
 export const {
   useRegisterAuthMutation,
   useLoginAuthMutation,
-  useLogoutMutation,
   useGetUserQuery,
 } = authApi;

@@ -10,14 +10,14 @@ import { BiCamera, BiEdit } from "react-icons/bi";
 import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
+import { useGetUserQuery } from "../../../services/AuthApi";
 import ImageChangeModal from "./ImageChangeModal";
 import ProfileModal from "./ProfileModal";
 type Props = {};
 
 const Profile = (props: Props) => {
   const [user] = useAuth<authUserInterface | any>({});
-
-  console.log(user);
+  const { data } = useGetUserQuery(user?.user?._id);
 
   const dateDistance = formatDistance(
     new Date(),
@@ -97,6 +97,25 @@ const Profile = (props: Props) => {
                 </div>
               </label>
               <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
+                <span className="profile-details-item-label">Verified</span>
+                <span className="profile-details-item-value ">
+                  {data?.data?.isVerified ? (
+                    <span className="badge badge-success">Verified</span>
+                  ) : (
+                    <>
+                      <div className="flex items-center gap-3">
+                        <span className="badge badge-warning">
+                          Not Verified
+                        </span>
+                        <span className="text-sm block text-error">
+                          Please Check your Email to get verified.
+                        </span>
+                      </div>
+                    </>
+                  )}
+                </span>
+              </div>
+              <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
                 <span className="profile-details-item-label">Name</span>
                 <span className="profile-details-item-value font-bold">
                   {user?.user?.name || "No Available"}
@@ -166,6 +185,25 @@ const Profile = (props: Props) => {
                 </span>
               </div>
             </div>
+            {/* {!data?.data?.isVerified && (
+              <>
+                <div className="text-center flex items-center justify-center">
+                  <div>
+                    <h2 className="text-2xl font-bold mb-3">
+                      Send Verification Email
+                    </h2>
+                    <p className="mb-4 font-poppins">
+                      Without verification, you could'nt Add House, Review,
+                      could'nt update profile, could'nt activities with you
+                      houses
+                    </p>
+                    <button className="btn btn-success rounded-full">
+                      Send{" "}
+                    </button>
+                  </div>
+                </div>
+              </>
+            )} */}
           </div>
         </div>
       </div>
