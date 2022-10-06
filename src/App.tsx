@@ -2,6 +2,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import AuthChangeRoute from "./auth/AuthChangeRoute";
 import RequireAdmin from "./auth/RequireAdmin";
 import RequireAuth from "./auth/RequireAuth";
+import RequireUser from "./auth/RequireUser";
 import About from "./pages/About";
 import Login from "./pages/Authentication/Login";
 import RegisterAuth from "./pages/Authentication/Register";
@@ -91,16 +92,55 @@ function App() {
           <Route index element={<DashboardContent />} />
 
           {/* Users Routes */}
-          <Route path="houses" element={<MyHouses />} />
-          <Route path="houses/add" element={<AddHouse />} />
-          <Route path="bookings" element={<MyBookings />} />
-          <Route path="houses/edit/:houseId" element={<UpdateHouse />} />
-          <Route path="houses/reviews/:houseId" element={<HouseReviews />} />
+          <Route
+            path="houses"
+            element={
+              <RequireUser>
+                <MyHouses />
+              </RequireUser>
+            }
+          />
+          <Route
+            path="houses/add"
+            element={
+              <RequireUser>
+                <AddHouse />
+              </RequireUser>
+            }
+          />
+
+          <Route
+            path="houses/edit/:houseId"
+            element={
+              <RequireUser>
+                <UpdateHouse />
+              </RequireUser>
+            }
+          />
+          <Route
+            path="houses/reviews/:houseId"
+            element={
+              <RequireUser>
+                <HouseReviews />
+              </RequireUser>
+            }
+          />
           <Route
             path="houses/questions/:houseId"
-            element={<HouseQuestions />}
+            element={
+              <RequireUser>
+                <HouseQuestions />
+              </RequireUser>
+            }
           />
-          <Route path="houses/reports/:houseId" element={<ReportedHouses />} />
+          <Route
+            path="houses/reports/:houseId"
+            element={
+              <RequireUser>
+                <ReportedHouses />
+              </RequireUser>
+            }
+          />
 
           {/* Common Routes */}
           <Route path="reviews" element={<MyReviews />}>
@@ -114,6 +154,7 @@ function App() {
           {/* Customers Routes */}
           <Route path="payments" element={<Payments />} />
           <Route path="purchase/bookings" element={<PurchaseHouse />} />
+          <Route path="bookings" element={<MyBookings />} />
 
           {/* Admin Routes */}
           <Route

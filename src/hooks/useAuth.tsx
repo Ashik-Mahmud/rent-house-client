@@ -8,10 +8,10 @@ const useAuth = <T,>(props: Props) => {
   const cookies = new Cookies();
   const [user, setUser] = useState<T>(cookies.get("user"));
   const newUser = user as any;
-  const { data } = useGetUserQuery(newUser?.user._id);
+  const { data, isLoading } = useGetUserQuery(newUser?.user._id);
   const updatedUser = data?.data;
 
-  return { user, updatedUser, setUser };
+  return { user, isLoading, updatedUser, setUser };
 };
 
 export default useAuth;
