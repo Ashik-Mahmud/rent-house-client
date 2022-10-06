@@ -12,7 +12,7 @@ const BookNow = (props: Props) => {
   return (
     <div>
       <input type="checkbox" id="book-now-modal" className="modal-toggle" />
-      <div className="modal modal-bottom sm:modal-middle">
+      <div className="modal modal-middle sm:modal-middle">
         <div className="modal-box w-11/12 max-w-5xl">
           <h3 className="font-bold text-lg">
             Congratulations you come across to book this house.
@@ -125,7 +125,7 @@ const BookNow = (props: Props) => {
               </label>
             </div>
           </div>
-          <div className="modal-action">
+          <div className="modal-action flex-col items-stretch gap-3 flex-col-reverse">
             <label htmlFor="book-now-modal" className="btn btn-warning">
               Cancel
             </label>

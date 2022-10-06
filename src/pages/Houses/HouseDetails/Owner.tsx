@@ -21,7 +21,7 @@ const Owner = (props: Props) => {
           <h3 className="text-2xl font-bold mt-3">Owners</h3>
           <span className="w-10 h-1 bg-success block"></span>
         </div>
-        <div className="owner-content">
+        <div className="owner-content overflow-x-auto">
           <table className="table">
             <tbody>
               <tr>

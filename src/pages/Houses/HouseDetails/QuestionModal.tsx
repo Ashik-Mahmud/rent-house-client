@@ -6,7 +6,7 @@ const QuestionModal = (props: Props) => {
   return (
     <>
       <input type="checkbox" id="question-modal" className="modal-toggle" />
-      <div className="modal modal-bottom sm:modal-middle">
+      <div className="modal modal-middle sm:modal-middle">
         <div className="modal-box">
           <h3 className="font-bold text-lg">Leave Your Question</h3>
           <p className="py-4 text-error">

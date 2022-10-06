@@ -10,7 +10,7 @@ const Gallery = (props: Props) => {
           <span className="w-10 h-1 bg-success block"></span>
         </div>
         <div className="images">
-          <ul className="flex gap-1 items-center">
+          <ul className="flex-col sm:flex-row flex gap-1 items-center">
             <li className="cursor-pointer">
               <img
                 src="https://placeimg.com/400/225/arch"

@@ -26,7 +26,7 @@ const HouseDetails = (props: Props) => {
       <section>
         <div className="container mx-auto py-10 ">
           <div className="cards">
-            <div className="card-header flex items-center justify-between my-5 bg-white p-4 ">
+            <div className="card-header flex-col sm:flex-row flex items-center justify-between my-5 bg-white p-4 ">
               <div className="left flex items-center gap-4">
                 <div
                   className="back text-3xl cursor-pointer tooltip"
@@ -70,61 +70,65 @@ const HouseDetails = (props: Props) => {
               {/* House Details */}
               <div className="house-details my-5 bg-white p-10">
                 {/* Details */}
-                <div className="details">
+                <div className="details ">
                   <div className="title mb-6">
                     <h3 className="text-2xl font-bold mt-3">Details</h3>
                     <span className="w-10 h-1 bg-success block"></span>
                   </div>
-                  <div className="table">
-                    <tbody>
-                      <tr>
-                        <td className="flex items-center gap-2">
-                          <GoHome /> Price
-                        </td>
-                        <th>
-                          <span className="badge badge-ghost">12000/m </span>
-                        </th>
-                        <td className="flex items-center gap-2">
-                          <GoHome /> House Type
-                        </td>
-                        <th>
-                          <span className="badge badge-ghost">Rent </span>
-                        </th>
-                        <td className="flex items-center gap-2">
-                          <GoHome /> Category
-                        </td>
-                        <th>
-                          <span className="badge badge-ghost">Duplex </span>
-                        </th>
-                        <td className="flex items-center gap-2">
-                          <GoHome /> House Use For
-                        </td>
-                        <th>
-                          <span className="badge badge-ghost">Residential</span>
-                        </th>
-                        <td className="flex items-center gap-2">
-                          <GoHome /> Bedrooms
-                        </td>
-                        <th>
-                          <span className="badge badge-ghost">4 pcs</span>
-                        </th>
-                        <td className="flex items-center gap-2">
-                          <GoHome /> Bathrooms
-                        </td>
-                        <th>
-                          <span className="badge badge-ghost">2 pcs</span>
-                        </th>
-                      </tr>
-                    </tbody>
+                  <div className="overflow-x-auto">
+                    <table className="table">
+                      <tbody>
+                        <tr>
+                          <td className="flex items-center gap-2">
+                            <GoHome /> Price
+                          </td>
+                          <th>
+                            <span className="badge badge-ghost">12000/m </span>
+                          </th>
+                          <td className="flex items-center gap-2">
+                            <GoHome /> House Type
+                          </td>
+                          <th>
+                            <span className="badge badge-ghost">Rent </span>
+                          </th>
+                          <td className="flex items-center gap-2">
+                            <GoHome /> Category
+                          </td>
+                          <th>
+                            <span className="badge badge-ghost">Duplex </span>
+                          </th>
+                          <td className="flex items-center gap-2">
+                            <GoHome /> House Use For
+                          </td>
+                          <th>
+                            <span className="badge badge-ghost">
+                              Residential
+                            </span>
+                          </th>
+                          <td className="flex items-center gap-2">
+                            <GoHome /> Bedrooms
+                          </td>
+                          <th>
+                            <span className="badge badge-ghost">4 pcs</span>
+                          </th>
+                          <td className="flex items-center gap-2">
+                            <GoHome /> Bathrooms
+                          </td>
+                          <th>
+                            <span className="badge badge-ghost">2 pcs</span>
+                          </th>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
                 {/* End */}
-                <div className="desc">
+                <div className="desc ">
                   <div className="title mb-6">
                     <h3 className="text-2xl font-bold mt-3">Description</h3>
                     <span className="w-10 h-1 bg-success block"></span>
                   </div>
-                  <p>
+                  <p className="h-52 sm:h-auto overflow-y-auto">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Totam ullam iste aperiam, optio quos doloremque incidunt
                     consequatur odit nemo magni et molestiae. In accusantium
