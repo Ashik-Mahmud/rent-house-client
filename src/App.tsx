@@ -1,4 +1,5 @@
 import { Route, Routes, useLocation } from "react-router-dom";
+import RequireAuth from "./auth/RequireAuth";
 import About from "./pages/About";
 import Login from "./pages/Authentication/Login";
 import RegisterAuth from "./pages/Authentication/Register";
@@ -63,7 +64,14 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/pricing" element={<Pricing />} />
         {/* Dashboard Routes */}
-        <Route path="/dashboard" element={<Dashboard />}>
+        <Route
+          path="/dashboard"
+          element={
+            <RequireAuth>
+              <Dashboard />
+            </RequireAuth>
+          }
+        >
           <Route index element={<DashboardContent />} />
 
           {/* Users Routes */}

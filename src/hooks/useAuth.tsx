@@ -6,6 +6,7 @@ type Props = {};
 const useAuth = <T,>(props: Props) => {
   const cookies = new Cookies();
   const [user, setUser] = useState<T>(cookies.get("user"));
+
   return [user, setUser];
 };
 

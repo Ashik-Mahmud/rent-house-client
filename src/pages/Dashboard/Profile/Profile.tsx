@@ -14,9 +14,9 @@ import ProfileModal from "./ProfileModal";
 type Props = {};
 
 const Profile = (props: Props) => {
-  const [user] = useAuth<authUserInterface>({});
+  const [user] = useAuth<authUserInterface | any>({});
 
-  console.log(user);
+  console.log(user.user);
 
   const dateDistance = formatDistance(
     new Date(),
