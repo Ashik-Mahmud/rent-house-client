@@ -1,9 +1,13 @@
 import { BrowserView } from "react-device-detect";
 import { Link, NavLink } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+import { authUserInterface } from "../interfaces/UserInterface";
 
 type Props = {};
 
 const Header = (props: Props) => {
+  const [users] = useAuth<authUserInterface | any>({});
+
   const NavbarMenus = (
     <>
       <li tabIndex={0}>
@@ -34,10 +38,11 @@ const Header = (props: Props) => {
           </small>
         </Link>
       </li>
-
-      <Link className="btn btn-md btn-success sm:ml-10 " to={"/login"}>
-        Login
-      </Link>
+      {!users?.isAuthenticated && (
+        <Link className="btn btn-md btn-success sm:ml-10 " to={"/login"}>
+          Login
+        </Link>
+      )}
     </>
   );
 
@@ -87,30 +92,36 @@ const Header = (props: Props) => {
               />
             </div>
           </BrowserView>
-          {/* <div className="dropdown dropdown-end">
-            <label tabIndex={0} className="btn btn-ghost btn-circle avatar online">
-              <div className="w-10 rounded-full">
-                <img src="https://placeimg.com/80/80/people" alt="" />
-              </div>
-            </label>
-            <ul
-              tabIndex={0}
-              className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
-            >
-              <li>
-                <a className="justify-between" href="/">
-                  Profile
-                  <span className="badge">New</span>
-                </a>
-              </li>
-              <li>
-                <a href="/">Settings</a>
-              </li>
-              <li>
-                <a href="/">Logout</a>
-              </li>
-            </ul>
-          </div> */}
+          {users?.isAuthenticated && (
+            <div className="dropdown dropdown-end">
+              <label
+                tabIndex={0}
+                className="btn btn-ghost btn-circle avatar online"
+              >
+                <div className="w-10 rounded-full">
+                  <img src={users?.user?.avatar} alt="" />
+                </div>
+              </label>
+              <ul
+                tabIndex={0}
+                className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
+              >
+                <li>
+                  <Link to="/dashboard/profile" className="justify-between">
+                    Profile
+                    <span className="badge">New</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/dashboard/settings">Settings</Link>
+                </li>
+                <li>
+                  <button>Logout</button>
+                </li>
+              </ul>
+            </div>
+          )}
+          {/* */}
         </div>
       </div>
     </header>

@@ -16,7 +16,7 @@ type Props = {};
 const Profile = (props: Props) => {
   const [user] = useAuth<authUserInterface | any>({});
 
-  console.log(user.user);
+  console.log(user);
 
   const dateDistance = formatDistance(
     new Date(),
