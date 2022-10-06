@@ -6,7 +6,7 @@ const Users = (props: Props) => {
   return (
     <div>
       <div className="users-area p-5 my-4 bg-white">
-        <div className="title flex items-center justify-between ">
+        <div className="title flex-col items-start sm:items-center sm:flex-row flex  justify-between gap-4">
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-bold">Users Management</h1>
             <small className="badge badge-success">Admin</small>
@@ -23,7 +23,7 @@ const Users = (props: Props) => {
             </select>
           </div>
         </div>
-        <div className="users-table mt-5">
+        <div className="users-table mt-5 overflow-x-auto">
           <table className="table w-full table-compact">
             <thead>
               <tr>
