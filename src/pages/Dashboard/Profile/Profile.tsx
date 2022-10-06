@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import formatDistance from "date-fns/formatDistance";
 import {
   browserName,
@@ -20,11 +21,14 @@ const Profile = (props: Props) => {
 
   const dateDistance = formatDistance(
     new Date(),
-    new Date("Mon Oct 03 2022 15:21:46"),
+    new Date(user?.user?.createdAt),
     {
       addSuffix: true,
     }
   );
+
+  /* Last Login  */
+  const result = format(new Date(user?.user?.updatedAt), "PPPP BBBB ppp");
 
   return (
     <>
@@ -32,7 +36,10 @@ const Profile = (props: Props) => {
         <div className="profile p-5 my-5 bg-white">
           <div className="flex items-center gap-2">
             <h2 className="text-2xl font-bold">
-              <span className="text-success">Ashik Mahmud's</span> Profile{" "}
+              <span className="text-success">
+                {user?.user?.name || "No Available"}'s
+              </span>{" "}
+              Profile{" "}
             </h2>
             <small className="badge badge-success">all</small>
           </div>
@@ -40,10 +47,8 @@ const Profile = (props: Props) => {
             <div className="flex items-center justify-between">
               <div className="profile-image rounded-full  w-32 h-32 relative  ">
                 <img
-                  src={
-                    "https://assets.webiconspng.com/uploads/2016/11/avatar_business_costume_male_man_office_user_icon_403022.png"
-                  }
-                  alt="profile"
+                  src={user?.user?.avatar}
+                  alt={user?.user?.name}
                   className="w-32 h-32 rounded-full border-4 border-success object-cover shadow-lg"
                 />
                 <label
@@ -94,25 +99,25 @@ const Profile = (props: Props) => {
               <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
                 <span className="profile-details-item-label">Name</span>
                 <span className="profile-details-item-value font-bold">
-                  John Doe
+                  {user?.user?.name || "No Available"}
                 </span>
               </div>
               <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
                 <span className="profile-details-item-label">Email</span>
                 <span className="profile-details-item-value font-bold">
-                  ashik@gmail.com
+                  {user?.user?.email || "No Available"}
                 </span>
               </div>
               <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
                 <span className="profile-details-item-label">Phone</span>
                 <span className="profile-details-item-value font-bold">
-                  +880 123456789
+                  {user?.user?.phone || "No Available"}
                 </span>
               </div>
               <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
                 <span className="profile-details-item-label">Address</span>
                 <span className="profile-details-item-value font-bold">
-                  XYZ, Bangladesh
+                  {user?.user?.address || "No Available"}
                 </span>
               </div>
               <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
@@ -124,7 +129,11 @@ const Profile = (props: Props) => {
               <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
                 <span className="profile-details-item-label">Role</span>
                 <span className="profile-details-item-value font-bold">
-                  <span className="badge badge-outline">Admin</span>
+                  <span className="badge badge-outline">
+                    {user?.user?.role === "user"
+                      ? "House Holder"
+                      : user?.user?.role || "No Available"}
+                  </span>
                 </span>
               </div>
               <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
@@ -136,7 +145,7 @@ const Profile = (props: Props) => {
               <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
                 <span className="profile-details-item-label">Last Login</span>
                 <span className="profile-details-item-value font-bold">
-                  <span className="badge badge-ghost"> 03 Oct 2021</span>
+                  <span className="badge badge-ghost">{result}</span>
                 </span>
               </div>
               <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
