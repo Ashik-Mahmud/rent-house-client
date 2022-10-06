@@ -5,19 +5,19 @@ type Props = {};
 
 const Houses = (props: Props) => {
   return (
-    <section id="houses">
-      <div className="container mx-auto pb-20 pt-20">
+    <section id="houses" className="overflow-x-hidden">
+      <div className="container mx-auto pb-20 pt-20 px-5">
         {/* <div className="house-title text-center font-bold p-6 bg-white my-5 rounded shadow">
           <h2 className="text-3xl">Welcome to HOUSES</h2>
         </div> */}
-        <div className="house-content flex items-start gap-10">
+        <div className="house-content flex-col sm:flex-row flex items-start gap-10">
           {/* Filters Sidebar */}
           <FilterSidebar />
           {/* Filters Sidebar end */}
           {/* Content */}
           <div className="house-content-right border p-5 flex-grow bg-white">
             <div className="house-content-right-title">
-              <div className="house-header flex bg-slate-50 rounded-lg justify-between text-sm px-7 items-center">
+              <div className="house-header sm:flex bg-slate-50 rounded-lg justify-between text-sm px-7 items-center">
                 <div className="filter-by-recent flex items-center justify-start gap-6 flex-1">
                   <div className="flex items-center gap-2">
                     <b>452445</b> results{" "}
@@ -43,7 +43,7 @@ const Houses = (props: Props) => {
               </div>
 
               {/* Houses Main Content */}
-              <div className="house-main-content p-6 grid grid-cols-4 gap-6">
+              <div className="house-main-content p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 <HouseCard />
                 <HouseCard />
                 <HouseCard />
