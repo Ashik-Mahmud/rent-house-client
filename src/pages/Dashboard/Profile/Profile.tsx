@@ -195,25 +195,6 @@ const Profile = (props: Props) => {
                 </span>
               </div>
             </div>
-            {/* {!data?.data?.isVerified && (
-              <>
-                <div className="text-center flex items-center justify-center">
-                  <div>
-                    <h2 className="text-2xl font-bold mb-3">
-                      Send Verification Email
-                    </h2>
-                    <p className="mb-4 font-poppins">
-                      Without verification, you could'nt Add House, Review,
-                      could'nt update profile, could'nt activities with you
-                      houses
-                    </p>
-                    <button className="btn btn-success rounded-full">
-                      Send{" "}
-                    </button>
-                  </div>
-                </div>
-              </>
-            )} */}
           </div>
         </div>
       </div>

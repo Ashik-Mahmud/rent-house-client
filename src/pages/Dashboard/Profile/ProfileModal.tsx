@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import {
   BiEnvelope,
   BiMailSend,
@@ -16,23 +18,26 @@ type Props = {};
 const ProfileModal = (props: Props) => {
   const { updatedUser } = useAuth<authUserInterface | any>({});
   const isVerify = updatedUser?.isVerified;
-  const [updateProfile] = useUpdateProfileMutation();
+  const [updateProfile, { data, isSuccess }] = useUpdateProfileMutation();
 
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
   const handleUpdateProfile = handleSubmit(async (formData) => {
     const bodyData = { ...formData, email: updatedUser?.email };
     await updateProfile(bodyData);
+    reset();
   });
 
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success((data as any).message);
+    }
+  }, [isSuccess, data]);
   return (
-    <div>
+    <form onSubmit={handleUpdateProfile}>
       <input type="checkbox" id="profile-edit-modal" className="modal-toggle" />
-      <div className="modal modal-bottom sm:modal-middle">
-        <form
-          onSubmit={handleUpdateProfile}
-          className="modal-box w-11/12 max-w-5xl"
-        >
+      <div className={`modal  modal-bottom sm:modal-middle `}>
+        <div className="modal-box w-11/12 max-w-5xl">
           <h3 className="font-bold text-xl">Edit Profile Information's</h3>
           {isVerify ? (
             <>
@@ -179,9 +184,9 @@ const ProfileModal = (props: Props) => {
               <button className="btn btn-success">Save Profile</button>
             )}
           </div>
-        </form>
+        </div>
       </div>
-    </div>
+    </form>
   );
 };
 
