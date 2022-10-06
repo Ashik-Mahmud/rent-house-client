@@ -2,6 +2,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import About from "./pages/About";
 import Login from "./pages/Authentication/Login";
 import RegisterAuth from "./pages/Authentication/Register";
+import Blogs from "./pages/Blogs/Blogs";
 import Contact from "./pages/Contact";
 import AddHouse from "./pages/Dashboard/AddHouse/AddHouse";
 import AdminHouses from "./pages/Dashboard/AdminHouses/AdminHouses";
@@ -33,7 +34,6 @@ import RequestFromUsers from "./pages/Dashboard/RequestFromUsers/RequestFromUser
 import Settings from "./pages/Dashboard/Settings/Settings";
 import Users from "./pages/Dashboard/Users/Users";
 import Home from "./pages/Home/Home";
-import Blogs from "./pages/Houses/Blogs/Blogs";
 import HouseDetails from "./pages/Houses/HouseDetails/HouseDetails";
 import Houses from "./pages/Houses/Houses";
 import Pricing from "./pages/Pricing";
