@@ -12,7 +12,9 @@ const Messages = (props: Props) => {
     <div>
       <div className="p-5 my-4 bg-white">
         <div className="flex items-center gap-3">
-          <h3 className="text-2xl font-bold">Send Email to The All Users </h3>{" "}
+          <h3 className="text-lg sm:text-2xl font-bold">
+            Send Email to The All Users{" "}
+          </h3>{" "}
           <small className="badge badge-success text-xs">admin</small>
         </div>
         <div className="message-content pb-10">
@@ -130,7 +132,7 @@ const Messages = (props: Props) => {
                 <MessageBoxEditor setMessageVal={setMessageVal} />
               </div>
             </div>
-            <div className=" mt-5 justify-end flex">
+            <div className="mt-16 sm:mt-6 justify-end flex">
               <button className="flex items-center gap-3 btn btn-success rounded-none">
                 Send Message <BiSend />
               </button>
