@@ -5,8 +5,8 @@ type Props = {};
 const MyHouses = (props: Props) => {
   return (
     <div className="p-10 my-5 bg-white rounded shadow">
-      <div className="title flex items-center justify-between mb-3">
-        <div className="flex items-center gap-2">
+      <div className="title flex-col sm:flex-row flex items-center justify-between mb-3">
+        <div className="flex items-center gap-2 mb-4 sm:mb-0">
           <h1 className="text-2xl font-bold">My Houses</h1>
           <small className="badge badge-success">House Holder</small>
         </div>
