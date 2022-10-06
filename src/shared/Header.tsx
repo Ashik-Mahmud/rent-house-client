@@ -1,7 +1,9 @@
 import { BrowserView } from "react-device-detect";
-import { Link, NavLink } from "react-router-dom";
+import toast from "react-hot-toast";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../app/store";
+import { logout } from "../features/AuthSlice";
 import useAuth from "../hooks/useAuth";
-import useHandleLogout from "../hooks/useHandleLogout";
 import { authUserInterface } from "../interfaces/UserInterface";
 
 type Props = {};
@@ -10,11 +12,14 @@ const Header = (props: Props) => {
   const [users, setUsers] = useAuth<authUserInterface | any>({});
 
   /* Handle Logout */
-  const [handleLogout] = useHandleLogout();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  const logout = () => {
+  const handleLogout = () => {
     setUsers(null);
-    handleLogout();
+    dispatch(logout());
+    toast.success("Logout Successfully");
+    navigate("/login");
   };
 
   const NavbarMenus = (
@@ -128,7 +133,7 @@ const Header = (props: Props) => {
                   <Link to="/dashboard/settings">Settings</Link>
                 </li>
                 <li>
-                  <button onClick={logout}>Logout</button>
+                  <button onClick={handleLogout}>Logout</button>
                 </li>
               </ul>
             </div>

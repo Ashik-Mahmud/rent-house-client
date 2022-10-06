@@ -5,6 +5,7 @@ import {
   osName,
   osVersion,
 } from "react-device-detect";
+import toast from "react-hot-toast";
 import { AiOutlineUser } from "react-icons/ai";
 import { BiPlus, BiUser } from "react-icons/bi";
 import {
@@ -18,8 +19,10 @@ import {
   BsReceipt,
 } from "react-icons/bs";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../app/store";
+import { logout } from "../../features/AuthSlice";
 import useAuth from "../../hooks/useAuth";
-import useHandleLogout from "../../hooks/useHandleLogout";
+
 import { authUserInterface } from "../../interfaces/UserInterface";
 
 type Props = {};
@@ -119,10 +122,12 @@ const Dashboard = (props: Props) => {
   const navigate = useNavigate();
   const [user, setUser] = useAuth<authUserInterface | any>({});
   /* Handle Logout */
-  const [handleLogout] = useHandleLogout();
-  const logout = () => {
+
+  const dispatch = useAppDispatch();
+  const handleLogout = () => {
     setUser(null);
-    handleLogout();
+    dispatch(logout());
+    toast.success("Logout Successfully");
     navigate("/login");
   };
   console.log(user);
@@ -208,7 +213,7 @@ const Dashboard = (props: Props) => {
                       </li>
                     )}
                     <li>
-                      <button onClick={logout}>Logout</button>
+                      <button onClick={handleLogout}>Logout</button>
                     </li>
                   </ul>
                 </div>
