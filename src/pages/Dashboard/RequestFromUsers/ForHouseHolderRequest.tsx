@@ -5,7 +5,7 @@ type Props = {};
 const ForHouseHolderRequest = (props: Props) => {
   return (
     <>
-      <div className="request-table mt-5">
+      <div className="request-table mt-5 overflow-x-auto">
         <table className="table table-compact table-striped w-full">
           <thead>
             <tr>
