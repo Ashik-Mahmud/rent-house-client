@@ -7,7 +7,7 @@ type Props = {};
 const UsersBlogs = (props: Props) => {
   return (
     <div>
-      <div className="p-5 my-5 bg-white">
+      <div className="p-3 sm:p-5 my-5 bg-white">
         <h1 className="text-3xl font-bold">My Blogs</h1>
         {/* Blogs Table */}
         <div className="overflow-x-auto my-5 font-poppins">
@@ -69,6 +69,17 @@ const UsersBlogs = (props: Props) => {
             </tbody>
           </table>
         </div>
+      </div>
+      <div className="pagination flex items-center justify-center gap-2">
+        <a href="/" className="btn btn-circle btn-ghost btn-sm">
+          1
+        </a>
+        <a href="/" className="btn btn-circle btn-ghost btn-sm btn-active">
+          2
+        </a>
+        <a href="/" className="btn btn-circle btn-ghost btn-sm">
+          3
+        </a>
       </div>
     </div>
   );

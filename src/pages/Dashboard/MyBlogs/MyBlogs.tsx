@@ -6,14 +6,14 @@ const MyBlogs = (props: Props) => {
   const location = useLocation();
   return (
     <div>
-      <div className="p-5 my-5 bg-white">
-        <div className="title flex items-center justify-between">
+      <div className="p-4 sm:p-5 my-5 bg-white">
+        <div className="title sm:flex items-center justify-between">
           <div>
             <h3 className="text-2xl font-bold">
               <span className="text-success">Ashik Mahmud's</span> Blogs
             </h3>
           </div>
-          <div className="flex items-center rounded overflow-hidden">
+          <div className="sm:flex mt-3 sm:mt-0 items-center rounded overflow-hidden">
             <Link
               className={`py-2 px-4 ${
                 location.pathname.includes("users-blogs") ||
