@@ -192,8 +192,6 @@ const Dashboard = (props: Props) => {
     toast.success("Logout Successfully");
   };
 
-  console.log(data?.data.role);
-
   return (
     <>
       <div className="grid place-items-center ">
@@ -216,9 +214,9 @@ const Dashboard = (props: Props) => {
                   <BrowserView>
                     Welcome to <span className="text-success">houseLagbe?</span>{" "}
                     <span className="capitalize">
-                      {data?.data.role === "user"
+                      {data?.data?.role === "user"
                         ? "House Holder"
-                        : data?.data.role}
+                        : data?.data?.role}
                     </span>{" "}
                     Panel
                   </BrowserView>
@@ -232,9 +230,9 @@ const Dashboard = (props: Props) => {
                 </div>
                 <div className="active-user flex items-center gap-1 text-sm text-green-500 select-none capitalize">
                   <div className="h-2 w-2 bg-green-500 rounded-full"></div>
-                  {data?.data.role === "user"
+                  {data?.data?.role === "user"
                     ? "House Holder"
-                    : data?.data.role}
+                    : data?.data?.role}
                 </div>
                 {!pathname.includes("/dashboard/houses/add") && (
                   <Link
