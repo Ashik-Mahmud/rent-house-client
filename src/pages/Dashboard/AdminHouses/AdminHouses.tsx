@@ -12,7 +12,7 @@ const AdminHouses = (props: Props) => {
           <small className="badge badge-success">admin</small>
         </div>
         <div className="py-5 ">
-          <div className="toggle-houses flex items-center justify-center">
+          <div className="toggle-houses flex-col sm:flex-row items-stretch flex sm:items-center justify-center rounded overflow-hidden">
             <Link
               to="/dashboard/admin/houses/unapproved"
               className={`p-4 text-lg font-poppins rounded-none ${

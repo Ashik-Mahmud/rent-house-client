@@ -1,3 +1,4 @@
+import { BrowserView, MobileView } from "react-device-detect";
 import ApprovedRow from "./ApprovedRow";
 
 type Props = {};
@@ -5,9 +6,14 @@ type Props = {};
 const ApprovedHouses = (props: Props) => {
   return (
     <div className="">
-      <div className="approvedHouse p-5 my-4 bg-white">
+      <div className="approvedHouse p-3 sm:p-5 my-4 bg-white">
         <div className="title flex items-center justify-between bg-base-300 p-3 rounded">
-          <h3 className="text-2xl font-bold">Approved Houses</h3>
+          <MobileView>
+            <h3 className="text-2xl font-bold">Approved</h3>
+          </MobileView>
+          <BrowserView>
+            <h3 className="text-2xl font-bold">Approved Houses</h3>
+          </BrowserView>
           <div className="recent">
             <select
               name=""

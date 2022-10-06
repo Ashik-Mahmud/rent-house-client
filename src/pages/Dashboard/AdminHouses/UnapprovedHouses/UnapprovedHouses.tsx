@@ -1,3 +1,4 @@
+import { BrowserView, MobileView } from "react-device-detect";
 import RejectedHouseModal from "./RejectedHouseModal";
 import UnapprovedRow from "./UnapprovedRow";
 
@@ -7,9 +8,14 @@ const UnapprovedHouses = (props: Props) => {
   return (
     <>
       <div>
-        <div className="p-5 my-5 bg-white">
+        <div className="p-3 sm:p-5 my-5 bg-white">
           <div className="title flex items-center justify-between bg-base-200 p-3 rounded">
-            <h3 className="text-2xl font-bold">Unapproved Houses</h3>
+            <MobileView>
+              <h3 className="text-2xl font-bold">Unapproved </h3>
+            </MobileView>
+            <BrowserView>
+              <h3 className="text-2xl font-bold">Unapproved Houses</h3>
+            </BrowserView>
             <div className="recent">
               <select
                 name=""

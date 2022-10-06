@@ -10,7 +10,7 @@ const HouseHolderModal = (props: Props) => {
         id="owners-details-modal"
         className="modal-toggle"
       />
-      <div className="modal modal-bottom sm:modal-middle">
+      <div className="modal modal-middle sm:modal-middle">
         <div className="modal-box w-11/12 max-w-5xl">
           <h3 className="font-bold text-xl">Owner's Profile Information</h3>
 
