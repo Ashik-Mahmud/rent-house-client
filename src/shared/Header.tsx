@@ -35,7 +35,7 @@ const Header = (props: Props) => {
         </Link>
       </li>
 
-      <Link className="btn btn-md btn-success ml-10" to={"/login"}>
+      <Link className="btn btn-md btn-success sm:ml-10 " to={"/login"}>
         Login
       </Link>
     </>
