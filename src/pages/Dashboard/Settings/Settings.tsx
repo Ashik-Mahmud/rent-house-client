@@ -9,19 +9,19 @@ const Settings = (props: Props) => {
         <h3 className="text-2xl font-bold">Settings</h3>
 
         <div className="settings-content">
-          <div className="req-for-blog flex items-center justify-between my-8 bg-base-200 p-5 rounded-lg">
-            <h3 className="text-xl font-bold">
+          <div className="req-for-blog flex-col justify-center sm:justify-between sm:flex-row flex items-center my-8 bg-base-200 p-5 rounded-lg">
+            <h3 className="text-xl font-bold text-center sm:text-left">
               If you want to get Blogs writing authority
             </h3>
-            <button className="btn btn-success rounded-full">
+            <button className="btn btn-success rounded-full mt-4  sm:mt-0">
               Request For Blog
             </button>
           </div>
-          <div className="req-for-blog flex items-center justify-between my-8 bg-base-200 p-5 rounded-lg">
-            <h3 className="text-xl font-bold">
+          <div className="req-for-blog flex items-center  my-8 bg-base-200 p-5 rounded-lg flex-col justify-center sm:justify-between sm:flex-row">
+            <h3 className="text-xl font-bold text-center sm:text-left">
               If you want to get House Holder Account
             </h3>
-            <button className="btn btn-success rounded-full">
+            <button className="btn btn-success rounded-full mt-4 sm:mt-0">
               Request For House Holder Account
             </button>
           </div>
