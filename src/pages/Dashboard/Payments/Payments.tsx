@@ -7,12 +7,12 @@ const Payments = (props: Props) => {
   return (
     <div>
       <div className="p-5 my-4 bg-white">
-        <div className="flex items-center justify-between">
+        <div className="flex-col  sm:flex-row flex grid-4 items-center justify-between">
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-bold">Payments</h1>
             <small className="badge badge-success">House Holder</small>
           </div>
-          <div className="flex items-center justify-between gap-2  border p-3 rounded">
+          <div className="flex items-center justify-between gap-2 mt-4 sm:mt-0  border p-3 rounded">
             <div className="flex items-center gap-2">
               <div className="icon">
                 <BiSearchAlt2 />
