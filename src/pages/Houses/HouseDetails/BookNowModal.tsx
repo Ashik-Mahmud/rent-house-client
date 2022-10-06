@@ -125,7 +125,7 @@ const BookNow = (props: Props) => {
               </label>
             </div>
           </div>
-          <div className="modal-action flex-col items-stretch gap-3 flex-col-reverse">
+          <div className="modal-action  items-stretch gap-3 flex-col-reverse">
             <label htmlFor="book-now-modal" className="btn btn-warning">
               Cancel
             </label>
