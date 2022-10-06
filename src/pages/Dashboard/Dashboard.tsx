@@ -19,6 +19,7 @@ import {
 } from "react-icons/bs";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import useHandleLogout from "../../hooks/useHandleLogout";
 import { authUserInterface } from "../../interfaces/UserInterface";
 
 type Props = {};
@@ -116,7 +117,14 @@ const Dashboard = (props: Props) => {
   ];
   const { pathname } = useLocation();
 
-  const [user] = useAuth<authUserInterface | any>({});
+  const [user, setUser] = useAuth<authUserInterface | any>({});
+  /* Handle Logout */
+  const [handleLogout] = useHandleLogout();
+  const logout = () => {
+    setUser(null);
+    handleLogout();
+  };
+  console.log(user);
 
   return (
     <>
@@ -151,7 +159,7 @@ const Dashboard = (props: Props) => {
                 </div>
                 <div className="active-user flex items-center gap-1 text-sm text-green-500 select-none">
                   <div className="h-2 w-2 bg-green-500 rounded-full"></div>
-                  Customer
+                  {user?.user?.role}
                 </div>
                 <Link
                   to=""
@@ -189,7 +197,7 @@ const Dashboard = (props: Props) => {
                       </li>
                     )}
                     <li>
-                      <a href="/">Logout</a>
+                      <button onClick={logout}>Logout</button>
                     </li>
                   </ul>
                 </div>

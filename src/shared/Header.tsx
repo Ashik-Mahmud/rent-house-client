@@ -1,8 +1,8 @@
 import { BrowserView } from "react-device-detect";
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import useHandleLogout from "../hooks/useHandleLogout";
 import { authUserInterface } from "../interfaces/UserInterface";
-import useHandleLogout from "../utilities/useHandleLogout";
 
 type Props = {};
 
