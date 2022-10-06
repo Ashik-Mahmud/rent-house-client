@@ -1,4 +1,10 @@
 import formatDistance from "date-fns/formatDistance";
+import {
+  browserName,
+  fullBrowserVersion,
+  osName,
+  osVersion,
+} from "react-device-detect";
 import { BiCamera, BiEdit } from "react-icons/bi";
 import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
 import useAuth from "../../../hooks/useAuth";
@@ -118,25 +124,43 @@ const Profile = (props: Props) => {
               <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
                 <span className="profile-details-item-label">Role</span>
                 <span className="profile-details-item-value font-bold">
-                  Admin
+                  <span className="badge badge-outline">Admin</span>
                 </span>
               </div>
               <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
                 <span className="profile-details-item-label">Status</span>
                 <span className="profile-details-item-value font-bold">
-                  Active
+                  <span className="badge badge-info">Active</span>
                 </span>
               </div>
-              <div className="profile-details-item flex items-center justify-between text-lg">
+              <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
                 <span className="profile-details-item-label">Last Login</span>
                 <span className="profile-details-item-value font-bold">
-                  03 Oct 2021
+                  <span className="badge badge-ghost"> 03 Oct 2021</span>
+                </span>
+              </div>
+              <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
+                <span className="profile-details-item-label">Used Browser</span>
+                <span className="profile-details-item-value font-bold">
+                  <span className="badge badge-secondary">
+                    {" "}
+                    {browserName} {fullBrowserVersion}{" "}
+                  </span>
+                </span>
+              </div>
+              <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
+                <span className="profile-details-item-label">Used Device</span>
+                <span className="profile-details-item-value font-bold">
+                  <span className="badge badge-success">
+                    {osName} {osVersion}
+                  </span>
                 </span>
               </div>
             </div>
           </div>
         </div>
       </div>
+
       <ProfileModal />
       <ImageChangeModal />
     </>
