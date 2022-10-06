@@ -112,7 +112,7 @@ const Profile = (props: Props) => {
               <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
                 <span className="profile-details-item-label">Address</span>
                 <span className="profile-details-item-value font-bold">
-                  123, ABC Road, XYZ, Bangladesh
+                  XYZ, Bangladesh
                 </span>
               </div>
               <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">

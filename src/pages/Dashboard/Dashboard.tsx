@@ -1,3 +1,4 @@
+import { BrowserView, MobileView } from "react-device-detect";
 import { AiOutlineUser } from "react-icons/ai";
 import { BiPlus, BiUser } from "react-icons/bi";
 import {
@@ -110,20 +111,25 @@ const Dashboard = (props: Props) => {
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content p-5">
           {/*  <!-- Page content here --> */}
-          <div className="dashboard-header bg-white p-2 rounded shadow flex items-center justify-between sticky top-1 z-50">
-            <div className="flex items-center gap-3">
+          <div className="dashboard-header bg-white p-2 rounded shadow sm:flex items-center justify-between sticky top-1 z-50">
+            <div className="flex items-center sm:gap-3">
               <label
                 htmlFor="my-drawer-2"
                 className="btn btn-ghost text-xl border drawer-button lg:hidden"
               >
                 <BsGrid />
               </label>
-              <span className="text-2xl font-bold font-poppins px-3">
-                Welcome to <span className="text-success">houseLagbe?</span>{" "}
-                Admin Panel
+              <span className="text-xl sm:text-2xl font-bold font-poppins px-3">
+                <MobileView>
+                  Welcome to <span className="text-success">houseLagbe?</span>
+                </MobileView>
+                <BrowserView>
+                  Welcome to <span className="text-success">houseLagbe?</span>{" "}
+                  Admin Panel
+                </BrowserView>
               </span>
             </div>
-            <div className="flex items-center gap-5">
+            <div className="flex items-center gap-5 justify-center">
               <Link
                 to=""
                 className="flex items-center gap-2 btn btn-success btn-outline rounded-sm btn-sm"
