@@ -3,7 +3,7 @@ type Props = {};
 const Footer = (props: Props) => {
   return (
     <footer
-      className=" text-base-content font-open font-medium bg-base-200 relative p-20 pt-32"
+      className=" text-base-content font-open font-medium bg-base-200 relative p-10 sm:p-20 pt-32 overflow-x-hidden"
       style={{ clipPath: `ellipse(75% 100% at 59.75% 100%)` }}
     >
       <div className="footer p-10  mx-auto container">

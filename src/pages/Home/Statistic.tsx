@@ -3,7 +3,7 @@ type Props = {};
 const Statistic = (props: Props) => {
   return (
     <div className="flex justify-center pt-10">
-      <div className="stats stats-vertical lg:stats-horizontal gap-20 ">
+      <div className="grid grid-cols-2  rounded  sm:stats stats-vertical sm:stats-horizontal gap-20 ">
         <div className="stat">
           <div className="stat-title">Downloads</div>
           <div className="stat-value">31K</div>

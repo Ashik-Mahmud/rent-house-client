@@ -10,7 +10,7 @@ type Props = {};
 
 const Home = (props: Props) => {
   return (
-    <section>
+    <section className="overflow-x-hidden">
       <Hero />
       <Statistic />
       <BestHouses />

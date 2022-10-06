@@ -5,7 +5,7 @@ const CallToAction = (props: Props) => {
   return (
     <div>
       <div className="container mx-auto p-20 -mb-48 z-50 relative">
-        <div className="call-to-action-cards flex  justify-center gap-10">
+        <div className="call-to-action-cards flex-col sm:flex-row flex  justify-center gap-10">
           <div className="call-to-action-card shadow-lg bg-gray-50 p-10 text-center rounded-lg  flex-1">
             <div className="call-to-action-card__icon text-4xl grid justify-center py-4 ">
               <BsTelephoneOutbound />

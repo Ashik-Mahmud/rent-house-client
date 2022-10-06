@@ -1,3 +1,4 @@
+import { BrowserView } from "react-device-detect";
 import { Link, NavLink } from "react-router-dom";
 
 type Props = {};
@@ -77,13 +78,15 @@ const Header = (props: Props) => {
         </div>
 
         <div className="navbar-end">
-          <div className="form-control mr-4">
-            <input
-              type="text"
-              placeholder="Search"
-              className="input input-bordered"
-            />
-          </div>
+          <BrowserView>
+            <div className="form-control mr-4">
+              <input
+                type="text"
+                placeholder="Search"
+                className="input input-bordered"
+              />
+            </div>
+          </BrowserView>
           {/* <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar online">
               <div className="w-10 rounded-full">

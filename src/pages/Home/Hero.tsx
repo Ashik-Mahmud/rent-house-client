@@ -22,7 +22,7 @@ const Hero = (props: Props) => {
 
   return (
     <section
-      className="hero min-h-[70vh]"
+      className="hero  min-h-[85vh] sm:min-h-[73vh]"
       style={{
         backgroundImage: `url(${images[current]})`,
         clipPath: `ellipse(102% 100% at 48.96% 0%)`,
@@ -30,8 +30,8 @@ const Hero = (props: Props) => {
     >
       <div className="hero-overlay bg-opacity-90"></div>
       <div className="hero-content text-center text-neutral-content">
-        <div className="px-60">
-          <h1 className="mb-5 text-5xl font-bold">
+        <div className="sm:px-60">
+          <h1 className="mb-5 text-4xl sm:text-5xl font-bold">
             Welcome To the <span className="text-success"> houseLagbe?</span>
           </h1>
           <p className="mb-5">

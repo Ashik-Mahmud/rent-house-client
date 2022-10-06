@@ -12,7 +12,7 @@ const CreateAccountSec = (props: Props) => {
     >
       <div className="hero-overlay bg-opacity-60"></div>
       <div className="container mx-auto">
-        <div className="flex flex-col items-center justify-center py-20">
+        <div className="flex flex-col items-center justify-center py-20 px-3">
           <h1 className="text-4xl font-bold text-center my-4 text-white">
             Do you have a houses for sale or rent?
           </h1>
