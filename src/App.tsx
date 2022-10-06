@@ -1,4 +1,5 @@
 import { Route, Routes, useLocation } from "react-router-dom";
+import AuthChangeRoute from "./auth/AuthChangeRoute";
 import RequireAuth from "./auth/RequireAuth";
 import About from "./pages/About";
 import Login from "./pages/Authentication/Login";
@@ -56,8 +57,22 @@ function App() {
         <Route path="/houses" element={<Houses />} />
         {/* Single House Route */}
         <Route path="/house/:houseId" element={<HouseDetails />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<RegisterAuth />} />
+        <Route
+          path="/login"
+          element={
+            <AuthChangeRoute>
+              <Login />
+            </AuthChangeRoute>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <AuthChangeRoute>
+              <RegisterAuth />
+            </AuthChangeRoute>
+          }
+        />
         <Route path="/reviews" element={<Reviews />} />
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/about" element={<About />} />
