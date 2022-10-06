@@ -20,7 +20,7 @@ const ProfileModal = (props: Props) => {
   const isVerify = updatedUser?.isVerified;
   const [updateProfile, { data, isSuccess }] = useUpdateProfileMutation();
 
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset, setValue } = useForm();
 
   const handleUpdateProfile = handleSubmit(async (formData) => {
     const bodyData = { ...formData, email: updatedUser?.email };
@@ -29,10 +29,16 @@ const ProfileModal = (props: Props) => {
   });
 
   useEffect(() => {
+    setValue("name", updatedUser?.name);
+    setValue("phone", updatedUser?.phone);
+    setValue("address", updatedUser?.address);
+    setValue("facebookLink", updatedUser?.facebookLink);
+    setValue("twitterLink", updatedUser?.twitterLink);
+    setValue("instagramLink", updatedUser?.instagramLink);
     if (isSuccess) {
       toast.success((data as any).message);
     }
-  }, [isSuccess, data]);
+  }, [isSuccess, data, setValue, updatedUser]);
   return (
     <form onSubmit={handleUpdateProfile}>
       <input type="checkbox" id="profile-edit-modal" className="modal-toggle" />
