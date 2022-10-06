@@ -2,11 +2,20 @@ import { BrowserView } from "react-device-detect";
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { authUserInterface } from "../interfaces/UserInterface";
+import useHandleLogout from "../utilities/useHandleLogout";
 
 type Props = {};
 
 const Header = (props: Props) => {
-  const [users] = useAuth<authUserInterface | any>({});
+  const [users, setUsers] = useAuth<authUserInterface | any>({});
+
+  /* Handle Logout */
+  const [handleLogout] = useHandleLogout();
+
+  const logout = () => {
+    setUsers(null);
+    handleLogout();
+  };
 
   const NavbarMenus = (
     <>
@@ -30,14 +39,17 @@ const Header = (props: Props) => {
       <li>
         <NavLink to="/contact">Contact</NavLink>
       </li>
-      <li>
-        <Link to="/dashboard">
-          Dashboard{" "}
-          <small className="badge badge-xs badge-success text-xs font-poppins absolute right-0 top-0 text-[.6rem] font-thin">
-            New
-          </small>
-        </Link>
-      </li>
+
+      {users?.isAuthenticated && (
+        <li>
+          <Link to="/dashboard">
+            Dashboard{" "}
+            <small className="badge badge-xs badge-success text-xs font-poppins absolute right-0 top-0 text-[.6rem] font-thin">
+              New
+            </small>
+          </Link>
+        </li>
+      )}
       {!users?.isAuthenticated && (
         <Link className="btn btn-md btn-success sm:ml-10 " to={"/login"}>
           Login
@@ -116,7 +128,7 @@ const Header = (props: Props) => {
                   <Link to="/dashboard/settings">Settings</Link>
                 </li>
                 <li>
-                  <button>Logout</button>
+                  <button onClick={logout}>Logout</button>
                 </li>
               </ul>
             </div>

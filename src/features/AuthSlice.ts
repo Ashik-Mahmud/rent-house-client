@@ -8,6 +8,7 @@ const initialState: authUserInterface = {
     id: 0,
     name: "",
     email: "",
+    avatar: "",
   },
   token: "",
   isAuthenticated: false,
@@ -26,10 +27,21 @@ const AuthSlice = createSlice({
       state.isAuthenticated = true;
       cookies.set("user", state);
     },
+    logout: (state: authUserInterface) => {
+      state.user = {
+        id: 0,
+        name: "",
+        email: "",
+        avatar: "",
+      };
+      state.token = "";
+      state.isAuthenticated = false;
+      cookies.remove("user");
+    },
   },
 });
 
-export const { setAuthInformation } = AuthSlice.actions;
+export const { setAuthInformation, logout } = AuthSlice.actions;
 export default AuthSlice.reducer;
 
 // Language: typescript

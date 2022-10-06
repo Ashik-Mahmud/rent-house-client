@@ -17,10 +17,11 @@ export interface UserInterface {
 }
 
 export interface authUserInterface {
-  user: {
+  user?: {
     id: number;
     name: string;
     email: string;
+    avatar: string;
   };
   token: string;
   isAuthenticated?: boolean;

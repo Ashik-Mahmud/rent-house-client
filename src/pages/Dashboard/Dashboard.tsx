@@ -17,7 +17,9 @@ import {
   BsMessenger,
   BsReceipt,
 } from "react-icons/bs";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import { authUserInterface } from "../../interfaces/UserInterface";
 
 type Props = {};
 
@@ -112,6 +114,9 @@ const Dashboard = (props: Props) => {
       link: "/dashboard/purchase/bookings",
     },
   ];
+  const { pathname } = useLocation();
+
+  const [user] = useAuth<authUserInterface | any>({});
 
   return (
     <>
@@ -160,22 +165,29 @@ const Dashboard = (props: Props) => {
                     className="btn btn-ghost btn-circle avatar"
                   >
                     <div className="w-10 rounded-full">
-                      <img src="https://placeimg.com/80/80/people" alt="/" />
+                      <img src={user?.user?.avatar} alt={user?.user?.name} />
                     </div>
                   </label>
                   <ul
                     tabIndex={0}
                     className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
                   >
-                    <li>
-                      <a className="justify-between" href="/">
-                        Profile
-                        <span className="badge">New</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/">Settings</a>
-                    </li>
+                    {!pathname.includes("/dashboard/profile") && (
+                      <li>
+                        <Link
+                          to="/dashboard/profile"
+                          className="justify-between"
+                        >
+                          Profile
+                          <span className="badge">New</span>
+                        </Link>
+                      </li>
+                    )}
+                    {!pathname.includes("/dashboard/settings") && (
+                      <li>
+                        <Link to="/dashboard/settings">Settings</Link>
+                      </li>
+                    )}
                     <li>
                       <a href="/">Logout</a>
                     </li>
