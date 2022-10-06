@@ -9,13 +9,13 @@ const PurchaseHouse = (props: Props) => {
     <>
       <div>
         <div className="p-4 my-4 bg-white">
-          <div className="title flex items-center justify-between">
+          <div className="title flex-col sm:flex-row flex items-center justify-between">
             <div className="flex items-center gap-2">
               <h3 className="text-2xl font-bold">Booked House</h3>
               <small className="badge badge-success">customer</small>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="search">
+            <div className="flex items-center gap-3 mt-4 sm:mt-0">
+              <div className="search flex items-center">
                 <input
                   type="text"
                   placeholder="Search by House Name"
