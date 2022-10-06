@@ -64,6 +64,13 @@ export const authApi = createApi({
       }),
     }),
 
+    updateProfile: builder.mutation({
+      query: (body) => ({
+        url: "/users/update-profile",
+        method: "PATCH",
+        body,
+      }),
+    }),
     getUser: builder.query<getUserType, string>({
       query: (id) => `/users/me/${id}`,
       providesTags: ["GetUser"],
@@ -75,4 +82,5 @@ export const {
   useRegisterAuthMutation,
   useLoginAuthMutation,
   useGetUserQuery,
+  useUpdateProfileMutation,
 } = authApi;

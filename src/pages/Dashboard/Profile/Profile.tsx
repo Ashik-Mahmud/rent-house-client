@@ -10,14 +10,12 @@ import { BiCamera, BiEdit } from "react-icons/bi";
 import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
-import { useGetUserQuery } from "../../../services/AuthApi";
 import ImageChangeModal from "./ImageChangeModal";
 import ProfileModal from "./ProfileModal";
 type Props = {};
 
 const Profile = (props: Props) => {
-  const { user } = useAuth<authUserInterface | any>({});
-  const { data } = useGetUserQuery(user?.user?._id);
+  const { user, updatedUser: data } = useAuth<authUserInterface | any>({});
 
   const dateDistance = formatDistance(
     new Date(),
@@ -37,7 +35,7 @@ const Profile = (props: Props) => {
           <div className="flex items-center gap-2">
             <h2 className="text-2xl font-bold">
               <span className="text-success">
-                {data?.data?.name || "No Available"}'s
+                {data?.name || "No Available"}'s
               </span>{" "}
               Profile{" "}
             </h2>
@@ -47,8 +45,8 @@ const Profile = (props: Props) => {
             <div className="flex items-center justify-between">
               <div className="profile-image rounded-full  w-32 h-32 relative  ">
                 <img
-                  src={data?.data?.avatar}
-                  alt={data?.data?.name}
+                  src={data?.avatar}
+                  alt={data?.name}
                   className="w-32 h-32 rounded-full border-4 border-success object-cover shadow-lg"
                 />
                 <label
@@ -60,30 +58,42 @@ const Profile = (props: Props) => {
               </div>
               <div className="social-links">
                 <ul className="flex justify-center items-center gap-5 py-5">
-                  <li className="tooltip" data-tip="Facebook">
-                    <a
-                      href="/"
-                      className="btn-sm text-lg btn-circle btn-ghost btn btn-outline"
-                    >
-                      <BsFacebook />
-                    </a>
-                  </li>
-                  <li className="tooltip" data-tip="Twitter">
-                    <a
-                      href="/"
-                      className="btn-sm text-lg btn-circle btn-ghost btn btn-outline"
-                    >
-                      <BsTwitter />
-                    </a>
-                  </li>
-                  <li className="tooltip" data-tip="Instagram">
-                    <a
-                      href="/"
-                      className="btn-sm text-lg btn-circle btn-ghost btn btn-outline"
-                    >
-                      <BsInstagram />
-                    </a>
-                  </li>
+                  {data?.facebookLink && (
+                    <li className="tooltip" data-tip="Facebook">
+                      <a
+                        href={data?.facebookLink}
+                        target="_blank"
+                        className="btn-sm text-lg btn-circle btn-ghost btn btn-outline"
+                        rel="noreferrer"
+                      >
+                        <BsFacebook />
+                      </a>
+                    </li>
+                  )}
+                  {data?.twitterLink && (
+                    <li className="tooltip" data-tip="Twitter">
+                      <a
+                        href={data?.twitterLink}
+                        target="_blank"
+                        className="btn-sm text-lg btn-circle btn-ghost btn btn-outline"
+                        rel="noreferrer"
+                      >
+                        <BsTwitter />
+                      </a>
+                    </li>
+                  )}
+                  {data?.instagramLink && (
+                    <li className="tooltip" data-tip="Instagram">
+                      <a
+                        href={data?.instagramLink}
+                        target="_blank"
+                        className="btn-sm text-lg btn-circle btn-ghost btn btn-outline"
+                        rel="noreferrer"
+                      >
+                        <BsInstagram />
+                      </a>
+                    </li>
+                  )}
                 </ul>
               </div>
             </div>
@@ -99,7 +109,7 @@ const Profile = (props: Props) => {
               <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
                 <span className="profile-details-item-label">Verified</span>
                 <span className="profile-details-item-value ">
-                  {data?.data?.isVerified ? (
+                  {data?.isVerified ? (
                     <span className="badge badge-success">Verified</span>
                   ) : (
                     <>
@@ -118,25 +128,25 @@ const Profile = (props: Props) => {
               <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
                 <span className="profile-details-item-label">Name</span>
                 <span className="profile-details-item-value font-bold">
-                  {data?.data?.name || "No Available"}
+                  {data?.name || "No Available"}
                 </span>
               </div>
               <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
                 <span className="profile-details-item-label">Email</span>
                 <span className="profile-details-item-value font-bold">
-                  {data?.data?.email || "No Available"}
+                  {data?.email || "No Available"}
                 </span>
               </div>
               <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
                 <span className="profile-details-item-label">Phone</span>
                 <span className="profile-details-item-value font-bold">
-                  {data?.data?.phone || "No Available"}
+                  {data?.phone || "No Available"}
                 </span>
               </div>
               <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
                 <span className="profile-details-item-label">Address</span>
                 <span className="profile-details-item-value font-bold">
-                  {data?.data?.address || "No Available"}
+                  {data?.address || "No Available"}
                 </span>
               </div>
               <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
@@ -149,9 +159,9 @@ const Profile = (props: Props) => {
                 <span className="profile-details-item-label">Role</span>
                 <span className="profile-details-item-value font-bold">
                   <span className="badge badge-outline">
-                    {data?.data?.role === "user"
+                    {data?.role === "user"
                       ? "House Holder"
-                      : data?.data?.role || "No Available"}
+                      : data?.role || "No Available"}
                   </span>
                 </span>
               </div>
