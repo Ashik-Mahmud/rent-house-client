@@ -7,7 +7,7 @@ type Props = {
 };
 
 const AuthChangeRoute = ({ children }: Props) => {
-  const [user] = useAuth<authUserInterface | any>({});
+  const { user } = useAuth<authUserInterface | any>({});
 
   if (user?.token) {
     return <Navigate to="/dashboard" replace />;

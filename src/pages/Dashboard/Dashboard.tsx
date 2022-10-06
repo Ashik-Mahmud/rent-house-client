@@ -19,19 +19,23 @@ import {
   BsReceipt,
 } from "react-icons/bs";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
-import Cookies from "universal-cookie";
-import { useAppDispatch, useAppSelector } from "../../app/store";
+import { useAppDispatch } from "../../app/store";
 import { logout } from "../../features/AuthSlice";
 import useAuth from "../../hooks/useAuth";
 
 import { authUserInterface } from "../../interfaces/UserInterface";
+import { useGetUserQuery } from "../../services/AuthApi";
 
 type Props = {};
 
 const Dashboard = (props: Props) => {
   const [isPhone, setIsPhone] = useState<boolean>(true);
-
-  const menuArray = [
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const { user, setUser } = useAuth<authUserInterface | any>({});
+  const { data } = useGetUserQuery(user?.user?._id);
+  const role = data?.data?.role;
+  let menuArray = [
     {
       id: 1,
       title: "Dashboard",
@@ -50,84 +54,137 @@ const Dashboard = (props: Props) => {
       icon: <BiPlus />,
       link: "/dashboard/houses/add",
     },
+
     {
       id: 4,
-      title: "My Bookings",
-      icon: <BsBookFill />,
-      link: "/dashboard/bookings",
-    },
-    {
-      id: 5,
       title: "My Reviews",
       icon: <BsHeart />,
       link: "/dashboard/reviews",
     },
-
     {
-      id: 6,
+      id: 5,
       title: "Profile",
       icon: <BiUser />,
       link: "/dashboard/profile",
     },
-
+    {
+      id: 6,
+      title: "Settings",
+      icon: <BsGear />,
+      link: "/dashboard/settings",
+    },
     {
       id: 7,
       title: "Payments",
       icon: <BsCardChecklist />,
       link: "/dashboard/payments",
     },
-    {
-      id: 8,
-      title: "Messages",
-      icon: <BsMessenger />,
-      link: "/dashboard/messages",
-    },
-    {
-      id: 9,
-      title: "Settings",
-      icon: <BsGear />,
-      link: "/dashboard/settings",
-    },
-    {
-      id: 10,
-      title: "Users",
-      icon: <AiOutlineUser />,
-      link: "/dashboard/users",
-    },
-    {
-      id: 11,
-      title: "Blogs",
-      icon: <BsBookFill />,
-      link: "/dashboard/blogs",
-    },
-    {
-      id: 12,
-      title: "Request From Users",
-      icon: <BsReceipt />,
-      link: "/dashboard/request-from-users",
-    },
-    {
-      id: 13,
-      title: "Houses",
-      icon: <BsHouse />,
-      link: "/dashboard/admin/houses",
-    },
-    {
-      id: 14,
-      title: "Bookings",
-      icon: <BsBookFill />,
-      link: "/dashboard/purchase/bookings",
-    },
   ];
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
-  const [user, setUser] = useAuth<authUserInterface | any>({});
-  const cookies = new Cookies();
+
+  if (role === "customer") {
+    menuArray = [
+      {
+        id: 1,
+        title: "Dashboard",
+        icon: <BsGrid />,
+        link: "/dashboard",
+      },
+      {
+        id: 2,
+        title: "My Reviews",
+        icon: <BsHeart />,
+        link: "/dashboard/reviews",
+      },
+      {
+        id: 3,
+        title: "My Bookings",
+        icon: <BsBookFill />,
+        link: "/dashboard/bookings",
+      },
+      {
+        id: 4,
+        title: "Profile",
+        icon: <BiUser />,
+        link: "/dashboard/profile",
+      },
+      {
+        id: 5,
+        title: "Settings",
+        icon: <BsGear />,
+        link: "/dashboard/settings",
+      },
+
+      {
+        id: 6,
+        title: "Bookings",
+        icon: <BsBookFill />,
+        link: "/dashboard/purchase/bookings",
+      },
+    ];
+  }
+
+  if (role === "admin") {
+    menuArray = [
+      {
+        id: 9,
+        title: "Dashboard",
+        icon: <BsGrid />,
+        link: "/dashboard",
+      },
+      {
+        id: 1,
+        title: "Users",
+        icon: <AiOutlineUser />,
+        link: "/dashboard/users",
+      },
+      {
+        id: 2,
+        title: "Messages",
+        icon: <BsMessenger />,
+        link: "/dashboard/messages",
+      },
+      {
+        id: 3,
+        title: "Request From Users",
+        icon: <BsReceipt />,
+        link: "/dashboard/request-from-users",
+      },
+      {
+        id: 4,
+        title: "Houses",
+        icon: <BsHouse />,
+        link: "/dashboard/admin/houses",
+      },
+      {
+        id: 5,
+        title: "Profile",
+        icon: <BiUser />,
+        link: "/dashboard/profile",
+      },
+      {
+        id: 6,
+        title: "Settings",
+        icon: <BsGear />,
+        link: "/dashboard/settings",
+      },
+      {
+        id: 14,
+        title: "Settings",
+        icon: <BsGear />,
+        link: "/dashboard/settings",
+      },
+      {
+        id: 12,
+        title: "Blogs",
+        icon: <BsBookFill />,
+        link: "/dashboard/blogs",
+      },
+    ];
+  }
+
   /* Handle Logout */
 
   const dispatch = useAppDispatch();
-  const { user: newUser } = useAppSelector((state) => state.auth);
-
   const handleLogout = () => {
     setUser(null);
     dispatch(logout());
@@ -135,8 +192,7 @@ const Dashboard = (props: Props) => {
     toast.success("Logout Successfully");
   };
 
-  const cookieUser = cookies.get("user");
-  console.log(user, newUser, "Cookie User", cookieUser);
+  console.log(data?.data.role);
 
   return (
     <>
@@ -159,10 +215,10 @@ const Dashboard = (props: Props) => {
                   </MobileView>
                   <BrowserView>
                     Welcome to <span className="text-success">houseLagbe?</span>{" "}
-                    <span>
-                      {user?.user?.role === "user"
+                    <span className="capitalize">
+                      {data?.data.role === "user"
                         ? "House Holder"
-                        : user?.user?.role}
+                        : data?.data.role}
                     </span>{" "}
                     Panel
                   </BrowserView>
@@ -176,9 +232,9 @@ const Dashboard = (props: Props) => {
                 </div>
                 <div className="active-user flex items-center gap-1 text-sm text-green-500 select-none capitalize">
                   <div className="h-2 w-2 bg-green-500 rounded-full"></div>
-                  {user?.user?.role === "user"
+                  {data?.data.role === "user"
                     ? "House Holder"
-                    : user?.user?.role}
+                    : data?.data.role}
                 </div>
                 {!pathname.includes("/dashboard/houses/add") && (
                   <Link

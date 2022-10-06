@@ -16,7 +16,7 @@ import ProfileModal from "./ProfileModal";
 type Props = {};
 
 const Profile = (props: Props) => {
-  const [user] = useAuth<authUserInterface | any>({});
+  const { user } = useAuth<authUserInterface | any>({});
   const { data } = useGetUserQuery(user?.user?._id);
 
   const dateDistance = formatDistance(
@@ -37,7 +37,7 @@ const Profile = (props: Props) => {
           <div className="flex items-center gap-2">
             <h2 className="text-2xl font-bold">
               <span className="text-success">
-                {user?.user?.name || "No Available"}'s
+                {data?.data?.name || "No Available"}'s
               </span>{" "}
               Profile{" "}
             </h2>
@@ -47,8 +47,8 @@ const Profile = (props: Props) => {
             <div className="flex items-center justify-between">
               <div className="profile-image rounded-full  w-32 h-32 relative  ">
                 <img
-                  src={user?.user?.avatar}
-                  alt={user?.user?.name}
+                  src={data?.data?.avatar}
+                  alt={data?.data?.name}
                   className="w-32 h-32 rounded-full border-4 border-success object-cover shadow-lg"
                 />
                 <label
@@ -118,25 +118,25 @@ const Profile = (props: Props) => {
               <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
                 <span className="profile-details-item-label">Name</span>
                 <span className="profile-details-item-value font-bold">
-                  {user?.user?.name || "No Available"}
+                  {data?.data?.name || "No Available"}
                 </span>
               </div>
               <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
                 <span className="profile-details-item-label">Email</span>
                 <span className="profile-details-item-value font-bold">
-                  {user?.user?.email || "No Available"}
+                  {data?.data?.email || "No Available"}
                 </span>
               </div>
               <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
                 <span className="profile-details-item-label">Phone</span>
                 <span className="profile-details-item-value font-bold">
-                  {user?.user?.phone || "No Available"}
+                  {data?.data?.phone || "No Available"}
                 </span>
               </div>
               <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
                 <span className="profile-details-item-label">Address</span>
                 <span className="profile-details-item-value font-bold">
-                  {user?.user?.address || "No Available"}
+                  {data?.data?.address || "No Available"}
                 </span>
               </div>
               <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
@@ -149,9 +149,9 @@ const Profile = (props: Props) => {
                 <span className="profile-details-item-label">Role</span>
                 <span className="profile-details-item-value font-bold">
                   <span className="badge badge-outline">
-                    {user?.user?.role === "user"
+                    {data?.data?.role === "user"
                       ? "House Holder"
-                      : user?.user?.role || "No Available"}
+                      : data?.data?.role || "No Available"}
                   </span>
                 </span>
               </div>

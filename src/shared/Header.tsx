@@ -9,14 +9,14 @@ import { authUserInterface } from "../interfaces/UserInterface";
 type Props = {};
 
 const Header = (props: Props) => {
-  const [users, setUsers] = useAuth<authUserInterface | any>({});
+  const { user, setUser } = useAuth<authUserInterface | any>({});
 
   /* Handle Logout */
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    setUsers(null);
+    setUser(null);
     dispatch(logout());
     toast.success("Logout Successfully");
     navigate("/login");
@@ -45,7 +45,7 @@ const Header = (props: Props) => {
         <NavLink to="/contact">Contact</NavLink>
       </li>
 
-      {users?.isAuthenticated && (
+      {user?.isAuthenticated && (
         <li>
           <Link to="/dashboard">
             Dashboard{" "}
@@ -55,7 +55,7 @@ const Header = (props: Props) => {
           </Link>
         </li>
       )}
-      {!users?.isAuthenticated && (
+      {!user?.isAuthenticated && (
         <Link className="btn btn-md btn-success sm:ml-10 " to={"/login"}>
           Login
         </Link>
@@ -109,14 +109,14 @@ const Header = (props: Props) => {
               />
             </div>
           </BrowserView>
-          {users?.isAuthenticated && (
+          {user?.isAuthenticated && (
             <div className="dropdown dropdown-end">
               <label
                 tabIndex={0}
                 className="btn btn-ghost btn-circle avatar online"
               >
                 <div className="w-10 rounded-full">
-                  <img src={users?.user?.avatar} alt="" />
+                  <img src={user?.user?.avatar} alt="" />
                 </div>
               </label>
               <ul

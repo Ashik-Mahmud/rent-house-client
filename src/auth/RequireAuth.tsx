@@ -5,7 +5,7 @@ import { authUserInterface } from "../interfaces/UserInterface";
 type Props = { children: React.ReactNode };
 
 const RequireAuth = ({ children }: Props) => {
-  const [user] = useAuth<authUserInterface | any>({});
+  const { user } = useAuth<authUserInterface | any>({});
   const location = useLocation();
 
   if (!user?.token) {
