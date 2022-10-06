@@ -17,7 +17,7 @@ import {
   BsMessenger,
   BsReceipt,
 } from "react-icons/bs";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import useHandleLogout from "../../hooks/useHandleLogout";
 import { authUserInterface } from "../../interfaces/UserInterface";
@@ -116,13 +116,14 @@ const Dashboard = (props: Props) => {
     },
   ];
   const { pathname } = useLocation();
-
+  const navigate = useNavigate();
   const [user, setUser] = useAuth<authUserInterface | any>({});
   /* Handle Logout */
   const [handleLogout] = useHandleLogout();
   const logout = () => {
     setUser(null);
     handleLogout();
+    navigate("/login");
   };
   console.log(user);
 
@@ -147,7 +148,12 @@ const Dashboard = (props: Props) => {
                   </MobileView>
                   <BrowserView>
                     Welcome to <span className="text-success">houseLagbe?</span>{" "}
-                    Admin Panel
+                    <span>
+                      {user?.user?.role === "user"
+                        ? "House Holder"
+                        : user?.user?.role}
+                    </span>{" "}
+                    Panel
                   </BrowserView>
                 </span>
               </div>
@@ -157,16 +163,21 @@ const Dashboard = (props: Props) => {
                     Browsing at {osName} {osVersion}
                   </span>
                 </div>
-                <div className="active-user flex items-center gap-1 text-sm text-green-500 select-none">
+                <div className="active-user flex items-center gap-1 text-sm text-green-500 select-none capitalize">
                   <div className="h-2 w-2 bg-green-500 rounded-full"></div>
-                  {user?.user?.role}
+                  {user?.user?.role === "user"
+                    ? "House Holder"
+                    : user?.user?.role}
                 </div>
-                <Link
-                  to=""
-                  className="flex items-center gap-2 btn btn-success btn-outline rounded-sm btn-sm"
-                >
-                  Post House <BiPlus />
-                </Link>
+                {!pathname.includes("/dashboard/houses/add") && (
+                  <Link
+                    to="/dashboard/houses/add"
+                    className="flex items-center gap-2 btn btn-success btn-outline rounded-sm btn-sm"
+                  >
+                    Post House <BiPlus />
+                  </Link>
+                )}
+
                 <div className="dropdown dropdown-end ">
                   <label
                     tabIndex={0}
