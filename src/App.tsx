@@ -1,5 +1,6 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import AuthChangeRoute from "./auth/AuthChangeRoute";
+import RequireAdmin from "./auth/RequireAdmin";
 import RequireAuth from "./auth/RequireAuth";
 import About from "./pages/About";
 import Login from "./pages/Authentication/Login";
@@ -115,15 +116,36 @@ function App() {
           <Route path="purchase/bookings" element={<PurchaseHouse />} />
 
           {/* Admin Routes */}
-          <Route path="messages" element={<Messages />} />
-          <Route path="users" element={<Users />} />
+          <Route
+            path="messages"
+            element={
+              <RequireAdmin>
+                <Messages />
+              </RequireAdmin>
+            }
+          />
+          <Route
+            path="users"
+            element={
+              <RequireAdmin>
+                <Users />
+              </RequireAdmin>
+            }
+          />
           <Route path="blogs" element={<MyBlogs />}>
             <Route index element={<UsersBlogs />} />
             <Route path="users-blogs" element={<UsersBlogs />} />
             <Route path="update" element={<UpdateBlogs />} />
             <Route path="add" element={<AddBlog />} />
           </Route>
-          <Route path="request-from-users" element={<RequestFromUsers />}>
+          <Route
+            path="request-from-users"
+            element={
+              <RequireAdmin>
+                <RequestFromUsers />
+              </RequireAdmin>
+            }
+          >
             <Route
               path="for-house-holder"
               element={<ForHouseHolderRequest />}
@@ -131,12 +153,24 @@ function App() {
             <Route path="for-blogs" element={<ForBlogsRequest />} />
             <Route index element={<ForBlogsRequest />} />
           </Route>
+
           <Route
             path="request-from-users/for-house-holder"
-            element={<ForHouseHolderRequest />}
+            element={
+              <RequireAdmin>
+                <ForHouseHolderRequest />
+              </RequireAdmin>
+            }
           />
 
-          <Route path="admin/houses" element={<AdminHouses />}>
+          <Route
+            path="admin/houses"
+            element={
+              <RequireAdmin>
+                <AdminHouses />
+              </RequireAdmin>
+            }
+          >
             <Route index element={<UnapprovedHouses />} />
             <Route path="approved" element={<ApprovedHouses />} />
             <Route path="unapproved" element={<UnapprovedHouses />} />
