@@ -1,8 +1,24 @@
+import { useForm } from "react-hook-form";
 import { BsImage } from "react-icons/bs";
+import useAuth from "../../../hooks/useAuth";
+import { authUserInterface } from "../../../interfaces/UserInterface";
+import { useChangeProfilePictureMutation } from "../../../services/AuthApi";
 
 type Props = {};
 
 const ImageChangeModal = (props: Props) => {
+  const { updatedUser } = useAuth<authUserInterface | any>({});
+  const [changeProfilePicture] = useChangeProfilePictureMutation();
+  const { register, handleSubmit } = useForm();
+  /* Handle change profile picture */
+  const handleChangeProfile = handleSubmit(async (formDataImage) => {
+    const imageInfo = formDataImage?.profileImage[0];
+    const formData = new FormData();
+    formData.append("profileImage", imageInfo, imageInfo.name);
+    formData.append("email", updatedUser?.email || "");
+    await changeProfilePicture(formData);
+  });
+
   return (
     <div>
       <input
@@ -10,7 +26,12 @@ const ImageChangeModal = (props: Props) => {
         id="profile-image-edit-modal"
         className="modal-toggle"
       />
-      <div className="modal modal-bottom sm:modal-middle">
+      <form
+        encType="multipart/form-data"
+        method="post"
+        onSubmit={handleChangeProfile}
+        className="modal modal-bottom sm:modal-middle"
+      >
         <div className="modal-box w-11/12 max-w-5xl">
           <h3 className="font-bold text-xl">Change Image</h3>
 
@@ -34,6 +55,7 @@ const ImageChangeModal = (props: Props) => {
                 type="file"
                 className="form-control outline-none pl-4 w-full hidden"
                 id="choose-file"
+                {...register("profileImage", { required: true })}
               />
             </div>
             {/* End */}
@@ -48,7 +70,7 @@ const ImageChangeModal = (props: Props) => {
             <button className="btn btn-success">Save Image</button>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

@@ -63,7 +63,6 @@ export const authApi = createApi({
         body,
       }),
     }),
-
     updateProfile: builder.mutation({
       query: (body) => ({
         url: "/users/update-profile",
@@ -71,6 +70,13 @@ export const authApi = createApi({
         body,
       }),
       invalidatesTags: ["GetUser"],
+    }),
+    changeProfilePicture: builder.mutation({
+      query: (body) => ({
+        url: "/users/change-profile-picture",
+        method: "post",
+        body,
+      }),
     }),
     getUser: builder.query<getUserType, string>({
       query: (id) => `/users/me/${id}`,
@@ -84,4 +90,5 @@ export const {
   useLoginAuthMutation,
   useGetUserQuery,
   useUpdateProfileMutation,
+  useChangeProfilePictureMutation,
 } = authApi;
