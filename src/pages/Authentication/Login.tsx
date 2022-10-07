@@ -120,7 +120,7 @@ const Login = (props: Props) => {
               </div>
               <div className="form-control mt-6">
                 {isLoading ? (
-                  <button className="btn btn-success">
+                  <button type="button" className="btn btn-success">
                     <PulseLoader size={8} />
                   </button>
                 ) : (

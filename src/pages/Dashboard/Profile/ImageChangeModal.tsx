@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { BsImage } from "react-icons/bs";
 import useAuth from "../../../hooks/useAuth";
@@ -10,6 +11,8 @@ const ImageChangeModal = (props: Props) => {
   const { updatedUser } = useAuth<authUserInterface | any>({});
   const [changeProfilePicture] = useChangeProfilePictureMutation();
   const { register, handleSubmit } = useForm();
+  const [imageName, setImageName] = useState<string>("");
+  const [previewSource, setPreviewSource] = useState<any>("");
   /* Handle change profile picture */
   const handleChangeProfile = handleSubmit(async (formDataImage) => {
     const imageInfo = formDataImage?.profileImage[0];
@@ -18,6 +21,14 @@ const ImageChangeModal = (props: Props) => {
     formData.append("email", updatedUser?.email || "");
     await changeProfilePicture(formData);
   });
+
+  const previewFile = (file: any) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setPreviewSource(reader.result);
+    };
+  };
 
   return (
     <div>
@@ -47,15 +58,40 @@ const ImageChangeModal = (props: Props) => {
                 htmlFor="choose-file"
                 className="input-group flex items-center my-2 border-2 border-dotted  py-14 rounded-md mt-2 justify-center cursor-grabbing"
               >
-                <div className="icon text-5xl">
-                  <BsImage />
-                </div>
+                {imageName ? (
+                  <>
+                    <div className="text-center">
+                      <h3 className="text-xl mb-4">{imageName}</h3>
+                      {previewSource && (
+                        <div
+                          className="w-48 h-48  overflow-hidden mx-auto border-8 border-success"
+                          style={{ borderRadius: "50%" }}
+                        >
+                          <img
+                            src={previewSource}
+                            alt="previewImage"
+                            className="w-full h-full object-cover rounded-full"
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </>
+                ) : (
+                  <div className="icon text-5xl">
+                    <BsImage />
+                  </div>
+                )}
               </label>
+
               <input
                 type="file"
                 className="form-control outline-none pl-4 w-full hidden"
                 id="choose-file"
                 {...register("profileImage", { required: true })}
+                onChange={(e: any) => {
+                  setImageName(e.target.files[0].name || "");
+                  previewFile(e.target.files[0]);
+                }}
               />
             </div>
             {/* End */}
@@ -64,6 +100,10 @@ const ImageChangeModal = (props: Props) => {
             <label
               htmlFor="profile-image-edit-modal"
               className="btn btn-warning"
+              onClick={() => {
+                setPreviewSource("");
+                setImageName("");
+              }}
             >
               Cancel
             </label>
