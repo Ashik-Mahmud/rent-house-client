@@ -1,6 +1,6 @@
-import BarCharts from "./BarCharts";
-import RecentBookings from "./RecentBookings";
-import UsersCharts from "./UsersCharts";
+import BarCharts from "./AdminDashboard/BarCharts";
+import RecentBookings from "./AdminDashboard/RecentBookings";
+import UsersCharts from "./AdminDashboard/UsersCharts";
 
 type Props = {};
 

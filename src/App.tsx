@@ -5,6 +5,8 @@ import RequireAuth from "./auth/RequireAuth";
 import RequireBlog from "./auth/RequireBlog";
 import RequireCustomer from "./auth/RequireCustomer";
 import RequireUser from "./auth/RequireUser";
+import useAuth from "./hooks/useAuth";
+import { authUserInterface } from "./interfaces/UserInterface";
 import About from "./pages/About";
 import Login from "./pages/Authentication/Login";
 import RegisterAuth from "./pages/Authentication/Register";
@@ -16,7 +18,9 @@ import ApprovedHouses from "./pages/Dashboard/AdminHouses/ApprovedHouses/Approve
 import RejectedHouses from "./pages/Dashboard/AdminHouses/RejectedHouses/RejectedHouses";
 import UnapprovedHouses from "./pages/Dashboard/AdminHouses/UnapprovedHouses/UnapprovedHouses";
 import Dashboard from "./pages/Dashboard/Dashboard";
-import DashboardContent from "./pages/Dashboard/Dashboard/DashboardContent";
+import AdminDashboard from "./pages/Dashboard/Dashboard/AdminDashboard/AdminDashboard";
+import CustomerDashboard from "./pages/Dashboard/Dashboard/CustomerDashboard/CustomerDashboard";
+import HouseHolderDashboard from "./pages/Dashboard/Dashboard/HouseHolderDashboard/HouseHolderDashboard";
 import Messages from "./pages/Dashboard/Messages/Messages";
 import AddBlog from "./pages/Dashboard/MyBlogs/AddBlog/AddBlog";
 import UpdateBlogs from "./pages/Dashboard/MyBlogs/AddBlog/UpdateBlogs";
@@ -49,7 +53,18 @@ import Header from "./shared/Header";
 import NotFoundPage from "./shared/NotFoundPage";
 
 function App() {
+  const { updatedUser } = useAuth<authUserInterface | any>({});
+
   const location = useLocation();
+  const sendDashboardForParticularRole = () => {
+    if (updatedUser?.role === "admin") {
+      return <AdminDashboard />;
+    } else if (updatedUser?.role === "user") {
+      return <HouseHolderDashboard />;
+    } else {
+      return <CustomerDashboard />;
+    }
+  };
   return (
     <div className="App font-open font-medium bg-cover bg-center bg-[#F5F6FA]">
       {!location.pathname.includes("dashboard") && <Header />}
@@ -82,7 +97,9 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/pricing" element={<Pricing />} />
-        {/* Dashboard Routes */}
+        {/* 
+           Dashboard Routes 
+        */}
         <Route
           path="/dashboard"
           element={
@@ -91,7 +108,7 @@ function App() {
             </RequireAuth>
           }
         >
-          <Route index element={<DashboardContent />} />
+          <Route index element={sendDashboardForParticularRole()} />
 
           {/* Users Routes */}
           <Route
