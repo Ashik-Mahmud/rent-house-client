@@ -54,7 +54,12 @@ const Dashboard = (props: Props) => {
       icon: <BiPlus />,
       link: "/dashboard/houses/add",
     },
-
+    {
+      id: 7,
+      title: "Payments",
+      icon: <BsCardChecklist />,
+      link: "/dashboard/payments",
+    },
     {
       id: 4,
       title: "My Reviews",
@@ -72,12 +77,6 @@ const Dashboard = (props: Props) => {
       title: "Settings",
       icon: <BsGear />,
       link: "/dashboard/settings",
-    },
-    {
-      id: 7,
-      title: "Payments",
-      icon: <BsCardChecklist />,
-      link: "/dashboard/payments",
     },
   ];
 
