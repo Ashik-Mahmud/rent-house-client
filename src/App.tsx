@@ -2,6 +2,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import AuthChangeRoute from "./auth/AuthChangeRoute";
 import RequireAdmin from "./auth/RequireAdmin";
 import RequireAuth from "./auth/RequireAuth";
+import RequireBlog from "./auth/RequireBlog";
 import RequireUser from "./auth/RequireUser";
 import About from "./pages/About";
 import Login from "./pages/Authentication/Login";
@@ -173,7 +174,14 @@ function App() {
               </RequireAdmin>
             }
           />
-          <Route path="blogs" element={<MyBlogs />}>
+          <Route
+            path="blogs"
+            element={
+              <RequireBlog>
+                <MyBlogs />
+              </RequireBlog>
+            }
+          >
             <Route index element={<UsersBlogs />} />
             <Route path="users-blogs" element={<UsersBlogs />} />
             <Route path="update" element={<UpdateBlogs />} />
