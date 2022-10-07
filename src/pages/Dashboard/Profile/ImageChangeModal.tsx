@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { BsImage } from "react-icons/bs";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
@@ -9,40 +10,50 @@ type Props = {};
 
 const ImageChangeModal = (props: Props) => {
   const { updatedUser } = useAuth<authUserInterface | any>({});
-  const [changeProfilePicture] = useChangeProfilePictureMutation();
-  const { register, handleSubmit } = useForm();
+  const [changeProfilePicture, { data, isSuccess }] =
+    useChangeProfilePictureMutation();
+  const { register, handleSubmit, watch, reset } = useForm();
   const [imageName, setImageName] = useState<string>("");
   const [previewSource, setPreviewSource] = useState<any>("");
   /* Handle change profile picture */
   const handleChangeProfile = handleSubmit(async (formDataImage) => {
     const imageInfo = formDataImage?.profileImage[0];
+    console.log(formDataImage?.profileImage);
     const formData = new FormData();
-    formData.append("profileImage", imageInfo, imageInfo.name);
+    formData.append("profileImage", imageInfo, imageInfo?.name);
     formData.append("email", updatedUser?.email || "");
     await changeProfilePicture(formData);
+    reset();
   });
 
-  const previewFile = (file: any) => {
+  watch((data, { name, type }) => {
     const reader = new FileReader();
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(data?.profileImage[0] || "");
     reader.onloadend = () => {
       setPreviewSource(reader.result);
     };
-  };
+    setImageName(data?.profileImage[0]?.name);
+  });
+
+  /* Handle Data */
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success(data?.message);
+    }
+  }, [data, isSuccess]);
 
   return (
-    <div>
+    <form
+      encType="multipart/form-data"
+      method="post"
+      onSubmit={handleChangeProfile}
+    >
       <input
         type="checkbox"
         id="profile-image-edit-modal"
         className="modal-toggle"
       />
-      <form
-        encType="multipart/form-data"
-        method="post"
-        onSubmit={handleChangeProfile}
-        className="modal modal-bottom sm:modal-middle"
-      >
+      <div className="modal modal-bottom sm:modal-middle">
         <div className="modal-box w-11/12 max-w-5xl">
           <h3 className="font-bold text-xl">Change Image</h3>
 
@@ -88,10 +99,6 @@ const ImageChangeModal = (props: Props) => {
                 className="form-control outline-none pl-4 w-full hidden"
                 id="choose-file"
                 {...register("profileImage", { required: true })}
-                onChange={(e: any) => {
-                  setImageName(e.target.files[0].name || "");
-                  previewFile(e.target.files[0]);
-                }}
               />
             </div>
             {/* End */}
@@ -110,8 +117,8 @@ const ImageChangeModal = (props: Props) => {
             <button className="btn btn-success">Save Image</button>
           </div>
         </div>
-      </form>
-    </div>
+      </div>
+    </form>
   );
 };
 
