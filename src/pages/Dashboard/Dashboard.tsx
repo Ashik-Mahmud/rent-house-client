@@ -32,7 +32,7 @@ const Dashboard = (props: Props) => {
   const [isPhone, setIsPhone] = useState<boolean>(true);
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const { user, setUser } = useAuth<authUserInterface | any>({});
+  const { user, setUser, updatedUser } = useAuth<authUserInterface | any>({});
   const { data } = useGetUserQuery(user?.user?._id);
   const role = data?.data?.role;
   let menuArray = [
@@ -179,6 +179,18 @@ const Dashboard = (props: Props) => {
         link: "/dashboard/blogs",
       },
     ];
+  }
+
+  if (
+    (updatedUser?.role === "user" || updatedUser?.role === "customer") &&
+    updatedUser?.blogAllowed === true
+  ) {
+    menuArray.push({
+      id: 12,
+      title: "Blogs",
+      icon: <BsBookFill />,
+      link: "/dashboard/blogs",
+    });
   }
 
   /* Handle Logout */

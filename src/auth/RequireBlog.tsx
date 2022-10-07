@@ -8,7 +8,7 @@ type Props = {
 };
 
 const RequireBlog = ({ children }: Props) => {
-  const { updatedUser, isLoading } = useAuth<authUserInterface>({});
+  const { updatedUser, isLoading } = useAuth<authUserInterface | any>({});
 
   const location = useLocation();
 
