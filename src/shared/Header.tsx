@@ -9,7 +9,11 @@ import { authUserInterface } from "../interfaces/UserInterface";
 type Props = {};
 
 const Header = (props: Props) => {
-  const { user, setUser } = useAuth<authUserInterface | any>({});
+  const {
+    user,
+    setUser,
+    updatedUser: data,
+  } = useAuth<authUserInterface | any>({});
 
   /* Handle Logout */
   const dispatch = useAppDispatch();
@@ -116,7 +120,14 @@ const Header = (props: Props) => {
                 className="btn btn-ghost btn-circle avatar online"
               >
                 <div className="w-10 rounded-full">
-                  <img src={user?.user?.avatar} alt="" />
+                  <img
+                    src={
+                      data?.profileImage
+                        ? "http://localhost:5000/profiles/" + data?.profileImage
+                        : user?.user?.avatar
+                    }
+                    alt={data?.name}
+                  />
                 </div>
               </label>
               <ul

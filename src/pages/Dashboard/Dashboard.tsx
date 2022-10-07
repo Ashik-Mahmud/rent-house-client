@@ -249,7 +249,15 @@ const Dashboard = (props: Props) => {
                     className="btn btn-ghost btn-circle avatar"
                   >
                     <div className="w-10 rounded-full">
-                      <img src={user?.user?.avatar} alt={user?.user?.name} />
+                      <img
+                        src={
+                          data?.data?.profileImage
+                            ? "http://localhost:5000/profiles/" +
+                              data?.data?.profileImage
+                            : user?.user?.avatar
+                        }
+                        alt={user?.user?.name}
+                      />
                     </div>
                   </label>
                   <ul
