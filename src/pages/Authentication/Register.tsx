@@ -55,13 +55,13 @@ const RegisterAuth = (props: Props) => {
       }}
     >
       <div>
-        <div className="hero-content flex-col lg:flex-row-reverse shadow-lg border rounded-lg p-10 ">
+        <div className="hero-content flex-col lg:flex-row-reverse shadow-lg border rounded-lg sm:p-10 ">
           <form
             onSubmit={registerForm}
             method="post"
-            className="card flex-shrink-0 w-full max-w-sm  "
+            className="card flex-shrink-0 w-full sm:max-w-sm  p-3"
           >
-            <div className="card-body">
+            <div className="card-body p-3">
               <div className="card-header mb-3">
                 <h3 className="font-bold text-2xl">Register</h3>
                 <h3 className="text-2xl">For List Your Houses Here</h3>
