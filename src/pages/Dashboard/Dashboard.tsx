@@ -102,6 +102,12 @@ const Dashboard = (props: Props) => {
         link: "/dashboard/bookings",
       },
       {
+        id: 6,
+        title: "Bookings",
+        icon: <BsBookFill />,
+        link: "/dashboard/purchase/bookings",
+      },
+      {
         id: 4,
         title: "Profile",
         icon: <BiUser />,
@@ -112,13 +118,6 @@ const Dashboard = (props: Props) => {
         title: "Settings",
         icon: <BsGear />,
         link: "/dashboard/settings",
-      },
-
-      {
-        id: 6,
-        title: "Bookings",
-        icon: <BsBookFill />,
-        link: "/dashboard/purchase/bookings",
       },
     ];
   }

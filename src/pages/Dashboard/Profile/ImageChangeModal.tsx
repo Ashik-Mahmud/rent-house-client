@@ -18,7 +18,6 @@ const ImageChangeModal = (props: Props) => {
   /* Handle change profile picture */
   const handleChangeProfile = handleSubmit(async (formDataImage) => {
     const imageInfo = formDataImage?.profileImage[0];
-    console.log(formDataImage?.profileImage);
     const formData = new FormData();
     formData.append("profileImage", imageInfo, imageInfo?.name);
     formData.append("email", updatedUser?.email || "");
@@ -34,6 +33,8 @@ const ImageChangeModal = (props: Props) => {
     };
     setImageName(data?.profileImage[0]?.name);
   });
+
+  console.log(data, isSuccess);
 
   /* Handle Data */
   useEffect(() => {
