@@ -1,6 +1,6 @@
 import RecentBookings from "../AdminDashboard/RecentBookings";
-import BarCharts from "./BarCharts";
 import HouseReportChart from "./HouseReportChart";
+import MostLovesHouse from "./MostLovesHouse";
 
 type Props = {};
 
@@ -103,7 +103,7 @@ const HouseHolderDashboard = (props: Props) => {
 
       <div className="charts gap-6 shadow my-5 grid grid-cols-1 md:grid-cols-2 ">
         <HouseReportChart />
-        <BarCharts />
+        <MostLovesHouse />
       </div>
     </div>
   );
