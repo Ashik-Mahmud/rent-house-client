@@ -130,6 +130,12 @@ const Dashboard = (props: Props) => {
         link: "/dashboard",
       },
       {
+        id: 4,
+        title: "Houses",
+        icon: <BsHouse />,
+        link: "/dashboard/admin/houses",
+      },
+      {
         id: 1,
         title: "Users",
         icon: <AiOutlineUser />,
@@ -147,11 +153,12 @@ const Dashboard = (props: Props) => {
         icon: <BsReceipt />,
         link: "/dashboard/request-from-users",
       },
+
       {
-        id: 4,
-        title: "Houses",
-        icon: <BsHouse />,
-        link: "/dashboard/admin/houses",
+        id: 12,
+        title: "Blogs",
+        icon: <BsBookFill />,
+        link: "/dashboard/blogs",
       },
       {
         id: 5,
@@ -164,18 +171,6 @@ const Dashboard = (props: Props) => {
         title: "Settings",
         icon: <BsGear />,
         link: "/dashboard/settings",
-      },
-      {
-        id: 14,
-        title: "Settings",
-        icon: <BsGear />,
-        link: "/dashboard/settings",
-      },
-      {
-        id: 12,
-        title: "Blogs",
-        icon: <BsBookFill />,
-        link: "/dashboard/blogs",
       },
     ];
   }
