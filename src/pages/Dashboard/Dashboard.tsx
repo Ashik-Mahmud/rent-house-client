@@ -235,12 +235,18 @@ const Dashboard = (props: Props) => {
                     : data?.data?.role}
                 </div>
                 {!pathname.includes("/dashboard/houses/add") && (
-                  <Link
-                    to="/dashboard/houses/add"
-                    className="flex items-center gap-2 btn btn-success btn-outline rounded-sm btn-sm"
-                  >
-                    Post House <BiPlus />
-                  </Link>
+                  <>
+                    {role !== "customer" && role !== "admin" ? (
+                      <>
+                        <Link
+                          to="/dashboard/houses/add"
+                          className="flex items-center gap-2 btn btn-success btn-outline rounded-sm btn-sm"
+                        >
+                          Post House <BiPlus />
+                        </Link>
+                      </>
+                    ) : null}
+                  </>
                 )}
 
                 <div className="dropdown dropdown-end ">

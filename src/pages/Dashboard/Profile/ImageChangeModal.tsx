@@ -28,7 +28,7 @@ const ImageChangeModal = (props: Props) => {
 
   watch((data, { name, type }) => {
     const reader = new FileReader();
-    reader.readAsDataURL(data?.profileImage[0] || "");
+    reader?.readAsDataURL(data?.profileImage[0] || "");
     reader.onloadend = () => {
       setPreviewSource(reader.result);
     };
