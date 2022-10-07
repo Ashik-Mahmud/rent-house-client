@@ -12,6 +12,7 @@ export interface UserInterface {
   blogAllowed: boolean;
   avatar: string;
   status: string;
+  profileImage?: string;
   createdAt?: string;
   updatedAt?: string;
 }

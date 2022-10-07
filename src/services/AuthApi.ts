@@ -77,6 +77,7 @@ export const authApi = createApi({
         method: "post",
         body,
       }),
+      invalidatesTags: ["GetUser"],
     }),
     getUser: builder.query<getUserType, string>({
       query: (id) => `/users/me/${id}`,

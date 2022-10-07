@@ -27,7 +27,7 @@ const Profile = (props: Props) => {
 
   /* Last Login  */
   const result = format(new Date(user?.user?.updatedAt), "PPPP BBBB ppp");
-
+  console.log(data);
   return (
     <>
       <div>
@@ -45,7 +45,11 @@ const Profile = (props: Props) => {
             <div className="flex items-center justify-between">
               <div className="profile-image rounded-full  w-32 h-32 relative  ">
                 <img
-                  src={data?.avatar}
+                  src={
+                    data?.profileImage
+                      ? "http://localhost:5000/profiles/" + data?.profileImage
+                      : data?.avatar
+                  }
                   alt={data?.name}
                   className="w-32 h-32 rounded-full border-4 border-success object-cover shadow-lg"
                 />
