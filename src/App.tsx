@@ -160,6 +160,14 @@ function App() {
               </RequireUser>
             }
           />
+          <Route
+            path="payments"
+            element={
+              <RequireUser>
+                <Payments />
+              </RequireUser>
+            }
+          />
 
           {/* Common Routes */}
           <Route path="reviews" element={<MyReviews />}>
@@ -171,14 +179,6 @@ function App() {
           <Route path="settings" element={<Settings />} />
 
           {/* Customers Routes */}
-          <Route
-            path="payments"
-            element={
-              <RequireCustomer>
-                <Payments />
-              </RequireCustomer>
-            }
-          />
           <Route
             path="purchase/bookings"
             element={
