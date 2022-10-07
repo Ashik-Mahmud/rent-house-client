@@ -27,7 +27,7 @@ const Profile = (props: Props) => {
 
   /* Last Login  */
   const result = format(new Date(user?.user?.updatedAt), "PPPP BBBB ppp");
-  console.log(data);
+
   return (
     <>
       <div>

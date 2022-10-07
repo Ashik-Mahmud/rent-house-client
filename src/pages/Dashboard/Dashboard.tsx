@@ -187,8 +187,8 @@ const Dashboard = (props: Props) => {
   const dispatch = useAppDispatch();
   const handleLogout = () => {
     setUser(null);
-    dispatch(logout());
     navigate("/login");
+    dispatch(logout());
     toast.success("Logout Successfully");
   };
 

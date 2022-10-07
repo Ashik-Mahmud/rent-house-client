@@ -42,7 +42,7 @@ const AuthSlice = createSlice({
       state.user = undefined;
       state.token = undefined;
       state.isAuthenticated = false;
-      cookies.remove("user");
+      cookies.remove("user", { path: "/" });
     },
   },
 });

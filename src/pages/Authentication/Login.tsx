@@ -45,7 +45,7 @@ const Login = (props: Props) => {
       toast.success("Login Success");
     }
   }, [isSuccess, error, data, navigate, dispatch]);
-
+  console.log(data, isSuccess, error);
   return (
     <div
       className="flex justify-center p-20 bg-cover"
