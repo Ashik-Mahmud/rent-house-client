@@ -49,7 +49,7 @@ const RegisterAuth = (props: Props) => {
 
   return (
     <div
-      className="flex justify-center p-20 bg-cover"
+      className="flex justify-center sm:p-20 bg-cover"
       style={{
         backgroundImage: `url(${require("../../assets/images/bg.png")})`,
       }}
