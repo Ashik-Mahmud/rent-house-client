@@ -34,8 +34,6 @@ const ImageChangeModal = (props: Props) => {
     setImageName(data?.profileImage[0]?.name);
   });
 
-  console.log(data, isSuccess);
-
   /* Handle Data */
   useEffect(() => {
     if (isSuccess) {
