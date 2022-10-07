@@ -16,7 +16,7 @@ const RequireCustomer = ({ children }: Props) => {
   }
 
   if (updatedUser?.role !== "customer") {
-    toast.error("You are not allowed to access to Customer");
+    toast.error("Access Denied");
     return <Navigate to="/dashboard" replace state={{ from: location }} />;
   }
 

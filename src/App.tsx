@@ -3,6 +3,7 @@ import AuthChangeRoute from "./auth/AuthChangeRoute";
 import RequireAdmin from "./auth/RequireAdmin";
 import RequireAuth from "./auth/RequireAuth";
 import RequireBlog from "./auth/RequireBlog";
+import RequireCustomer from "./auth/RequireCustomer";
 import RequireUser from "./auth/RequireUser";
 import About from "./pages/About";
 import Login from "./pages/Authentication/Login";
@@ -153,9 +154,30 @@ function App() {
           <Route path="settings" element={<Settings />} />
 
           {/* Customers Routes */}
-          <Route path="payments" element={<Payments />} />
-          <Route path="purchase/bookings" element={<PurchaseHouse />} />
-          <Route path="bookings" element={<MyBookings />} />
+          <Route
+            path="payments"
+            element={
+              <RequireCustomer>
+                <Payments />
+              </RequireCustomer>
+            }
+          />
+          <Route
+            path="purchase/bookings"
+            element={
+              <RequireCustomer>
+                <PurchaseHouse />
+              </RequireCustomer>
+            }
+          />
+          <Route
+            path="bookings"
+            element={
+              <RequireCustomer>
+                <MyBookings />
+              </RequireCustomer>
+            }
+          />
 
           {/* Admin Routes */}
           <Route
