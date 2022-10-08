@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { BiLockAlt } from "react-icons/bi";
+import { useAppDispatch } from "../../../app/store";
+import { logout } from "../../../features/AuthSlice";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import { useChangePasswordMutation } from "../../../services/AuthApi";
@@ -17,6 +19,7 @@ const Settings = (props: Props) => {
     useChangePasswordMutation();
 
   const { register, handleSubmit, reset } = useForm();
+  const dispatch = useAppDispatch();
 
   /* Handle Change Password Form */
   const handleChangePassword = handleSubmit(async (formData) => {
@@ -46,11 +49,11 @@ const Settings = (props: Props) => {
     if (error) toast.error((error as any)?.data?.message);
     if (isSuccess) {
       toast.success(
-        data?.message +
-          " Now you may login using the new password in the next time"
+        data?.message + " Now you may login using the new password"
       );
+      dispatch(logout());
     }
-  }, [isSuccess, data, error]);
+  }, [isSuccess, data, error, dispatch]);
 
   return (
     <div>
