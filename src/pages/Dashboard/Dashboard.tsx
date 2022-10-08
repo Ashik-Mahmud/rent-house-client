@@ -7,7 +7,7 @@ import {
 } from "react-device-detect";
 import toast from "react-hot-toast";
 import { AiOutlineUser } from "react-icons/ai";
-import { BiPlus, BiUser } from "react-icons/bi";
+import { BiGitPullRequest, BiPlus, BiUser } from "react-icons/bi";
 import {
   BsBookFill,
   BsCardChecklist,
@@ -73,6 +73,12 @@ const Dashboard = (props: Props) => {
       link: "/dashboard/profile",
     },
     {
+      id: 7,
+      title: "Feature Requests",
+      icon: <BiGitPullRequest />,
+      link: "/dashboard/feature-request",
+    },
+    {
       id: 6,
       title: "Settings",
       icon: <BsGear />,
@@ -111,6 +117,12 @@ const Dashboard = (props: Props) => {
         title: "Profile",
         icon: <BiUser />,
         link: "/dashboard/profile",
+      },
+      {
+        id: 7,
+        title: "Feature Requests",
+        icon: <BiGitPullRequest />,
+        link: "/dashboard/feature-request",
       },
       {
         id: 5,

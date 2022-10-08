@@ -21,6 +21,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import AdminDashboard from "./pages/Dashboard/Dashboard/AdminDashboard/AdminDashboard";
 import CustomerDashboard from "./pages/Dashboard/Dashboard/CustomerDashboard/CustomerDashboard";
 import HouseHolderDashboard from "./pages/Dashboard/Dashboard/HouseHolderDashboard/HouseHolderDashboard";
+import FeatureRequest from "./pages/Dashboard/FeatureRequest/FeatureRequest";
 import Messages from "./pages/Dashboard/Messages/Messages";
 import AddBlog from "./pages/Dashboard/MyBlogs/AddBlog/AddBlog";
 import UpdateBlogs from "./pages/Dashboard/MyBlogs/AddBlog/UpdateBlogs";
@@ -175,6 +176,10 @@ function App() {
             <Route path="my-reviews" element={<UserReviews />} />
             <Route index element={<UserReviews />} />
           </Route>
+          <Route
+            path="/dashboard/feature-request"
+            element={<FeatureRequest />}
+          />
           <Route path="profile" element={<Profile />} />
           <Route path="settings" element={<Settings />} />
 
