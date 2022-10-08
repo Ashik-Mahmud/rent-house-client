@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import ReactStars from "react-stars";
 import { toast } from "react-toastify";
 import SendVerifyEmail from "../../../components/SendVerifyEmail";
@@ -17,6 +18,8 @@ const AddReview = (props: Props) => {
   const isVerify = updatedUser?.isVerified;
   const { handleSubmit, register, reset } = useForm();
   const [AddReview, { data, isSuccess, error }] = useAddReviewMutation();
+
+  const navigate = useNavigate();
 
   const [rating, setRating] = useState(1);
   const ratingChanged = (newRating: number) => {
@@ -53,8 +56,9 @@ const AddReview = (props: Props) => {
         position: "bottom-center",
         type: "success",
       });
+      navigate("/dashboard/reviews/my-reviews", { replace: true });
     }
-  }, [data, isSuccess, error]);
+  }, [data, isSuccess, error, navigate]);
 
   return (
     <div>

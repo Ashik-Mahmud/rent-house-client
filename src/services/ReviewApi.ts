@@ -31,6 +31,7 @@ export const ReviewApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ["AddReview"],
   endpoints: (builder) => ({
     AddReview: builder.mutation<addReviewTypeResult, AddReviewType | any>({
       query: (body) => ({
@@ -38,6 +39,7 @@ export const ReviewApi = createApi({
         method: "POST",
         body,
       }),
+      invalidatesTags: ["AddReview"],
     }),
 
     GetReviewsByUser: builder.query<any, string>({
@@ -45,6 +47,7 @@ export const ReviewApi = createApi({
         url: `/get-reviews-by-user/${userId}`,
         method: "GET",
       }),
+      providesTags: ["AddReview"],
     }),
   }),
 });

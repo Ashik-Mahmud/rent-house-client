@@ -12,7 +12,6 @@ const UserReviews = (props: Props) => {
   const { data, isLoading } = useGetReviewsByUserQuery(user?.user?._id);
 
   const reviewsData = data?.data;
-  console.log(reviewsData);
 
   type ReviewType = {
     content: string;
@@ -36,9 +35,9 @@ const UserReviews = (props: Props) => {
             <thead>
               <tr>
                 <th></th>
-                <th>Name</th>
+                <th>Review ID</th>
                 <th>Ratings</th>
-                <th>Email</th>
+                <th>Comment</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -46,11 +45,7 @@ const UserReviews = (props: Props) => {
               {reviewsData.map((review: ReviewType, index: number) => (
                 <tr key={review?._id}>
                   <th>{index + 1}</th>
-                  <td>
-                    {review?.content.length > 40
-                      ? review?.content.slice(0, 40) + "..."
-                      : review?.content}
-                  </td>
+                  <td>R-{review?._id.slice(0, 10)}</td>
                   <td>
                     <div className="flex items-center gap-2">
                       {[0, 1, 2, 3, 4].map((stars, index) => (
@@ -63,11 +58,9 @@ const UserReviews = (props: Props) => {
                     </div>
                   </td>
                   <td>
-                    <a href={`mailto:${review?.author?.email}`}>
-                      <span className="text-success">
-                        {review?.author?.email}
-                      </span>
-                    </a>
+                    {review?.content.length > 80
+                      ? review?.content.slice(0, 80) + "..."
+                      : review?.content}
                   </td>
                   <td>
                     <button className="text-success">
