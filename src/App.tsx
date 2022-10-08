@@ -11,6 +11,7 @@ import About from "./pages/About";
 import Login from "./pages/Authentication/Login";
 import RegisterAuth from "./pages/Authentication/Register";
 import ResetPassword from "./pages/Authentication/ResetPassword";
+import ResetPasswordField from "./pages/Authentication/ResetPasswordField";
 import Blogs from "./pages/Blogs/Blogs";
 import Contact from "./pages/Contact";
 import AddHouse from "./pages/Dashboard/AddHouse/AddHouse";
@@ -87,6 +88,7 @@ function App() {
           }
         />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/new-password" element={<ResetPasswordField />} />
         <Route
           path="/register"
           element={
