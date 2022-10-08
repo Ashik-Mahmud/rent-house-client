@@ -42,7 +42,6 @@ const Settings = (props: Props) => {
   });
 
   /* 監聽changePassword狀態值變化，有成功會導回列表page */
-
   useEffect(() => {
     if (error) toast.error((error as any)?.data?.message);
     if (isSuccess) {
