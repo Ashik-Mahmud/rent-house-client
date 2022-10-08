@@ -1,3 +1,4 @@
+import { BiExport } from "react-icons/bi";
 import HouseRow from "./HouseRow";
 
 type Props = {};
@@ -7,8 +8,10 @@ const MyHouses = (props: Props) => {
     <div className="p-10 my-5 bg-white rounded shadow">
       <div className="title flex-col sm:flex-row flex items-center justify-between mb-3">
         <div className="flex items-center gap-2 mb-4 sm:mb-0">
-          <h1 className="text-2xl font-bold">My Houses</h1>
-          <small className="badge badge-success">House Holder</small>
+          <div className="flex items-center gap-3">
+            <h1 className="text-2xl font-bold">My Houses</h1>
+            <small className="badge badge-success">House Holder</small>
+          </div>
         </div>
         <input
           type="search"
@@ -17,6 +20,11 @@ const MyHouses = (props: Props) => {
           id="search-field"
           placeholder="Search"
         />
+      </div>
+      <div className="export-btn">
+        <button className="badge badge-ghost badge-lg flex items-center gap-2 font-poppins">
+          Export Collection <BiExport className="text-xl" />
+        </button>
       </div>
       <div className="my-5 overflow-x-auto">
         <table className="w-full table">

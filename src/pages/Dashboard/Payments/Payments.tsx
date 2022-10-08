@@ -1,4 +1,9 @@
-import { BiChevronLeft, BiChevronRight, BiSearchAlt2 } from "react-icons/bi";
+import {
+  BiChevronLeft,
+  BiChevronRight,
+  BiExport,
+  BiSearchAlt2,
+} from "react-icons/bi";
 import PaymentRow from "./PaymentRow";
 
 type Props = {};
@@ -25,7 +30,12 @@ const Payments = (props: Props) => {
             </div>
           </div>
         </div>
-        <div className="payments-content my-7">
+        <div className="export-btn my-5">
+          <button className="badge badge-ghost badge-lg flex items-center gap-2 font-poppins">
+            Export Collection <BiExport className="text-xl" />
+          </button>
+        </div>
+        <div className="payments-content mb-7">
           <div className="overflow-x-auto">
             <table className="table w-full">
               <thead>
