@@ -15,18 +15,18 @@ const ResetPassword = (props: Props) => {
     if (!formData?.resetPasswordEmail)
       return toast.error("Email field is required.");
     await resetPassword(formData);
-    reset();
   });
 
   useEffect(() => {
     if (isError) {
-      console.log(error);
-      toast.error((data as any)?.data?.message);
+      toast.error((error as any)?.data?.message);
     }
+
     if (isSuccess) {
-      console.log(data);
+      toast.success(data?.message);
+      reset();
     }
-  }, [isSuccess, data, error, isError]);
+  }, [isSuccess, data, error, isError, reset]);
 
   return (
     <div className="h-[80vh] grid place-items-center font-poppins">
