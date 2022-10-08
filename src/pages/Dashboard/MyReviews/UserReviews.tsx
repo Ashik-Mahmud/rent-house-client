@@ -1,6 +1,7 @@
 import { BiEditAlt, BiTrash } from "react-icons/bi";
 import { BsStarFill } from "react-icons/bs";
 import { toast } from "react-toastify";
+import swal from "sweetalert";
 import GlobalLoader from "../../../components/GlobalLoader";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
@@ -32,13 +33,22 @@ const UserReviews = (props: Props) => {
 
   /* Handle Delete Review */
   const handleDeleteReview = async (id: string) => {
-    try {
-      await DeleteReview(id);
-    } catch (err) {
-      toast.error((err as any).message);
+    const isConfirm = await swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this imaginary file!",
+      icon: "warning",
+      buttons: ["Cancel", "Delete"],
+    });
+
+    if (isConfirm) {
+      try {
+        await DeleteReview(id);
+      } catch (err) {
+        toast.error((err as any).message);
+      }
     }
   };
-  console.log(deleteData, isSuccess);
+
   return (
     <div>
       {/* Reviews Table */}
