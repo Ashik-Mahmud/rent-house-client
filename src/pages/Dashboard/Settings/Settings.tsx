@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { BiLockAlt } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../../app/store";
 import { logout } from "../../../features/AuthSlice";
 import useAuth from "../../../hooks/useAuth";
@@ -11,9 +12,10 @@ import { useChangePasswordMutation } from "../../../services/AuthApi";
 type Props = {};
 
 const Settings = (props: Props) => {
-  const { updatedUser } = useAuth<authUserInterface | any>({});
+  const { updatedUser, setUser } = useAuth<authUserInterface | any>({});
   const role = updatedUser?.role;
   const isVerify = updatedUser?.isVerified;
+  const navigate = useNavigate();
 
   const [changePassword, { data, isSuccess, error }] =
     useChangePasswordMutation();
@@ -51,9 +53,11 @@ const Settings = (props: Props) => {
       toast.success(
         data?.message + " Now you may login using the new password"
       );
+      setUser(null);
       dispatch(logout());
+      navigate("/login");
     }
-  }, [isSuccess, data, error, dispatch]);
+  }, [isSuccess, data, error, dispatch, setUser, navigate]);
 
   return (
     <div>
