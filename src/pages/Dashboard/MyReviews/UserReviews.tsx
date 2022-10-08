@@ -1,15 +1,21 @@
 import { BiEditAlt, BiTrash } from "react-icons/bi";
 import { BsStarFill } from "react-icons/bs";
+import { toast } from "react-toastify";
 import GlobalLoader from "../../../components/GlobalLoader";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
-import { useGetReviewsByUserQuery } from "../../../services/ReviewApi";
+import {
+  useDeleteReviewByIdMutation,
+  useGetReviewsByUserQuery,
+} from "../../../services/ReviewApi";
 
 type Props = {};
 
 const UserReviews = (props: Props) => {
   const { user } = useAuth<authUserInterface | any>({});
   const { data, isLoading } = useGetReviewsByUserQuery(user?.user?._id);
+  const [DeleteReview, { data: deleteData, isSuccess }] =
+    useDeleteReviewByIdMutation();
 
   const reviewsData = data?.data;
 
@@ -24,6 +30,15 @@ const UserReviews = (props: Props) => {
     };
   };
 
+  /* Handle Delete Review */
+  const handleDeleteReview = async (id: string) => {
+    try {
+      await DeleteReview(id);
+    } catch (err) {
+      toast.error((err as any).message);
+    }
+  };
+  console.log(deleteData, isSuccess);
   return (
     <div>
       {/* Reviews Table */}
@@ -66,7 +81,10 @@ const UserReviews = (props: Props) => {
                     <button className="text-success">
                       <BiEditAlt />
                     </button>
-                    <button className="text-error ml-3">
+                    <button
+                      className="text-error ml-3"
+                      onClick={() => handleDeleteReview(review?._id)}
+                    >
                       <BiTrash />
                     </button>
                   </td>

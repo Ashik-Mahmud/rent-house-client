@@ -18,6 +18,11 @@ type addReviewTypeResult = {
   message: string;
 };
 
+type deleteReviewType = {
+  success: boolean;
+  message: string;
+};
+
 export const ReviewApi = createApi({
   reducerPath: "ReviewApi",
   baseQuery: fetchBaseQuery({
@@ -49,7 +54,19 @@ export const ReviewApi = createApi({
       }),
       providesTags: ["AddReview"],
     }),
+
+    DeleteReviewById: builder.mutation<deleteReviewType, string | undefined>({
+      query: (reviewId) => ({
+        url: `/delete-review/${reviewId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["AddReview"],
+    }),
   }),
 });
 
-export const { useAddReviewMutation, useGetReviewsByUserQuery } = ReviewApi;
+export const {
+  useAddReviewMutation,
+  useGetReviewsByUserQuery,
+  useDeleteReviewByIdMutation,
+} = ReviewApi;
