@@ -12,7 +12,7 @@ type Props = {};
 const AddReview = (props: Props) => {
   const { updatedUser } = useAuth<authUserInterface | any>({});
   const isVerify = updatedUser?.isVerified;
-  const { handleSubmit, register } = useForm();
+  const { handleSubmit, register, reset } = useForm();
   const [AddReview, { data, isSuccess, error }] = useAddReviewMutation();
 
   const [rating, setRating] = useState(1);
@@ -22,7 +22,7 @@ const AddReview = (props: Props) => {
   const handleReviewFormSubmit = handleSubmit(async (data) => {
     const reviewContent = {
       ...data,
-      ratings: rating,
+      rating: rating,
       author: {
         userId: updatedUser?._id,
         name: updatedUser?.name,
@@ -33,6 +33,7 @@ const AddReview = (props: Props) => {
     try {
       // rest of the code
       await AddReview(reviewContent);
+      reset();
     } catch (error) {
       // error handling
       toast.error((error as any).message);
@@ -42,13 +43,14 @@ const AddReview = (props: Props) => {
 
   useEffect(() => {
     if (error) {
-      console.log(error);
+      toast.error((error as any)?.data?.message);
     }
-
     if (isSuccess) {
       // show some loader or message
-      toast.success("review added SuccessfullY");
-      console.log(data);
+      toast((data as any)?.message, {
+        position: "bottom-center",
+        type: "success",
+      });
     }
   }, [data, isSuccess, error]);
 

@@ -3,10 +3,10 @@ import Cookies from "universal-cookie";
 
 const cookies = new Cookies();
 
-const ReviewApi = createApi({
+export const ReviewApi = createApi({
   reducerPath: "ReviewApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://localhost:5000/api/v1/reviews",
+    baseUrl: "http://localhost:5000/api/v1/reviews",
     prepareHeaders: (headers, api) => {
       const cookie = cookies.get("user");
       const token = cookie?.token;
