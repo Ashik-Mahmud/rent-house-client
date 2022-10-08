@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useResetPasswordMutation } from "../../services/AuthApi";
 type Props = {};
@@ -10,6 +10,7 @@ const ResetPasswordField = (props: Props) => {
   const { register, handleSubmit, reset } = useForm();
   const [resetPassword] = useResetPasswordMutation();
   const [isVerified, setIsVerified] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   /* Handle Reset Password */
   const handleResetPassword = handleSubmit(async (formData) => {
@@ -19,11 +20,12 @@ const ResetPasswordField = (props: Props) => {
     reset();
   });
 
+  console.log(verified);
   useEffect(() => {
     if (verified) {
       setIsVerified(true);
     }
-  }, [verified]);
+  }, [verified, navigate]);
   return (
     <div className="h-[80vh] grid place-items-center font-poppins">
       <form

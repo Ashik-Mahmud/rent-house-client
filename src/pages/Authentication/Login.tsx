@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { PulseLoader } from "react-spinners";
+import { toast } from "react-toastify";
 import { useAppDispatch } from "../../app/store";
 import { setAuthInformation } from "../../features/AuthSlice";
 import { useLoginAuthMutation } from "../../services/AuthApi";
@@ -37,6 +37,7 @@ const Login = (props: Props) => {
     /* If Error */
     if (error) {
       toast.error((error as any).data.message);
+      toast.error((error as any)?.data);
     }
     /* If Success */
     if (isSuccess) {
