@@ -5,7 +5,7 @@ const cookies = new Cookies();
 
 const initialState: authUserInterface = {
   user: {
-    _id: 0,
+    _id: "",
     name: "",
     email: "",
     avatar: "",

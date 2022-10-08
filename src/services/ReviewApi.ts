@@ -7,7 +7,7 @@ export type AddReviewType = {
   rating: number;
   content: string;
   author?: {
-    userId: number | undefined;
+    userId: string | undefined;
     name: string | undefined;
     email: string | undefined;
   };
@@ -39,7 +39,14 @@ export const ReviewApi = createApi({
         body,
       }),
     }),
+
+    GetReviewsByUser: builder.query<any, string>({
+      query: (userId) => ({
+        url: `/get-reviews-by-user/${userId}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useAddReviewMutation } = ReviewApi;
+export const { useAddReviewMutation, useGetReviewsByUserQuery } = ReviewApi;
