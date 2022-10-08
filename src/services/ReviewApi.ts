@@ -3,6 +3,21 @@ import Cookies from "universal-cookie";
 
 const cookies = new Cookies();
 
+export type AddReviewType = {
+  rating: number;
+  content: string;
+  author?: {
+    userId: number | undefined;
+    name: string | undefined;
+    email: string | undefined;
+  };
+};
+
+type addReviewTypeResult = {
+  success: boolean;
+  message: string;
+};
+
 export const ReviewApi = createApi({
   reducerPath: "ReviewApi",
   baseQuery: fetchBaseQuery({
@@ -17,7 +32,7 @@ export const ReviewApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    AddReview: builder.mutation({
+    AddReview: builder.mutation<addReviewTypeResult, AddReviewType | any>({
       query: (body) => ({
         url: "/create-review",
         method: "POST",

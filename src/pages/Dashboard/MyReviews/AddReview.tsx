@@ -5,7 +5,10 @@ import { toast } from "react-toastify";
 import SendVerifyEmail from "../../../components/SendVerifyEmail";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
-import { useAddReviewMutation } from "../../../services/ReviewApi";
+import {
+  AddReviewType,
+  useAddReviewMutation,
+} from "../../../services/ReviewApi";
 
 type Props = {};
 
@@ -20,8 +23,8 @@ const AddReview = (props: Props) => {
     setRating(newRating);
   };
   const handleReviewFormSubmit = handleSubmit(async (data) => {
-    const reviewContent = {
-      ...data,
+    const reviewContent: AddReviewType = {
+      content: data.content,
       rating: rating,
       author: {
         userId: updatedUser?._id,
@@ -38,7 +41,6 @@ const AddReview = (props: Props) => {
       // error handling
       toast.error((error as any).message);
     }
-    console.log(reviewContent);
   });
 
   useEffect(() => {
