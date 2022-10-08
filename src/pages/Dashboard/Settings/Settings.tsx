@@ -1,3 +1,5 @@
+import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 import { BiLockAlt } from "react-icons/bi";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
@@ -8,6 +10,25 @@ const Settings = (props: Props) => {
   const { updatedUser } = useAuth<authUserInterface | any>({});
   const role = updatedUser?.role;
   const isVerify = updatedUser?.isVerified;
+
+  const { register, handleSubmit } = useForm();
+
+  /* Handle Change Password Form */
+  const handleChangePassword = handleSubmit(async (formData) => {
+    const { oldPassword, newPassword, repeatNewPassword } = formData;
+    if (!oldPassword) return toast.error("Old password is required.");
+    if (!oldPassword || !newPassword || !repeatNewPassword)
+      return toast.error("All fields are required"); // Form error handle, all field required
+
+    if (newPassword !== repeatNewPassword) {
+      return toast.error("Password must be same with repeat password.");
+    }
+    try {
+      console.log(formData); /* To Convert and convert */
+    } catch (error) {
+      throw new Error((error as any)?.message);
+    }
+  });
 
   return (
     <div>
@@ -59,7 +80,7 @@ const Settings = (props: Props) => {
 
           <div className="password-change-field bg-gray-50 p-8 rounded">
             <h3 className="text-2xl font-bold mb-6">Change Password</h3>
-            <form action="">
+            <form action="" onSubmit={handleChangePassword}>
               <div className="input-group flex items-center my-1 border p-3 rounded-md mt-2 bg-white">
                 <div className="icon">
                   <BiLockAlt />
@@ -68,6 +89,7 @@ const Settings = (props: Props) => {
                   type="password"
                   className="outline-none  w-full pl-4 text-sm"
                   placeholder="Old Password"
+                  {...register("oldPassword")}
                 />
               </div>
               <div className="input-group flex items-center my-1 border p-3 rounded-md mt-2 bg-white">
@@ -78,6 +100,7 @@ const Settings = (props: Props) => {
                   type="password"
                   className="outline-none  w-full pl-4  text-sm"
                   placeholder="New Password"
+                  {...register("newPassword")}
                 />
               </div>
               <div className="input-group flex items-center my-1 border p-3 rounded-md mt-2 bg-white">
@@ -88,6 +111,7 @@ const Settings = (props: Props) => {
                   type="password"
                   className="outline-none  w-full pl-4  text-sm"
                   placeholder="Confirm Password"
+                  {...register("repeatNewPassword")}
                 />
               </div>
               <button className="btn btn-success rounded-full mt-5">
