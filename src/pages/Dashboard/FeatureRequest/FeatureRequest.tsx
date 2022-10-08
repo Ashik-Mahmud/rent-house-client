@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { BiUser } from "react-icons/bi";
+import FeatureRequestEditor from "./FeatureRequestEditor";
 
 type Props = {};
 
@@ -61,6 +62,25 @@ const FeatureRequest = (props: Props) => {
             </div>
           </div>
           {/* End */}
+          <div
+            className="name border  rounded p-3 pb-1 relative mt-10 flex-1"
+            style={{ height: 350 }}
+          >
+            <div className="name-title absolute -top-4 bg-white rounded p-1">
+              <h3 className="text-xs font-poppins flex items-center gap-1 border p-1 rounded">
+                Write Features & Bugs Issues
+              </h3>
+            </div>
+            <div className="my-1 rounded-md mt-6">
+              <FeatureRequestEditor />
+            </div>
+          </div>
+
+          <div className="submit-btn mt-6">
+            <button className="btn btn-success rounded-none btn-lg">
+              Send Request
+            </button>
+          </div>
         </form>
       </div>
     </div>
