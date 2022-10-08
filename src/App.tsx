@@ -88,7 +88,10 @@ function App() {
           }
         />
         <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/new-password" element={<ResetPasswordField />} />
+        <Route
+          path="/new-password/:verified"
+          element={<ResetPasswordField />}
+        />
         <Route
           path="/register"
           element={

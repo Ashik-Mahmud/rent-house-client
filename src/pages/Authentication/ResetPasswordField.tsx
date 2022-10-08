@@ -1,11 +1,15 @@
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useResetPasswordMutation } from "../../services/AuthApi";
 type Props = {};
 
 const ResetPasswordField = (props: Props) => {
+  const { verified } = useParams();
   const { register, handleSubmit, reset } = useForm();
   const [resetPassword] = useResetPasswordMutation();
+  const [isVerified, setIsVerified] = useState<boolean>(false);
 
   /* Handle Reset Password */
   const handleResetPassword = handleSubmit(async (formData) => {
@@ -14,12 +18,23 @@ const ResetPasswordField = (props: Props) => {
     await resetPassword(formData);
     reset();
   });
+
+  useEffect(() => {
+    if (verified) {
+      setIsVerified(true);
+    }
+  }, [verified]);
   return (
     <div className="h-[80vh] grid place-items-center font-poppins">
       <form
         onSubmit={handleResetPassword}
         className="reset-password bg-white py-16 px-10 w-[35rem]"
       >
+        {isVerified && (
+          <div className="alert rounded bg-green-50 text-green-500 mb-3">
+            Email successfully verified
+          </div>
+        )}
         <h4 className="text-2xl font-bold">Put New Password</h4>
         <p className="text-sm leading-6 mt-2">
           Password is very secure things for everyone. Which one be any

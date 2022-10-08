@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useResetPasswordMutation } from "../../services/AuthApi";
@@ -6,7 +7,8 @@ type Props = {};
 
 const ResetPassword = (props: Props) => {
   const { register, handleSubmit, reset } = useForm();
-  const [resetPassword] = useResetPasswordMutation();
+  const [resetPassword, { data, isSuccess, error, isError }] =
+    useResetPasswordMutation();
 
   /* Handle Reset Password */
   const handleResetPassword = handleSubmit(async (formData) => {
@@ -15,6 +17,16 @@ const ResetPassword = (props: Props) => {
     await resetPassword(formData);
     reset();
   });
+
+  useEffect(() => {
+    if (isError) {
+      console.log(error);
+      toast.error((data as any)?.data?.message);
+    }
+    if (isSuccess) {
+      console.log(data);
+    }
+  }, [isSuccess, data, error, isError]);
 
   return (
     <div className="h-[80vh] grid place-items-center font-poppins">
