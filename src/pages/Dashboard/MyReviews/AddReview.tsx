@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import ReactStars from "react-stars";
+import { toast } from "react-toastify";
 import SendVerifyEmail from "../../../components/SendVerifyEmail";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
+import { useAddReviewMutation } from "../../../services/ReviewApi";
 
 type Props = {};
 
@@ -11,17 +13,44 @@ const AddReview = (props: Props) => {
   const { updatedUser } = useAuth<authUserInterface | any>({});
   const isVerify = updatedUser?.isVerified;
   const { handleSubmit, register } = useForm();
+  const [AddReview, { data, isSuccess, error }] = useAddReviewMutation();
 
   const [rating, setRating] = useState(1);
-
-  const handleReviewFormSubmit = handleSubmit(async (data) => {
-    const reviewContent = { ...data, ratings: rating };
-    console.log(reviewContent);
-  });
-
   const ratingChanged = (newRating: number) => {
     setRating(newRating);
   };
+  const handleReviewFormSubmit = handleSubmit(async (data) => {
+    const reviewContent = {
+      ...data,
+      ratings: rating,
+      author: {
+        userId: updatedUser?._id,
+        name: updatedUser?.name,
+        email: updatedUser?.email,
+      },
+    };
+
+    try {
+      // rest of the code
+      await AddReview(reviewContent);
+    } catch (error) {
+      // error handling
+      toast.error((error as any).message);
+    }
+    console.log(reviewContent);
+  });
+
+  useEffect(() => {
+    if (error) {
+      console.log(error);
+    }
+
+    if (isSuccess) {
+      // show some loader or message
+      toast.success("review added SuccessfullY");
+      console.log(data);
+    }
+  }, [data, isSuccess, error]);
 
   return (
     <div>
