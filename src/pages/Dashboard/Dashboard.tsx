@@ -73,8 +73,8 @@ const Dashboard = (props: Props) => {
       link: "/dashboard/profile",
     },
     {
-      id: 7,
-      title: "Feature Requests",
+      id: 8,
+      title: "Feature Requests & Bugs",
       icon: <BiGitPullRequest />,
       link: "/dashboard/feature-request",
     },
@@ -120,7 +120,7 @@ const Dashboard = (props: Props) => {
       },
       {
         id: 7,
-        title: "Feature Requests",
+        title: "Feature Requests & Bugs",
         icon: <BiGitPullRequest />,
         link: "/dashboard/feature-request",
       },
