@@ -15,8 +15,7 @@ type Props = {};
 const UserReviews = (props: Props) => {
   const { user } = useAuth<authUserInterface | any>({});
   const { data, isLoading } = useGetReviewsByUserQuery(user?.user?._id);
-  const [DeleteReview, { data: deleteData, isSuccess }] =
-    useDeleteReviewByIdMutation();
+  const [DeleteReview] = useDeleteReviewByIdMutation();
 
   const reviewsData = data?.data;
 
