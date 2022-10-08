@@ -90,6 +90,13 @@ export const authApi = createApi({
         body,
       }),
     }),
+    resetPassword: builder.mutation({
+      query: (body) => ({
+        url: "/users/reset-password",
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -100,4 +107,5 @@ export const {
   useUpdateProfileMutation,
   useChangeProfilePictureMutation,
   useChangePasswordMutation,
+  useResetPasswordMutation,
 } = authApi;

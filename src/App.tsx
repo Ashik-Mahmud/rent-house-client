@@ -10,6 +10,7 @@ import { authUserInterface } from "./interfaces/UserInterface";
 import About from "./pages/About";
 import Login from "./pages/Authentication/Login";
 import RegisterAuth from "./pages/Authentication/Register";
+import ResetPassword from "./pages/Authentication/ResetPassword";
 import Blogs from "./pages/Blogs/Blogs";
 import Contact from "./pages/Contact";
 import AddHouse from "./pages/Dashboard/AddHouse/AddHouse";
@@ -85,6 +86,7 @@ function App() {
             </AuthChangeRoute>
           }
         />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route
           path="/register"
           element={
