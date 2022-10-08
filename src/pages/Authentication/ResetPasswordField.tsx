@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import useAuth from "../../hooks/useAuth";
+import { authUserInterface } from "../../interfaces/UserInterface";
 import { useResetPasswordMutation } from "../../services/AuthApi";
 type Props = {};
 
 const ResetPasswordField = (props: Props) => {
+  const { user } = useAuth<authUserInterface | any>({});
   const { verified } = useParams();
   const { register, handleSubmit, reset } = useForm();
   const [resetPassword] = useResetPasswordMutation();
@@ -20,12 +23,14 @@ const ResetPasswordField = (props: Props) => {
     reset();
   });
 
-  console.log(verified);
   useEffect(() => {
     if (verified) {
       setIsVerified(true);
     }
-  }, [verified, navigate]);
+    if (user?.isAuthenticated) {
+      navigate("/dashboard");
+    }
+  }, [verified, navigate, user]);
   return (
     <div className="h-[80vh] grid place-items-center font-poppins">
       <form

@@ -1,12 +1,17 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import useAuth from "../../hooks/useAuth";
+import { authUserInterface } from "../../interfaces/UserInterface";
 import { useResetPasswordMutation } from "../../services/AuthApi";
 
 type Props = {};
 
 const ResetPassword = (props: Props) => {
+  const { user } = useAuth<authUserInterface | any>({});
   const { register, handleSubmit, reset } = useForm();
+  const navigate = useNavigate();
   const [resetPassword, { data, isSuccess, error, isError }] =
     useResetPasswordMutation();
 
@@ -27,7 +32,11 @@ const ResetPassword = (props: Props) => {
       toast.success(data?.message);
       reset();
     }
-  }, [isSuccess, data, error, isError, reset]);
+
+    if (user?.isAuthenticated) {
+      navigate("/dashboard");
+    }
+  }, [isSuccess, data, error, isError, reset, navigate, user]);
 
   return (
     <div className="h-[80vh] grid place-items-center font-poppins">
