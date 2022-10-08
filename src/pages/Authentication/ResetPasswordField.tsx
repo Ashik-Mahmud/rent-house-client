@@ -4,23 +4,32 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";
 import { authUserInterface } from "../../interfaces/UserInterface";
-import { useResetPasswordMutation } from "../../services/AuthApi";
+import { useChangePasswordWithoutOldPwdMutation } from "../../services/AuthApi";
 type Props = {};
 
 const ResetPasswordField = (props: Props) => {
   const { user } = useAuth<authUserInterface | any>({});
   const { verified } = useParams();
   const { register, handleSubmit, reset } = useForm();
-  const [resetPassword] = useResetPasswordMutation();
+
   const [isVerified, setIsVerified] = useState<boolean>(false);
   const navigate = useNavigate();
+  const [ChangePassword, { data, error, isSuccess, isError }] =
+    useChangePasswordWithoutOldPwdMutation();
 
   /* Handle Reset Password */
   const handleResetPassword = handleSubmit(async (formData) => {
-    if (!formData?.resetPasswordEmail)
-      return toast.error("Email field is required.");
-    await resetPassword(formData);
-    reset();
+    if (!formData.newPassword || !formData.confirmPassword) {
+      return toast.error("All fields are required.");
+    }
+    if (formData.newPassword !== formData.confirmPassword) {
+      return toast.error("Password doesn't match");
+    }
+    await ChangePassword({
+      ...formData,
+      confirmPassword: undefined,
+      id: verified,
+    });
   });
 
   useEffect(() => {
@@ -30,7 +39,17 @@ const ResetPasswordField = (props: Props) => {
     if (user?.isAuthenticated) {
       navigate("/dashboard");
     }
-  }, [verified, navigate, user]);
+
+    if (isError) {
+      toast.error((error as any)?.data?.message);
+    }
+
+    if (isSuccess) {
+      toast.success(data?.message + " Now you may login this password.");
+      navigate("/login");
+      reset();
+    }
+  }, [verified, navigate, user, isSuccess, data, error, isError, reset]);
   return (
     <div className="h-[80vh] grid place-items-center font-poppins">
       <form

@@ -97,6 +97,13 @@ export const authApi = createApi({
         body,
       }),
     }),
+    changePasswordWithoutOldPwd: builder.mutation({
+      query: (body) => ({
+        url: "/users/change-password/new",
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -108,4 +115,5 @@ export const {
   useChangeProfilePictureMutation,
   useChangePasswordMutation,
   useResetPasswordMutation,
+  useChangePasswordWithoutOldPwdMutation,
 } = authApi;
