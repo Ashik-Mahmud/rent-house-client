@@ -1,8 +1,10 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { BiLockAlt } from "react-icons/bi";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
+import { useChangePasswordMutation } from "../../../services/AuthApi";
 
 type Props = {};
 
@@ -11,7 +13,10 @@ const Settings = (props: Props) => {
   const role = updatedUser?.role;
   const isVerify = updatedUser?.isVerified;
 
-  const { register, handleSubmit } = useForm();
+  const [changePassword, { data, isSuccess, error }] =
+    useChangePasswordMutation();
+
+  const { register, handleSubmit, reset } = useForm();
 
   /* Handle Change Password Form */
   const handleChangePassword = handleSubmit(async (formData) => {
@@ -24,11 +29,29 @@ const Settings = (props: Props) => {
       return toast.error("Password must be same with repeat password.");
     }
     try {
-      console.log(formData); /* To Convert and convert */
+      /* To Convert and convert */
+      await changePassword({
+        ...formData,
+        repeatNewPassword: undefined,
+        email: updatedUser?.email,
+      });
+      reset();
     } catch (error) {
       throw new Error((error as any)?.message);
     }
   });
+
+  /* 監聽changePassword狀態值變化，有成功會導回列表page */
+
+  useEffect(() => {
+    if (error) toast.error((error as any)?.data?.message);
+    if (isSuccess) {
+      toast.success(
+        data?.message +
+          " Now you may login using the new password in the next time"
+      );
+    }
+  }, [isSuccess, data, error]);
 
   return (
     <div>

@@ -83,6 +83,13 @@ export const authApi = createApi({
       query: (id) => `/users/me/${id}`,
       providesTags: ["GetUser"],
     }),
+    changePassword: builder.mutation({
+      query: (body) => ({
+        url: "/users/change-password",
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -92,4 +99,5 @@ export const {
   useGetUserQuery,
   useUpdateProfileMutation,
   useChangeProfilePictureMutation,
+  useChangePasswordMutation,
 } = authApi;
