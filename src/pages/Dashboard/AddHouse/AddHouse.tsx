@@ -59,7 +59,7 @@ const AddHouse = (props: Props) => {
     }
 
     /* Create Form Data for This */
-    const houseFormData = new FormData();
+    const formData = new FormData();
 
     const sendingDataForHouse = {
       name: data.name,
@@ -104,17 +104,17 @@ const AddHouse = (props: Props) => {
       },
     };
 
-    houseFormData.append(
+    formData.append(
       "previewImage",
       data?.previewImage[0],
       data?.previewImage[0]?.name
     );
     [...data?.galleryImage].forEach((image) => {
-      houseFormData.append("galleryImage", image);
+      formData.append("galleryImage", image, image.name);
     });
-    houseFormData.append("data", sendingDataForHouse as any);
+    formData.append("data", JSON.stringify(sendingDataForHouse));
 
-    await createHouse(houseFormData);
+    await createHouse(formData);
   });
 
   console.log(isError, error, isSuccess, data);
@@ -137,7 +137,10 @@ const AddHouse = (props: Props) => {
       </div>
       <div className="mt-5">
         {isVerify ? (
-          <form onSubmit={handleAddHouseFormSubmit}>
+          <form
+            onSubmit={handleAddHouseFormSubmit}
+            encType="multipart/form-data"
+          >
             <div className="flex flex-col md:flex-row gap-3">
               <HouseInput title="Put Your House Name" icon={<BsHouse />}>
                 <input
