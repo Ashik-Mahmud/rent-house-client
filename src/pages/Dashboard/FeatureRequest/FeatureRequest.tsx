@@ -34,12 +34,14 @@ const FeatureRequest = (props: Props) => {
         "/send-feature-request",
         sendingData
       );
-      console.log(data);
+      if (data?.success) {
+        toast.success(data?.message);
+      } else {
+        toast.error(data?.message);
+      }
     } catch (error) {
       console.log((error as any)?.message, error);
     }
-
-    console.log(sendingData);
   });
 
   useEffect(() => {
@@ -85,7 +87,7 @@ const FeatureRequest = (props: Props) => {
                 type="button"
                 onClick={() => setIsReadonly((state) => !state)}
               >
-                Put you own
+                {!isReadonly ? "Set Default" : "Put your own"}
               </button>
             </div>
           </div>

@@ -36,6 +36,7 @@ const FeatureRequestEditor = ({ setRequestText }: Props) => {
     "indent",
     "link",
     "clean",
+    "color",
   ];
   const { quill, quillRef } = useQuill({ modules, formats, placeholder });
 
