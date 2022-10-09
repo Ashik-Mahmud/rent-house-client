@@ -1,8 +1,10 @@
 import { BsPlus } from "react-icons/bs";
 
-type Props = {};
+type Props = {
+  data: any;
+};
 
-const Question = (props: Props) => {
+const Question = ({ data }: Props) => {
   return (
     <div>
       {/* Question Area */}
@@ -13,12 +15,14 @@ const Question = (props: Props) => {
             <span className="w-10 h-1 bg-success block"></span>
           </div>
 
-          <label
-            htmlFor="question-modal"
-            className=" modal-button btn btn-success rounded-none btn-sm flex items-center gap-2"
-          >
-            Add Question <BsPlus />
-          </label>
+          {data?.allowQuestion === "Yes" && (
+            <label
+              htmlFor="question-modal"
+              className=" modal-button btn btn-success rounded-none btn-sm flex items-center gap-2"
+            >
+              Add Question <BsPlus />
+            </label>
+          )}
         </div>
         <div className="question-answer">
           <ul className="flex gap-1 items-center ">

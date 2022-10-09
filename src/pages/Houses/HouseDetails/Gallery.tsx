@@ -1,6 +1,8 @@
-type Props = {};
+type Props = {
+  gallery: any;
+};
 
-const Gallery = (props: Props) => {
+const Gallery = ({ gallery }: Props) => {
   return (
     <>
       {/* Gallery */}
@@ -11,41 +13,19 @@ const Gallery = (props: Props) => {
         </div>
         <div className="images">
           <ul className="flex-col sm:flex-row flex gap-1 items-center">
-            <li className="cursor-pointer">
-              <img
-                src="https://placeimg.com/400/225/arch"
-                className="h-60"
-                alt=""
-              />
-            </li>
-            <li className="cursor-pointer">
-              <img
-                src="https://placeimg.com/400/225/arch"
-                className="h-60"
-                alt=""
-              />
-            </li>
-            <li className="cursor-pointer">
-              <img
-                src="https://placeimg.com/400/225/arch"
-                className="h-60"
-                alt=""
-              />
-            </li>
-            <li className="cursor-pointer">
-              <img
-                src="https://placeimg.com/400/225/arch"
-                className="h-60"
-                alt=""
-              />
-            </li>
-            <li className="cursor-pointer">
-              <img
-                src="https://placeimg.com/400/225/arch"
-                className="h-60"
-                alt=""
-              />
-            </li>
+            {gallery?.map((item: any, index: number) => (
+              <li className="cursor-pointer" key={index}>
+                <img
+                  src={
+                    item
+                      ? "http://localhost:5000/gallery/" + item
+                      : "https://placeimg.com/400/225/arch"
+                  }
+                  className="h-60"
+                  alt=""
+                />
+              </li>
+            ))}
           </ul>
         </div>
       </div>

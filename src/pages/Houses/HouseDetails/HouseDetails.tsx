@@ -3,6 +3,9 @@ import { BsArrowLeft, BsHeartFill } from "react-icons/bs";
 import { FiMaximize2 } from "react-icons/fi";
 import { GoHome } from "react-icons/go";
 import { MdReportGmailerrorred } from "react-icons/md";
+import { useParams } from "react-router-dom";
+import GlobalLoader from "../../../components/GlobalLoader";
+import { useGetHouseByHouseIdQuery } from "../../../services/HouseApi";
 import Address from "./Address";
 import BookNow from "./BookNowModal";
 import Gallery from "./Gallery";
@@ -20,7 +23,16 @@ type Props = {};
 
 const HouseDetails = (props: Props) => {
   /* Get House ID */
+  const { houseId } = useParams<{ houseId: string }>();
+  console.log(houseId);
+  const { data, isLoading, error } = useGetHouseByHouseIdQuery(houseId);
 
+  if (isLoading) return <GlobalLoader />;
+  if (error) {
+    console.log(error);
+    return <h1>Oh nooo!!! Something went wrong. Please try again.</h1>;
+  }
+  console.log(data);
   return (
     <>
       <section>
@@ -34,7 +46,7 @@ const HouseDetails = (props: Props) => {
                 >
                   <BsArrowLeft />{" "}
                 </div>
-                <h2 className="text-2xl font-bold">Rajbari New Villa</h2>
+                <h2 className="text-2xl font-bold">{data?.data?.name}</h2>
               </div>
               <div className="flex items-center gap-2">
                 <label
@@ -48,10 +60,10 @@ const HouseDetails = (props: Props) => {
                   className="heart tooltip flex items-center gap-2 btn btn-ghost"
                   data-tip="Loved House"
                 >
-                  <BsHeartFill /> Love
+                  <BsHeartFill /> {data?.data?.likes}
                 </div>
                 <div className="flex items-center gap-2">
-                  <BiMap /> Rajbari, Rangpur
+                  <BiMap /> {data?.data?.address}
                 </div>
               </div>
             </div>
@@ -62,8 +74,12 @@ const HouseDetails = (props: Props) => {
                   <FiMaximize2 />
                 </div>
                 <img
-                  src="https://placeimg.com/400/225/arch"
-                  alt="previewImage"
+                  src={
+                    data?.data?.image
+                      ? "http://localhost:5000/previews/" + data?.data?.image
+                      : "https://placeimg.com/400/225/arch"
+                  }
+                  alt={data?.data?.name}
                   className="w-full h-96 object-cover"
                 />
               </div>
@@ -83,39 +99,49 @@ const HouseDetails = (props: Props) => {
                             <GoHome /> Price
                           </td>
                           <th>
-                            <span className="badge badge-ghost">12000/m </span>
+                            <span className="badge badge-ghost">
+                              {data?.data?.price}/taka
+                            </span>
                           </th>
                           <td className="flex items-center gap-2">
                             <GoHome /> House Type
                           </td>
                           <th>
-                            <span className="badge badge-ghost">Rent </span>
+                            <span className="badge badge-ghost">
+                              {data?.data?.houseType}
+                            </span>
                           </th>
                           <td className="flex items-center gap-2">
                             <GoHome /> Category
                           </td>
                           <th>
-                            <span className="badge badge-ghost">Duplex </span>
+                            <span className="badge badge-ghost">
+                              {data?.data?.category}
+                            </span>
                           </th>
                           <td className="flex items-center gap-2">
                             <GoHome /> House Use For
                           </td>
                           <th>
                             <span className="badge badge-ghost">
-                              Residential
+                              {data?.data?.houseUseFor}
                             </span>
                           </th>
                           <td className="flex items-center gap-2">
                             <GoHome /> Bedrooms
                           </td>
                           <th>
-                            <span className="badge badge-ghost">4 pcs</span>
+                            <span className="badge badge-ghost">
+                              {data?.data?.bedrooms} pcs
+                            </span>
                           </th>
                           <td className="flex items-center gap-2">
                             <GoHome /> Bathrooms
                           </td>
                           <th>
-                            <span className="badge badge-ghost">2 pcs</span>
+                            <span className="badge badge-ghost">
+                              {data?.data?.bathrooms} pcs
+                            </span>
                           </th>
                         </tr>
                       </tbody>
@@ -129,42 +155,16 @@ const HouseDetails = (props: Props) => {
                     <span className="w-10 h-1 bg-success block"></span>
                   </div>
                   <p className="h-52 sm:h-auto overflow-y-auto">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Totam ullam iste aperiam, optio quos doloremque incidunt
-                    consequatur odit nemo magni et molestiae. In accusantium
-                    voluptatibus quos hic voluptas. Aperiam vitae ex, illo qui
-                    eaque sint veritatis asperiores est natus harum eum
-                    aspernatur, quos delectus sit accusamus iure ipsum ratione
-                    laboriosam quibusdam voluptatum voluptatibus ipsa
-                    blanditiis. Beatae cum repellat consequatur. Eos
-                    exercitationem in porro laudantium deserunt corporis
-                    consequuntur tempore nobis quibusdam quas harum assumenda
-                    labore iste asperiores, magnam iure sapiente, expedita,
-                    doloremque quae. Aperiam at maiores, vel asperiores cumque
-                    ullam labore perspiciatis repudiandae repellendus
-                    accusantium esse dolor possimus veritatis a vitae, fugiat
-                    ipsum beatae modi nam officiis sint natus iste corporis? Quo
-                    ea aliquid, tempore recusandae vero perferendis voluptates
-                    incidunt iusto quae distinctio nostrum eius reiciendis dolor
-                    illo ipsam provident commodi maiores aspernatur velit
-                    itaque, dolores iste. Velit amet dolor atque vero quos? Amet
-                    eum ad asperiores numquam vero. Aliquam libero velit iusto
-                    esse sit commodi consequatur veniam placeat quis doloribus,
-                    officia officiis, nulla molestias mollitia, maiores quidem.
-                    Ullam laudantium explicabo similique iusto doloremque
-                    consequuntur tenetur, omnis modi placeat quam fuga
-                    architecto atque ratione voluptate repellendus voluptatum.
-                    Atque animi nostrum minima aspernatur est iste magnam
-                    commodi quae corporis perspiciatis? Expedita, ab.
+                    {data?.data?.description}
                   </p>
                 </div>
               </div>
 
-              <Address />
-              <Owner />
+              <Address data={data?.data} />
+              <Owner owner={data?.data?.owner} />
               <Others />
-              <Gallery />
-              <Question />
+              <Gallery gallery={data?.data?.gallery} />
+              <Question data={data?.data} />
               <Reviews />
             </div>
           </div>

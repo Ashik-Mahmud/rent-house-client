@@ -1,8 +1,10 @@
 import { BiMap, BiUserCheck } from "react-icons/bi";
 import { BsFillSuitHeartFill, BsMapFill } from "react-icons/bs";
 import { GoHome } from "react-icons/go";
-type Props = {};
-const Address = (props: Props) => {
+type Props = {
+  data: any;
+};
+const Address = ({ data }: Props) => {
   return (
     <div>
       {" "}
@@ -20,15 +22,13 @@ const Address = (props: Props) => {
                   <BiMap /> District
                 </td>
                 <th>
-                  <span className="badge badge-ghost">Gaibandha </span>
+                  <span className="badge badge-ghost">{data?.district} </span>
                 </th>
                 <td className="flex items-center gap-2">
                   <BiMap /> City
                 </td>
                 <th>
-                  <span className="badge badge-ghost">
-                    Rangpur, Bangladesh{" "}
-                  </span>
+                  <span className="badge badge-ghost">{data?.city}</span>
                 </th>
                 <td className="flex items-center gap-2">
                   <BsMapFill /> Google Map
@@ -36,20 +36,26 @@ const Address = (props: Props) => {
                 <th>
                   <span className="badge badge-ghost">
                     {" "}
-                    <a href="https//maps.google.com">Go to Map</a>{" "}
+                    <a
+                      href={data?.googleMapLocation}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Go to Map
+                    </a>{" "}
                   </span>
                 </th>
                 <td className="flex items-center gap-2">
                   <BsFillSuitHeartFill /> Total Love
                 </td>
                 <th>
-                  <span className="badge badge-ghost">1200</span>
+                  <span className="badge badge-ghost">{data?.likes}</span>
                 </th>
                 <td className="flex items-center gap-2">
                   <BiUserCheck /> Total Views
                 </td>
                 <th>
-                  <span className="badge badge-ghost">1400</span>
+                  <span className="badge badge-ghost">{data?.views}</span>
                 </th>
                 <td className="flex items-center gap-2">
                   <GoHome /> Positive Review

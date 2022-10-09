@@ -4,7 +4,7 @@ type Props = {};
 
 const GlobalLoader = (props: Props) => {
   return (
-    <div className="text-center py-10">
+    <div className="text-center py-20">
       <ScaleLoader color={"#80CED1"} />
     </div>
   );

@@ -28,7 +28,17 @@ export const HouseApi = createApi({
         method: "GET",
       }),
     }),
+    getHouseByHouseId: builder.query({
+      query: (id) => ({
+        url: `/${id}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useCreateHouseMutation, useGetHouseByUserQuery } = HouseApi;
+export const {
+  useCreateHouseMutation,
+  useGetHouseByUserQuery,
+  useGetHouseByHouseIdQuery,
+} = HouseApi;

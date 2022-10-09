@@ -67,7 +67,7 @@ const HouseRow = ({ approved, house, index }: Props) => {
       <td className="py-3 ">
         <Link
           data-tip="View House"
-          to="/house/43342323"
+          to={`/house/${house._id}`}
           className="btn btn-xs btn-circle btn-primary flex items-center gap-2 text-xs tooltip"
         >
           <AiFillEye />
