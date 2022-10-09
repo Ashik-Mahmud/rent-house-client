@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { BiUser } from "react-icons/bi";
+import { toast } from "react-toastify";
+import { AxiosUser } from "../../../api/Axios";
 import FeatureRequestEditor from "./FeatureRequestEditor";
 
 type Props = {};
@@ -12,10 +14,20 @@ const FeatureRequest = (props: Props) => {
 
   /* Handle Feature Bugs */
   const handleFeatureBugs = handleSubmit(async (formData) => {
-    console.log(formData);
-    console.log(requestText);
-
+    if (!requestText || !formData?.subject) {
+      return toast.error("All Fields are required.");
+    }
     const sendingData = { ...formData, requestText };
+    try {
+      const { data } = await AxiosUser.post(
+        "/send-feature-request",
+        sendingData
+      );
+      console.log(data);
+    } catch (error) {
+      console.log((error as any)?.message, error);
+    }
+
     console.log(sendingData);
   });
 
