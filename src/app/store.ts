@@ -4,6 +4,7 @@ import type { TypedUseSelectorHook } from "react-redux";
 import { useDispatch, useSelector } from "react-redux";
 import AuthReducer from "../features/AuthSlice";
 import { authApi } from "../services/AuthApi";
+import { HouseApi } from "../services/HouseApi";
 import { ReviewApi } from "../services/ReviewApi";
 
 const store = configureStore({
@@ -12,9 +13,14 @@ const store = configureStore({
     auth: AuthReducer,
     [authApi.reducerPath]: authApi.reducer,
     [ReviewApi.reducerPath]: ReviewApi.reducer,
+    [HouseApi.reducerPath]: HouseApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat([authApi.middleware, ReviewApi.middleware]),
+    getDefaultMiddleware().concat([
+      authApi.middleware,
+      ReviewApi.middleware,
+      HouseApi.middleware,
+    ]),
 });
 
 export type AppDispatch = typeof store.dispatch;
