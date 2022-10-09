@@ -8,10 +8,15 @@ type Props = {};
 const FeatureRequest = (props: Props) => {
   const [isReadonly, setIsReadonly] = useState<boolean>(true);
   const { register, handleSubmit, setValue } = useForm();
+  const [requestText, setRequestText] = useState<string>("");
 
   /* Handle Feature Bugs */
   const handleFeatureBugs = handleSubmit(async (formData) => {
     console.log(formData);
+    console.log(requestText);
+
+    const sendingData = { ...formData, requestText };
+    console.log(sendingData);
   });
 
   useEffect(() => {
@@ -72,7 +77,7 @@ const FeatureRequest = (props: Props) => {
               </h3>
             </div>
             <div className="my-1 rounded-md mt-6">
-              <FeatureRequestEditor />
+              <FeatureRequestEditor setRequestText={setRequestText} />
             </div>
           </div>
 

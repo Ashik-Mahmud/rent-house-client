@@ -1,8 +1,10 @@
 import { useEffect } from "react";
 import { useQuill } from "react-quilljs";
-type Props = {};
+type Props = {
+  setRequestText: (state: string) => void;
+};
 
-const FeatureRequestEditor = (props: Props) => {
+const FeatureRequestEditor = ({ setRequestText }: Props) => {
   const modules = {
     toolbar: [
       [{ size: ["small", false, "large", "huge"] }],
@@ -40,10 +42,10 @@ const FeatureRequestEditor = (props: Props) => {
   useEffect(() => {
     if (quill) {
       quill.on("text-change", () => {
-        console.log(quillRef.current.firstChild.innerHTML);
+        setRequestText(quillRef?.current.firstChild.innerHTML);
       });
     }
-  }, [quill, quillRef]);
+  }, [quill, quillRef, setRequestText]);
 
   return (
     <div style={{ width: "100%", height: 250 }}>
