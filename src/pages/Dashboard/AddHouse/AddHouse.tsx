@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { BiBath, BiBed, BiMoney } from "react-icons/bi";
 import { BsAlignEnd, BsHouse, BsLink, BsPen } from "react-icons/bs";
 import SendVerifyEmail from "../../../components/SendVerifyEmail";
@@ -14,16 +15,95 @@ const AddHouse = (props: Props) => {
   const isVerify = updatedUser?.isVerified;
 
   /* Handle Add House Form Submit */
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-    reset,
-  } = useForm();
+  const { handleSubmit, register, reset } = useForm();
 
   const handleAddHouseFormSubmit = handleSubmit((data) => {
-    console.log(data);
-    reset();
+    /* Validation */
+    if (!data.name) return toast.error(`Name is required`);
+    if (!data.district) return toast.error(`District is required`);
+    if (!data.city) return toast.error(`City is required`);
+    if (!data.bedrooms) return toast.error(`Bedrooms is required`);
+    if (!data.bathrooms) return toast.error(`Bathrooms is required`);
+    if (!data.address) return toast.error(`Address is required`);
+    if (!data.description) return toast.error(`Description is required`);
+    if (!data.price) return toast.error(`Price is required`);
+    if (!data.isBooked) return toast.error(`isBooked is required`);
+    if (!data.isBachelorRoom) return toast.error(`isBachelorRoom is required`);
+    if (!data.allowQuestion) return toast.error(`Allow Question is required`);
+    if (!data.isAvailable) return toast.error(`isAvailable is required`);
+    if (!data.allowReview) return toast.error(`Allow Review is required`);
+
+    /* Validation for Images */
+    if (data.previewImage.length === 0)
+      return toast.error(`Preview is Image required`);
+
+    if (data.previewImage[0].size > 1000000)
+      return toast.error(`Preview Image size must be in 1 MB`);
+
+    if (data.galleryImage.length === 0)
+      return toast.error(`Image Gallery is  required`);
+
+    if (data.galleryImage.length > 5)
+      return toast.error(`5 Images only for gallery.`);
+
+    const galleryImage = data.galleryImage;
+
+    for (let image in galleryImage) {
+      const eachImage = galleryImage[image];
+      if (eachImage.size > 1000000)
+        return toast.error(`Gallery Image must be in 1 MB`);
+    }
+
+    /* Create Form Data for This */
+    const houseFormData = new FormData();
+
+    const sendingDataForHouse = {
+      name: data.name,
+      price: data.price,
+      category: data.category,
+      houseType: data.houseType,
+      houseUseFor: data.houseUseFor,
+      googleMapLink: data.googleMapLink,
+      bathrooms: data.bathrooms,
+      bedrooms: data.bedrooms,
+      address: data.address,
+      district: data.district,
+      city: data.city,
+      description: data.description,
+      allowQuestion: data.allowQuestion,
+      allowReview: data.allowReview,
+      isAvailable: data.isAvailable,
+      isBachelorRoom: data.isBachelorRoom,
+      isBooked: data.isBooked,
+      others: {
+        hasDrawingRoom: data.hasDrawingRoom,
+        hasDinningRoom: data.hasDinningRoom,
+        hasKitchen: data.hasKitchen,
+        hasStore: data.hasStore,
+        hasServantRoom: data.hasServantRoom,
+        hasSwimmingPool: data.hasSwimmingPool,
+        hasGym: data.hasGym,
+        hasLawn: data.hasLawn,
+        hasGarage: data.hasGarage,
+        hasCarParking: data.hasCarParking,
+        hasLift: data.hasLift,
+        hasGenerator: data.hasGenerator,
+        hasSecurity: data.hasSecurity,
+        hasCCTV: data.hasCCTV,
+        hasInternet: data.hasInternet,
+        hasGas: data.hasGas,
+      },
+    };
+
+    houseFormData.append(
+      "previewImage",
+      data?.previewImage[0],
+      data?.previewImage[0]?.name
+    );
+    [...data?.galleryImage].forEach((image) => {
+      houseFormData.append("galleryImage", image);
+    });
+    houseFormData.append("data", sendingDataForHouse as any);
   });
 
   return (
@@ -59,6 +139,7 @@ const AddHouse = (props: Props) => {
                   className="outline-none  w-full pl-4 cursor-pointer text-sm"
                   {...register("category", { required: true })}
                 >
+                  <option value="General">General</option>
                   <option value="Bungalow">Bungalow</option>
                   <option value="Duplex">Duplex</option>
                   <option value="Flat">Flat</option>
@@ -149,7 +230,7 @@ const AddHouse = (props: Props) => {
                 type="url"
                 className="form-control outline-none pl-4 w-full"
                 placeholder="URL"
-                {...register("googleMapLink", { required: true })}
+                {...register("googleMapLink")}
               />
             </HouseInput>
             {/* Start */}
@@ -157,7 +238,7 @@ const AddHouse = (props: Props) => {
               <HouseInput title="IsBooked" icon={<BsHouse />}>
                 <select
                   className="form-control outline-none pl-4 w-full"
-                  {...register("isBooked", { required: true })}
+                  {...register("isBooked")}
                 >
                   <option value="">Select</option>
                   <option value="Yes">Yes</option>
@@ -167,7 +248,7 @@ const AddHouse = (props: Props) => {
               <HouseInput title="isBachelorRoom" icon={<BsHouse />}>
                 <select
                   className="form-control outline-none pl-4 w-full"
-                  {...register("isBechelorRoom", { required: true })}
+                  {...register("isBachelorRoom")}
                 >
                   <option value="">Select</option>
                   <option value="Yes">Yes</option>
@@ -177,7 +258,7 @@ const AddHouse = (props: Props) => {
               <HouseInput title="Allow Question" icon={<BsHouse />}>
                 <select
                   className="form-control outline-none pl-4 w-full"
-                  {...register("allowQuestion", { required: true })}
+                  {...register("allowQuestion")}
                 >
                   <option value="">Select</option>
                   <option value="Yes">Yes</option>
@@ -187,7 +268,7 @@ const AddHouse = (props: Props) => {
               <HouseInput title="Is Available" icon={<BsHouse />}>
                 <select
                   className="form-control outline-none pl-4 w-full"
-                  {...register("isAvailable", { required: true })}
+                  {...register("isAvailable")}
                 >
                   <option value="">Select</option>
                   <option value="Yes">Yes</option>
@@ -197,7 +278,7 @@ const AddHouse = (props: Props) => {
               <HouseInput title="Allow Review" icon={<BsHouse />}>
                 <select
                   className="form-control outline-none pl-4 w-full"
-                  {...register("allowReview", { required: true })}
+                  {...register("allowReview")}
                 >
                   <option value="">Select</option>
                   <option value="Yes">Yes</option>
@@ -234,7 +315,7 @@ const AddHouse = (props: Props) => {
                     type="checkbox"
                     className="toggle toggle-sm  rounded-full"
                     id="hasKitchen"
-                    {...register("hasDinningRoom")}
+                    {...register("hasKitchen")}
                   />{" "}
                   <label htmlFor="hasKitchen" className="cursor-pointer">
                     hasKitchen
@@ -245,7 +326,7 @@ const AddHouse = (props: Props) => {
                     type="checkbox"
                     className="toggle toggle-sm  rounded-full"
                     id="hasStore"
-                    {...register("hasDinningRoom")}
+                    {...register("hasStore")}
                   />{" "}
                   <label htmlFor="hasStore" className="cursor-pointer">
                     hasStore
@@ -256,7 +337,7 @@ const AddHouse = (props: Props) => {
                     type="checkbox"
                     className="toggle toggle-sm  rounded-full"
                     id="hasServantRoom"
-                    {...register("hasDinningRoom")}
+                    {...register("hasServantRoom")}
                   />{" "}
                   <label htmlFor="hasServantRoom" className="cursor-pointer">
                     hasServantRoom
@@ -267,7 +348,7 @@ const AddHouse = (props: Props) => {
                     type="checkbox"
                     className="toggle toggle-sm  rounded-full"
                     id="hasSwimmingPool"
-                    {...register("hasDinningRoom")}
+                    {...register("hasSwimmingPool")}
                   />{" "}
                   <label htmlFor="hasSwimmingPool" className="cursor-pointer">
                     hasSwimmingPool
@@ -278,7 +359,7 @@ const AddHouse = (props: Props) => {
                     type="checkbox"
                     className="toggle toggle-sm  rounded-full"
                     id="hasGym"
-                    {...register("hasDinningRoom")}
+                    {...register("hasGym")}
                   />{" "}
                   <label htmlFor="hasGym" className="cursor-pointer">
                     hasGym
@@ -289,7 +370,7 @@ const AddHouse = (props: Props) => {
                     type="checkbox"
                     className="toggle toggle-sm  rounded-full"
                     id="hasLawn"
-                    {...register("hasDinningRoom")}
+                    {...register("hasLawn")}
                   />{" "}
                   <label htmlFor="hasLawn" className="cursor-pointer">
                     hasLawn
@@ -300,7 +381,7 @@ const AddHouse = (props: Props) => {
                     type="checkbox"
                     className="toggle toggle-sm  rounded-full"
                     id="hasGarage"
-                    {...register("hasDinningRoom")}
+                    {...register("hasGarage")}
                   />{" "}
                   <label htmlFor="hasGarage" className="cursor-pointer">
                     hasGarage
@@ -311,7 +392,7 @@ const AddHouse = (props: Props) => {
                     type="checkbox"
                     className="toggle toggle-sm  rounded-full"
                     id="hasCarParking"
-                    {...register("hasDinningRoom")}
+                    {...register("hasCarParking")}
                   />{" "}
                   <label htmlFor="hasCarParking" className="cursor-pointer">
                     hasCarParking
@@ -322,7 +403,7 @@ const AddHouse = (props: Props) => {
                     type="checkbox"
                     className="toggle toggle-sm  rounded-full"
                     id="hasLift"
-                    {...register("hasDinningRoom")}
+                    {...register("hasLift")}
                   />{" "}
                   <label htmlFor="hasLift" className="cursor-pointer">
                     hasLift
@@ -333,7 +414,7 @@ const AddHouse = (props: Props) => {
                     type="checkbox"
                     className="toggle toggle-sm  rounded-full"
                     id="hasGenerator"
-                    {...register("hasDinningRoom")}
+                    {...register("hasGenerator")}
                   />{" "}
                   <label htmlFor="hasGenerator" className="cursor-pointer">
                     hasGenerator
@@ -344,7 +425,7 @@ const AddHouse = (props: Props) => {
                     type="checkbox"
                     className="toggle toggle-sm  rounded-full"
                     id="hasSecurity"
-                    {...register("hasDinningRoom")}
+                    {...register("hasSecurity")}
                   />{" "}
                   <label htmlFor="hasSecurity" className="cursor-pointer">
                     hasSecurity
@@ -355,7 +436,7 @@ const AddHouse = (props: Props) => {
                     type="checkbox"
                     className="toggle toggle-sm  rounded-full"
                     id="hasCCTV"
-                    {...register("hasDinningRoom")}
+                    {...register("hasCCTV")}
                   />{" "}
                   <label htmlFor="hasCCTV" className="cursor-pointer">
                     hasCCTV
@@ -366,7 +447,7 @@ const AddHouse = (props: Props) => {
                     type="checkbox"
                     className="toggle toggle-sm  rounded-full"
                     id="hasInternet"
-                    {...register("hasDinningRoom")}
+                    {...register("hasInternet")}
                   />{" "}
                   <label htmlFor="hasInternet" className="cursor-pointer">
                     hasInternet
@@ -377,7 +458,7 @@ const AddHouse = (props: Props) => {
                     type="checkbox"
                     className="toggle toggle-sm  rounded-full"
                     id="hasGas"
-                    {...register("hasDinningRoom")}
+                    {...register("hasGas")}
                   />{" "}
                   <label htmlFor="hasGas" className="cursor-pointer">
                     hasGas
@@ -389,7 +470,7 @@ const AddHouse = (props: Props) => {
               <HouseInput title="Image">
                 <input
                   type="file"
-                  {...register("previewImage", { required: true })}
+                  {...register("previewImage")}
                   accept="image/*"
                 />
               </HouseInput>
@@ -397,7 +478,7 @@ const AddHouse = (props: Props) => {
                 <input
                   type="file"
                   multiple
-                  {...register("galleryImage", { required: true })}
+                  {...register("galleryImage")}
                   accept="image/*"
                 />
               </HouseInput>
