@@ -1,3 +1,12 @@
+*::-webkit-scrollbar {
+  width: 5px;
+  height: 4px;
+  background-color: #ebebebbb;
+}
+*::-webkit-scrollbar-thumb {
+  background: #f3f3f3;
+}
+
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;800&family=Poppins:wght@400;700&display=swap");
 @tailwind base;
 @tailwind components;
