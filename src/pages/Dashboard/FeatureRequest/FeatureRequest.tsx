@@ -3,11 +3,14 @@ import { useForm } from "react-hook-form";
 import { BiUser } from "react-icons/bi";
 import { toast } from "react-toastify";
 import { AxiosUser } from "../../../api/Axios";
+import useAuth from "../../../hooks/useAuth";
+import { authUserInterface } from "../../../interfaces/UserInterface";
 import FeatureRequestEditor from "./FeatureRequestEditor";
 
 type Props = {};
 
 const FeatureRequest = (props: Props) => {
+  const { updatedUser } = useAuth<authUserInterface | any>({});
   const [isReadonly, setIsReadonly] = useState<boolean>(true);
   const { register, handleSubmit, setValue } = useForm();
   const [requestText, setRequestText] = useState<string>("");
@@ -17,7 +20,15 @@ const FeatureRequest = (props: Props) => {
     if (!requestText || !formData?.subject) {
       return toast.error("All Fields are required.");
     }
-    const sendingData = { ...formData, requestText };
+    const sendingData = {
+      ...formData,
+      requestText,
+      author: {
+        name: updatedUser?.name,
+        email: updatedUser?.email,
+        role: updatedUser?.role,
+      },
+    };
     try {
       const { data } = await AxiosUser.post(
         "/send-feature-request",
