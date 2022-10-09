@@ -22,7 +22,13 @@ export const HouseApi = createApi({
         body,
       }),
     }),
+    getHouseByUser: builder.query({
+      query: (id) => ({
+        url: `/get-house-by-user/${id}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useCreateHouseMutation } = HouseApi;
+export const { useCreateHouseMutation, useGetHouseByUserQuery } = HouseApi;

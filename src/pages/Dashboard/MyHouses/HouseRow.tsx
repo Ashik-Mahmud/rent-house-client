@@ -3,28 +3,39 @@ import { Link } from "react-router-dom";
 
 type Props = {
   approved?: boolean;
+  house: any;
+  index: number;
 };
 
-const HouseRow = ({ approved }: Props) => {
+const HouseRow = ({ approved, house, index }: Props) => {
   return (
     <tr className="border-b border-gray-200">
-      <td className="py-3">H-1234</td>
-      <td className="py-3">House 1</td>
-      <td className="py-3">123 Main St</td>
+      <td className="py-3">
+        H-{house._id.slice(0, 5)}
+        {index}
+      </td>
+      <td className="py-3">
+        {house?.name.length > 18
+          ? house?.name.slice(0, 18) + "..."
+          : house?.name}
+      </td>
+      <td className="py-3">{house?.address}</td>
 
-      <td className="py-3">NY</td>
-      <td className="py-3">10001</td>
-      <td className="py-3">$1,200</td>
-      <td className="py-3">Apartment</td>
+      <td className="py-3">{house?.bedrooms}</td>
+      <td className="py-3">{house?.bathrooms}</td>
+      <td className="py-3">{house?.price}</td>
+      <td className="py-3">{house?.bathrooms}</td>
       <td className="py-3">
         <div
-          className={`badge badge-${approved ? "success" : "warning"} text-xs `}
+          className={`badge badge-${
+            house.status === "approved" ? "success" : "warning"
+          } text-xs `}
         >
-          {approved ? "Approved" : "Pending"}
+          {house.status}
         </div>
       </td>
       <td>
-        <div className="badge badge-secondary">1544</div>
+        <div className="badge badge-secondary">{house?.likes}</div>
       </td>
       <td className="py-3">
         <Link
