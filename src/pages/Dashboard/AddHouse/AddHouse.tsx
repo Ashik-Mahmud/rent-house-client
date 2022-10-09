@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { BiBath, BiBed, BiMoney } from "react-icons/bi";
 import { BsAlignEnd, BsHouse, BsLink, BsPen } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 import SendVerifyEmail from "../../../components/SendVerifyEmail";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
@@ -18,8 +19,10 @@ const AddHouse = (props: Props) => {
 
   const isVerify = updatedUser?.isVerified;
 
+  const navigate = useNavigate();
+
   /* Handle Add House Form Submit */
-  const { handleSubmit, register } = useForm();
+  const { handleSubmit, register, reset } = useForm();
 
   const handleAddHouseFormSubmit = handleSubmit(async (data) => {
     /* Validation */
@@ -67,7 +70,7 @@ const AddHouse = (props: Props) => {
       category: data.category,
       houseType: data.houseType,
       houseUseFor: data.houseUseFor,
-      googleMapLink: data.googleMapLink,
+      googleMapLocation: data.googleMapLink,
       bathrooms: data.bathrooms,
       bedrooms: data.bedrooms,
       address: data.address,
@@ -117,17 +120,19 @@ const AddHouse = (props: Props) => {
     await createHouse(formData);
   });
 
-  console.log(isError, error, isSuccess, data);
   /* Handling Error And Data */
   useEffect(() => {
     if (isError) {
       console.log(error);
+      toast.error((error as any)?.message);
     }
 
     if (isSuccess) {
-      console.log(data);
+      toast.success(data?.message);
+      navigate("/dashboard/houses");
+      reset();
     }
-  }, [isError, error, isSuccess, data]);
+  }, [isError, error, isSuccess, data, reset, navigate]);
 
   return (
     <div className="p-5 my-5 bg-white rounded">
@@ -147,7 +152,7 @@ const AddHouse = (props: Props) => {
                   type="text"
                   className="form-control outline-none pl-4 w-full"
                   placeholder="Name"
-                  {...register("name", { required: true })}
+                  {...register("name")}
                 />
               </HouseInput>
 
@@ -156,14 +161,14 @@ const AddHouse = (props: Props) => {
                   type="text"
                   className="form-control outline-none pl-4 w-full"
                   placeholder="Address"
-                  {...register("address", { required: true })}
+                  {...register("address")}
                 />
               </HouseInput>
 
               <HouseInput title="Put Your Category" icon={<BsHouse />}>
                 <select
                   className="outline-none  w-full pl-4 cursor-pointer text-sm"
-                  {...register("category", { required: true })}
+                  {...register("category")}
                 >
                   <option value="General">General</option>
                   <option value="Bungalow">Bungalow</option>
@@ -176,7 +181,7 @@ const AddHouse = (props: Props) => {
               <HouseInput title="Select House Type" icon={<BsHouse />}>
                 <select
                   className="form-control outline-none pl-4 w-full"
-                  {...register("houseType", { required: true })}
+                  {...register("houseType")}
                 >
                   <option value="Rent">Rent</option>
                   <option value="Sale">Sale</option>
@@ -186,7 +191,7 @@ const AddHouse = (props: Props) => {
               <HouseInput title="Select House Use For" icon={<BsHouse />}>
                 <select
                   className="form-control outline-none pl-4 w-full"
-                  {...register("houseUseFor", { required: true })}
+                  {...register("houseUseFor")}
                 >
                   <option value="Residential">Residential</option>
                   <option value="Commercial">Commercial</option>
@@ -199,7 +204,7 @@ const AddHouse = (props: Props) => {
                   type="text"
                   className="form-control outline-none pl-4 w-full"
                   placeholder="Price"
-                  {...register("price", { required: true })}
+                  {...register("price")}
                 />
               </HouseInput>
 
@@ -211,7 +216,7 @@ const AddHouse = (props: Props) => {
                   type="number"
                   className="form-control outline-none pl-4 w-full"
                   placeholder="bedrooms"
-                  {...register("bedrooms", { required: true })}
+                  {...register("bedrooms")}
                 />
               </HouseInput>
 
@@ -220,7 +225,7 @@ const AddHouse = (props: Props) => {
                   type="number"
                   className="form-control outline-none pl-4 w-full"
                   placeholder="bathrooms"
-                  {...register("bathrooms", { required: true })}
+                  {...register("bathrooms")}
                 />
               </HouseInput>
 
@@ -229,7 +234,7 @@ const AddHouse = (props: Props) => {
                   type="text"
                   className="form-control outline-none pl-4 w-full"
                   placeholder="District"
-                  {...register("district", { required: true })}
+                  {...register("district")}
                 />
               </HouseInput>
 
@@ -238,7 +243,7 @@ const AddHouse = (props: Props) => {
                   type="text"
                   className="form-control outline-none pl-4 w-full"
                   placeholder="City"
-                  {...register("city", { required: true })}
+                  {...register("city")}
                 />
               </HouseInput>
             </div>
@@ -248,7 +253,7 @@ const AddHouse = (props: Props) => {
                 rows={5}
                 placeholder="Description"
                 className="w-full outline-none"
-                {...register("description", { required: true })}
+                {...register("description")}
               ></textarea>
             </HouseInput>
             <HouseInput title="Put Your Google Map Link" icon={<BsLink />}>
