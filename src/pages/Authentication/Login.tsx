@@ -55,7 +55,7 @@ const Login = (props: Props) => {
       }}
     >
       <div>
-        <div className="hero-content flex-col lg:flex-row-reverse shadow-lg border rounded-lg sm:p-10 ">
+        <div className="hero-content flex-col lg:flex-row-reverse shadow-lg border rounded-lg sm:p-10 bg-white">
           <div className="text-center lg:text-left max-w-md">
             <img
               src="https://i.ibb.co/HVBwcZT/undraw-Access-account-re-8spm.png"
