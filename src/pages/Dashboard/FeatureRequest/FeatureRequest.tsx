@@ -36,6 +36,7 @@ const FeatureRequest = (props: Props) => {
       );
       if (data?.success) {
         toast.success(data?.message);
+        setRequestText("");
       } else {
         toast.error(data?.message);
       }
