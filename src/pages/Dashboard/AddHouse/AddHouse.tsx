@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { BiBath, BiBed, BiMoney } from "react-icons/bi";
@@ -5,19 +6,22 @@ import { BsAlignEnd, BsHouse, BsLink, BsPen } from "react-icons/bs";
 import SendVerifyEmail from "../../../components/SendVerifyEmail";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
+import { useCreateHouseMutation } from "../../../services/HouseApi";
 import HouseInput from "./HouseInput";
 
 type Props = {};
 
 const AddHouse = (props: Props) => {
   const { updatedUser } = useAuth<authUserInterface | any>({});
+  const [createHouse, { data, isSuccess, isError, error }] =
+    useCreateHouseMutation();
 
   const isVerify = updatedUser?.isVerified;
 
   /* Handle Add House Form Submit */
-  const { handleSubmit, register, reset } = useForm();
+  const { handleSubmit, register } = useForm();
 
-  const handleAddHouseFormSubmit = handleSubmit((data) => {
+  const handleAddHouseFormSubmit = handleSubmit(async (data) => {
     /* Validation */
     if (!data.name) return toast.error(`Name is required`);
     if (!data.district) return toast.error(`District is required`);
@@ -109,7 +113,21 @@ const AddHouse = (props: Props) => {
       houseFormData.append("galleryImage", image);
     });
     houseFormData.append("data", sendingDataForHouse as any);
+
+    await createHouse(houseFormData);
   });
+
+  console.log(isError, error, isSuccess, data);
+  /* Handling Error And Data */
+  useEffect(() => {
+    if (isError) {
+      console.log(error);
+    }
+
+    if (isSuccess) {
+      console.log(data);
+    }
+  }, [isError, error, isSuccess, data]);
 
   return (
     <div className="p-5 my-5 bg-white rounded">
