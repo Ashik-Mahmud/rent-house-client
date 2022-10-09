@@ -3,7 +3,7 @@ import { BsArrowLeft, BsHeartFill } from "react-icons/bs";
 import { FiMaximize2 } from "react-icons/fi";
 import { GoHome } from "react-icons/go";
 import { MdReportGmailerrorred } from "react-icons/md";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import GlobalLoader from "../../../components/GlobalLoader";
 import { useGetHouseByHouseIdQuery } from "../../../services/HouseApi";
 import Address from "./Address";
@@ -24,15 +24,15 @@ type Props = {};
 const HouseDetails = (props: Props) => {
   /* Get House ID */
   const { houseId } = useParams<{ houseId: string }>();
-  console.log(houseId);
   const { data, isLoading, error } = useGetHouseByHouseIdQuery(houseId);
+  const navigate = useNavigate();
 
   if (isLoading) return <GlobalLoader />;
   if (error) {
     console.log(error);
     return <h1>Oh nooo!!! Something went wrong. Please try again.</h1>;
   }
-  console.log(data);
+
   return (
     <>
       <section>
@@ -43,6 +43,7 @@ const HouseDetails = (props: Props) => {
                 <div
                   className="back text-3xl cursor-pointer tooltip"
                   data-tip="Backward"
+                  onClick={() => navigate(-1)}
                 >
                   <BsArrowLeft />{" "}
                 </div>
