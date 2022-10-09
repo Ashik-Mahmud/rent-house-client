@@ -93,6 +93,11 @@ const AddHouse = (props: Props) => {
         hasInternet: data.hasInternet,
         hasGas: data.hasGas,
       },
+      author: {
+        name: updatedUser?.name,
+        email: updatedUser?.email,
+        id: updatedUser?._id,
+      },
     };
 
     houseFormData.append(
