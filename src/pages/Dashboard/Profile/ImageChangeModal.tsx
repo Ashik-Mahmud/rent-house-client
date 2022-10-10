@@ -10,7 +10,7 @@ type Props = {};
 
 const ImageChangeModal = (props: Props) => {
   const { updatedUser } = useAuth<authUserInterface | any>({});
-  const [changeProfilePicture, { data, isSuccess }] =
+  const [changeProfilePicture, { data, isSuccess, error }] =
     useChangeProfilePictureMutation();
   const { register, handleSubmit, watch, reset } = useForm();
   const [imageName, setImageName] = useState<string>("");
@@ -39,7 +39,10 @@ const ImageChangeModal = (props: Props) => {
     if (isSuccess) {
       toast.success(data?.message);
     }
-  }, [data, isSuccess]);
+    if (error) {
+      toast.error((error as any)?.message || data?.message);
+    }
+  }, [data, isSuccess, error]);
 
   return (
     <form
