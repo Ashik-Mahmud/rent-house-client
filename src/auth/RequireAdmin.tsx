@@ -8,8 +8,13 @@ type Props = {
 };
 
 const RequireAdmin = ({ children }: Props) => {
-  const { updatedUser } = useAuth<authUserInterface | any>({});
+  const { updatedUser, isLoading } = useAuth<authUserInterface | any>({});
   const location = useLocation();
+
+  if (isLoading) {
+    return null;
+  }
+
   if (updatedUser?.role !== "admin") {
     toast.error("access denied");
     return <Navigate to={"/dashboard"} replace state={{ from: location }} />;

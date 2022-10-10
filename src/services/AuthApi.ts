@@ -104,6 +104,9 @@ export const authApi = createApi({
         body,
       }),
     }),
+    getAllUsersForAdmin: builder.query<any, void>({
+      query: () => "/users/admin",
+    }),
   }),
 });
 
@@ -116,4 +119,5 @@ export const {
   useChangePasswordMutation,
   useResetPasswordMutation,
   useChangePasswordWithoutOldPwdMutation,
+  useGetAllUsersForAdminQuery,
 } = authApi;
