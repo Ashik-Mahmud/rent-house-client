@@ -16,6 +16,7 @@ type Props = {
 
 const UserRow = ({ data, ind }: Props) => {
   const [isEdit, setIsEdit] = useState<boolean>(false);
+
   return (
     <tr>
       <td className="text-left">{data?.name || "not available"}</td>
@@ -73,9 +74,9 @@ const UserRow = ({ data, ind }: Props) => {
               id=""
               className="outline-none cursor-pointer  rounded-md w-24"
             >
-              <option value="">Customer</option>
-              <option value="">Admin</option>
-              <option value="">User - House Holder</option>
+              <option value="customer">Customer</option>
+              <option value="user">User - House Holder</option>
+              <option value="admin">Admin</option>
             </select>
             <div className=" select-none flex items-center gap-1">
               <span
@@ -119,7 +120,6 @@ const UserRow = ({ data, ind }: Props) => {
             >
               <option value="">Active</option>
               <option value="">Inactive</option>
-              <option value="">Block</option>
             </select>
             <div className=" select-none flex items-center gap-1">
               <span

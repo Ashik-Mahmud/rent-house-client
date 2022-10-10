@@ -1,16 +1,18 @@
+import { useState } from "react";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { useGetAllUsersForAdminQuery } from "../../../services/AuthApi";
 import UserRow from "./UserRow";
 type Props = {};
 
 const Users = (props: Props) => {
-  const { data, isLoading, error } = useGetAllUsersForAdminQuery();
+  const [filterRole, setFilterRole] = useState<string>("All");
+  const { data, isLoading, error } = useGetAllUsersForAdminQuery(filterRole);
 
   if (error) {
     console.log(error);
   }
 
-  console.log(data, isLoading);
+  console.log(data, isLoading, filterRole);
 
   return (
     <div>
@@ -25,10 +27,16 @@ const Users = (props: Props) => {
               <span className="bg-green-500 w-3 h-3 rounded-full inline-block mr-2"></span>
               <span>Active</span>
             </div>
-            <select name="" className="select select-bordered select-sm" id="">
-              <option value="">Customers</option>
-              <option value="">Houses Holder</option>
-              <option value="">Admin</option>
+            <select
+              name=""
+              className="select select-bordered select-sm"
+              id=""
+              onChange={(e) => setFilterRole(e.target.value)}
+            >
+              <option value="All">All</option>
+              <option value="customer">Customers</option>
+              <option value="user">Houses Holder</option>
+              <option value="admin">Admin</option>
             </select>
           </div>
         </div>
