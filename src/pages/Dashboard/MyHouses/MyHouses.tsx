@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { BiExport } from "react-icons/bi";
+import { Link } from "react-router-dom";
 import GlobalLoader from "../../../components/GlobalLoader";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
@@ -78,7 +79,15 @@ const MyHouses = (props: Props) => {
             </tbody>
           </table>
         ) : (
-          <div>No Houses</div>
+          <div className="text-center">
+            <h3 className="text-2xl font-bold">No Houses</h3>
+            <Link
+              to="/dashboard/houses/add"
+              className="btn btn-success mt-4 btn-sm"
+            >
+              Add Your Own
+            </Link>
+          </div>
         )}
       </div>
       <div className="pagination">

@@ -15,6 +15,7 @@ const Settings = (props: Props) => {
   const { updatedUser, setUser } = useAuth<authUserInterface | any>({});
   const role = updatedUser?.role;
   const isVerify = updatedUser?.isVerified;
+  const isBlogAllowed = updatedUser?.blogAllowed;
   const navigate = useNavigate();
 
   const [changePassword, { data, isSuccess, error }] =
@@ -67,24 +68,26 @@ const Settings = (props: Props) => {
         <div className="settings-content">
           {role !== "admin" && (
             <>
-              <div className="req-for-blog flex-col justify-center sm:justify-between sm:flex-row flex items-center my-8 bg-base-200 p-5 rounded-lg">
-                <h3 className="text-xl font-bold text-center sm:text-left">
-                  If you want to get Blogs writing authority
-                </h3>
+              {!isBlogAllowed && (
+                <div className="req-for-blog flex-col justify-center sm:justify-between sm:flex-row flex items-center my-8 bg-base-200 p-5 rounded-lg">
+                  <h3 className="text-xl font-bold text-center sm:text-left">
+                    If you want to get Blogs writing authority
+                  </h3>
 
-                {isVerify ? (
-                  <button className="btn btn-success rounded-full mt-4  sm:mt-0">
-                    Request For Blog
-                  </button>
-                ) : (
-                  <button
-                    className="btn btn-warning pointer-events-none rounded-full mt-4  sm:mt-0 tooltip"
-                    data-tip="Verify First"
-                  >
-                    Verify Account to Get Request
-                  </button>
-                )}
-              </div>
+                  {isVerify ? (
+                    <button className="btn btn-success rounded-full mt-4  sm:mt-0">
+                      Request For Blog
+                    </button>
+                  ) : (
+                    <button
+                      className="btn btn-warning pointer-events-none rounded-full mt-4  sm:mt-0 tooltip"
+                      data-tip="Verify First"
+                    >
+                      Verify Account to Get Request
+                    </button>
+                  )}
+                </div>
+              )}
               {role === "customer" && (
                 <div className="req-for-blog flex items-center  my-8 bg-base-200 p-5 rounded-lg flex-col justify-center sm:justify-between sm:flex-row">
                   <h3 className="text-xl font-bold text-center sm:text-left">
