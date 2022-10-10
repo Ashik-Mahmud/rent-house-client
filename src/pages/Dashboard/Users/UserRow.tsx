@@ -193,8 +193,8 @@ const UserRow = ({ data, ind, refetch }: Props) => {
           </div>
         ) : (
           <span
-            className={`text-green-500 ${
-              data?.status === "active" ? "text-green-500" : "text-secondary"
+            className={`badge ${
+              data?.status === "active" ? " badge-success" : " badge-warning"
             } capitalize`}
           >
             {data?.status || "not available"}

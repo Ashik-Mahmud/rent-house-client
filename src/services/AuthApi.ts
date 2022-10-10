@@ -27,6 +27,12 @@ type getUserType = {
   data: UserInterface;
 };
 
+type paginationType = {
+  page: number;
+  limit: number;
+  role: string;
+};
+
 interface CustomError {
   data: {
     message: string;
@@ -104,12 +110,15 @@ export const authApi = createApi({
         body,
       }),
     }),
-    getAllUsersForAdmin: builder.query<
-      any,
-      { role: string; page: number; limit: number }
-    >({
+    getAllUsersForAdmin: builder.query<any, paginationType>({
       query: (query) =>
         `/users/admin?role=${query.role}&limit=${query.limit}&page=${query.page}`,
+    }),
+    deleteUserForAdmin: builder.mutation({
+      query: (id: string) => ({
+        url: `/users/admin/delete/${id}`,
+        method: "DELETE",
+      }),
     }),
   }),
 });
