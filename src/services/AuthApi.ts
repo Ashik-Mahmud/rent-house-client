@@ -113,12 +113,14 @@ export const authApi = createApi({
     getAllUsersForAdmin: builder.query<any, paginationType>({
       query: (query) =>
         `/users/admin?role=${query.role}&limit=${query.limit}&page=${query.page}`,
+      providesTags: ["GetUser"],
     }),
     deleteUserForAdmin: builder.mutation({
       query: (id: string) => ({
         url: `/users/admin/delete/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["GetUser"],
     }),
   }),
 });
@@ -133,4 +135,5 @@ export const {
   useResetPasswordMutation,
   useChangePasswordWithoutOldPwdMutation,
   useGetAllUsersForAdminQuery,
+  useDeleteUserForAdminMutation,
 } = authApi;

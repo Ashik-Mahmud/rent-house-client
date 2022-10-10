@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   BsCheck2,
   BsFacebook,
@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import { AxiosUser } from "../../../api/Axios";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
+import { useDeleteUserForAdminMutation } from "../../../services/AuthApi";
 
 type Props = {
   data: any;
@@ -24,6 +25,10 @@ const UserRow = ({ data, ind, refetch }: Props) => {
   const [changeRole, setChangeRole] = useState<string>("");
   const [changeStatus, setChangeStatus] = useState<string>("");
   const { updatedUser } = useAuth<authUserInterface | any>({});
+
+  /* Delete Rtk Query */
+  const [deleteUser, { data: deleteData, error, isSuccess }] =
+    useDeleteUserForAdminMutation();
 
   /* Handle Change Role */
   const handleChangeRole = async (id: string) => {
@@ -54,6 +59,24 @@ const UserRow = ({ data, ind, refetch }: Props) => {
       toast.error((err as any)?.response?.data?.message);
     }
   };
+
+  /* Handle Delete User by Admin */
+  const handleDeleteUserByAdmin = async (id: string) => {
+    const isConfirm = window.confirm("Are you sure?");
+    if (isConfirm) {
+      await deleteUser(id);
+    }
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      console.log(deleteData);
+      toast.success(deleteData?.message);
+    }
+    if (error) {
+      console.log(error);
+    }
+  }, [isSuccess, deleteData, error]);
 
   return (
     <tr>
@@ -228,6 +251,7 @@ const UserRow = ({ data, ind, refetch }: Props) => {
               data?._id === updatedUser?._id &&
               "pointer-events-none text-gray-300"
             }`}
+            onClick={() => handleDeleteUserByAdmin(data?._id)}
           >
             <span className="w-5 h-5 flex items-center justify-center">
               <BsTrash />
