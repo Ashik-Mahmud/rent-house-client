@@ -56,9 +56,14 @@ const Users = (props: Props) => {
                 </tr>
               </thead>
               <tbody>
-                <UserRow />
-                <UserRow />
-                <UserRow />
+                {error && (
+                  <tr>
+                    <td colSpan={8}>Something Went Wrong!</td>
+                  </tr>
+                )}
+                {data?.data?.map((d: any, i: number) => (
+                  <UserRow data={d} ind={i} key={d?._id} />
+                ))}
               </tbody>
             </table>
           )}

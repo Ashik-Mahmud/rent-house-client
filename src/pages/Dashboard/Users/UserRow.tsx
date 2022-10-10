@@ -7,32 +7,62 @@ import {
   BsTrash,
   BsTwitter,
 } from "react-icons/bs";
+import { GiChessQueen } from "react-icons/gi";
 
-type Props = {};
+type Props = {
+  data: any;
+  ind: number;
+};
 
-const UserRow = (Props: Props) => {
+const UserRow = ({ data, ind }: Props) => {
   const [isEdit, setIsEdit] = useState<boolean>(false);
   return (
     <tr>
-      <td className="text-left">John Doe</td>
+      <td className="text-left">{data?.name || "not available"}</td>
       <td className="text-left">
-        <span className="text-gray-500">jhon@doe.com</span>
+        <span className="text-gray-500">{data?.email || "not available"}</span>
       </td>
       <td className="text-left">
-        <span className="text-gray-500">01700000000</span>
+        <span className="text-gray-500">{data?.phone || "not available"}</span>
       </td>
       <td>Dhaka/Bangladesh</td>
       <td>
         <div className="flex items-center gap-3">
-          <a href="/" className="btn btn-xs btn-ghost">
-            <BsFacebook />
-          </a>
-          <a href="/" className="btn btn-xs btn-ghost">
-            <BsTwitter />
-          </a>
-          <a href="/" className="btn btn-xs btn-ghost">
-            <BsInstagram />
-          </a>
+          {data?.facebookLink && (
+            <a
+              href={data?.facebookLink}
+              target="_blank"
+              className="btn btn-xs btn-ghost"
+              rel="noreferrer"
+            >
+              <BsFacebook />
+            </a>
+          )}
+          {data?.instagramLink && (
+            <a
+              href={data?.instagramLink}
+              target="_blank"
+              className="btn btn-xs btn-ghost"
+              rel="noreferrer"
+            >
+              <BsInstagram />
+            </a>
+          )}
+
+          {data?.twitterLink && (
+            <a
+              href={data?.twitterLink}
+              target="_blank"
+              className="btn btn-xs btn-ghost"
+              rel="noreferrer"
+            >
+              <BsTwitter />
+            </a>
+          )}
+          {!data?.facebookLink &&
+            !data?.twitterLink &&
+            !data?.instagramLink &&
+            "not available"}
         </div>
       </td>
       <td className="text-left">
@@ -64,7 +94,19 @@ const UserRow = (Props: Props) => {
             </div>
           </div>
         ) : (
-          <span className="text-gray-500">Customer</span>
+          <span className="text-gray-500 capitalize flex gap-1">
+            {data?.role === "user"
+              ? "House Holder"
+              : data?.role || "not available"}
+            {data?.role === "admin" && (
+              <span
+                title="High Position"
+                className="block mt-px text-yellow-500"
+              >
+                <GiChessQueen />
+              </span>
+            )}
+          </span>
         )}
       </td>
       <td className="text-left">
@@ -96,7 +138,13 @@ const UserRow = (Props: Props) => {
             </div>
           </div>
         ) : (
-          <span className="text-green-500">Active</span>
+          <span
+            className={`text-green-500 ${
+              data?.status === "active" ? "text-green-500" : "text-secondary"
+            } capitalize`}
+          >
+            {data?.status || "not available"}
+          </span>
         )}
       </td>
       <td className="text-left">
