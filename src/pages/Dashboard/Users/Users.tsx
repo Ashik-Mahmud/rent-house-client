@@ -112,7 +112,7 @@ const Users = (props: Props) => {
                   </tr>
                 )}
                 {data?.data?.map((d: any, i: number) => (
-                  <UserRow data={d} ind={i} key={d?._id} />
+                  <UserRow data={d} ind={i} key={d?._id} refetch={refetch} />
                 ))}
               </tbody>
             </table>

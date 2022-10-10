@@ -8,14 +8,35 @@ import {
   BsTwitter,
 } from "react-icons/bs";
 import { GiChessQueen } from "react-icons/gi";
+import { toast } from "react-toastify";
+import { AxiosUser } from "../../../api/Axios";
 
 type Props = {
   data: any;
   ind: number;
+  refetch: () => void;
 };
 
-const UserRow = ({ data, ind }: Props) => {
+const UserRow = ({ data, ind, refetch }: Props) => {
   const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [changeRole, setChangeRole] = useState<string>("");
+  /* Handle Change Role */
+  const handleChangeRole = async (id: string) => {
+    const isConfirm = window.confirm("Are you sure?");
+    try {
+      if (isConfirm) {
+        const { data } = await AxiosUser.patch("/admin/change-role", {
+          role: changeRole,
+          id: id,
+        });
+        toast.success(data?.message);
+        refetch();
+        setIsEdit(false);
+      }
+    } catch (err) {
+      toast.error((err as any)?.response?.data?.message);
+    }
+  };
 
   return (
     <tr>
@@ -73,6 +94,7 @@ const UserRow = ({ data, ind }: Props) => {
               name=""
               id=""
               className="outline-none cursor-pointer  rounded-md w-24"
+              onChange={(e) => setChangeRole(e.target.value)}
             >
               <option value="customer">Customer</option>
               <option value="user">User - House Holder</option>
@@ -82,6 +104,7 @@ const UserRow = ({ data, ind }: Props) => {
               <span
                 className="text-success cursor-pointer text-2xl tooltip"
                 data-tip="Save Changes"
+                onClick={() => handleChangeRole(data?._id)}
               >
                 <BsCheck2 />
               </span>
