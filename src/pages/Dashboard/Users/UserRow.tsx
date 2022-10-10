@@ -45,7 +45,12 @@ const UserRow = ({ data, ind, refetch }: Props) => {
 
   /* Common function for changing */
   const adminAction = async (changeText: string, id: string, url: string) => {
-    const isConfirm = window.confirm("Are you sure?");
+    const isConfirm = await swal({
+      title: "Are you sure?",
+      text: "After done It's role change to create whatever you put",
+      icon: "warning",
+      buttons: ["Cancel", "Delete"],
+    });
     try {
       if (isConfirm) {
         const { data } = await AxiosUser.patch(`/admin${url}`, {
