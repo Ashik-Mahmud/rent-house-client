@@ -9,6 +9,7 @@ import {
 } from "react-icons/bs";
 import { GiChessQueen } from "react-icons/gi";
 import { toast } from "react-toastify";
+import swal from "sweetalert";
 import { AxiosUser } from "../../../api/Axios";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
@@ -62,7 +63,12 @@ const UserRow = ({ data, ind, refetch }: Props) => {
 
   /* Handle Delete User by Admin */
   const handleDeleteUserByAdmin = async (id: string) => {
-    const isConfirm = window.confirm("Are you sure?");
+    const isConfirm = await swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this imaginary file!",
+      icon: "warning",
+      buttons: ["Cancel", "Delete"],
+    });
     if (isConfirm) {
       await deleteUser(id);
     }
@@ -70,11 +76,10 @@ const UserRow = ({ data, ind, refetch }: Props) => {
 
   useEffect(() => {
     if (isSuccess) {
-      console.log(deleteData);
       toast.success(deleteData?.message);
     }
     if (error) {
-      console.log(error);
+      toast.error((error as any)?.data.message);
     }
   }, [isSuccess, deleteData, error]);
 
