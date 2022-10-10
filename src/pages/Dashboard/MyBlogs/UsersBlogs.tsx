@@ -1,10 +1,12 @@
+import { useState } from "react";
 import { BiEdit, BiTrash } from "react-icons/bi";
-import { BsEye } from "react-icons/bs";
+import { BsCheck2, BsEye, BsHeart, BsPen, BsX } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
 type Props = {};
 
 const UsersBlogs = (props: Props) => {
+  const [editStatus, setEditStatus] = useState<boolean>(false);
   return (
     <div>
       <div className="p-3 sm:p-5 my-5 bg-white">
@@ -19,6 +21,7 @@ const UsersBlogs = (props: Props) => {
                 <th>Name</th>
                 <th>Category</th>
                 <th>Views</th>
+                <th>Likes</th>
                 <th>status</th>
                 <th>Open</th>
                 <th>Action</th>
@@ -42,10 +45,55 @@ const UsersBlogs = (props: Props) => {
                 <td>Blog Title</td>
                 <td>Category</td>
                 <td>
-                  <div className="badge badge-ghost">150</div>
+                  <div className="badge badge-ghost">
+                    {" "}
+                    <span className="flex items-center gap-1">
+                      <BsEye /> 5
+                    </span>
+                  </div>
                 </td>
                 <td>
-                  <div className="badge badge-success">active</div>
+                  <div className="badge badge-ghost">
+                    <span className="flex items-center gap-1">
+                      <BsHeart /> 5
+                    </span>
+                  </div>
+                </td>
+                <td>
+                  <div className="flex items-center gap-2">
+                    <div className="">
+                      {editStatus ? (
+                        <select className=" outline-none select select-xs text-xs">
+                          <option value="">Select</option>
+                          <option value="active">Active</option>
+                          <option value="inactive">Inactive</option>
+                        </select>
+                      ) : (
+                        <span className="badge badge-success">active</span>
+                      )}
+                    </div>
+                    {editStatus ? (
+                      <div className="flex items-center gap-1">
+                        <span className="cursor-pointer text-xl text-success">
+                          <BsCheck2 />
+                        </span>
+                        <span
+                          className="cursor-pointer text-lg text-error"
+                          onClick={() => setEditStatus((state) => !state)}
+                        >
+                          <BsX />
+                        </span>
+                      </div>
+                    ) : (
+                      <span
+                        className="cursor-pointer text-sm tooltip tooltip-success"
+                        data-tip="Edit Status"
+                        onClick={() => setEditStatus((state) => !state)}
+                      >
+                        <BsPen />
+                      </span>
+                    )}
+                  </div>
                 </td>
                 <td>
                   <div className="badge badge-ghost cursor-pointer">
