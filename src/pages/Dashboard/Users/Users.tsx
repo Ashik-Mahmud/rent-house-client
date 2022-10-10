@@ -6,13 +6,42 @@ type Props = {};
 
 const Users = (props: Props) => {
   const [filterRole, setFilterRole] = useState<string>("All");
-  const { data, isLoading, error } = useGetAllUsersForAdminQuery(filterRole);
+  const [limitPerPage, setLimitPerPage] = useState<number>(5);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  const queryData = {
+    role: filterRole,
+    page: currentPage,
+    limit: limitPerPage,
+  };
+
+  const { data, isLoading, error, refetch } =
+    useGetAllUsersForAdminQuery(queryData);
 
   if (error) {
     console.log(error);
   }
 
-  console.log(data, isLoading, filterRole);
+  /* Page Count */
+  const itemsPerPage = 2;
+  const totalItems: number = isLoading ? 0 : data?.count || 0;
+  const totalPage: number = Math.ceil(totalItems / itemsPerPage);
+  let page = 1;
+
+  /* Pagination functions */
+  const nextPage = () => {
+    page = page + 1;
+    if (page > totalPage) page = totalPage;
+    setCurrentPage(page);
+    refetch();
+  };
+
+  const prevPage = () => {
+    page = page - 1;
+    if (page < 1) page = 1;
+    setCurrentPage(page);
+    refetch();
+  };
 
   return (
     <div>
@@ -21,6 +50,19 @@ const Users = (props: Props) => {
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-bold">Users Management</h1>
             <small className="badge badge-success">Admin</small>
+            <div className="flex items-center gap-2 font-poppins badge badge-ghost">
+              Limit Per Page
+              <select
+                name=""
+                id=""
+                className="btn btn-ghost btn-circle outline-none"
+                onChange={(e) => setLimitPerPage(Number(e.target.value))}
+              >
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+              </select>
+            </div>
           </div>
           <div className="flex items-center gap-3">
             <div className="active-user">
@@ -76,17 +118,31 @@ const Users = (props: Props) => {
             </table>
           )}
 
-          {!isLoading && data?.count !== 0 && (
+          {!isLoading && data?.count !== 0 && limitPerPage < data?.count && (
             <div className="pagination mt-5 flex items-center gap-6">
               <div className="pagination-previous">
-                <button className="btn btn-ghost">
+                <button
+                  className={`btn btn-ghost ${
+                    currentPage === 1
+                      ? "pointer-events-none"
+                      : "pointer-events-auto"
+                  }`}
+                  onClick={prevPage}
+                >
                   <span className="w-5 h-5 flex items-center justify-center">
                     <BsChevronLeft />
                   </span>
                 </button>
               </div>
               <div className="pagination-next">
-                <button className="btn btn-ghost">
+                <button
+                  className={`btn btn-ghost ${
+                    currentPage === totalPage
+                      ? "pointer-events-none"
+                      : "pointer-events-auto"
+                  }`}
+                  onClick={nextPage}
+                >
                   <span className="w-5 h-5 flex items-center justify-center">
                     <BsChevronRight />
                   </span>

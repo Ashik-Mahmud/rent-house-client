@@ -104,8 +104,12 @@ export const authApi = createApi({
         body,
       }),
     }),
-    getAllUsersForAdmin: builder.query<any, string>({
-      query: (role) => `/users/admin?role=${role}`,
+    getAllUsersForAdmin: builder.query<
+      any,
+      { role: string; page: number; limit: number }
+    >({
+      query: (query) =>
+        `/users/admin?role=${query.role}&limit=${query.limit}&page=${query.page}`,
     }),
   }),
 });
