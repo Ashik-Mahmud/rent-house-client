@@ -169,13 +169,6 @@ const UserRow = ({ data, ind, refetch }: Props) => {
               >
                 <BsCheck2 />
               </span>
-              <span
-                onClick={() => setIsEdit(false)}
-                className="text-danger cursor-pointer text-2xl tooltip text-error"
-                data-tip="Cancel Changes"
-              >
-                &times;
-              </span>
             </div>
           </div>
         ) : (
@@ -215,13 +208,6 @@ const UserRow = ({ data, ind, refetch }: Props) => {
               >
                 <BsCheck2 />
               </span>
-              <span
-                onClick={() => setIsEdit(false)}
-                className="text-danger cursor-pointer text-2xl tooltip text-error"
-                data-tip="Cancel Changes"
-              >
-                &times;
-              </span>
             </div>
           </div>
         ) : (
@@ -250,7 +236,7 @@ const UserRow = ({ data, ind, refetch }: Props) => {
             </button>
           ) : (
             <button onClick={() => setIsEdit(false)}>
-              <span className="text-2xl flex items-center justify-center">
+              <span className="text-2xl flex items-center justify-center text-error">
                 &times;
               </span>
             </button>
