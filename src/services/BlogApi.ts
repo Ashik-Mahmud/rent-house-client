@@ -6,7 +6,7 @@ const cookies = new Cookies();
 export const BlogApi = createApi({
   reducerPath: "BlogApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `http://localhost:1000/api/v1/blogs`,
+    baseUrl: `http://localhost:5000/api/v1/blogs`,
     prepareHeaders: (headers, api) => {
       const cookie = cookies.get("user");
       const token = cookie.token;

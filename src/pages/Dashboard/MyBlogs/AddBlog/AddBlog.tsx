@@ -1,13 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { BiBook, BiLink } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import useAuth from "../../../../hooks/useAuth";
+import { authUserInterface } from "../../../../interfaces/UserInterface";
+import { useCreateBlogMutation } from "../../../../services/BlogApi";
 import BlogEditor from "./BlogEditor";
 type Props = {};
 
 const AddBlog = (props: Props) => {
+  const { updatedUser } = useAuth<authUserInterface | any>({});
   const [blogText, setBlogText] = useState<string>("");
   const { register, handleSubmit } = useForm();
+
+  const navigate = useNavigate();
+  const [createBlog, { data, isSuccess, error }] = useCreateBlogMutation();
 
   const handleAddBlog = handleSubmit(async (formData) => {
     if (!formData?.blogTitle || !formData?.category || !formData?.imageUrl) {
@@ -15,8 +23,34 @@ const AddBlog = (props: Props) => {
     }
     if (!blogText) return toast(`Blog Content is Required.`);
 
-    console.log(formData, blogText);
+    try {
+      await createBlog({
+        title: formData.blogTitle,
+        description: blogText,
+        category: formData.category,
+        imageUrl: formData.imageUrl,
+        author: {
+          name: updatedUser?.name,
+          email: updatedUser?.email,
+          id: updatedUser?._id,
+        },
+      }).unwrap();
+    } catch (e) {
+      throw e;
+    }
   });
+
+  useEffect(() => {
+    if (error) {
+      console.log(error);
+    }
+
+    if (isSuccess === true) {
+      toast.success(`Blog Created Successfully!`);
+      navigate("/dashboard/blogs/users-blogs");
+    }
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSuccess, error, data]);
 
   return (
     <div>
