@@ -235,7 +235,7 @@ function App() {
           >
             <Route index element={<UsersBlogs />} />
             <Route path="users-blogs" element={<UsersBlogs />} />
-            <Route path="update" element={<UpdateBlogs />} />
+            <Route path="update/:id" element={<UpdateBlogs />} />
             <Route path="add" element={<AddBlog />} />
           </Route>
           <Route

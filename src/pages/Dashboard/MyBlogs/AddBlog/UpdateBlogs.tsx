@@ -1,8 +1,11 @@
 import { BiBook, BiLink } from "react-icons/bi";
+import { useParams } from "react-router-dom";
 import BlogEditor from "./BlogEditor";
 type Props = {};
 
 const UpdateBlogs = (props: Props) => {
+  const { id } = useParams();
+  console.log(id);
   return (
     <div>
       <div className="p-4 my-4 bg-white">

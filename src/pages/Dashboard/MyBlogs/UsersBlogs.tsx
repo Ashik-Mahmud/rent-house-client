@@ -153,7 +153,7 @@ const UsersBlogs = (props: Props) => {
                     <td>
                       <div className="flex items-center gap-6">
                         <Link
-                          to="/dashboard/blogs/update"
+                          to={`/dashboard/blogs/update/${blog?._id}`}
                           className="text-lg cursor-pointer"
                         >
                           <BiEdit />
