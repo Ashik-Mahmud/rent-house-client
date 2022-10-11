@@ -42,10 +42,11 @@ export const BlogApi = createApi({
     }),
     updateBlogById: builder.mutation({
       query: (data) => ({
-        url: `/update/${data?.id}`,
+        url: `/update/${data?._id}`,
         method: "PATCH",
         body: data,
       }),
+      invalidatesTags: ["getBlog"],
     }),
   }),
 });

@@ -2,9 +2,13 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { BiBook, BiLink } from "react-icons/bi";
 import { BsCheck2, BsX } from "react-icons/bs";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import GlobalLoader from "../../../../components/GlobalLoader";
-import { useGetBlogByIdQuery } from "../../../../services/BlogApi";
+import {
+  useGetBlogByIdQuery,
+  useUpdateBlogByIdMutation,
+} from "../../../../services/BlogApi";
 import BlogEditor from "./BlogEditor";
 type Props = {};
 
@@ -17,9 +21,13 @@ const UpdateBlogs = (props: Props) => {
   const updateData = data?.data;
   const { register, handleSubmit, setValue } = useForm();
 
+  const [updateBlog, { data: blogData, isSuccess, error: blogError }] =
+    useUpdateBlogByIdMutation();
+
+  const navigate = useNavigate();
+
   /* Handle Update Blog */
   const handleUpdateBlog = handleSubmit(async (formData) => {
-    console.log(formData, blogText);
     const editedContent = { ...formData, blogContent: "" };
     if (blogText) {
       editedContent.blogContent = blogText;
@@ -27,7 +35,7 @@ const UpdateBlogs = (props: Props) => {
       editedContent.blogContent = updateData?.description;
     }
 
-    console.log(editedContent);
+    await updateBlog({ ...editedContent, _id: id }).unwrap();
   });
 
   useEffect(() => {
@@ -36,18 +44,32 @@ const UpdateBlogs = (props: Props) => {
     setValue("title", updateData?.title);
     setValue("category", updateData?.category);
     setValue("imageUrl", updateData?.imageUrl);
-
     if (error) {
       console.log(error);
     }
-  }, [data, error, updateData, setValue]);
+    if (blogError) {
+      console.log(blogError);
+    }
+    if (isSuccess) {
+      toast.success(`Blog  Updated Successfully!`);
+      navigate("/dashboard/blogs/users-blogs");
+    }
+  }, [
+    data,
+    error,
+    updateData,
+    setValue,
+    blogError,
+    isSuccess,
+    blogData,
+    navigate,
+  ]);
 
   /* For Loading.... */
   if (isLoading) {
     return <GlobalLoader />;
   }
 
-  console.log(isYes);
   return (
     <div>
       <form onSubmit={handleUpdateBlog} className="p-4 my-4 bg-white">
