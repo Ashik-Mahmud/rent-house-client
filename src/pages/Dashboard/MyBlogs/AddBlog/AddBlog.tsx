@@ -1,12 +1,25 @@
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { BiBook, BiLink } from "react-icons/bi";
+import { toast } from "react-toastify";
 import BlogEditor from "./BlogEditor";
-
 type Props = {};
 
 const AddBlog = (props: Props) => {
+  const [blogText, setBlogText] = useState<string>("");
+  const { register, handleSubmit } = useForm();
+
+  const handleAddBlog = handleSubmit(async (formData) => {
+    if (!formData?.blogTitle || !formData?.category || !formData?.imageUrl) {
+      return toast.error(`All fields is required.`);
+    }
+    if (!blogText) return toast(`Blog Content is Required.`);
+    console.log(formData, blogText);
+  });
+
   return (
     <div>
-      <div className="p-4 my-4 bg-white">
+      <form onSubmit={handleAddBlog} className="p-4 my-4 bg-white">
         <h1 className="text-3xl font-bold">Add Blog</h1>
         <div className="mt-5">
           {/* Name */}
@@ -22,6 +35,7 @@ const AddBlog = (props: Props) => {
                 type="text"
                 className="form-control outline-none pl-4 w-full"
                 placeholder="Blog Title"
+                {...register("blogTitle")}
               />
             </div>
           </div>
@@ -39,6 +53,7 @@ const AddBlog = (props: Props) => {
                 type="text"
                 className="form-control outline-none pl-4 w-full"
                 placeholder="Category"
+                {...register("category")}
               />
             </div>
           </div>
@@ -56,6 +71,7 @@ const AddBlog = (props: Props) => {
                 type="url"
                 className="form-control outline-none pl-4 w-full"
                 placeholder="Image URL"
+                {...register("imageUrl")}
               />
             </div>
           </div>
@@ -71,7 +87,7 @@ const AddBlog = (props: Props) => {
               </h3>
             </div>
             <div className="my-1 rounded-md mt-6">
-              <BlogEditor />
+              <BlogEditor setBlogText={setBlogText} />
             </div>
           </div>
           {/* End */}
@@ -79,7 +95,7 @@ const AddBlog = (props: Props) => {
             <button className="btn btn-primary rounded-none">Add Blog</button>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 import { useQuill } from "react-quilljs";
 
-type Props = {};
+type Props = {
+  setBlogText: (state: string) => void;
+};
 
-const BlogEditor = (props: Props) => {
+const BlogEditor = ({ setBlogText }: Props | any) => {
   const modules = {
     toolbar: [
       [{ size: ["small", false, "large", "huge"] }],
@@ -19,7 +21,6 @@ const BlogEditor = (props: Props) => {
       ["clean"],
     ],
   };
-
   const placeholder = "Write Blogs Content ...";
 
   const formats = [
@@ -41,10 +42,10 @@ const BlogEditor = (props: Props) => {
   useEffect(() => {
     if (quill) {
       quill.on("text-change", () => {
-        console.log(quillRef.current.firstChild.innerHTML);
+        setBlogText(quillRef?.current.firstChild.innerHTML);
       });
     }
-  }, [quill, quillRef]);
+  }, [quill, quillRef, setBlogText]);
 
   return (
     <div style={{ width: "100%", height: 250 }}>

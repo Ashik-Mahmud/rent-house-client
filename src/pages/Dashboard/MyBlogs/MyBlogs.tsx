@@ -4,6 +4,7 @@ type Props = {};
 
 const MyBlogs = (props: Props) => {
   const location = useLocation();
+
   return (
     <div>
       <div className="p-4 sm:p-5 my-5 bg-white">
