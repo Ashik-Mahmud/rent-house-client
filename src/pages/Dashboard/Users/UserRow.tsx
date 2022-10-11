@@ -49,7 +49,7 @@ const UserRow = ({ data, ind, refetch }: Props) => {
       title: "Are you sure?",
       text: "After done It's role change to create whatever you put",
       icon: "warning",
-      buttons: ["Cancel", "Delete"],
+      buttons: ["Cancel", "Okay"],
     });
     try {
       if (isConfirm) {
@@ -72,7 +72,7 @@ const UserRow = ({ data, ind, refetch }: Props) => {
       title: "Are you sure?",
       text: "Once deleted, you will not be able to recover this imaginary file!",
       icon: "warning",
-      buttons: ["Cancel", "Delete"],
+      buttons: ["Cancel", "Okay"],
     });
     if (isConfirm) {
       await deleteUser(id);

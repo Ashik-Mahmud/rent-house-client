@@ -165,13 +165,6 @@ const Dashboard = (props: Props) => {
         icon: <BsReceipt />,
         link: "/dashboard/request-from-users",
       },
-
-      {
-        id: 12,
-        title: "Blogs",
-        icon: <BsBookFill />,
-        link: "/dashboard/blogs",
-      },
       {
         id: 5,
         title: "Profile",
@@ -187,10 +180,7 @@ const Dashboard = (props: Props) => {
     ];
   }
 
-  if (
-    (updatedUser?.role === "user" || updatedUser?.role === "customer") &&
-    updatedUser?.blogAllowed === true
-  ) {
+  if (updatedUser?.blogAllowed) {
     menuArray.push({
       id: 12,
       title: "Blogs",
