@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { Img } from "react-image";
 import { Link, useNavigate } from "react-router-dom";
 import { PulseLoader } from "react-spinners";
 import { toast } from "react-toastify";
@@ -56,11 +57,13 @@ const Login = (props: Props) => {
     >
       <div>
         <div className="hero-content flex-col lg:flex-row-reverse shadow-lg border rounded-lg sm:p-10 bg-white">
-          <div className="text-center lg:text-left max-w-md">
-            <img
-              src="https://i.ibb.co/HVBwcZT/undraw-Access-account-re-8spm.png"
-              alt=""
-              className="w-full"
+          <div className="text-center lg:text-left max-w-md ">
+            <Img
+              src={[
+                "https://i.ibb.co/HVBwcZT/undraw-Access-account-re-8spm.png",
+                "https://i.ibb.co/HVBwcZT/undraw-Access-account-re-8spm.png",
+              ]}
+              loader={<PulseLoader size={20} color="#fca311" />}
             />
           </div>
           <div className="divider lg:divider-horizontal">+</div>

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import { Img } from "react-image";
 import { Link, useNavigate } from "react-router-dom";
 import PulseLoader from "react-spinners/PulseLoader";
 import { useRegisterAuthMutation } from "../../services/AuthApi";
@@ -171,10 +172,12 @@ const RegisterAuth = (props: Props) => {
           </form>
           <div className="divider lg:divider-horizontal">+</div>
           <div className="text-center lg:text-left max-w-md">
-            <img
-              src="https://static.vecteezy.com/system/resources/previews/005/867/677/non_2x/online-registration-illustration-design-concept-vector.jpg"
-              alt=""
-              className="w-full"
+            <Img
+              src={[
+                "https://static.vecteezy.com/system/resources/previews/005/867/677/non_2x/online-registration-illustration-design-concept-vector.jpg",
+                "https://static.vecteezy.com/system/resources/previews/005/867/677/non_2x/online-registration-illustration-design-concept-vector.jpg",
+              ]}
+              loader={<PulseLoader size={20} color="#fca311" />}
             />
           </div>
         </div>
