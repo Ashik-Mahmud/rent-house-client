@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import { Toaster } from "react-hot-toast";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -29,14 +28,13 @@ root.render(
       draggable
       pauseOnHover
     />
-    <React.StrictMode>
-      <BrowserRouter>
-        <QueryClientProvider client={queryClient}>
-          <Provider store={store}>
-            <App />
-          </Provider>
-        </QueryClientProvider>
-      </BrowserRouter>
-    </React.StrictMode>
+
+    <BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </QueryClientProvider>
+    </BrowserRouter>
   </>
 );
