@@ -23,6 +23,9 @@ const AddBlog = (props: Props) => {
     }
     if (!blogText) return toast(`Blog Content is Required.`);
 
+    if (!formData.checked)
+      return toast.error("please accept our Term and Conditions");
+
     try {
       await createBlog({
         title: formData.blogTitle,
@@ -114,7 +117,7 @@ const AddBlog = (props: Props) => {
           {/* Blog Content */}
           <div
             className="name border  rounded p-3 pb-1 relative mt-10 flex-1"
-            style={{ height: 350 }}
+            style={{ height: 400 }}
           >
             <div className="name-title absolute -top-4 bg-white rounded p-1">
               <h3 className="text-xs font-poppins flex items-center gap-1 border p-1 rounded">
@@ -123,6 +126,19 @@ const AddBlog = (props: Props) => {
             </div>
             <div className="my-1 rounded-md mt-6">
               <BlogEditor setBlogText={setBlogText} />
+            </div>
+            <div className="mt-16 flex items-center gap-3">
+              <input
+                type="checkbox"
+                className="checkbox-primary rounded-none checkbox"
+                id="checked"
+                {...register("checked")}
+              />{" "}
+              <label htmlFor="checked" className="text-md font-poppins block">
+                TERMS: After Adding blog you can't edit Blogs Content. If you
+                want to update something in the blog content You should replace
+                whole blogs content
+              </label>
             </div>
           </div>
           {/* End */}

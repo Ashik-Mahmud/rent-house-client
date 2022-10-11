@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { BiBook, BiLink } from "react-icons/bi";
+import { BsCheck2, BsX } from "react-icons/bs";
 import { useParams } from "react-router-dom";
 import GlobalLoader from "../../../../components/GlobalLoader";
 import { useGetBlogByIdQuery } from "../../../../services/BlogApi";
@@ -9,6 +10,7 @@ type Props = {};
 
 const UpdateBlogs = (props: Props) => {
   const { id } = useParams();
+  const [seeBlogContent, setSeeBlogContent] = useState<boolean>(false);
   const [blogText, setBlogText] = useState<string>("");
   const { data, isLoading, error } = useGetBlogByIdQuery(id);
   const [isYes, setIsYes] = useState<boolean>(false);
@@ -18,6 +20,14 @@ const UpdateBlogs = (props: Props) => {
   /* Handle Update Blog */
   const handleUpdateBlog = handleSubmit(async (formData) => {
     console.log(formData, blogText);
+    const editedContent = { ...formData, blogContent: "" };
+    if (blogText) {
+      editedContent.blogContent = blogText;
+    } else {
+      editedContent.blogContent = updateData?.description;
+    }
+
+    console.log(editedContent);
   });
 
   useEffect(() => {
@@ -107,14 +117,39 @@ const UpdateBlogs = (props: Props) => {
                 Write Blogs
               </h3>
             </div>
-            <div className="my-1 rounded-md mt-6">
-              <BlogEditor
-                setBlogText={setBlogText}
-                isYes={isYes}
-                updateBlogText={updateData?.description}
-              />
-            </div>
+            {seeBlogContent ? (
+              <div className="my-1 rounded-md mt-6 relative">
+                <button
+                  className="btn btn-circle btn-error btn-sm absolute right-0 -top-9 text-xl "
+                  title="Cancel"
+                  onClick={() => setSeeBlogContent(false)}
+                >
+                  <BsX />
+                </button>
+                <BlogEditor
+                  setBlogText={setBlogText}
+                  isYes={isYes}
+                  updateBlogText={updateData?.description}
+                />
+              </div>
+            ) : (
+              <div className="text-center grid place-items-center h-[320px] font-poppins">
+                <div className="flex flex-col items-center">
+                  <span className="text-2xl">
+                    Are you want to replace your blog content as per TERMS?
+                  </span>
+                  <button
+                    onClick={() => setSeeBlogContent(true)}
+                    className="font-poppins btn btn-success btn-circle mt-4 text-2xl "
+                    title="Edit Blogs"
+                  >
+                    <BsCheck2 />
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
+
           {/* End */}
           <div className="flex justify-end mt-5">
             <button className="btn btn-primary rounded-none">
