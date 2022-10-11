@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiEdit, BiTrash } from "react-icons/bi";
 import { BsCheck2, BsEye, BsHeart, BsPen, BsX } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import swal from "sweetalert";
 import GlobalLoader from "../../../components/GlobalLoader";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
-import { useGetBlogsByUidQuery } from "../../../services/BlogApi";
+import {
+  useDeleteBlogByIdMutation,
+  useGetBlogsByUidQuery,
+} from "../../../services/BlogApi";
 
 type Props = {};
 
@@ -13,6 +17,35 @@ const UsersBlogs = (props: Props) => {
   const { updatedUser } = useAuth<authUserInterface | any>({});
   const [editStatus, setEditStatus] = useState<boolean>(false);
   const { data, isLoading } = useGetBlogsByUidQuery(updatedUser?._id);
+
+  const [deleteBlogById, { data: blogsData, isSuccess, error }] =
+    useDeleteBlogByIdMutation();
+
+  /* Handle Delete Blogs by Id */
+  const deleteBlog = async (id: Number) => {
+    const isConfirm = await swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this imaginary file!",
+      icon: "warning",
+      buttons: ["Cancel", "Delete"],
+    });
+    try {
+      if (isConfirm) {
+        await deleteBlogById(id);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    if (error) {
+      console.log(error);
+    }
+    if (isSuccess) {
+      console.log(blogsData);
+    }
+  }, [isSuccess, error, blogsData]);
 
   return (
     <div>
@@ -125,7 +158,10 @@ const UsersBlogs = (props: Props) => {
                         >
                           <BiEdit />
                         </Link>
-                        <span className="text-error text-lg cursor-pointer">
+                        <span
+                          className="text-error text-lg cursor-pointer"
+                          onClick={() => deleteBlog(blog?._id)}
+                        >
                           <BiTrash />
                         </span>
                       </div>
