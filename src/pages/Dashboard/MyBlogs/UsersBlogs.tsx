@@ -18,8 +18,15 @@ const UsersBlogs = (props: Props) => {
   const { updatedUser } = useAuth<authUserInterface | any>({});
   const [editStatus, setEditStatus] = useState<boolean>(false);
   const [status, setStatus] = useState<string>("");
-  const { data, isLoading } = useGetBlogsByUidQuery(updatedUser?._id);
+  /* Pagination State */
+  const [limit, setLimit] = useState<number>(5);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
+  const { data, isLoading, refetch } = useGetBlogsByUidQuery({
+    uid: updatedUser?._id,
+    page: currentPage,
+    limit,
+  });
   const [deleteBlogById, { data: blogsData, isSuccess, error }] =
     useDeleteBlogByIdMutation();
 
@@ -64,6 +71,23 @@ const UsersBlogs = (props: Props) => {
     }
   };
 
+  /* Pagination Calc */
+  const totalPages = Math.ceil(data?.data?.count / 5);
+  let pageNumbers = [];
+  for (let i = 1; i <= totalPages; i++) {
+    pageNumbers.push(i);
+  }
+
+  /* Handle Page Change */
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page as number);
+  };
+
+  useEffect(() => {
+    setCurrentPage(currentPage);
+    refetch();
+  }, [currentPage, refetch]);
+
   useEffect(() => {
     if (error) {
       console.log(error);
@@ -73,7 +97,6 @@ const UsersBlogs = (props: Props) => {
     }
 
     if (statusData) {
-      console.log(statusData);
       cogoToast.success("Status Changed Successfully");
       setEditStatus(false);
     }
@@ -87,7 +110,24 @@ const UsersBlogs = (props: Props) => {
   return (
     <div>
       <div className="p-3 sm:p-5 my-5 bg-white">
-        <h1 className="text-3xl font-bold">My Blogs</h1>
+        <div className="flex items-center gap-3">
+          <h1 className="text-3xl font-bold">My Blogs</h1>
+          <div>
+            <span className="badge badge-ghost">
+              Limit per page{" "}
+              <select
+                name="limit"
+                id=""
+                className="btn btn-circle btn-ghost"
+                onChange={(e) => setLimit(Number(e.target.value))}
+              >
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+              </select>
+            </span>
+          </div>
+        </div>
         {/* Blogs Table */}
         <div className="overflow-x-auto my-5 font-poppins">
           {isLoading ? (
@@ -232,17 +272,21 @@ const UsersBlogs = (props: Props) => {
           )}
         </div>
       </div>
-      <div className="pagination flex items-center justify-center gap-2">
-        <a href="/" className="btn btn-circle btn-ghost btn-sm">
-          1
-        </a>
-        <a href="/" className="btn btn-circle btn-ghost btn-sm btn-active">
-          2
-        </a>
-        <a href="/" className="btn btn-circle btn-ghost btn-sm">
-          3
-        </a>
-      </div>
+      {data?.data?.count > limit && (
+        <div className="pagination flex items-center justify-center gap-2">
+          {pageNumbers?.map((page) => (
+            <span
+              key={page}
+              onClick={() => handlePageChange(page)}
+              className={`btn btn-circle btn-ghost btn-sm cursor-pointer ${
+                page === currentPage && "btn-active"
+              }`}
+            >
+              {page}
+            </span>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

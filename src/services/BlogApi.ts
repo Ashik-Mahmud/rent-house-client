@@ -27,7 +27,8 @@ export const BlogApi = createApi({
       invalidatesTags: ["getBlog"],
     }),
     getBlogsByUid: builder.query({
-      query: (uid) => `/blogs-by-uid/${uid}`,
+      query: (data) =>
+        `/blogs-by-uid/${data?.uid}?page=${data?.page}&limit=${data?.limit}`,
       providesTags: ["getBlog"],
     }),
     deleteBlogById: builder.mutation({
