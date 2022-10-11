@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { BiMap } from "react-icons/bi";
 import { BsArrowLeft, BsHeartFill } from "react-icons/bs";
 import { FiMaximize2 } from "react-icons/fi";
@@ -25,6 +26,7 @@ const HouseDetails = (props: Props) => {
   /* Get House ID */
   const { houseId } = useParams<{ houseId: string }>();
   const { data, isLoading, error } = useGetHouseByHouseIdQuery(houseId);
+  const [isBigImage, setIsBigImage] = useState(false);
   const navigate = useNavigate();
 
   if (isLoading) return <GlobalLoader />;
@@ -70,8 +72,15 @@ const HouseDetails = (props: Props) => {
             </div>
             <div className="card-bodies w-full relative">
               {/* Images */}
-              <div className="preview-image w-full p-5 bg-white">
-                <div className="maximize w-10 h-10 grid place-items-center bg-white absolute right-10 top-10 cursor-pointer">
+              <div
+                className={`preview-image w-full p-5 bg-white ${
+                  isBigImage && "w-screen h-screen fixed left-0 top-0 z-50"
+                }`}
+              >
+                <div
+                  onClick={() => setIsBigImage((state) => !state)}
+                  className={`maximize  grid place-items-center bg-white absolute right-10 top-10 cursor-pointer w-10 h-10`}
+                >
                   <FiMaximize2 />
                 </div>
                 <img
@@ -81,7 +90,9 @@ const HouseDetails = (props: Props) => {
                       : "https://placeimg.com/400/225/arch"
                   }
                   alt={data?.data?.name}
-                  className="w-full h-96 object-cover"
+                  className={`w-full  object-cover ${
+                    isBigImage ? "h-full" : "h-96"
+                  }`}
                 />
               </div>
               {/* House Details */}
