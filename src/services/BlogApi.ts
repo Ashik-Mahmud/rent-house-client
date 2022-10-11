@@ -16,6 +16,7 @@ export const BlogApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ["getBlog"],
   endpoints: (builder) => ({
     createBlog: builder.mutation({
       query: (body) => ({
@@ -23,8 +24,21 @@ export const BlogApi = createApi({
         method: "POST",
         body,
       }),
+      invalidatesTags: ["getBlog"],
+    }),
+    getBlogsByUid: builder.query({
+      query: (uid) => `/blogs-by-uid/${uid}`,
+      providesTags: ["getBlog"],
+    }),
+    deleteBlogById: builder.mutation({
+      query: (id) => `/delete/${id}`,
+      invalidatesTags: ["getBlog"],
     }),
   }),
 });
 
-export const { useCreateBlogMutation } = BlogApi;
+export const {
+  useCreateBlogMutation,
+  useGetBlogsByUidQuery,
+  useDeleteBlogByIdMutation,
+} = BlogApi;
