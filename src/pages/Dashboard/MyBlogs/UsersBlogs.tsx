@@ -22,10 +22,14 @@ const UsersBlogs = (props: Props) => {
   const [limit, setLimit] = useState<number>(5);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
+  /* Search State */
+  const [searchKey, setSearchKey] = useState<string>("");
+
   const { data, isLoading, refetch } = useGetBlogsByUidQuery({
     uid: updatedUser?._id,
     page: currentPage,
     limit,
+    q: searchKey,
   });
   const [deleteBlogById, { data: blogsData, isSuccess, error }] =
     useDeleteBlogByIdMutation();
@@ -72,7 +76,7 @@ const UsersBlogs = (props: Props) => {
   };
 
   /* Pagination Calc */
-  const totalPages = Math.ceil(data?.data?.count / 5);
+  const totalPages = Math.ceil(data?.data?.count / limit);
   let pageNumbers = [];
   for (let i = 1; i <= totalPages; i++) {
     pageNumbers.push(i);
@@ -83,10 +87,21 @@ const UsersBlogs = (props: Props) => {
     setCurrentPage(page as number);
   };
 
+  /* Handle Input Change */
+  const handleInputChange = async (e: any) => {
+    const { value } = e.target;
+    setSearchKey(value);
+  };
+
+  window.addEventListener("keyup", (e: any) => {
+    if (e.key === "Enter") setCurrentPage(1);
+  });
+
   useEffect(() => {
+    setSearchKey(searchKey);
     setCurrentPage(currentPage);
     refetch();
-  }, [currentPage, refetch]);
+  }, [currentPage, refetch, searchKey]);
 
   useEffect(() => {
     if (error) {
@@ -110,22 +125,32 @@ const UsersBlogs = (props: Props) => {
   return (
     <div>
       <div className="p-3 sm:p-5 my-5 bg-white">
-        <div className="flex items-center gap-3">
-          <h1 className="text-3xl font-bold">My Blogs</h1>
-          <div>
-            <span className="badge badge-ghost">
-              Limit per page{" "}
-              <select
-                name="limit"
-                id=""
-                className="btn btn-circle btn-ghost"
-                onChange={(e) => setLimit(Number(e.target.value))}
-              >
-                <option value="5">5</option>
-                <option value="10">10</option>
-                <option value="15">15</option>
-              </select>
-            </span>
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <h1 className="text-3xl font-bold">My Blogs</h1>
+            <div>
+              <span className="badge badge-ghost">
+                Limit per page{" "}
+                <select
+                  name="limit"
+                  id=""
+                  className="btn btn-circle btn-ghost"
+                  onChange={(e) => setLimit(Number(e.target.value))}
+                >
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="15">15</option>
+                </select>
+              </span>
+            </div>
+          </div>
+          <div className="search sm:w-72">
+            <input
+              type="search"
+              placeholder="Search by Name or Category"
+              className="input input-bordered w-full"
+              onInput={handleInputChange}
+            />
           </div>
         </div>
         {/* Blogs Table */}
