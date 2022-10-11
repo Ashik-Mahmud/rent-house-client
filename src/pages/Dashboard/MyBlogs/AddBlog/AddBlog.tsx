@@ -14,6 +14,7 @@ const AddBlog = (props: Props) => {
       return toast.error(`All fields is required.`);
     }
     if (!blogText) return toast(`Blog Content is Required.`);
+
     console.log(formData, blogText);
   });
 
