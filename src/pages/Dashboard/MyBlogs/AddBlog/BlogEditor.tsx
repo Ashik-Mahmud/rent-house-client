@@ -3,9 +3,11 @@ import { useQuill } from "react-quilljs";
 
 type Props = {
   setBlogText: (state: string) => void;
+  isYes?: boolean;
+  updateBlogText?: string;
 };
 
-const BlogEditor = ({ setBlogText }: Props | any) => {
+const BlogEditor = ({ setBlogText, isYes, updateBlogText }: Props | any) => {
   const modules = {
     toolbar: [
       [{ size: ["small", false, "large", "huge"] }],
@@ -45,7 +47,7 @@ const BlogEditor = ({ setBlogText }: Props | any) => {
         setBlogText(quillRef?.current.firstChild.innerHTML);
       });
     }
-  }, [quill, quillRef, setBlogText]);
+  }, [quill, quillRef, setBlogText, isYes, updateBlogText]);
 
   return (
     <div style={{ width: "100%", height: 250 }}>

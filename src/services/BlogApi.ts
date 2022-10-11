@@ -55,4 +55,5 @@ export const {
   useGetBlogsByUidQuery,
   useDeleteBlogByIdMutation,
   useUpdateBlogByIdMutation,
+  useGetBlogByIdQuery,
 } = BlogApi;

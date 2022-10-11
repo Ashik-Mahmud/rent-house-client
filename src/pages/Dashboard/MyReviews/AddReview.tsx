@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import ReactStars from "react-stars";
+import { Rating } from "react-simple-star-rating";
 import { toast } from "react-toastify";
 import SendVerifyEmail from "../../../components/SendVerifyEmail";
 import useAuth from "../../../hooks/useAuth";
@@ -70,11 +70,17 @@ const AddReview = (props: Props) => {
                 <label htmlFor="title" className="label">
                   Ratings
                 </label>
-                <ReactStars
-                  count={5}
-                  size={35}
-                  color2={"#ffd700"}
-                  onChange={ratingChanged}
+
+                <Rating
+                  onClick={ratingChanged}
+                  showTooltip
+                  tooltipArray={[
+                    "Terrible",
+                    "Bad",
+                    "Average",
+                    "Great",
+                    "Prefect",
+                  ]}
                 />
               </div>
               <div className="form-control my-4">

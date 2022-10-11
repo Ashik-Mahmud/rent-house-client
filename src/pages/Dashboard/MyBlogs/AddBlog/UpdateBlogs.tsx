@@ -1,14 +1,46 @@
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { BiBook, BiLink } from "react-icons/bi";
 import { useParams } from "react-router-dom";
+import GlobalLoader from "../../../../components/GlobalLoader";
+import { useGetBlogByIdQuery } from "../../../../services/BlogApi";
 import BlogEditor from "./BlogEditor";
 type Props = {};
 
 const UpdateBlogs = (props: Props) => {
   const { id } = useParams();
-  console.log(id);
+  const [blogText, setBlogText] = useState<string>("");
+  const { data, isLoading, error } = useGetBlogByIdQuery(id);
+  const [isYes, setIsYes] = useState<boolean>(false);
+  const updateData = data?.data;
+  const { register, handleSubmit, setValue } = useForm();
+
+  /* Handle Update Blog */
+  const handleUpdateBlog = handleSubmit(async (formData) => {
+    console.log(formData, blogText);
+  });
+
+  useEffect(() => {
+    setIsYes(true);
+    /* Set Default value for Blog */
+    setValue("title", updateData?.title);
+    setValue("category", updateData?.category);
+    setValue("imageUrl", updateData?.imageUrl);
+
+    if (error) {
+      console.log(error);
+    }
+  }, [data, error, updateData, setValue]);
+
+  /* For Loading.... */
+  if (isLoading) {
+    return <GlobalLoader />;
+  }
+
+  console.log(isYes);
   return (
     <div>
-      <div className="p-4 my-4 bg-white">
+      <form onSubmit={handleUpdateBlog} className="p-4 my-4 bg-white">
         <h1 className="text-3xl font-bold">Update Blog</h1>
         <div className="mt-5">
           {/* Name */}
@@ -24,6 +56,7 @@ const UpdateBlogs = (props: Props) => {
                 type="text"
                 className="form-control outline-none pl-4 w-full"
                 placeholder="Blog Title"
+                {...register("title")}
               />
             </div>
           </div>
@@ -41,6 +74,7 @@ const UpdateBlogs = (props: Props) => {
                 type="text"
                 className="form-control outline-none pl-4 w-full"
                 placeholder="Category"
+                {...register("category")}
               />
             </div>
           </div>
@@ -58,6 +92,7 @@ const UpdateBlogs = (props: Props) => {
                 type="url"
                 className="form-control outline-none pl-4 w-full"
                 placeholder="Image URL"
+                {...register("imageUrl")}
               />
             </div>
           </div>
@@ -73,7 +108,11 @@ const UpdateBlogs = (props: Props) => {
               </h3>
             </div>
             <div className="my-1 rounded-md mt-6">
-              <BlogEditor />
+              <BlogEditor
+                setBlogText={setBlogText}
+                isYes={isYes}
+                updateBlogText={updateData?.description}
+              />
             </div>
           </div>
           {/* End */}
@@ -83,7 +122,7 @@ const UpdateBlogs = (props: Props) => {
             </button>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 };
