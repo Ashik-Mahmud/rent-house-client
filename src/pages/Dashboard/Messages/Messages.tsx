@@ -1,16 +1,44 @@
 import { useState } from "react";
 import { BiSend, BiUserCircle } from "react-icons/bi";
+import Select from "react-select";
 import MessageBoxEditor from "./MessageBoxEditor";
+
 type Props = {};
 
 const Messages = (props: Props) => {
+  const colorOptions = [
+    {
+      value: "ashikmahmud@gmail.com",
+      label: "ashikmahmud@gmail.com",
+    },
+    {
+      value: "abirmahmud@gmail.com",
+      label: "abirmahmud@gmail.com",
+    },
+    {
+      value: "team.sixavengers@gmail.com",
+      label: "team.sixavengers@gmail.com",
+    },
+    {
+      value: "gofur@gmail.com",
+      label: "gofur@gmail.com",
+    },
+  ];
+
   const [roles, setRoles] = useState<String>("");
   const [userType, setUserType] = useState<String>("");
   const [messageVal, setMessageVal] = useState<String>("");
-  console.log(messageVal);
+  const [specificUsers, setSpecificUsers] = useState([]);
+
+  /* Handle Change Users */
+  const handleChangeUser = (user: [] | any) => {
+    setSpecificUsers(user);
+  };
+
+  console.log(messageVal, specificUsers);
   return (
     <div>
-      <div className="p-5 my-4 bg-white">
+      <div className="p-5 my-4 bg-white font-poppins">
         <div className="flex items-center gap-3">
           <h3 className="text-lg sm:text-2xl font-bold">
             Send Email to The All Users{" "}
@@ -85,11 +113,15 @@ const Messages = (props: Props) => {
                   <div className="icon">
                     <BiUserCircle />
                   </div>
-                  <input
-                    type="text"
+
+                  <Select
+                    defaultValue={[colorOptions[2], colorOptions[3]]}
+                    isMulti
+                    name="colors"
+                    options={colorOptions}
                     className="form-control outline-none pl-4 w-full"
-                    placeholder="Select Users Email with , separation"
-                    list="users"
+                    classNamePrefix="select"
+                    onChange={handleChangeUser}
                   />
                 </div>
 
