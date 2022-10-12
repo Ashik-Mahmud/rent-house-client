@@ -1,8 +1,29 @@
+import cogoToast from "cogo-toast";
+import { useForm } from "react-hook-form";
 import { BiLink, BiPen } from "react-icons/bi";
+import useAuth from "../../../hooks/useAuth";
+import { authUserInterface } from "../../../interfaces/UserInterface";
 
 type Props = {};
 
 const VerifyBlogModal = (props: Props) => {
+  const { updatedUser } = useAuth<authUserInterface | any>({});
+  const { handleSubmit, register } = useForm();
+
+  /* Handle Verify Blog Modal */
+  const handleVerifyBlogModal = handleSubmit(async (data) => {
+    if (!data?.blogNotes) return cogoToast.error(`Blog Notes is required!`);
+    const sendingContent = {
+      ...data,
+      author: {
+        name: updatedUser?.name,
+        email: updatedUser?.email,
+        id: updatedUser?._id,
+      },
+    };
+    console.log(sendingContent);
+  });
+
   return (
     <>
       <input type="checkbox" id="my-modal-for-blog" className="modal-toggle" />
@@ -21,7 +42,7 @@ const VerifyBlogModal = (props: Props) => {
             You've been selected for a chance to get one year of subscription to
             use Wikipedia for free!
           </p>
-          <form action="">
+          <form action="" onSubmit={handleVerifyBlogModal}>
             {/* url */}
             <div className="name border  rounded p-3 relative mt-10 flex-1">
               <div className="name-title absolute -top-4 bg-white border rounded p-1">
@@ -37,6 +58,7 @@ const VerifyBlogModal = (props: Props) => {
                   type="url"
                   className="form-control outline-none pl-4 w-full"
                   placeholder="Blog URL"
+                  {...register("blogUrl")}
                 />
               </div>
             </div>
@@ -53,12 +75,12 @@ const VerifyBlogModal = (props: Props) => {
                   <BiPen />
                 </div>
                 <textarea
-                  name=""
                   id=""
                   cols={5}
                   rows={4}
                   className="w-full font-poppins text-md textarea"
                   placeholder="Write why you need blog option?"
+                  {...register("blogNotes")}
                 ></textarea>
               </div>
             </div>
