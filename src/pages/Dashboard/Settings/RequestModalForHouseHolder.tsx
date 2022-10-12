@@ -1,4 +1,5 @@
-import { useState } from "react";
+import cogoToast from "cogo-toast";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { BiPen } from "react-icons/bi";
 import swal from "sweetalert";
@@ -9,18 +10,19 @@ import { useReqForHouseholderRequestMutation } from "../../../services/RequestAp
 type Props = {};
 
 const RequestModalForHouseHolder = (props: Props) => {
-  const { updatedUser } = useAuth<authUserInterface | any>({});
+  const { updatedUser, refetch } = useAuth<authUserInterface | any>({});
   const [countWord, setCountWord] = useState(200);
   /* Form Control */
-  const { register, handleSubmit, watch, setValue } = useForm();
-  const [reqForHouseholderRequest] = useReqForHouseholderRequestMutation();
+  const { register, handleSubmit, watch, setValue, reset } = useForm();
+  const [reqForHouseholderRequest, { data, error, isSuccess }] =
+    useReqForHouseholderRequestMutation();
 
   /* Handle to Send Request as House Holder Role */
   const handleHouseRequest = handleSubmit(async (data) => {
     if (!data.note) return swal("Sorry", "You don't input a note!", "error");
     // Send request
     const sendingContent = {
-      ...data,
+      notes: data.note,
       author: {
         name: updatedUser?.name,
         email: updatedUser?.email,
@@ -47,6 +49,19 @@ const RequestModalForHouseHolder = (props: Props) => {
       else return 0;
     });
   }); //this will keep listening to the change
+
+  /* Handle error */
+  useEffect(() => {
+    if (error) {
+      console.log(error);
+      cogoToast.error((error as any)?.data?.message);
+    }
+    if (isSuccess) {
+      cogoToast.success(data?.message);
+      refetch();
+      reset();
+    }
+  }, [error, data, isSuccess, reset, refetch]);
 
   return (
     <form action="" onSubmit={handleHouseRequest}>

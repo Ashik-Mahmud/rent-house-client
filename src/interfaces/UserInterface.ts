@@ -13,7 +13,7 @@ export interface UserInterface {
   avatar: string;
   status: string;
   profileImage?: string;
-  isRequestSent?: boolean;
+  isBlogRequestSent?: boolean;
   createdAt?: string;
   updatedAt?: string;
 }

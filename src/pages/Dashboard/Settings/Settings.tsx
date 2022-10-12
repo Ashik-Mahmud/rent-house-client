@@ -82,7 +82,7 @@ const Settings = (props: Props) => {
                     </h3>
 
                     {isVerify ? (
-                      updatedUser.isRequestSent ? (
+                      updatedUser.isBlogRequestSent ? (
                         <label className="btn btn-warning rounded-full mt-4  sm:mt-0">
                           Already sent Wait for Accept
                         </label>
