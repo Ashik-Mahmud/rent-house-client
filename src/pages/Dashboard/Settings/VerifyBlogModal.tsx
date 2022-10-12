@@ -1,15 +1,18 @@
 import cogoToast from "cogo-toast";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { BiLink, BiPen } from "react-icons/bi";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
+import { useSendForBlogRequestMutation } from "../../../services/RequestApi";
 
 type Props = {};
 
 const VerifyBlogModal = (props: Props) => {
   const { updatedUser } = useAuth<authUserInterface | any>({});
   const { handleSubmit, register } = useForm();
-
+  const [sendRequestForBlog, { data, isSuccess, error }] =
+    useSendForBlogRequestMutation();
   /* Handle Verify Blog Modal */
   const handleVerifyBlogModal = handleSubmit(async (data) => {
     if (!data?.blogNotes) return cogoToast.error(`Blog Notes is required!`);
@@ -21,8 +24,22 @@ const VerifyBlogModal = (props: Props) => {
         id: updatedUser?._id,
       },
     };
-    console.log(sendingContent);
+    try {
+      await sendRequestForBlog(sendingContent);
+    } catch (error) {
+      console.log(error);
+    }
   });
+
+  /* Handle error */
+  useEffect(() => {
+    if (error) {
+      console.log(error);
+    }
+    if (isSuccess) {
+      console.log(data);
+    }
+  }, [error, data, isSuccess]);
 
   return (
     <>

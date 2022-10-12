@@ -6,6 +6,7 @@ import AuthReducer from "../features/AuthSlice";
 import { authApi } from "../services/AuthApi";
 import { BlogApi } from "../services/BlogApi";
 import { HouseApi } from "../services/HouseApi";
+import { RequestApi } from "../services/RequestApi";
 import { ReviewApi } from "../services/ReviewApi";
 
 const store = configureStore({
@@ -16,6 +17,7 @@ const store = configureStore({
     [ReviewApi.reducerPath]: ReviewApi.reducer,
     [HouseApi.reducerPath]: HouseApi.reducer,
     [BlogApi.reducerPath]: BlogApi.reducer,
+    [RequestApi.reducerPath]: RequestApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([
@@ -23,6 +25,7 @@ const store = configureStore({
       ReviewApi.middleware,
       HouseApi.middleware,
       BlogApi.middleware,
+      RequestApi.middleware,
     ]),
 });
 
