@@ -18,6 +18,7 @@ const VerifyBlogModal = (props: Props) => {
     if (!data?.notes) return cogoToast.error(`Blog Notes is required!`);
     const sendingContent = {
       ...data,
+      reqFor: "blog",
       author: {
         name: updatedUser?.name,
         email: updatedUser?.email,

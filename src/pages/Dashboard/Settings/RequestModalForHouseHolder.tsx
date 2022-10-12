@@ -23,6 +23,7 @@ const RequestModalForHouseHolder = (props: Props) => {
     // Send request
     const sendingContent = {
       notes: data.note,
+      reqFor: "householder",
       author: {
         name: updatedUser?.name,
         email: updatedUser?.email,
