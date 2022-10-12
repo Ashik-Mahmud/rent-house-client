@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { AxiosRequest } from "../../../api/Axios";
+import { useAppDispatch } from "../../../app/store";
 import GlobalLoader from "../../../components/GlobalLoader";
+import { setRequesterCount } from "../../../features/RequestBlogSlice";
 import { RequestFromUserRow } from "./RequestFromUsers";
 
 type Props = {};
@@ -10,6 +12,7 @@ const ForBlogsRequest = (props: Props) => {
   /* Pagination code */
   const [currentPage, setCurrentPage] = useState(1);
   const [limit, setLimit] = useState(10);
+  const dispatch = useAppDispatch();
 
   /* Try to fetch blog using UseQuery */
   const { data, refetch, isLoading } = useQuery("fetchBlog", async () => {
@@ -29,7 +32,8 @@ const ForBlogsRequest = (props: Props) => {
   useEffect(() => {
     setCurrentPage(currentPage);
     setLimit(limit);
-  }, [limit, currentPage]);
+    dispatch(setRequesterCount(data?.count));
+  }, [limit, currentPage, data, dispatch]);
 
   return (
     <>

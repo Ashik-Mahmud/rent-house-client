@@ -4,11 +4,14 @@ import { BsLink45Deg, BsX } from "react-icons/bs";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import swal from "sweetalert";
 import { AxiosRequest } from "../../../api/Axios";
+import { useAppSelector } from "../../../app/store";
 
 type Props = {};
 
 const RequestFromUsers = (props: Props) => {
   const { pathname } = useLocation();
+  const countForBlogs = useAppSelector((state) => state.reqBlog.requesterCount);
+
   return (
     <div>
       <div className="p-5 my-5 bg-white">
@@ -24,7 +27,8 @@ const RequestFromUsers = (props: Props) => {
                   : "bg-base-300 text-secondary"
               }`}
             >
-              For Blogs <span className="badge badge-ghost">0</span>
+              For Blogs{" "}
+              <span className="badge badge-ghost">{countForBlogs}</span>
             </Link>
             <Link
               to="/dashboard/request-from-users/for-house-holder"

@@ -3,6 +3,7 @@ import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import type { TypedUseSelectorHook } from "react-redux";
 import { useDispatch, useSelector } from "react-redux";
 import AuthReducer from "../features/AuthSlice";
+import ReqBlogReducer from "../features/RequestBlogSlice";
 import { authApi } from "../services/AuthApi";
 import { BlogApi } from "../services/BlogApi";
 import { HouseApi } from "../services/HouseApi";
@@ -13,6 +14,7 @@ const store = configureStore({
   reducer: {
     // Add the generated reducer as a specific top-level slice
     auth: AuthReducer,
+    reqBlog: ReqBlogReducer,
     [authApi.reducerPath]: authApi.reducer,
     [ReviewApi.reducerPath]: ReviewApi.reducer,
     [HouseApi.reducerPath]: HouseApi.reducer,
