@@ -1,5 +1,6 @@
+import cogoToast from "cogo-toast";
 import { BiCheck, BiX } from "react-icons/bi";
-import { BsLink45Deg } from "react-icons/bs";
+import { BsLink45Deg, BsX } from "react-icons/bs";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import swal from "sweetalert";
 import { AxiosRequest } from "../../../api/Axios";
@@ -50,8 +51,9 @@ export default RequestFromUsers;
 type rowType = {
   data: any;
   ind: number;
+  refetch: () => void;
 };
-export const RequestFromUserRow = ({ data, ind }: rowType) => {
+export const RequestFromUserRow = ({ data, ind, refetch }: rowType) => {
   /* Handle Confirm Blog Request */
   const handleConfirmBlogReq = async () => {
     try {
@@ -63,22 +65,17 @@ export const RequestFromUserRow = ({ data, ind }: rowType) => {
         dangerMode: true,
       });
 
-      const sendingContent = {
-        author: data.author,
-      };
-
       if (isConfirm) {
         // User pressed the confirm button
         // Will make an api call to confirm user blog
         const { data: info } = await AxiosRequest.patch(
-          `/approve-blog/${data?._id}`,
-          sendingContent
+          `/approve-blog/${data?._id}?authorId=${data?.author?._id}`
         );
-
-        console.log(sendingContent, info);
+        cogoToast.success(info?.message);
+        refetch();
       }
     } catch (error) {
-      console.log(error);
+      cogoToast.error((error as any)?.response?.data?.message);
     }
   };
 
@@ -106,6 +103,7 @@ export const RequestFromUserRow = ({ data, ind }: rowType) => {
           Message
         </span>
       </td>
+
       <td>
         {data?.blogUrl ? (
           <a
@@ -121,15 +119,29 @@ export const RequestFromUserRow = ({ data, ind }: rowType) => {
         )}
       </td>
       <td>
-        <button
-          className="badge badge-success badge-lg text-sm font-poppins cursor-pointer"
-          onClick={handleConfirmBlogReq}
-        >
-          <BiCheck /> Confirm
-        </button>
-        <button className="badge badge-error ml-3 badge-lg text-sm font-poppins cursor-pointer">
-          <BiX /> Remove
-        </button>
+        {data?.status === "pending" ? (
+          <>
+            {" "}
+            <button
+              className="badge badge-success badge-lg text-sm font-poppins cursor-pointer"
+              onClick={handleConfirmBlogReq}
+            >
+              <BiCheck /> Confirm
+            </button>
+            <button className="badge badge-error ml-3 badge-lg text-sm font-poppins cursor-pointer">
+              <BiX /> Remove
+            </button>
+          </>
+        ) : (
+          <>
+            <div className="flex items-center gap-2">
+              <span className="badge badge-success">Confirmed</span>
+              <span className="btn btn-circle btn-xs btn-error">
+                <BsX />
+              </span>
+            </div>
+          </>
+        )}
       </td>
     </tr>
   );

@@ -50,7 +50,12 @@ const ForBlogsRequest = (props: Props) => {
             </thead>
             <tbody>
               {data?.req.map((req: any, ind: number) => (
-                <RequestFromUserRow key={req._id} data={req} ind={ind} />
+                <RequestFromUserRow
+                  key={req._id}
+                  data={req}
+                  ind={ind}
+                  refetch={refetch}
+                />
               ))}
             </tbody>
           </table>
