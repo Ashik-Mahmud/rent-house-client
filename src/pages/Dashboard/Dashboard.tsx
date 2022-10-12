@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   BrowserView,
   MobileView,
@@ -18,9 +18,12 @@ import {
   BsMessenger,
   BsReceipt,
 } from "react-icons/bs";
+import { useQuery } from "react-query";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { AxiosRequest } from "../../api/Axios";
 import { useAppDispatch, useAppSelector } from "../../app/store";
 import { logout } from "../../features/AuthSlice";
+import { setPendingCount } from "../../features/RequestSlice";
 import useAuth from "../../hooks/useAuth";
 
 import { authUserInterface } from "../../interfaces/UserInterface";
@@ -28,6 +31,19 @@ import { authUserInterface } from "../../interfaces/UserInterface";
 type Props = {};
 
 const Dashboard = (props: Props) => {
+  const dispatch = useAppDispatch();
+  /* Try to fetch blog using UseQuery */
+  const { data: countData } = useQuery("fetchUnapprovedData", async () => {
+    const res = await AxiosRequest.get(
+      `/all-request` // fetch if user has blog
+    ); // fetch if user has blog
+    return res?.data;
+  });
+
+  useEffect(() => {
+    dispatch(setPendingCount(countData?.unapprovedCount));
+  }, [countData, dispatch]);
+
   const [isPhone, setIsPhone] = useState<boolean>(true);
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -194,7 +210,6 @@ const Dashboard = (props: Props) => {
 
   /* Handle Logout */
 
-  const dispatch = useAppDispatch();
   const handleLogout = () => {
     setUser(null);
     navigate("/login");

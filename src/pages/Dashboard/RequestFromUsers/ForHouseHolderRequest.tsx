@@ -39,8 +39,6 @@ const ForHouseHolderRequest = (props: Props) => {
     dispatch(setPendingCount(data?.unapprovedCount));
   }, [limit, currentPage, data, dispatch]);
 
-  console.log(data?.unapprovedCount, ".............++");
-
   return (
     <>
       <div className="request-table mt-5 overflow-x-auto">
