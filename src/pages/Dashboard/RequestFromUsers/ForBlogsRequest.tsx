@@ -8,25 +8,24 @@ type Props = {};
 const ForBlogsRequest = (props: Props) => {
   /* Pagination code */
   const [currentPage, setCurrentPage] = useState(1);
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(2);
 
-  const { data, isLoading, error } = useGetAllBlogRequesterQuery({
+  const { data, isLoading, refetch } = useGetAllBlogRequesterQuery({
     page: currentPage,
     limit: limit,
   });
 
-  useEffect(() => {
-    setCurrentPage(1);
-    setLimit(5);
-  }, []);
+  /* Pagination Func */
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(data?.count / limit); i++) {
+    pageNumbers.push(i);
+  }
 
   /* Handling Error and Data */
   useEffect(() => {
-    if (error) console.error(error);
-    if (!data?.count) console.info("Local Developer info", data);
-  }, [data, error]);
-
-  console.log(data);
+    setCurrentPage(currentPage);
+    setLimit(limit);
+  }, [limit, currentPage]);
 
   return (
     <>
@@ -60,17 +59,24 @@ const ForBlogsRequest = (props: Props) => {
         )}
       </div>
       {/* Pagination */}
-      <div className="pagination flex items-center justify-center mt-10 gap-2">
-        <a href="/" className="btn btn-circle btn-ghost btn-sm">
-          1
-        </a>
-        <a href="/" className="btn btn-circle btn-ghost btn-sm btn-active">
-          2
-        </a>
-        <a href="/" className="btn btn-circle btn-ghost btn-sm">
-          3
-        </a>
-      </div>
+      {data?.count > limit ? (
+        <div className="pagination flex items-center justify-center mt-10 gap-2">
+          {pageNumbers.map((num: number, ind: number) => (
+            <span
+              key={num + ind}
+              className={`btn btn-circle btn-ghost btn-sm cursor-pointer ${
+                currentPage === num && "btn-active"
+              }`}
+              onClick={() => {
+                setCurrentPage(num);
+                refetch();
+              }}
+            >
+              {num}
+            </span>
+          ))}
+        </div>
+      ) : null}
     </>
   );
 };
