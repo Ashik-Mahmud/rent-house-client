@@ -1,10 +1,55 @@
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { BiPen } from "react-icons/bi";
+import swal from "sweetalert";
+import useAuth from "../../../hooks/useAuth";
+import { authUserInterface } from "../../../interfaces/UserInterface";
+import { useReqForHouseholderRequestMutation } from "../../../services/RequestApi";
 
 type Props = {};
 
 const RequestModalForHouseHolder = (props: Props) => {
+  const { updatedUser } = useAuth<authUserInterface | any>({});
+  const [countWord, setCountWord] = useState(200);
+  /* Form Control */
+  const { register, handleSubmit, watch, setValue } = useForm();
+  const [reqForHouseholderRequest] = useReqForHouseholderRequestMutation();
+
+  /* Handle to Send Request as House Holder Role */
+  const handleHouseRequest = handleSubmit(async (data) => {
+    if (!data.note) return swal("Sorry", "You don't input a note!", "error");
+    // Send request
+    const sendingContent = {
+      ...data,
+      author: {
+        name: updatedUser?.name,
+        email: updatedUser?.email,
+        id: updatedUser?._id,
+      },
+    };
+    try {
+      await reqForHouseholderRequest(sendingContent);
+    } catch (error) {
+      console.log(error);
+    }
+
+    console.log(data);
+  });
+
+  watch(() => {
+    const note = watch("note");
+    if (note?.length > 200) {
+      swal("You can only write 200 words! please!");
+      setValue("note", note.slice(0, 200));
+    }
+    setCountWord(() => {
+      if (countWord > 0) return 200 - note?.length;
+      else return 0;
+    });
+  }); //this will keep listening to the change
+
   return (
-    <div>
+    <form action="" onSubmit={handleHouseRequest}>
       <input
         type="checkbox"
         id="my-modal-for-house-holder"
@@ -25,36 +70,37 @@ const RequestModalForHouseHolder = (props: Props) => {
             You've been selected for a chance to get one year of subscription to
             use Wikipedia for free!
           </p>
-          <form action="">
-            {/* url */}
-            <div className="name border  rounded p-3 relative mt-10 flex-1">
-              <div className="name-title absolute -top-4 bg-white border rounded p-1">
-                <h3 className="text-xs font-poppins">
-                  Why You want be a House holder?
-                </h3>
-              </div>
-              <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
-                <div className="icon">
-                  <BiPen />
-                </div>
-                <textarea
-                  name=""
-                  id=""
-                  cols={5}
-                  rows={4}
-                  className="w-full font-poppins text-md textarea"
-                  placeholder="Write Notes"
-                ></textarea>
-              </div>
+          {/* url */}
+          <div className="name border  rounded p-3 relative mt-10 flex-1">
+            <div className="name-title absolute -top-4 bg-white border rounded p-1">
+              <h3 className="text-xs font-poppins">
+                Why You want be a House holder?
+              </h3>
             </div>
-            {/* End */}
-            <div className="my-5 ">
-              <button className="btn btn-success mr-3">Send Request</button>
+            <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
+              <div className="icon">
+                <BiPen />
+              </div>
+              <textarea
+                id=""
+                cols={5}
+                rows={4}
+                className="w-full font-poppins text-md textarea"
+                placeholder="Write Notes"
+                {...register("note")}
+              ></textarea>
             </div>
-          </form>
+            <small className="text-xs absolute right-3 bottom-px text-gray-400">
+              Word - {countWord}
+            </small>
+          </div>
+          {/* End */}
+          <div className="my-5 ">
+            <button className="btn btn-success mr-3">Send Request</button>
+          </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 

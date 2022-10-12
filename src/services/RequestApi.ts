@@ -31,8 +31,21 @@ export const RequestApi = createApi({
       }),
       providesTags: ["Request"],
     }),
+
+    /* Send Request for House Holder */
+    reqForHouseholderRequest: build.mutation({
+      query: (data) => ({
+        url: "/for-house",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Request"],
+    }),
   }),
 });
 
-export const { useGetAllBlogRequesterQuery, useSendForBlogRequestMutation } =
-  RequestApi;
+export const {
+  useGetAllBlogRequesterQuery,
+  useSendForBlogRequestMutation,
+  useReqForHouseholderRequestMutation,
+} = RequestApi;
