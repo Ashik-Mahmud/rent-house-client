@@ -79,6 +79,29 @@ export const RequestFromUserRow = ({ data, ind, refetch }: rowType) => {
     }
   };
 
+  /* Handle Remove From Blog */
+  const handleRemoveForBlog = async () => {
+    try {
+      const isConfirm = await swal({
+        title: "Really?",
+        text: "You wont be able to revert this!",
+        icon: "warning",
+        buttons: ["cancel", "confirm!"],
+      });
+      if (isConfirm) {
+        // User pressed the confirm button
+        // Will make an api call to confirm user blog
+        const { data: info } = await AxiosRequest.patch(
+          `/deny-user-request/${data._id}?authorId=${data?.author?._id}`
+        );
+        cogoToast.success(info.message);
+        refetch();
+      }
+    } catch (error) {
+      cogoToast.error((error as any)?.response?.data?.message);
+    }
+  };
+
   return (
     <tr>
       <td>{ind + 1}</td>
@@ -136,7 +159,10 @@ export const RequestFromUserRow = ({ data, ind, refetch }: rowType) => {
           <>
             <div className="flex items-center gap-2">
               <span className="badge badge-success">Confirmed</span>
-              <span className="btn btn-circle btn-xs btn-error">
+              <span
+                className="btn btn-circle btn-xs btn-error"
+                onClick={handleRemoveForBlog}
+              >
                 <BsX />
               </span>
             </div>
