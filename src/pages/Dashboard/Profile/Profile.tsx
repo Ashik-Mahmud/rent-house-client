@@ -15,7 +15,11 @@ import ProfileModal from "./ProfileModal";
 type Props = {};
 
 const Profile = (props: Props) => {
-  const { user, updatedUser: data } = useAuth<authUserInterface | any>({});
+  const {
+    user,
+    updatedUser: data,
+    refetch,
+  } = useAuth<authUserInterface | any>({});
 
   const dateDistance = formatDistance(
     new Date(),
@@ -203,7 +207,7 @@ const Profile = (props: Props) => {
         </div>
       </div>
 
-      <ProfileModal />
+      <ProfileModal refetch={refetch} />
       <ImageChangeModal />
     </>
   );

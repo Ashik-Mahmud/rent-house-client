@@ -76,7 +76,11 @@ const HouseReqRow = ({ ind, data, refetch }: Props) => {
           </div>
           <div>
             <div className="font-bold">{data?.author?.name}</div>
-            <div className="text-sm opacity-50">{data?.author?.role}</div>
+            <div className="text-sm opacity-50">
+              {data?.author?.role === "user"
+                ? "House Holder"
+                : data?.author?.role}
+            </div>
           </div>
         </div>
       </td>

@@ -35,8 +35,6 @@ const RequestModalForHouseHolder = (props: Props) => {
     } catch (error) {
       console.log(error);
     }
-
-    console.log(data);
   });
 
   watch(() => {
@@ -65,7 +63,7 @@ const RequestModalForHouseHolder = (props: Props) => {
   }, [error, data, isSuccess, reset, refetch]);
 
   return (
-    <form action="" onSubmit={handleHouseRequest}>
+    <form action="" onSubmit={handleHouseRequest} className="font-poppins">
       <input
         type="checkbox"
         id="my-modal-for-house-holder"
@@ -83,8 +81,8 @@ const RequestModalForHouseHolder = (props: Props) => {
             Request For House Holder Account.
           </h3>
           <p className="py-4">
-            You've been selected for a chance to get one year of subscription to
-            use Wikipedia for free!
+            After send Request, admin will contact you for verify account by
+            email. it will take while time to accept.
           </p>
           {/* url */}
           <div className="name border  rounded p-3 relative mt-10 flex-1">
@@ -101,7 +99,7 @@ const RequestModalForHouseHolder = (props: Props) => {
                 id=""
                 cols={5}
                 rows={4}
-                className="w-full font-poppins text-md textarea"
+                className="w-full font-poppins text-md textarea textarea-ghost"
                 placeholder="Write Notes"
                 {...register("note")}
               ></textarea>

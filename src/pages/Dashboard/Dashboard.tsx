@@ -24,7 +24,6 @@ import { logout } from "../../features/AuthSlice";
 import useAuth from "../../hooks/useAuth";
 
 import { authUserInterface } from "../../interfaces/UserInterface";
-import { useGetUserQuery } from "../../services/AuthApi";
 
 type Props = {};
 
@@ -32,9 +31,13 @@ const Dashboard = (props: Props) => {
   const [isPhone, setIsPhone] = useState<boolean>(true);
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const { user, setUser, updatedUser } = useAuth<authUserInterface | any>({});
-  const { data } = useGetUserQuery(user?.user?._id);
-  const role = data?.data?.role;
+  const {
+    user,
+    setUser,
+    updatedUser: data,
+  } = useAuth<authUserInterface | any>({});
+  const role = data?.role;
+
   let menuArray = [
     {
       id: 1,
@@ -180,7 +183,7 @@ const Dashboard = (props: Props) => {
     ];
   }
 
-  if (updatedUser?.blogAllowed) {
+  if (data?.blogAllowed) {
     menuArray.push({
       id: 12,
       title: "Blogs",
@@ -221,9 +224,7 @@ const Dashboard = (props: Props) => {
                   <BrowserView>
                     Welcome to <span className="text-success">houseLagbe?</span>{" "}
                     <span className="capitalize">
-                      {data?.data?.role === "user"
-                        ? "House Holder"
-                        : data?.data?.role}
+                      {data?.role === "user" ? "House Holder" : data?.role}
                     </span>{" "}
                     Panel
                   </BrowserView>
@@ -237,9 +238,7 @@ const Dashboard = (props: Props) => {
                 </div>
                 <div className="active-user flex items-center gap-1 text-sm text-green-500 select-none capitalize">
                   <div className="h-2 w-2 bg-green-500 rounded-full"></div>
-                  {data?.data?.role === "user"
-                    ? "House Holder"
-                    : data?.data?.role}
+                  {data?.role === "user" ? "House Holder" : data?.role}
                 </div>
                 {!pathname.includes("/dashboard/houses/add") && (
                   <>
@@ -264,12 +263,12 @@ const Dashboard = (props: Props) => {
                     <div className="w-10 rounded-full">
                       <img
                         src={
-                          data?.data?.profileImage
+                          data?.profileImage
                             ? "http://localhost:5000/profiles/" +
-                              data?.data?.profileImage
+                              data?.profileImage
                             : user?.user?.avatar
                         }
-                        alt={user?.user?.name}
+                        alt={data?.name}
                       />
                     </div>
                   </label>

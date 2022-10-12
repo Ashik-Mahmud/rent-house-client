@@ -13,9 +13,11 @@ import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import { useUpdateProfileMutation } from "../../../services/AuthApi";
 
-type Props = {};
+type Props = {
+  refetch: () => void;
+};
 
-const ProfileModal = (props: Props) => {
+const ProfileModal = ({ refetch }: Props) => {
   const { updatedUser } = useAuth<authUserInterface | any>({});
   const isVerify = updatedUser?.isVerified;
   const [updateProfile, { data, isSuccess }] = useUpdateProfileMutation();
@@ -26,6 +28,7 @@ const ProfileModal = (props: Props) => {
     const bodyData = { ...formData, email: updatedUser?.email };
     await updateProfile(bodyData);
     reset();
+    refetch();
   });
 
   useEffect(() => {
