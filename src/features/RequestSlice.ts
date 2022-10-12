@@ -5,6 +5,7 @@ const requestSlice = createSlice({
   initialState: {
     requestBlogCount: 0,
     requestHouseCount: 0,
+    pendingCount: 0,
   },
   reducers: {
     setRequestBlogCount: (state, { payload }) => {
@@ -13,9 +14,12 @@ const requestSlice = createSlice({
     setRequestHouseCount: (state, { payload }) => {
       state.requestHouseCount = payload;
     },
+    setPendingCount: (state, { payload }) => {
+      state.pendingCount = payload;
+    },
   },
 });
 
 export default requestSlice.reducer;
-export const { setRequestBlogCount, setRequestHouseCount } =
+export const { setRequestBlogCount, setRequestHouseCount, setPendingCount } =
   requestSlice.actions;

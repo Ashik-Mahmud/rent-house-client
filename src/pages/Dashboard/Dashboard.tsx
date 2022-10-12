@@ -202,9 +202,22 @@ const Dashboard = (props: Props) => {
     toast.success("Logout Successfully");
   };
 
-  const { requestBlogCount, requestHouseCount } = useAppSelector(
+  const { requestBlogCount, requestHouseCount, pendingCount } = useAppSelector(
     (state) => state.request
   );
+
+  let title: string = "";
+
+  if (requestBlogCount > 0) {
+    title = "Blog Requests";
+  }
+  if (requestHouseCount > 0) {
+    title = "House Requests";
+  }
+
+  if (requestBlogCount > 0 && requestHouseCount > 0) {
+    title = "House/Blog Requests";
+  }
 
   return (
     <>
@@ -334,12 +347,14 @@ const Dashboard = (props: Props) => {
                         New
                       </span>
                     )}
-                    {(requestBlogCount > 0 || requestHouseCount > 0) &&
-                      item.title === "Request From Users" && (
-                        <span className="btn btn-circle btn-xs  btn-info">
-                          {requestBlogCount || requestHouseCount}
-                        </span>
-                      )}
+                    {pendingCount > 0 && item.title === "Request From Users" && (
+                      <span
+                        className="btn btn-circle btn-xs  btn-info "
+                        title={title}
+                      >
+                        {pendingCount > 9 ? "+9" : pendingCount}
+                      </span>
+                    )}
                   </Link>
                 </li>
               ))}

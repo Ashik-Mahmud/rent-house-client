@@ -4,7 +4,10 @@ import { AxiosRequest } from "../../../api/Axios";
 import { useAppDispatch } from "../../../app/store";
 import GlobalLoader from "../../../components/GlobalLoader";
 import NoDataComponent from "../../../components/NoDataComponent";
-import { setRequestBlogCount } from "../../../features/RequestSlice";
+import {
+  setPendingCount,
+  setRequestBlogCount,
+} from "../../../features/RequestSlice";
 import { RequestFromUserRow } from "./RequestFromUsers";
 
 type Props = {};
@@ -34,6 +37,7 @@ const ForBlogsRequest = (props: Props) => {
     setCurrentPage(currentPage);
     setLimit(limit);
     dispatch(setRequestBlogCount(data?.count));
+    dispatch(setPendingCount(data?.unapprovedCount));
   }, [limit, currentPage, data, dispatch]);
 
   return (

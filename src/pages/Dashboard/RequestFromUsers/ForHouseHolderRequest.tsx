@@ -3,7 +3,11 @@ import { useQuery } from "react-query";
 import { AxiosRequest } from "../../../api/Axios";
 import { useAppDispatch } from "../../../app/store";
 import GlobalLoader from "../../../components/GlobalLoader";
-import { setRequestHouseCount } from "../../../features/RequestSlice";
+import NoDataComponent from "../../../components/NoDataComponent";
+import {
+  setPendingCount,
+  setRequestHouseCount,
+} from "../../../features/RequestSlice";
 import HouseReqRow from "./HouseReqRow";
 type Props = {};
 
@@ -32,7 +36,10 @@ const ForHouseHolderRequest = (props: Props) => {
     setCurrentPage(currentPage);
     setLimit(limit);
     dispatch(setRequestHouseCount(data?.count));
+    dispatch(setPendingCount(data?.unapprovedCount));
   }, [limit, currentPage, data, dispatch]);
+
+  console.log(data?.unapprovedCount, ".............++");
 
   return (
     <>
@@ -64,11 +71,7 @@ const ForHouseHolderRequest = (props: Props) => {
             </tbody>
           </table>
         ) : (
-          <div className="py-6">
-            <h1 className="text-center font-bold">
-              No House Holder Request Yet.
-            </h1>
-          </div>
+          <NoDataComponent />
         )}
       </div>
       {/* Pagination */}
