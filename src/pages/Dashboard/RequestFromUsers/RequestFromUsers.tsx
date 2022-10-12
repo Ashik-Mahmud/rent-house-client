@@ -4,15 +4,10 @@ import { BsLink45Deg, BsX } from "react-icons/bs";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import swal from "sweetalert";
 import { AxiosRequest } from "../../../api/Axios";
-import { useGetAllBlogRequesterQuery } from "../../../services/RequestApi";
 
 type Props = {};
 
 const RequestFromUsers = (props: Props) => {
-  const { data } = useGetAllBlogRequesterQuery({
-    page: 1,
-    limit: 100,
-  });
   const { pathname } = useLocation();
   return (
     <div>
@@ -29,7 +24,7 @@ const RequestFromUsers = (props: Props) => {
                   : "bg-base-300 text-secondary"
               }`}
             >
-              For Blogs <span className="badge badge-ghost">{data?.count}</span>
+              For Blogs <span className="badge badge-ghost">0</span>
             </Link>
             <Link
               to="/dashboard/request-from-users/for-house-holder"
@@ -156,7 +151,10 @@ export const RequestFromUserRow = ({ data, ind, refetch }: rowType) => {
             >
               <BiCheck /> Confirm
             </button>
-            <button className="badge badge-error ml-3 badge-lg text-sm font-poppins cursor-pointer">
+            <button
+              className="badge badge-error ml-3 badge-lg text-sm font-poppins cursor-pointer"
+              onClick={handleRemoveForBlog}
+            >
               <BiX /> Remove
             </button>
           </>

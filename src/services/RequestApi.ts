@@ -23,7 +23,7 @@ export const RequestApi = createApi({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: (result) => [{ type: "Request", id: result }],
+      invalidatesTags: ["Request"],
     }),
     getAllBlogRequester: build.query({
       query: (data) => ({

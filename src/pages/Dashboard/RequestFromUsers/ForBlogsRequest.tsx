@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
+import { AxiosRequest } from "../../../api/Axios";
 import GlobalLoader from "../../../components/GlobalLoader";
-import { useGetAllBlogRequesterQuery } from "../../../services/RequestApi";
 import { RequestFromUserRow } from "./RequestFromUsers";
 
 type Props = {};
@@ -10,9 +11,12 @@ const ForBlogsRequest = (props: Props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [limit, setLimit] = useState(10);
 
-  const { data, isLoading, refetch } = useGetAllBlogRequesterQuery({
-    page: currentPage,
-    limit: limit,
+  /* Try to fetch blog using UseQuery */
+  const { data, refetch, isLoading } = useQuery("fetchBlog", async () => {
+    const res = await AxiosRequest.get(
+      `/all-request?page=${currentPage}&limit=${limit}`
+    ); // fetch if user has blog
+    return res?.data;
   });
 
   /* Pagination Func */

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { BiLockAlt } from "react-icons/bi";
@@ -15,7 +15,6 @@ type Props = {};
 
 const Settings = (props: Props) => {
   const { updatedUser, setUser } = useAuth<authUserInterface | any>({});
-  const [isSent, setIsSent] = useState(false);
   const role = updatedUser?.role;
   const isVerify = updatedUser?.isVerified;
   const isBlogAllowed = updatedUser?.blogAllowed;
@@ -67,7 +66,7 @@ const Settings = (props: Props) => {
 
   return (
     <>
-      <VerifyBlogModal setIsSent={setIsSent} />
+      <VerifyBlogModal />
       <RequestModalForHouseHolder />
       <div>
         <div className="p-5 my-4 bg-white font-poppins">
@@ -83,7 +82,7 @@ const Settings = (props: Props) => {
                     </h3>
 
                     {isVerify ? (
-                      updatedUser.isRequestSent || isSent ? (
+                      updatedUser.isRequestSent ? (
                         <label className="btn btn-warning rounded-full mt-4  sm:mt-0">
                           Already sent Wait for Accept
                         </label>

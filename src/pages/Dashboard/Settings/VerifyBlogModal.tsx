@@ -6,12 +6,10 @@ import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import { useSendForBlogRequestMutation } from "../../../services/RequestApi";
 
-type Props = {
-  setIsSent: React.Dispatch<React.SetStateAction<boolean>>;
-};
+type Props = {};
 
-const VerifyBlogModal = ({ setIsSent }: Props) => {
-  const { updatedUser } = useAuth<authUserInterface | any>({});
+const VerifyBlogModal = (props: Props) => {
+  const { updatedUser, refetch } = useAuth<authUserInterface | any>({});
   const { handleSubmit, register, reset } = useForm();
   const [sendRequestForBlog, { data, isSuccess, error }] =
     useSendForBlogRequestMutation();
@@ -41,10 +39,10 @@ const VerifyBlogModal = ({ setIsSent }: Props) => {
     }
     if (isSuccess) {
       cogoToast.success(data?.message);
-      setIsSent(true);
+      refetch();
       reset();
     }
-  }, [error, data, isSuccess, reset, setIsSent]);
+  }, [error, data, isSuccess, reset, refetch]);
 
   return (
     <>
