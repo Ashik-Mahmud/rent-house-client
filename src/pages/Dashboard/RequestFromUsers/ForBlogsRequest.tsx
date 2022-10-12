@@ -8,7 +8,7 @@ type Props = {};
 const ForBlogsRequest = (props: Props) => {
   /* Pagination code */
   const [currentPage, setCurrentPage] = useState(1);
-  const [limit, setLimit] = useState(2);
+  const [limit, setLimit] = useState(10);
 
   const { data, isLoading, refetch } = useGetAllBlogRequesterQuery({
     page: currentPage,

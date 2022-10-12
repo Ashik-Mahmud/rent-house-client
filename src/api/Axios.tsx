@@ -12,3 +12,11 @@ export const AxiosUser = axios.create({
     Authorization: `Bearer ${token}`,
   },
 });
+
+export const AxiosRequest = axios.create({
+  baseURL: "http://localhost:5000/api/v1/request",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  },
+});
