@@ -34,8 +34,6 @@ const ForHouseHolderRequest = (props: Props) => {
     dispatch(setRequestHouseCount(data?.count));
   }, [limit, currentPage, data, dispatch]);
 
-  console.log(data);
-
   return (
     <>
       <div className="request-table mt-5 overflow-x-auto">
@@ -67,7 +65,9 @@ const ForHouseHolderRequest = (props: Props) => {
           </table>
         ) : (
           <div className="py-6">
-            <h1 className="text-center font-bold">No Request Yet.</h1>
+            <h1 className="text-center font-bold">
+              No House Holder Request Yet.
+            </h1>
           </div>
         )}
       </div>

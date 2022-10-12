@@ -76,7 +76,7 @@ export const RequestFromUserRow = ({ data, ind, refetch }: rowType) => {
         // User pressed the confirm button
         // Will make an api call to confirm user blog
         const { data: info } = await AxiosRequest.patch(
-          `/approve-blog/${data?._id}?authorId=${data?.author?._id}`
+          `/approve-blog/${data?._id}?authorId=${data?.author?._id}&role=blog`
         );
         cogoToast.success(info?.message);
         refetch();
@@ -99,7 +99,7 @@ export const RequestFromUserRow = ({ data, ind, refetch }: rowType) => {
         // User pressed the confirm button
         // Will make an api call to confirm user blog
         const { data: info } = await AxiosRequest.delete(
-          `/cancel-request/${data._id}?authorId=${data?.author?._id}`
+          `/cancel-request/${data._id}?authorId=${data?.author?._id}&role=blog`
         );
         cogoToast.success(info.message);
         refetch();

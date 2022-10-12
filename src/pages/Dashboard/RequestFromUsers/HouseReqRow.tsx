@@ -1,10 +1,62 @@
+import cogoToast from "cogo-toast";
 import { BiCheck, BiX } from "react-icons/bi";
+import { BsX } from "react-icons/bs";
+import swal from "sweetalert";
+import { AxiosRequest } from "../../../api/Axios";
 type Props = {
   data: any;
   ind: number;
   refetch: () => void;
 };
-const HouseReqRow = ({ ind, data }: Props) => {
+const HouseReqRow = ({ ind, data, refetch }: Props) => {
+  /* Handle Confirm Blog Request */
+  const handleConfirmHouseReq = async () => {
+    try {
+      const isConfirm = await swal({
+        title: "Really?",
+        text: "You wont be able to revert this!",
+        icon: "warning",
+        buttons: ["cancel", "confirm!"],
+        dangerMode: true,
+      });
+
+      if (isConfirm) {
+        // User pressed the confirm button
+        // Will make an api call to confirm user blog
+        const { data: info } = await AxiosRequest.patch(
+          `/approve-request/${data?._id}?authorId=${data?.author?._id}&role=house`
+        );
+        cogoToast.success(info?.message);
+        refetch();
+      }
+    } catch (error) {
+      cogoToast.error((error as any)?.response?.data?.message);
+    }
+  };
+
+  /* Handle Remove From Blog */
+  const handleRemoveForHouse = async () => {
+    try {
+      const isConfirm = await swal({
+        title: "Really?",
+        text: "You wont be able to revert this!",
+        icon: "warning",
+        buttons: ["cancel", "confirm!"],
+      });
+      if (isConfirm) {
+        // User pressed the confirm button
+        // Will make an api call to confirm user blog
+        const { data: info } = await AxiosRequest.delete(
+          `/cancel-request/${data._id}?authorId=${data?.author?._id}&role=house`
+        );
+        cogoToast.success(info.message);
+        refetch();
+      }
+    } catch (error) {
+      cogoToast.error((error as any)?.response?.data?.message);
+    }
+  };
+
   return (
     <tr>
       <td>{ind + 1}</td>
@@ -41,12 +93,35 @@ const HouseReqRow = ({ ind, data }: Props) => {
           : data?.notes}
       </td>
       <td>
-        <button className="badge badge-success badge-lg text-sm font-poppins cursor-pointer">
-          <BiCheck /> Confirm
-        </button>
-        <button className="badge badge-error ml-3 badge-lg text-sm font-poppins cursor-pointer">
-          <BiX /> Remove
-        </button>
+        {data?.status === "pending" ? (
+          <>
+            {" "}
+            <button
+              className="badge badge-success badge-lg text-sm font-poppins cursor-pointer"
+              onClick={handleConfirmHouseReq}
+            >
+              <BiCheck /> Confirm
+            </button>
+            <button
+              className="badge badge-error ml-3 badge-lg text-sm font-poppins cursor-pointer"
+              onClick={handleRemoveForHouse}
+            >
+              <BiX /> Remove
+            </button>
+          </>
+        ) : (
+          <>
+            <div className="flex items-center gap-2">
+              <span className="badge badge-success">Confirmed</span>
+              <span
+                className="btn btn-circle btn-xs btn-error"
+                onClick={handleRemoveForHouse}
+              >
+                <BsX />
+              </span>
+            </div>
+          </>
+        )}
       </td>
     </tr>
   );
