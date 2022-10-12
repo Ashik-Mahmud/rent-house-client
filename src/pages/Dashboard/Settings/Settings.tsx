@@ -110,12 +110,18 @@ const Settings = (props: Props) => {
                       If you want to get House Holder Account
                     </h3>
                     {isVerify ? (
-                      <label
-                        htmlFor="my-modal-for-house-holder"
-                        className="btn btn-success rounded-full mt-4 sm:mt-0"
-                      >
-                        Request For House Holder Account
-                      </label>
+                      updatedUser.isHouseHolderReqSent ? (
+                        <label className="btn btn-warning rounded-full mt-4  sm:mt-0">
+                          Already sent Wait for Accept
+                        </label>
+                      ) : (
+                        <label
+                          htmlFor="my-modal-for-house-holder"
+                          className="btn btn-success rounded-full mt-4 sm:mt-0"
+                        >
+                          Request For House Holder Account
+                        </label>
+                      )
                     ) : (
                       <button
                         className="btn btn-warning pointer-events-none rounded-full mt-4  sm:mt-0 tooltip"

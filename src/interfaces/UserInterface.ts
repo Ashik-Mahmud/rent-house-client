@@ -14,6 +14,7 @@ export interface UserInterface {
   status: string;
   profileImage?: string;
   isBlogRequestSent?: boolean;
+  isHouseHolderReqSent?: boolean;
   createdAt?: string;
   updatedAt?: string;
 }
