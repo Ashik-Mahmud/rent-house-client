@@ -23,13 +23,13 @@ export const RequestApi = createApi({
         body: data,
       }),
     }),
-    getRequests: build.query({
-      query: () => ({
-        url: "/requests",
+    getAllBlogRequester: build.query({
+      query: (data) => ({
+        url: `/all-request?page=${data.page}&limit=${data.limit}`,
       }),
     }),
   }),
 });
 
-export const { useGetRequestsQuery, useSendForBlogRequestMutation } =
+export const { useGetAllBlogRequesterQuery, useSendForBlogRequestMutation } =
   RequestApi;

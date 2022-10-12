@@ -45,35 +45,48 @@ const RequestFromUsers = (props: Props) => {
 
 export default RequestFromUsers;
 
-export const RequestFromUserRow = () => {
+type rowType = {
+  data: any;
+  ind: number;
+};
+export const RequestFromUserRow = ({ data, ind }: rowType) => {
   return (
     <tr>
-      <td>1</td>
-      <td>John Doe</td>
+      <td>{ind + 1}</td>
+      <td>{data?.author?.name}</td>
       <td>
-        <a href="mailto:jhone@doe.com">jhone@doe.com</a>
+        <a href="mailto:jhone@doe.com">{data?.author?.email}</a>
       </td>
       <td>
-        <a href="tel:+880123456789">+880123456789</a>
+        <a href="tel:+880123456789">+{data?.author?.phone}</a>
       </td>
       <td>Customer</td>
       <td>
-        <span className="badge badge-success">verified</span>
+        {data?.author?.isVerified ? (
+          <span className="badge badge-success">verified</span>
+        ) : (
+          <span className="badge badge-warning">not verified</span>
+        )}
       </td>
 
       <td className="w-40">
-        <span
-          className=""
-          title="Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, qui
-          recusandae quia eligendi culpa excepturi Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde eligendi, "
-        >
+        <span className="" title={data?.notes || "No notes found."}>
           Message
         </span>
       </td>
       <td>
-        <a href="/" className="text-2xl font-bold text-center block">
-          <BsLink45Deg />
-        </a>
+        {data?.blogUrl ? (
+          <a
+            href={data?.blogUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="text-2xl font-bold text-center block"
+          >
+            <BsLink45Deg />
+          </a>
+        ) : (
+          "Nill"
+        )}
       </td>
       <td>
         <button className="badge badge-success badge-lg text-sm font-poppins cursor-pointer">
