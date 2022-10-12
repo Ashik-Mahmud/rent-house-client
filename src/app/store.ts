@@ -14,7 +14,7 @@ const store = configureStore({
   reducer: {
     // Add the generated reducer as a specific top-level slice
     auth: AuthReducer,
-    reqBlog: RequestReducer,
+    request: RequestReducer,
     [authApi.reducerPath]: authApi.reducer,
     [ReviewApi.reducerPath]: ReviewApi.reducer,
     [HouseApi.reducerPath]: HouseApi.reducer,

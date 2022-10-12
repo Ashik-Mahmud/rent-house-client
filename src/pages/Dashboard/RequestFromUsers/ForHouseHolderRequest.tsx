@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import { AxiosRequest } from "../../../api/Axios";
 import { useAppDispatch } from "../../../app/store";
 import GlobalLoader from "../../../components/GlobalLoader";
-import { setRequestBlogCount } from "../../../features/RequestSlice";
+import { setRequestHouseCount } from "../../../features/RequestSlice";
 import HouseReqRow from "./HouseReqRow";
 type Props = {};
 
@@ -31,7 +31,7 @@ const ForHouseHolderRequest = (props: Props) => {
   useEffect(() => {
     setCurrentPage(currentPage);
     setLimit(limit);
-    dispatch(setRequestBlogCount(data?.count));
+    dispatch(setRequestHouseCount(data?.count));
   }, [limit, currentPage, data, dispatch]);
 
   console.log(data);

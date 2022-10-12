@@ -10,8 +10,8 @@ type Props = {};
 
 const RequestFromUsers = (props: Props) => {
   const { pathname } = useLocation();
-  const countForBlogs = useAppSelector(
-    (state) => state.reqBlog.requestBlogCount
+  const { requestBlogCount, requestHouseCount } = useAppSelector(
+    (state) => state.request
   );
 
   return (
@@ -30,7 +30,7 @@ const RequestFromUsers = (props: Props) => {
               }`}
             >
               For Blogs{" "}
-              <span className="badge badge-ghost">{countForBlogs}</span>
+              <span className="badge badge-ghost">{requestBlogCount}</span>
             </Link>
             <Link
               to="/dashboard/request-from-users/for-house-holder"
@@ -40,7 +40,8 @@ const RequestFromUsers = (props: Props) => {
                   : "bg-base-300 text-secondary"
               }`}
             >
-              For House Holder <div className="badge badge-ghost">3</div>
+              For House Holder{" "}
+              <div className="badge badge-ghost">{requestHouseCount}</div>
             </Link>
           </div>
           <div className="users-request-content">

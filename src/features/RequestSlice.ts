@@ -17,4 +17,5 @@ const requestSlice = createSlice({
 });
 
 export default requestSlice.reducer;
-export const { setRequestBlogCount } = requestSlice.actions;
+export const { setRequestBlogCount, setRequestHouseCount } =
+  requestSlice.actions;
