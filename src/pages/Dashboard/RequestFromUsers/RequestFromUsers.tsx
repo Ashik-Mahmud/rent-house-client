@@ -10,7 +10,9 @@ type Props = {};
 
 const RequestFromUsers = (props: Props) => {
   const { pathname } = useLocation();
-  const countForBlogs = useAppSelector((state) => state.reqBlog.requesterCount);
+  const countForBlogs = useAppSelector(
+    (state) => state.reqBlog.requestBlogCount
+  );
 
   return (
     <div>
