@@ -60,9 +60,7 @@ export const RequestFromUserRow = () => {
       <td>
         <span className="badge badge-success">verified</span>
       </td>
-      <td>
-        <span className="badge badge-warning">uncompleted</span>
-      </td>
+
       <td className="w-40">
         <span
           className=""

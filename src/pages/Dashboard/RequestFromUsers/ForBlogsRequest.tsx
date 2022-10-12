@@ -15,7 +15,7 @@ const ForBlogsRequest = (props: Props) => {
               <th>Phone</th>
               <th>role</th>
               <th>Is Verified</th>
-              <th>Profile Status</th>
+
               <th>Message</th>
               <th>Blog Link</th>
               <th>Action</th>
