@@ -8,6 +8,7 @@ import { logout } from "../../../features/AuthSlice";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import { useChangePasswordMutation } from "../../../services/AuthApi";
+import RequestModalForHouseHolder from "../RequestFromUsers/RequestModalForHouseHolder";
 import VerifyBlogModal from "./VerifyBlogModal";
 
 type Props = {};
@@ -66,6 +67,7 @@ const Settings = (props: Props) => {
   return (
     <>
       <VerifyBlogModal />
+      <RequestModalForHouseHolder />
       <div>
         <div className="p-5 my-4 bg-white font-poppins">
           <h3 className="text-2xl font-bold mb-3">Settings</h3>
@@ -102,9 +104,12 @@ const Settings = (props: Props) => {
                       If you want to get House Holder Account
                     </h3>
                     {isVerify ? (
-                      <button className="btn btn-success rounded-full mt-4 sm:mt-0">
+                      <label
+                        htmlFor="my-modal-for-house-holder"
+                        className="btn btn-success rounded-full mt-4 sm:mt-0"
+                      >
                         Request For House Holder Account
-                      </button>
+                      </label>
                     ) : (
                       <button
                         className="btn btn-warning pointer-events-none rounded-full mt-4  sm:mt-0 tooltip"
