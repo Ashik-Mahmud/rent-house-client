@@ -30,7 +30,9 @@ const RequestFromUsers = (props: Props) => {
               }`}
             >
               For Blogs{" "}
-              <span className="badge badge-ghost">{requestBlogCount}</span>
+              {pathname.includes("for-blogs") && (
+                <span className="badge badge-ghost">{requestBlogCount}</span>
+              )}
             </Link>
             <Link
               to="/dashboard/request-from-users/for-house-holder"
@@ -41,7 +43,9 @@ const RequestFromUsers = (props: Props) => {
               }`}
             >
               For House Holder{" "}
-              <div className="badge badge-ghost">{requestHouseCount}</div>
+              {pathname.includes("for-house-holder") && (
+                <div className="badge badge-ghost">{requestHouseCount}</div>
+              )}
             </Link>
           </div>
           <div className="users-request-content">

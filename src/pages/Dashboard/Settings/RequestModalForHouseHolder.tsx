@@ -99,7 +99,7 @@ const RequestModalForHouseHolder = (props: Props) => {
                 id=""
                 cols={5}
                 rows={4}
-                className="w-full font-poppins text-md textarea textarea-ghost"
+                className="font-poppins text-md textarea textarea-ghost appearance-none placeholder-gray-400 w-full py-2 px-3 focus:outline-none focus:shadow-outline"
                 placeholder="Write Notes"
                 {...register("note")}
               ></textarea>

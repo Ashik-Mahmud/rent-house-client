@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import { AxiosRequest } from "../../../api/Axios";
 import { useAppDispatch } from "../../../app/store";
 import GlobalLoader from "../../../components/GlobalLoader";
+import NoDataComponent from "../../../components/NoDataComponent";
 import { setRequestBlogCount } from "../../../features/RequestSlice";
 import { RequestFromUserRow } from "./RequestFromUsers";
 
@@ -68,9 +69,7 @@ const ForBlogsRequest = (props: Props) => {
             </tbody>
           </table>
         ) : (
-          <div className="py-6">
-            <h1 className="text-center font-bold">No Request Yet.</h1>
-          </div>
+          <NoDataComponent />
         )}
       </div>
       {/* Pagination */}

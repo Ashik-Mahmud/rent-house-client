@@ -53,7 +53,7 @@ const VerifyBlogModal = (props: Props) => {
           id="my-modal-for-blog"
           className="modal-toggle"
         />
-        <div className="modal">
+        <div className="modal font-poppins">
           <div className="modal-box relative">
             <label
               htmlFor="my-modal-for-blog"
@@ -103,7 +103,7 @@ const VerifyBlogModal = (props: Props) => {
                   key={1}
                   cols={5}
                   rows={4}
-                  className="w-full font-poppins text-md textarea"
+                  className="font-poppins text-md textarea textarea-ghost appearance-none placeholder-gray-400 w-full py-2 px-3 focus:outline-none focus:shadow-outline"
                   placeholder="Write why you need blog option?"
                   {...register("notes")}
                 ></textarea>

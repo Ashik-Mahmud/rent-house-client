@@ -19,7 +19,7 @@ import {
   BsReceipt,
 } from "react-icons/bs";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../app/store";
+import { useAppDispatch, useAppSelector } from "../../app/store";
 import { logout } from "../../features/AuthSlice";
 import useAuth from "../../hooks/useAuth";
 
@@ -202,6 +202,10 @@ const Dashboard = (props: Props) => {
     toast.success("Logout Successfully");
   };
 
+  const { requestBlogCount, requestHouseCount } = useAppSelector(
+    (state) => state.request
+  );
+
   return (
     <>
       <div className="grid place-items-center ">
@@ -325,6 +329,17 @@ const Dashboard = (props: Props) => {
                       </span>
                     </span>
                     <span className="menu-title">{item.title}</span>
+                    {item.title === "Blogs" && (
+                      <span className="badge rounded-full text-numbers badge-ghost">
+                        New
+                      </span>
+                    )}
+                    {(requestBlogCount > 0 || requestHouseCount > 0) &&
+                      item.title === "Request From Users" && (
+                        <span className="btn btn-circle btn-xs  btn-info">
+                          {requestBlogCount || requestHouseCount}
+                        </span>
+                      )}
                   </Link>
                 </li>
               ))}
