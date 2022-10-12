@@ -14,7 +14,9 @@ const ForBlogsRequest = (props: Props) => {
               <th>Email</th>
               <th>Phone</th>
               <th>role</th>
+              <th>Is Verified</th>
               <th>Message</th>
+              <th>Blog Link</th>
               <th>Action</th>
             </tr>
           </thead>
