@@ -72,17 +72,24 @@ const ForHouseHolderRequest = (props: Props) => {
         )}
       </div>
       {/* Pagination */}
-      <div className="pagination flex items-center justify-center mt-10 gap-2">
-        <a href="/" className="btn btn-circle btn-ghost btn-sm">
-          1
-        </a>
-        <a href="/" className="btn btn-circle btn-ghost btn-sm btn-active">
-          2
-        </a>
-        <a href="/" className="btn btn-circle btn-ghost btn-sm">
-          3
-        </a>
-      </div>
+      {data?.count > limit ? (
+        <div className="pagination flex items-center justify-center mt-10 gap-2">
+          {pageNumbers.map((num: number, ind: number) => (
+            <span
+              key={num + ind}
+              className={`btn btn-circle btn-ghost btn-sm cursor-pointer ${
+                currentPage === num && "btn-active"
+              }`}
+              onClick={() => {
+                setCurrentPage(num);
+                refetch();
+              }}
+            >
+              {num}
+            </span>
+          ))}
+        </div>
+      ) : null}
     </>
   );
 };
