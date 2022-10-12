@@ -4,10 +4,15 @@ import { BsLink45Deg, BsX } from "react-icons/bs";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import swal from "sweetalert";
 import { AxiosRequest } from "../../../api/Axios";
+import { useGetAllBlogRequesterQuery } from "../../../services/RequestApi";
 
 type Props = {};
 
 const RequestFromUsers = (props: Props) => {
+  const { data } = useGetAllBlogRequesterQuery({
+    page: 1,
+    limit: 100,
+  });
   const { pathname } = useLocation();
   return (
     <div>
@@ -24,7 +29,7 @@ const RequestFromUsers = (props: Props) => {
                   : "bg-base-300 text-secondary"
               }`}
             >
-              For Blogs <span className="badge badge-ghost">5</span>
+              For Blogs <span className="badge badge-ghost">{data?.count}</span>
             </Link>
             <Link
               to="/dashboard/request-from-users/for-house-holder"
@@ -91,8 +96,8 @@ export const RequestFromUserRow = ({ data, ind, refetch }: rowType) => {
       if (isConfirm) {
         // User pressed the confirm button
         // Will make an api call to confirm user blog
-        const { data: info } = await AxiosRequest.patch(
-          `/deny-user-request/${data._id}?authorId=${data?.author?._id}`
+        const { data: info } = await AxiosRequest.delete(
+          `/cancel-request/${data._id}?authorId=${data?.author?._id}`
         );
         cogoToast.success(info.message);
         refetch();

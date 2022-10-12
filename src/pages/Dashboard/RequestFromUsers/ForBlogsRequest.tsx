@@ -60,7 +60,9 @@ const ForBlogsRequest = (props: Props) => {
             </tbody>
           </table>
         ) : (
-          <h1 className="text-center font-bold">No data</h1>
+          <div className="py-6">
+            <h1 className="text-center font-bold">No Request Yet.</h1>
+          </div>
         )}
       </div>
       {/* Pagination */}

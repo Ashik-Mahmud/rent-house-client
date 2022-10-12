@@ -15,6 +15,7 @@ export const RequestApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ["Request"],
   endpoints: (build) => ({
     sendForBlogRequest: build.mutation({
       query: (data) => ({
@@ -22,11 +23,13 @@ export const RequestApi = createApi({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: (result) => [{ type: "Request", id: result }],
     }),
     getAllBlogRequester: build.query({
       query: (data) => ({
         url: `/all-request?page=${data.page}&limit=${data.limit}`,
       }),
+      providesTags: ["Request"],
     }),
   }),
 });
