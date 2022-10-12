@@ -18,7 +18,7 @@ export const RequestApi = createApi({
   endpoints: (build) => ({
     sendForBlogRequest: build.mutation({
       query: (data) => ({
-        url: "/forBlog",
+        url: "/for-blog",
         method: "POST",
         body: data,
       }),

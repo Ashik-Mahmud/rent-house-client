@@ -13,6 +13,7 @@ export interface UserInterface {
   avatar: string;
   status: string;
   profileImage?: string;
+  isRequestSent?: boolean;
   createdAt?: string;
   updatedAt?: string;
 }

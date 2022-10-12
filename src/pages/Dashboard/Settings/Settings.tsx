@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { BiLockAlt } from "react-icons/bi";
@@ -8,13 +8,14 @@ import { logout } from "../../../features/AuthSlice";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import { useChangePasswordMutation } from "../../../services/AuthApi";
-import RequestModalForHouseHolder from "../RequestFromUsers/RequestModalForHouseHolder";
+import RequestModalForHouseHolder from "./RequestModalForHouseHolder";
 import VerifyBlogModal from "./VerifyBlogModal";
 
 type Props = {};
 
 const Settings = (props: Props) => {
   const { updatedUser, setUser } = useAuth<authUserInterface | any>({});
+  const [isSent, setIsSent] = useState(false);
   const role = updatedUser?.role;
   const isVerify = updatedUser?.isVerified;
   const isBlogAllowed = updatedUser?.blogAllowed;
@@ -66,7 +67,7 @@ const Settings = (props: Props) => {
 
   return (
     <>
-      <VerifyBlogModal />
+      <VerifyBlogModal setIsSent={setIsSent} />
       <RequestModalForHouseHolder />
       <div>
         <div className="p-5 my-4 bg-white font-poppins">
@@ -82,12 +83,18 @@ const Settings = (props: Props) => {
                     </h3>
 
                     {isVerify ? (
-                      <label
-                        htmlFor="my-modal-for-blog"
-                        className="btn btn-success rounded-full mt-4  sm:mt-0"
-                      >
-                        Request For Blog
-                      </label>
+                      updatedUser.isRequestSent || isSent ? (
+                        <label className="btn btn-warning rounded-full mt-4  sm:mt-0">
+                          Already sent Wait for Accept
+                        </label>
+                      ) : (
+                        <label
+                          htmlFor="my-modal-for-blog"
+                          className="btn btn-success rounded-full mt-4  sm:mt-0"
+                        >
+                          Request For Blog
+                        </label>
+                      )
                     ) : (
                       <button
                         className="btn btn-warning pointer-events-none rounded-full mt-4  sm:mt-0 tooltip"
