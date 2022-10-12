@@ -17,7 +17,7 @@ const ForBlogsRequest = (props: Props) => {
   /* Try to fetch blog using UseQuery */
   const { data, refetch, isLoading } = useQuery("fetchBlog", async () => {
     const res = await AxiosRequest.get(
-      `/all-request?page=${currentPage}&limit=${limit}`
+      `/all-request?page=${currentPage}&limit=${limit}&role=blog` // fetch if user has blog
     ); // fetch if user has blog
     return res?.data;
   });
