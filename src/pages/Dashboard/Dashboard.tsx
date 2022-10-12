@@ -32,17 +32,6 @@ type Props = {};
 
 const Dashboard = (props: Props) => {
   const dispatch = useAppDispatch();
-  /* Try to fetch blog using UseQuery */
-  const { data: countData } = useQuery("fetchUnapprovedData", async () => {
-    const res = await AxiosRequest.get(
-      `/all-request` // fetch if user has blog
-    ); // fetch if user has blog
-    return res?.data;
-  });
-
-  useEffect(() => {
-    dispatch(setPendingCount(countData?.unapprovedCount));
-  }, [countData, dispatch]);
 
   const [isPhone, setIsPhone] = useState<boolean>(true);
   const { pathname } = useLocation();
@@ -207,6 +196,20 @@ const Dashboard = (props: Props) => {
       link: "/dashboard/blogs",
     });
   }
+
+  /* Try to fetch blog using UseQuery */
+
+  const { data: countData } = useQuery("fetchUnapprovedData", async () => {
+    if (role === "admin") {
+      const res = await AxiosRequest.get(
+        `/all-request` // fetch if user has blog
+      ); // fetch if user has blog
+      return res?.data;
+    }
+  });
+  useEffect(() => {
+    dispatch(setPendingCount(countData?.unapprovedCount));
+  }, [countData, dispatch]);
 
   /* Handle Logout */
 
