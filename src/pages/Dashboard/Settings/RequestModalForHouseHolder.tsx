@@ -105,7 +105,7 @@ const RequestModalForHouseHolder = (props: Props) => {
               ></textarea>
             </div>
             <small className="text-xs absolute right-3 bottom-px text-gray-400">
-              Word - {countWord}
+              Chars - {countWord}
             </small>
           </div>
           {/* End */}

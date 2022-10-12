@@ -110,7 +110,7 @@ const Settings = (props: Props) => {
                       If you want to get House Holder Account
                     </h3>
                     {isVerify ? (
-                      updatedUser.isHouseHolderReqSent ? (
+                      updatedUser?.isHouseHolderReqSent ? (
                         <label className="btn btn-warning rounded-full mt-4  sm:mt-0">
                           Already sent Wait for Accept
                         </label>
