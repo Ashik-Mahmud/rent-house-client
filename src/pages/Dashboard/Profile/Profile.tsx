@@ -142,7 +142,10 @@ const Profile = (props: Props) => {
               </div>
               <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
                 <span className="profile-details-item-label">Email</span>
-                <span className="profile-details-item-value font-bold">
+                <span
+                  className="profile-details-item-value font-bold  tooltip tooltip-info hover:tooltip-fade"
+                  data-tip="You can't change Email"
+                >
                   {data?.email || "No Available"}
                 </span>
               </div>
