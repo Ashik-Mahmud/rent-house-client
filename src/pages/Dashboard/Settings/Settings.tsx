@@ -73,7 +73,7 @@ const Settings = (props: Props) => {
           <h3 className="text-2xl font-bold mb-3">Settings</h3>
 
           <div className="settings-content">
-            {role !== "admin" && (
+            {role !== "admin" && role !== "manager" && (
               <>
                 {!isBlogAllowed && (
                   <div className="req-for-blog flex-col justify-center sm:justify-between sm:flex-row flex items-center my-8 bg-base-200 p-5 rounded-lg">

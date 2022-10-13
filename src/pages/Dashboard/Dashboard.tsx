@@ -188,6 +188,47 @@ const Dashboard = (props: Props) => {
     ];
   }
 
+  if (role === "manager") {
+    menuArray = [
+      {
+        id: 9,
+        title: "Dashboard",
+        icon: <BsGrid />,
+        link: "/dashboard",
+      },
+      {
+        id: 4,
+        title: "Houses",
+        icon: <BsHouse />,
+        link: "/dashboard/admin/houses",
+      },
+      {
+        id: 2,
+        title: "Messages",
+        icon: <BsMessenger />,
+        link: "/dashboard/messages",
+      },
+      {
+        id: 3,
+        title: "Request From Users",
+        icon: <BsReceipt />,
+        link: "/dashboard/request-from-users",
+      },
+      {
+        id: 5,
+        title: "Profile",
+        icon: <BiUser />,
+        link: "/dashboard/profile",
+      },
+      {
+        id: 6,
+        title: "Settings",
+        icon: <BsGear />,
+        link: "/dashboard/settings",
+      },
+    ];
+  }
+
   if (data?.blogAllowed) {
     menuArray.push({
       id: 12,
@@ -202,7 +243,7 @@ const Dashboard = (props: Props) => {
   const { data: countData } = useQuery(
     ["fetchUnapprovedData", user],
     async () => {
-      if (role === "admin") {
+      if (role === "admin" || role === "manager") {
         const res = await AxiosRequest.get(`/all-request`);
         return res?.data;
       }
