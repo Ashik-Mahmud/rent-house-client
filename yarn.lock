@@ -2245,6 +2245,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-modal-video@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@types/react-modal-video/-/react-modal-video-1.2.0.tgz#1c6ab0841820fee3a1501b3bdd4b3ef4f515a8af"
+  integrity sha512-k1EZIbSZI1U1rZ1y/TA2qRhGy2CsBRPI2FN98KLfYV14RIrKVFoNFz1AFGEP9oSmU1bH5a+QXH2+jCZI68XwVw==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-redux@^7.1.24":
   version "7.1.24"
   resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-7.1.24.tgz#6caaff1603aba17b27d20f8ad073e4c077e975c0"

@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import App from "./App";
 import store from "./app/store";
 import "./index.css";
+import "./utilities/modal-video.min.css";
 
 import "./utilities/App.css";
 const queryClient = new QueryClient();
