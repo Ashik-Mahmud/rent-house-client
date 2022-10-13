@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import { BiUserCheck } from "react-icons/bi";
 import swal from "sweetalert";
 import { AxiosUser } from "../../../api/Axios";
+import { useAppDispatch } from "../../../app/store";
+import { logout } from "../../../features/AuthSlice";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 
@@ -11,6 +13,7 @@ type Props = {};
 const DeleteVerificationModal = (props: Props) => {
   const { updatedUser } = useAuth<authUserInterface | null>({});
   const [isError, setIsError] = useState(false);
+  const dispatch = useAppDispatch();
 
   const { register, watch, handleSubmit } = useForm();
 
@@ -28,12 +31,11 @@ const DeleteVerificationModal = (props: Props) => {
         icon: "warning",
       }).then(async (value) => {
         if (value) {
+          await AxiosUser.delete(`/delete-account/${updatedUser?._id}`);
           swal("Successfully Deleted!");
-          const { data } = await AxiosUser.delete(
-            `/delete-account?email=${updatedUser?.email}`
-          );
 
-          console.log(data);
+          setTimeout(() => (window.location.href = "/login"), 1000);
+          dispatch(logout());
         }
       });
     }
