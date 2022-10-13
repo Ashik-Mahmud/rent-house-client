@@ -1,9 +1,9 @@
+import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { BiUserCheck } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
-import { AxiosUser } from "../../../api/Axios";
 import { useAppDispatch } from "../../../app/store";
 import { logout } from "../../../features/AuthSlice";
 import useAuth from "../../../hooks/useAuth";
@@ -12,7 +12,7 @@ import { authUserInterface } from "../../../interfaces/UserInterface";
 type Props = {};
 
 const DeleteVerificationModal = (props: Props) => {
-  const { updatedUser } = useAuth<authUserInterface | null>({});
+  const { updatedUser, user } = useAuth<authUserInterface | null>({});
   const [isError, setIsError] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -33,7 +33,15 @@ const DeleteVerificationModal = (props: Props) => {
         icon: "warning",
       }).then(async (value) => {
         if (value) {
-          await AxiosUser.delete(`/delete-account/${updatedUser?._id}`);
+          await axios.delete(
+            `http://localhost:5000/api/v1/users/delete-account/${updatedUser?._id}`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                authorization: `Bearer ${user?.token}`,
+              },
+            }
+          );
           swal(
             "Successfully Deleted! Bye It will redirect to the login page after 4s",
             { icon: "success" }
@@ -56,6 +64,11 @@ const DeleteVerificationModal = (props: Props) => {
       setIsError(false);
     } else {
       setIsError(true);
+    }
+    if (email.length === updatedUser?.email.length) {
+      if (!isMatch) {
+        swal("Oops!", "not matched!", "error");
+      }
     }
   });
 
