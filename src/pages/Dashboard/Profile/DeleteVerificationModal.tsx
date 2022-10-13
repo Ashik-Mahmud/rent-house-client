@@ -125,6 +125,30 @@ const DeleteVerificationModal = (props: Props) => {
               </div>
             </div>
             {/* End */}
+            {/* Name */}
+            <div className="name border  rounded p-3 relative mt-10 flex-1">
+              <div className="name-title absolute -top-4 bg-white border rounded p-1">
+                <h3 className="text-xs font-poppins">Accept</h3>
+              </div>
+              <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2 gap-3">
+                <div className="icon">
+                  <input
+                    type="checkbox"
+                    name="accept"
+                    id="accept"
+                    className="checkbox rounded-none checkbox-lg"
+                  />
+                </div>
+                <label
+                  htmlFor="accept"
+                  className="text-sm font-poppins text-gray-600"
+                >
+                  You Permanently lost all the information, such as house,
+                  reviews, blogs etc. Yeah I am sure Love To Delete.
+                </label>
+              </div>
+            </div>
+            {/* End */}
           </div>
           <div className="modal-action">
             <label
