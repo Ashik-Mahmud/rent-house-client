@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { BiBook } from "react-icons/bi";
 
 type Props = {};
 
@@ -30,7 +31,7 @@ const Hero = (props: Props) => {
     >
       <div className="hero-overlay bg-opacity-90"></div>
       <div className="hero-content text-center text-neutral-content">
-        <div className="sm:px-60">
+        <div className="sm:px-40">
           <h1 className="mb-5 text-4xl sm:text-5xl font-bold">
             Welcome To the <span className="text-success"> houseLagbe?</span>
           </h1>
@@ -41,7 +42,63 @@ const Hero = (props: Props) => {
             sale and rent. You can choose your dream house from our huge
             collection of houses and apartments.
           </p>
-          <button className="btn btn-primary mr-7">Find Houses</button>
+          <div className="filter-search flex items-center font-poppins justify-center w-full">
+            {/* address */}
+            <div className="name border  rounded rounded-r-none p-3 relative mt-10 flex-1 bg-white">
+              <div className="name-title absolute -top-4 bg-white text-black border rounded p-1">
+                <h3 className="text-xs font-poppins">Category</h3>
+              </div>
+              <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
+                <div className="icon">
+                  <BiBook />
+                </div>
+                <select className="outline-none  w-full pl-4 cursor-pointer text-sm text-black">
+                  <option value="General">General</option>
+                  <option value="Bungalow">Bungalow</option>
+                  <option value="Duplex">Duplex</option>
+                  <option value="Flat">Flat</option>
+                  <option value="Terrace">Terrace</option>
+                </select>
+              </div>
+            </div>
+            {/* End */}
+            {/* address */}
+            <div className="name border   p-3 relative mt-10 flex-1 bg-white">
+              <div className="name-title absolute -top-4 bg-white text-black border rounded p-1">
+                <h3 className="text-xs font-poppins">Type</h3>
+              </div>
+              <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2  bg-white">
+                <div className="icon">
+                  <BiBook />
+                </div>
+                <select className="form-control outline-none pl-4 w-full text-black">
+                  <option value="Rent">Rent</option>
+                  <option value="Sale">Sale</option>
+                </select>
+              </div>
+            </div>
+            <div className="name border  rounded rounded-r-none rounded-l-none p-3 relative mt-10 flex-1 bg-white">
+              <div className="name-title absolute -top-4 bg-white text-black border rounded p-1">
+                <h3 className="text-xs font-poppins">Address</h3>
+              </div>
+              <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2 bg-white">
+                <div className="icon">
+                  <BiBook />
+                </div>
+                <input
+                  type="text"
+                  className="form-control outline-none pl-4 w-full text-black"
+                  placeholder="Address"
+                />
+              </div>
+            </div>
+
+            <div className="flex items-start flex-col mt-10">
+              <button className="btn btn-primary mr-7  h-[94px] rounded-l-none">
+                Find Houses
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </section>

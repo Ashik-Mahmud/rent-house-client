@@ -4,6 +4,7 @@ import RequireAdmin from "./auth/RequireAdmin";
 import RequireAuth from "./auth/RequireAuth";
 import RequireBlog from "./auth/RequireBlog";
 import RequireCustomer from "./auth/RequireCustomer";
+import RequireSupAdmin from "./auth/RequireSupAdmin";
 import RequireUser from "./auth/RequireUser";
 import useAuth from "./hooks/useAuth";
 import { authUserInterface } from "./interfaces/UserInterface";
@@ -60,7 +61,7 @@ function App() {
 
   const location = useLocation();
   const sendDashboardForParticularRole = () => {
-    if (updatedUser?.role === "admin") {
+    if (updatedUser?.role === "admin" || updatedUser?.role === "manager") {
       return <AdminDashboard />;
     } else if (updatedUser?.role === "user") {
       return <HouseHolderDashboard />;
@@ -220,9 +221,9 @@ function App() {
           <Route
             path="users"
             element={
-              <RequireAdmin>
+              <RequireSupAdmin>
                 <Users />
-              </RequireAdmin>
+              </RequireSupAdmin>
             }
           />
           <Route

@@ -8,7 +8,7 @@ const UsersCharts = (props: Props) => {
     xaxis: {
       categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999],
     },
-    labels: ["Users", "Customers", "Admin"],
+    labels: ["Users", "Customers", "Admin", "Manager"],
   };
   /* const series = [
     {
@@ -17,7 +17,7 @@ const UsersCharts = (props: Props) => {
     },
   ]; */
 
-  const series = [44, 55, 41];
+  const series = [44, 55, 41, 15];
 
   return (
     <div className="bg-white">

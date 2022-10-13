@@ -122,6 +122,10 @@ export const authApi = createApi({
       }),
       invalidatesTags: ["GetUser"],
     }),
+    getAllUsers: builder.query({
+      query: () => "/admin/users",
+      providesTags: ["GetUser"],
+    }),
   }),
 });
 
@@ -136,4 +140,5 @@ export const {
   useChangePasswordWithoutOldPwdMutation,
   useGetAllUsersForAdminQuery,
   useDeleteUserForAdminMutation,
+  useGetAllUsersQuery,
 } = authApi;
