@@ -208,7 +208,7 @@ const Profile = (props: Props) => {
       </div>
 
       <ProfileModal refetch={refetch} />
-      <ImageChangeModal />
+      <ImageChangeModal refetch={refetch} />
     </>
   );
 };

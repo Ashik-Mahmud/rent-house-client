@@ -6,9 +6,11 @@ import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import { useChangeProfilePictureMutation } from "../../../services/AuthApi";
 
-type Props = {};
+type Props = {
+  refetch: () => void;
+};
 
-const ImageChangeModal = (props: Props) => {
+const ImageChangeModal = ({ refetch }: Props) => {
   const { updatedUser } = useAuth<authUserInterface | any>({});
   const [changeProfilePicture, { data, isSuccess, error }] =
     useChangeProfilePictureMutation();
@@ -23,6 +25,7 @@ const ImageChangeModal = (props: Props) => {
     formData.append("email", updatedUser?.email || "");
     await changeProfilePicture(formData);
     reset();
+    refetch();
   });
 
   watch((data, { name, type }) => {
