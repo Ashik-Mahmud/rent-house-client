@@ -20,13 +20,18 @@ const Messages = (props: Props) => {
   const registerUsers = data?.users?.users;
 
   /* email options */
-  const emailOptions = registerUsers?.map((user: any) => {
-    return { value: user.email, label: user.email };
+  const registerUsersEmail = registerUsers?.map((user: any) => {
+    return { value: user.email, label: user.email, role: user?.role };
   });
+
+  /* get user by filter in role */
+  let emailOptions = registerUsersEmail?.filter(
+    (email: any) => email?.role === roles
+  );
 
   /* roles option */
   const roleOptions = registerUsers?.map((user: any) => user.role);
-  console.log(roleOptions);
+  console.log(emailOptions);
 
   /* Handle Change Users */
   const handleChangeUser = (user: [] | any) => {
@@ -43,10 +48,8 @@ const Messages = (props: Props) => {
   watch(() => {
     const roles = watch("roles");
     setRoles(roles);
-    console.log(roles);
+    emailOptions = [];
   });
-
-  console.log(data);
 
   return (
     <div>
@@ -71,13 +74,17 @@ const Messages = (props: Props) => {
                   <BiUserCircle />
                 </div>
                 <select
-                  className="outline-none  w-full pl-4 cursor-pointer text-sm"
+                  className="outline-none  w-full pl-4 cursor-pointer text-sm  capitalize"
                   {...register("roles")}
                 >
                   <option value="">Select Role</option>
                   <option value="all">All Register Users</option>
-                  <option value="user">House Holder</option>
-                  <option value="customer">Customers</option>
+
+                  {roleOptions?.map((role: string, index: number) => (
+                    <option key={index} value={role}>
+                      {role === "user" ? "House Holder" : role}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
