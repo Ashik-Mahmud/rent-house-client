@@ -1,7 +1,7 @@
+import axios from "axios";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import Cookies from "universal-cookie";
-import { AxiosUser } from "../api/Axios";
 
 type Props = {};
 
@@ -14,10 +14,17 @@ const useAuth = <T,>(props: Props) => {
     data: newData,
     isLoading,
     refetch,
-  } = useQuery("userInit", async () => {
+  } = useQuery(["userInit", newUser], async () => {
     if (newUser) {
-      const res = await AxiosUser.get(`/me/${newUser?.user._id}`);
-      return res.data?.data;
+      const res = await axios.get(
+        `http://localhost:5000/api/v1/users/me/${newUser?.user?._id}`,
+        {
+          headers: {
+            authorization: `Bearer ${newUser?.token}`,
+          },
+        }
+      );
+      return res?.data?.data;
     }
   });
 

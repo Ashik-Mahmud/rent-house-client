@@ -199,14 +199,16 @@ const Dashboard = (props: Props) => {
 
   /* Try to fetch blog using UseQuery */
 
-  const { data: countData } = useQuery("fetchUnapprovedData", async () => {
-    if (role === "admin") {
-      const res = await AxiosRequest.get(
-        `/all-request` // fetch if user has blog
-      ); // fetch if user has blog
-      return res?.data;
+  const { data: countData } = useQuery(
+    ["fetchUnapprovedData", user],
+    async () => {
+      if (role === "admin") {
+        const res = await AxiosRequest.get(`/all-request`);
+        return res?.data;
+      }
     }
-  });
+  );
+
   useEffect(() => {
     dispatch(setPendingCount(countData?.unapprovedCount));
   }, [countData, dispatch]);
