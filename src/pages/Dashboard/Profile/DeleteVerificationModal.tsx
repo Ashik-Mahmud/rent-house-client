@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { BiUserCheck } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import { AxiosUser } from "../../../api/Axios";
 import { useAppDispatch } from "../../../app/store";
@@ -14,6 +15,7 @@ const DeleteVerificationModal = (props: Props) => {
   const { updatedUser } = useAuth<authUserInterface | null>({});
   const [isError, setIsError] = useState(false);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const { register, watch, handleSubmit } = useForm();
 
@@ -32,10 +34,14 @@ const DeleteVerificationModal = (props: Props) => {
       }).then(async (value) => {
         if (value) {
           await AxiosUser.delete(`/delete-account/${updatedUser?._id}`);
-          swal("Successfully Deleted!");
-
-          setTimeout(() => (window.location.href = "/login"), 1000);
-          dispatch(logout());
+          swal(
+            "Successfully Deleted! Bye It will redirect to the login page after 4s",
+            { icon: "success" }
+          );
+          setTimeout(() => {
+            navigate("/login");
+            dispatch(logout());
+          }, 4000);
         }
       });
     }
