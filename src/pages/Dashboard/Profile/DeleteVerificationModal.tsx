@@ -27,6 +27,9 @@ const DeleteVerificationModal = (props: Props) => {
     } else if (data?.email !== updatedUser?.email) {
       await swal("You are unauthorized person to delete your account");
       return;
+    } else if (!data?.accept) {
+      await swal("You must be accept our Term and Condition to delete.");
+      return;
     } else {
       await swal("Are you sure to delete account permanently?", {
         buttons: ["No,keep it", "Yes, delete it!"],
@@ -134,9 +137,9 @@ const DeleteVerificationModal = (props: Props) => {
                 <div className="icon">
                   <input
                     type="checkbox"
-                    name="accept"
                     id="accept"
                     className="checkbox rounded-none checkbox-lg"
+                    {...register("accept")}
                   />
                 </div>
                 <label
