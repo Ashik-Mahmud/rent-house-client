@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { BiUserCheck } from "react-icons/bi";
 import swal from "sweetalert";
+import { AxiosUser } from "../../../api/Axios";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 
@@ -28,6 +29,10 @@ const DeleteVerificationModal = (props: Props) => {
       }).then(async (value) => {
         if (value) {
           swal("Successfully Deleted!");
+          const { data } = await AxiosUser.delete(
+            `/delete-account?email=${updatedUser?.email}`
+          );
+
           console.log(data);
         }
       });
