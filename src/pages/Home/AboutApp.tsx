@@ -6,7 +6,7 @@ type Props = {};
 const AboutApp = (props: Props) => {
   const [isModal, setIsModal] = useState<boolean>(false);
   return (
-    <div>
+    <div className="bg-white mt-5">
       <ModalVideo
         channel="youtube"
         isOpen={isModal}
@@ -14,10 +14,7 @@ const AboutApp = (props: Props) => {
         onClose={() => setIsModal(false)}
       />
       <div className="container mx-auto">
-        <h1 className="text-4xl font-semibold mb-4 text-center font-open m-16 ipad:m-20">
-          About App
-        </h1>
-        <div className="flex items-center justify-evenly">
+        <div className="flex items-center justify-evenly py-10">
           <div className="max-w-2xl">
             <h3 className="text-xl">Yah! That's all</h3>
             <h2 className="text-4xl font-bold my-3">About Us</h2>

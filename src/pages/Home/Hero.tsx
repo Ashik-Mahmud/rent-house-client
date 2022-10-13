@@ -44,7 +44,7 @@ const Hero = (props: Props) => {
           </p>
           <div className="filter-search flex items-center font-poppins justify-center w-full">
             {/* address */}
-            <div className="name border  rounded p-3 relative mt-10 flex-1 bg-white">
+            <div className="name border  rounded rounded-r-none p-3 relative mt-10 flex-1 bg-white">
               <div className="name-title absolute -top-4 bg-white text-black border rounded p-1">
                 <h3 className="text-xs font-poppins">Category</h3>
               </div>
@@ -63,7 +63,7 @@ const Hero = (props: Props) => {
             </div>
             {/* End */}
             {/* address */}
-            <div className="name border  rounded p-3 relative mt-10 flex-1 bg-white">
+            <div className="name border   p-3 relative mt-10 flex-1 bg-white">
               <div className="name-title absolute -top-4 bg-white text-black border rounded p-1">
                 <h3 className="text-xs font-poppins">Type</h3>
               </div>
