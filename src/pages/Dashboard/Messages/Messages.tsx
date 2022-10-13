@@ -1,41 +1,53 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { BiSend, BiUserCircle } from "react-icons/bi";
 import Select from "react-select";
+import { useGetAllUsersQuery } from "../../../services/AuthApi";
 import MessageBoxEditor from "./MessageBoxEditor";
 
 type Props = {};
 
 const Messages = (props: Props) => {
-  const colorOptions = [
-    {
-      value: "ashikmahmud@gmail.com",
-      label: "ashikmahmud@gmail.com",
-    },
-    {
-      value: "abirmahmud@gmail.com",
-      label: "abirmahmud@gmail.com",
-    },
-    {
-      value: "team.sixavengers@gmail.com",
-      label: "team.sixavengers@gmail.com",
-    },
-    {
-      value: "gofur@gmail.com",
-      label: "gofur@gmail.com",
-    },
-  ];
-
+  const { data } = useGetAllUsersQuery({} as any);
   const [roles, setRoles] = useState<String>("");
   const [userType, setUserType] = useState<String>("");
   const [messageVal, setMessageVal] = useState<String>("");
   const [specificUsers, setSpecificUsers] = useState([]);
 
+  /* form handle hook */
+  const { handleSubmit, register, watch } = useForm();
+
+  const registerUsers = data?.users?.users;
+
+  /* email options */
+  const emailOptions = registerUsers?.map((user: any) => {
+    return { value: user.email, label: user.email };
+  });
+
+  /* roles option */
+  const roleOptions = registerUsers?.map((user: any) => user.role);
+  console.log(roleOptions);
+
   /* Handle Change Users */
   const handleChangeUser = (user: [] | any) => {
     setSpecificUsers(user);
   };
-
   console.log(messageVal, specificUsers);
+
+  /* Handle Send Message to Users */
+  const handleSendMessageFromAdmin = handleSubmit(async (data) => {
+    console.log(data);
+  });
+
+  /* Onchange for roles */
+  watch(() => {
+    const roles = watch("roles");
+    setRoles(roles);
+    console.log(roles);
+  });
+
+  console.log(data);
+
   return (
     <div>
       <div className="p-5 my-4 bg-white font-poppins">
@@ -46,7 +58,7 @@ const Messages = (props: Props) => {
           <small className="badge badge-success text-xs">admin</small>
         </div>
         <div className="message-content pb-10">
-          <form action="">
+          <form action="" onSubmit={handleSendMessageFromAdmin}>
             {/* Whom want sent mail */}
             <div className="name border  rounded p-3 pb-1 relative mt-10 flex-1">
               <div className="name-title absolute -top-4 bg-white border rounded p-1">
@@ -60,7 +72,7 @@ const Messages = (props: Props) => {
                 </div>
                 <select
                   className="outline-none  w-full pl-4 cursor-pointer text-sm"
-                  onChange={(e) => setRoles(e.target.value)}
+                  {...register("roles")}
                 >
                   <option value="">Select Role</option>
                   <option value="all">All Register Users</option>
@@ -115,10 +127,10 @@ const Messages = (props: Props) => {
                   </div>
 
                   <Select
-                    defaultValue={[colorOptions[2], colorOptions[3]]}
+                    defaultValue={[emailOptions[2], emailOptions[3]]}
                     isMulti
                     name="colors"
-                    options={colorOptions}
+                    options={emailOptions}
                     className="form-control outline-none pl-4 w-full"
                     classNamePrefix="select"
                     onChange={handleChangeUser}
