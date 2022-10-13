@@ -160,6 +160,7 @@ const UserRow = ({ data, ind, refetch }: Props) => {
               <option value="customer">Customer</option>
               <option value="user">User - House Holder</option>
               <option value="admin">Admin</option>
+              <option value="manager">Manager</option>
             </select>
             <div className=" select-none flex items-center gap-1">
               <span

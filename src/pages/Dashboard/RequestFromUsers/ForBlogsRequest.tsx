@@ -21,8 +21,8 @@ const ForBlogsRequest = (props: Props) => {
   /* Try to fetch blog using UseQuery */
   const { data, refetch, isLoading } = useQuery("fetchBlog", async () => {
     const res = await AxiosRequest.get(
-      `/all-request?page=${currentPage}&limit=${limit}&role=blog` // fetch if user has blog
-    ); // fetch if user has blog
+      `/all-request?page=${currentPage}&limit=${limit}&role=blog`
+    );
     return res?.data;
   });
 
@@ -38,7 +38,7 @@ const ForBlogsRequest = (props: Props) => {
     setLimit(limit);
     dispatch(setRequestBlogCount(data?.count));
     dispatch(setPendingCount(data?.unapprovedCount));
-  }, [limit, currentPage, data, dispatch]);
+  }, [limit, currentPage, data, dispatch, refetch]);
 
   return (
     <>

@@ -1,3 +1,4 @@
+import AboutApp from "./AboutApp";
 import BestHouses from "./BestHouse/BestHouses";
 import CallToAction from "./CallToAction";
 import CreateAccountSec from "./CreateAccountSec";
@@ -15,6 +16,7 @@ const Home = (props: Props) => {
       <Statistic />
       <BestHouses />
       <WhyUs />
+      <AboutApp />
       <PublicReviews />
       <CreateAccountSec />
       <CallToAction />

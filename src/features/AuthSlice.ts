@@ -38,6 +38,10 @@ const AuthSlice = createSlice({
       state.isAuthenticated = true;
       cookies.set("user", state, { path: "/" });
     },
+    getCookieData: (state: authUserInterface) => {
+      const cookieData = cookies.get("user");
+      console.log(cookieData);
+    },
     logout: (state: authUserInterface) => {
       state.user = undefined;
       state.token = undefined;

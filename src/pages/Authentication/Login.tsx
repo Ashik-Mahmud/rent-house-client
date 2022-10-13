@@ -10,6 +10,7 @@ import { useLoginAuthMutation } from "../../services/AuthApi";
 type Props = {};
 
 const Login = (props: Props) => {
+  //   const { refetch } = useAuth<authUserInterface | any>({});
   /* From AuthAPI */
   const [loginAuth, { data, isLoading, isSuccess, error }] =
     useLoginAuthMutation();
