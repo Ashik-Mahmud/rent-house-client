@@ -60,7 +60,7 @@ const Header = (props: Props) => {
         </li>
       )}
       {!user?.isAuthenticated && (
-        <Link className="btn btn-md btn-success sm:ml-10 " to={"/login"}>
+        <Link className="btn btn-success sm:ml-10 btn-sm mt-2" to={"/login"}>
           Login
         </Link>
       )}

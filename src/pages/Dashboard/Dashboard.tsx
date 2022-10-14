@@ -320,7 +320,9 @@ const Dashboard = (props: Props) => {
                 </div>
                 {!pathname.includes("/dashboard/houses/add") && (
                   <>
-                    {role !== "customer" && role !== "admin" ? (
+                    {role !== "customer" &&
+                    role !== "admin" &&
+                    role !== "manager" ? (
                       <>
                         <Link
                           to="/dashboard/houses/add"
