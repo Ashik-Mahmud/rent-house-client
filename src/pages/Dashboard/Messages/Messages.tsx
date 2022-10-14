@@ -95,18 +95,16 @@ const Messages = (props: Props) => {
       setUserEmails((state) => state);
     }
     if (userType === "specific") {
-      console.log(userType);
       setUserEmails(specificUsers);
     }
   }, [userType, specificUsers, registerUsersEmail, roles, watch]);
-
+  console.log(userEmails, "EMAIL SEND");
   /* Handle Send Message to Users */
   const handleSendMessageFromAdmin = handleSubmit(async (data) => {
     if (!data?.roles) return cogoToast.warn("Please Select The Role!");
     if (data?.roles === "all") {
       setUserType("all");
     }
-
     if (!userType) return cogoToast.warn("Please Select User Type");
     if (!data?.subject) return cogoToast.warn("Please Write Topic/Subject !");
     if (!messageVal) return cogoToast.warn("Please write a messages!");
@@ -115,12 +113,19 @@ const Messages = (props: Props) => {
       subject: data?.subject,
       content: messageVal,
       userEmails,
-      userType: userType,
-      roles: roles,
     };
-    console.log(sendMessageContent);
+
+    /* Send Message */
+    const { data: mailedData } = await axios.post(
+      "http://localhost:5000/api/v1/admin/emails/send",
+      {
+        ...sendMessageContent,
+        headers: { Authorization: `Bearer ${user?.token}` },
+      }
+    );
+
+    console.log(sendMessageContent, mailedData, "hmm");
   });
-  console.log(isChangedRoles, specificUsers, userEmails);
 
   return (
     <div>
