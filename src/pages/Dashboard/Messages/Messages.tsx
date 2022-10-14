@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { BiSend, BiUserCircle } from "react-icons/bi";
 import { useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import swal from "sweetalert";
 import useAuth from "../../../hooks/useAuth";
@@ -29,6 +30,7 @@ const Messages = (props: Props) => {
   const [userType, setUserType] = useState<String>("");
   const [messageVal, setMessageVal] = useState<String>("");
   const [specificUsers, setSpecificUsers] = useState([]);
+  const navigate = useNavigate();
 
   /* form handle hook */
   const { handleSubmit, register, watch, reset } = useForm();
@@ -122,6 +124,7 @@ const Messages = (props: Props) => {
     );
     await swal("Success!", mailedData?.message, "success");
     reset();
+    navigate(`/dashboard/messages/`, { replace: true });
   });
 
   return (
