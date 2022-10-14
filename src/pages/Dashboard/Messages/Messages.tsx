@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { BiSend, BiUserCircle } from "react-icons/bi";
 import { useQuery } from "react-query";
 import Select from "react-select";
+import swal from "sweetalert";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import MessageBoxEditor from "./MessageBoxEditor";
@@ -28,10 +29,9 @@ const Messages = (props: Props) => {
   const [userType, setUserType] = useState<String>("");
   const [messageVal, setMessageVal] = useState<String>("");
   const [specificUsers, setSpecificUsers] = useState([]);
-  const [isChangedRoles, setIsChangedRole] = useState<boolean>(false);
 
   /* form handle hook */
-  const { handleSubmit, register, watch } = useForm();
+  const { handleSubmit, register, watch, reset } = useForm();
 
   const registerUsers = data?.users?.users;
 
@@ -63,9 +63,6 @@ const Messages = (props: Props) => {
     watch(() => {
       const roles = watch("roles");
       setRoles(roles);
-      if (roles) {
-        setIsChangedRole(true);
-      }
 
       if (roles === "admin") {
         setUserEmails(() =>
@@ -98,7 +95,7 @@ const Messages = (props: Props) => {
       setUserEmails(specificUsers);
     }
   }, [userType, specificUsers, registerUsersEmail, roles, watch]);
-  console.log(userEmails, "EMAIL SEND");
+
   /* Handle Send Message to Users */
   const handleSendMessageFromAdmin = handleSubmit(async (data) => {
     if (!data?.roles) return cogoToast.warn("Please Select The Role!");
@@ -112,19 +109,19 @@ const Messages = (props: Props) => {
     const sendMessageContent = {
       subject: data?.subject,
       content: messageVal,
-      userEmails,
+      userEmails: userEmails?.map((user: any) => user.value).join(","),
     };
 
     /* Send Message */
     const { data: mailedData } = await axios.post(
-      "http://localhost:5000/api/v1/admin/emails/send",
+      `http://localhost:5000/api/v1/admin/emails/send`,
+      { ...sendMessageContent },
       {
-        ...sendMessageContent,
         headers: { Authorization: `Bearer ${user?.token}` },
       }
     );
-
-    console.log(sendMessageContent, mailedData, "hmm");
+    await swal("Success!", mailedData?.message, "success");
+    reset();
   });
 
   return (
