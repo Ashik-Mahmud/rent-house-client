@@ -62,3 +62,28 @@ export const stateOptions = [
   { value: "WI", label: "Wisconsin" },
   { value: "WY", label: "Wyoming" },
 ];
+
+export const themeOptions = [
+  { value: "light", label: "light" },
+  { value: "dark", label: "dark" },
+  { value: "cupcake", label: "cupcake" },
+  { value: "bumblebee", label: "bumblebee" },
+  { value: "corporate", label: "corporate" },
+  { value: "synthwave", label: "synthwave" },
+  { value: "retro", label: "retro" },
+  { value: "cyberpunk", label: "cyberpunk" },
+  { value: "valentine", label: "valentine" },
+  { value: "halloween", label: "halloween" },
+  { value: "garden", label: "garden" },
+  { value: "luxury", label: "luxury" },
+  { value: "forest", label: "forest" },
+  { value: "night", label: "night" },
+  { value: "lemonade", label: "lemonade" },
+  { value: "acid", label: "acid" },
+  { value: "business", label: "business" },
+  { value: "coffee", label: "coffee" },
+  { value: "winter", label: "winter" },
+  { value: "lofi", label: "lofi" },
+  { value: "pastel", label: "pastel" },
+  { value: "dracula", label: "dracula" },
+];
