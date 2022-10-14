@@ -7,7 +7,7 @@ import {
 } from "react-device-detect";
 import toast from "react-hot-toast";
 import { AiOutlineUser } from "react-icons/ai";
-import { BiGitPullRequest, BiPlus, BiUser } from "react-icons/bi";
+import { BiGitPullRequest, BiLogOut, BiPlus, BiUser } from "react-icons/bi";
 import {
   BsBookFill,
   BsCardChecklist,
@@ -386,14 +386,27 @@ const Dashboard = (props: Props) => {
           <div className="drawer-side">
             <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
             <ul className="menu p-4 overflow-y-auto w-80 bg-[#081A51] text-base-content ">
-              <div className="logo text-center">
-                <Link
-                  to="/"
-                  className="text-3xl font-poppins my-5 block text-success font-bold"
-                >
-                  houseLagbe?
+              <div className="logo text-center mt-3">
+                <Link to="/dashboard/profile" className="avatar mb-2">
+                  <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                    <img src="https://placeimg.com/192/192/people" alt="/" />
+                  </div>
                 </Link>
-                <button className="btn btn-warning btn-xs mb-5">Logout</button>
+                <div className="info">
+                  <Link
+                    to="/dashboard/profile"
+                    className="text-lg text-base-200"
+                  >
+                    Ashik mahmud
+                  </Link>
+                  <small className="text-gray-400 mb-3 block">Admin</small>
+                </div>
+                <button
+                  className="btn  btn-warning btn-circle btn-sm mb-5 absolute right-2 top-3 text-xl "
+                  title="Logout"
+                >
+                  <BiLogOut />
+                </button>
               </div>
               {/*  <!-- Sidebar content here --> */}
               {menuArray.map((item) => (
