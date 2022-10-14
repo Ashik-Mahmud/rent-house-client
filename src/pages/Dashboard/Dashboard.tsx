@@ -389,7 +389,15 @@ const Dashboard = (props: Props) => {
               <div className="logo text-center mt-3">
                 <Link to="/dashboard/profile" className="avatar mb-2">
                   <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                    <img src="https://placeimg.com/192/192/people" alt="/" />
+                    <img
+                      src={
+                        data?.profileImage
+                          ? "http://localhost:5000/profiles/" +
+                            data?.profileImage
+                          : user?.user?.avatar
+                      }
+                      alt={data?.name}
+                    />
                   </div>
                 </Link>
                 <div className="info">
@@ -397,12 +405,14 @@ const Dashboard = (props: Props) => {
                     to="/dashboard/profile"
                     className="text-lg text-base-200"
                   >
-                    Ashik mahmud
+                    {data?.name}
                   </Link>
-                  <small className="text-gray-400 mb-3 block">Admin</small>
+                  <small className="text-gray-400 mb-3 block capitalize">
+                    {data?.role === "user" ? "House Holder" : data?.role}
+                  </small>
                 </div>
                 <button
-                  className="btn  btn-warning btn-circle btn-sm mb-5 absolute right-2 top-3 text-xl "
+                  className="btn  btn-warning btn-circle btn-sm mb-5 absolute right-4 top-3 text-xl "
                   title="Logout"
                 >
                   <BiLogOut />
