@@ -297,10 +297,16 @@ const Dashboard = (props: Props) => {
                 </label>
                 <span className="text-xl sm:text-2xl font-bold font-poppins px-3">
                   <MobileView>
-                    Welcome to <span className="text-success">houseLagbe?</span>
+                    Welcome to{" "}
+                    <Link to="/" className="text-success">
+                      houseLagbe?
+                    </Link>
                   </MobileView>
                   <BrowserView>
-                    Welcome to <span className="text-success">houseLagbe?</span>{" "}
+                    Welcome to{" "}
+                    <Link to="/" className="text-success">
+                      houseLagbe?
+                    </Link>{" "}
                     <span className="capitalize">
                       {data?.role === "user" ? "House Holder" : data?.role}
                     </span>{" "}

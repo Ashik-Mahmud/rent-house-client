@@ -19,7 +19,7 @@ const AdminHouses = (props: Props) => {
                 pathname.includes("unapproved") ||
                 pathname === "/dashboard/admin/houses"
                   ? "bg-success"
-                  : "bg-base-300"
+                  : "bg-gray-50"
               } border-r`}
             >
               Unapproved Houses <div className="badge badge-ghost">5</div>
@@ -29,7 +29,7 @@ const AdminHouses = (props: Props) => {
               className={`p-4 text-lg font-poppins rounded-none ${
                 pathname.includes("houses/approved")
                   ? "bg-success"
-                  : "bg-base-300"
+                  : "bg-gray-50"
               } border-r`}
             >
               Approved Houses <div className="badge badge-ghost">10</div>
@@ -37,7 +37,7 @@ const AdminHouses = (props: Props) => {
             <Link
               to="/dashboard/admin/houses/rejected"
               className={`p-4 text-lg font-poppins rounded-none ${
-                pathname.includes("rejected") ? "bg-success" : "bg-base-300"
+                pathname.includes("rejected") ? "bg-success" : "bg-gray-50"
               }  border-r`}
             >
               Reject Houses <div className="badge badge-ghost">2</div>

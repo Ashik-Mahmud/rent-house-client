@@ -3,11 +3,13 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { BiLockAlt } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import Select from "react-select";
 import { useAppDispatch } from "../../../app/store";
 import { logout } from "../../../features/AuthSlice";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import { useChangePasswordMutation } from "../../../services/AuthApi";
+import { stateOptions } from "../../../utilities/data";
 import RequestModalForHouseHolder from "./RequestModalForHouseHolder";
 import VerifyBlogModal from "./VerifyBlogModal";
 
@@ -134,6 +136,25 @@ const Settings = (props: Props) => {
                 )}
               </>
             )}
+
+            <div className="flex items-center justify-between py-6 rounded my-4 bg-gray-50 px-5">
+              <h2 className="text-xl font-bold">Change Language</h2>
+              <div className="flex items-center gap-3">
+                <Select options={stateOptions} className="w-60" />
+              </div>
+            </div>
+            <div className="flex items-center justify-between py-6 rounded my-4 bg-gray-50 px-5">
+              <h2 className="text-xl font-bold">Change Theme</h2>
+              <div className="flex items-center gap-3">
+                <input
+                  type="color"
+                  name="color"
+                  id="color"
+                  className="input w-28"
+                />
+                <span>#344334</span>
+              </div>
+            </div>
 
             <div className="password-change-field bg-gray-50 p-8 rounded">
               <h3 className="text-2xl font-bold mb-6">Change Password</h3>
