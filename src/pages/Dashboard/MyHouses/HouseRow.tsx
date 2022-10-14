@@ -28,8 +28,11 @@ const HouseRow = ({ approved, house, index }: Props) => {
       <td className="py-3">
         <div
           className={`badge badge-${
-            house.status === "approved" ? "success" : "warning"
+            house.status === "approved"
+              ? "success"
+              : "warning tooltip tooltip-warning"
           } text-xs `}
+          data-tip="Waiting for Admin Approval"
         >
           {house.status}
         </div>

@@ -7,7 +7,7 @@ import {
 } from "react-device-detect";
 import toast from "react-hot-toast";
 import { AiOutlineUser } from "react-icons/ai";
-import { BiGitPullRequest, BiPlus, BiUser } from "react-icons/bi";
+import { BiGitPullRequest, BiLogOut, BiPlus, BiUser } from "react-icons/bi";
 import {
   BsBookFill,
   BsCardChecklist,
@@ -297,10 +297,16 @@ const Dashboard = (props: Props) => {
                 </label>
                 <span className="text-xl sm:text-2xl font-bold font-poppins px-3">
                   <MobileView>
-                    Welcome to <span className="text-success">houseLagbe?</span>
+                    Welcome to{" "}
+                    <Link to="/" className="text-success">
+                      houseLagbe?
+                    </Link>
                   </MobileView>
                   <BrowserView>
-                    Welcome to <span className="text-success">houseLagbe?</span>{" "}
+                    Welcome to{" "}
+                    <Link to="/" className="text-success">
+                      houseLagbe?
+                    </Link>{" "}
                     <span className="capitalize">
                       {data?.role === "user" ? "House Holder" : data?.role}
                     </span>{" "}
@@ -320,7 +326,9 @@ const Dashboard = (props: Props) => {
                 </div>
                 {!pathname.includes("/dashboard/houses/add") && (
                   <>
-                    {role !== "customer" && role !== "admin" ? (
+                    {role !== "customer" &&
+                    role !== "admin" &&
+                    role !== "manager" ? (
                       <>
                         <Link
                           to="/dashboard/houses/add"
@@ -384,14 +392,37 @@ const Dashboard = (props: Props) => {
           <div className="drawer-side">
             <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
             <ul className="menu p-4 overflow-y-auto w-80 bg-[#081A51] text-base-content ">
-              <div className="logo text-center">
-                <Link
-                  to="/"
-                  className="text-3xl font-poppins my-5 block text-success font-bold"
-                >
-                  houseLagbe?
+              <div className="logo text-center mt-3">
+                <Link to="/dashboard/profile" className="avatar mb-2">
+                  <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                    <img
+                      src={
+                        data?.profileImage
+                          ? "http://localhost:5000/profiles/" +
+                            data?.profileImage
+                          : user?.user?.avatar
+                      }
+                      alt={data?.name}
+                    />
+                  </div>
                 </Link>
-                <button className="btn btn-warning btn-xs mb-5">Logout</button>
+                <div className="info">
+                  <Link
+                    to="/dashboard/profile"
+                    className="text-lg text-base-200"
+                  >
+                    {data?.name}
+                  </Link>
+                  <small className="text-gray-400 mb-3 block capitalize">
+                    {data?.role === "user" ? "House Holder" : data?.role}
+                  </small>
+                </div>
+                <button
+                  className="btn  btn-warning btn-circle btn-sm mb-5 absolute right-4 top-3 text-xl "
+                  title="Logout"
+                >
+                  <BiLogOut />
+                </button>
               </div>
               {/*  <!-- Sidebar content here --> */}
               {menuArray.map((item) => (

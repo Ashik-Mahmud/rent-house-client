@@ -60,7 +60,7 @@ const Header = (props: Props) => {
         </li>
       )}
       {!user?.isAuthenticated && (
-        <Link className="btn btn-md btn-success sm:ml-10 " to={"/login"}>
+        <Link className="btn btn-success sm:ml-10 btn-sm mt-2" to={"/login"}>
           Login
         </Link>
       )}
@@ -68,7 +68,7 @@ const Header = (props: Props) => {
   );
 
   return (
-    <header className="bg-base-200 py-3 uppercase shadow-lg">
+    <header className="bg-base-100 py-3 uppercase shadow-lg">
       <div className="navbar container mx-auto">
         <div className="navbar-start">
           <div className="dropdown">

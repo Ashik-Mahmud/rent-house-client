@@ -10,6 +10,7 @@ import { BiCamera, BiEdit } from "react-icons/bi";
 import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
+import DeleteVerificationModal from "./DeleteVerificationModal";
 import ImageChangeModal from "./ImageChangeModal";
 import ProfileModal from "./ProfileModal";
 type Props = {};
@@ -141,7 +142,10 @@ const Profile = (props: Props) => {
               </div>
               <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
                 <span className="profile-details-item-label">Email</span>
-                <span className="profile-details-item-value font-bold">
+                <span
+                  className="profile-details-item-value font-bold  tooltip tooltip-info hover:tooltip-fade"
+                  data-tip="You can't change Email"
+                >
                   {data?.email || "No Available"}
                 </span>
               </div>
@@ -202,6 +206,17 @@ const Profile = (props: Props) => {
                   </span>
                 </span>
               </div>
+              <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
+                <span className="profile-details-item-label">Action</span>
+                <span className="profile-details-item-value font-bold">
+                  <label
+                    htmlFor="verify-account-delete-modal"
+                    className="badge badge-error cursor-pointer"
+                  >
+                    Delete Account
+                  </label>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -209,6 +224,7 @@ const Profile = (props: Props) => {
 
       <ProfileModal refetch={refetch} />
       <ImageChangeModal refetch={refetch} />
+      <DeleteVerificationModal />
     </>
   );
 };

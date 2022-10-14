@@ -70,7 +70,7 @@ function App() {
     }
   };
   return (
-    <div className="App font-open font-medium bg-cover bg-center bg-[#F5F6FA]">
+    <div className="App font-open font-medium bg-cover bg-center bg-base-100">
       {!location.pathname.includes("dashboard") && <Header />}
       <Routes>
         {/* Pages Routes */}

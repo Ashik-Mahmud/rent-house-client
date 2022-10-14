@@ -1,52 +1,131 @@
-import { useState } from "react";
+import axios from "axios";
+import cogoToast from "cogo-toast";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { BiSend, BiUserCircle } from "react-icons/bi";
+import { useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
 import Select from "react-select";
-import { useGetAllUsersQuery } from "../../../services/AuthApi";
+import swal from "sweetalert";
+import useAuth from "../../../hooks/useAuth";
+import { authUserInterface } from "../../../interfaces/UserInterface";
 import MessageBoxEditor from "./MessageBoxEditor";
 
 type Props = {};
 
 const Messages = (props: Props) => {
-  const { data } = useGetAllUsersQuery({} as any);
+  //   const { data } = useGetAllUsersQuery({} as any);
+  const { user } = useAuth<authUserInterface | any>({});
+  const { data } = useQuery(
+    "users-with-profiles",
+    async () =>
+      await axios
+        .get("http://localhost:5000/api/v1/admin/users", {
+          headers: { Authorization: `Bearer ${user?.token}` },
+        })
+        .then((res) => res.data)
+  );
+
   const [roles, setRoles] = useState<String>("");
   const [userType, setUserType] = useState<String>("");
   const [messageVal, setMessageVal] = useState<String>("");
   const [specificUsers, setSpecificUsers] = useState([]);
+  const navigate = useNavigate();
 
   /* form handle hook */
-  const { handleSubmit, register, watch } = useForm();
+  const { handleSubmit, register, watch, reset } = useForm();
 
   const registerUsers = data?.users?.users;
 
   /* email options */
-  const emailOptions = registerUsers?.map((user: any) => {
-    return { value: user.email, label: user.email };
+  const registerUsersEmail = registerUsers?.map((user: any) => {
+    return { value: user.email, label: user.email, role: user?.role };
   });
 
+  /* get user by filter in role */
+  let emailOptions = registerUsersEmail?.filter(
+    (email: any) => email?.role === roles
+  );
+
   /* roles option */
-  const roleOptions = registerUsers?.map((user: any) => user.role);
-  console.log(roleOptions);
+  const roleOptions = registerUsers
+    ?.map((user: any) => user.role)
+    .filter((v: string, i: number, a: string[]) => a.indexOf(v) === i);
 
   /* Handle Change Users */
   const handleChangeUser = (user: [] | any) => {
     setSpecificUsers(user);
   };
-  console.log(messageVal, specificUsers);
+
+  /* Onchange for roles */
+
+  const [userEmails, setUserEmails] = useState([]);
+
+  useEffect(() => {
+    watch(() => {
+      const roles = watch("roles");
+      setRoles(roles);
+
+      if (roles === "admin") {
+        setUserEmails(() =>
+          registerUsersEmail?.filter((user: any) => user?.role === roles)
+        );
+      }
+      if (roles === "manager") {
+        setUserEmails(() =>
+          registerUsersEmail?.filter((user: any) => user?.role === roles)
+        );
+      }
+      if (roles === "user") {
+        setUserEmails(() =>
+          registerUsersEmail?.filter((user: any) => user?.role === roles)
+        );
+      }
+      if (roles === "customer") {
+        setUserEmails(() =>
+          registerUsersEmail?.filter((user: any) => user?.role === roles)
+        );
+      }
+      if (roles === "all") {
+        setUserEmails(registerUsersEmail);
+      }
+    });
+    if (userType === "all") {
+      setUserEmails((state) => state);
+    }
+    if (userType === "specific") {
+      setUserEmails(specificUsers);
+    }
+  }, [userType, specificUsers, registerUsersEmail, roles, watch]);
 
   /* Handle Send Message to Users */
   const handleSendMessageFromAdmin = handleSubmit(async (data) => {
-    console.log(data);
-  });
+    if (!data?.roles) return cogoToast.warn("Please Select The Role!");
+    if (data?.roles === "all") {
+      setUserType("all");
+    }
+    if (!userType) return cogoToast.warn("Please Select User Type");
+    if (!data?.subject) return cogoToast.warn("Please Write Topic/Subject !");
+    if (!messageVal) return cogoToast.warn("Please write a messages!");
 
-  /* Onchange for roles */
-  watch(() => {
-    const roles = watch("roles");
-    setRoles(roles);
-    console.log(roles);
-  });
+    const sendMessageContent = {
+      subject: data?.subject,
+      content: messageVal,
+      userEmails: userEmails?.map((user: any) => user.value).join(","),
+    };
 
-  console.log(data);
+    /* Send Message */
+    const { data: mailedData } = await axios.post(
+      `http://localhost:5000/api/v1/admin/emails/send`,
+      { ...sendMessageContent },
+      {
+        headers: { Authorization: `Bearer ${user?.token}` },
+      }
+    );
+    await swal("Success!", mailedData?.message, "success");
+    reset();
+    navigate(`/dashboard/messages/`, { replace: true });
+  });
 
   return (
     <div>
@@ -63,21 +142,42 @@ const Messages = (props: Props) => {
             <div className="name border  rounded p-3 pb-1 relative mt-10 flex-1">
               <div className="name-title absolute -top-4 bg-white border rounded p-1">
                 <h3 className="text-xs font-poppins flex items-center gap-1">
-                  Mail To <b>{roles}</b>
+                  Mail To{" "}
+                  <b className="capitalize">
+                    {roles === "user" ? "House Holder" : roles}
+                  </b>
                 </h3>
               </div>
-              <div className="input-group flex items-center my-1 border p-3 rounded-md mt-2">
+              <div
+                className={`input-group flex items-center my-1 border p-3 rounded-md mt-2 tooltip-info tooltip-bottom-left ${
+                  specificUsers.length > 0 ? "tooltip" : ""
+                }`}
+                data-tip={
+                  specificUsers.length > 0
+                    ? "Unselect previously selected specific users"
+                    : ""
+                }
+              >
                 <div className="icon">
                   <BiUserCircle />
                 </div>
                 <select
-                  className="outline-none  w-full pl-4 cursor-pointer text-sm"
+                  className="outline-none  w-full pl-4 cursor-pointer text-sm  capitalize"
                   {...register("roles")}
+                  disabled={
+                    specificUsers.length > 0 && userType !== "all"
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Role</option>
                   <option value="all">All Register Users</option>
-                  <option value="user">House Holder</option>
-                  <option value="customer">Customers</option>
+
+                  {roleOptions?.map((role: string, index: number) => (
+                    <option key={index} value={role}>
+                      {role === "user" ? "House Holder" : role}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -99,7 +199,10 @@ const Messages = (props: Props) => {
                     onChange={(e) => setUserType(e.target.value)}
                   >
                     {roles === "all" ? (
-                      <option value="all">All</option>
+                      <>
+                        <option value="">select type</option>
+                        <option value="all">All</option>
+                      </>
                     ) : (
                       <>
                         <option value="">Select Role</option>
@@ -127,7 +230,6 @@ const Messages = (props: Props) => {
                   </div>
 
                   <Select
-                    defaultValue={[emailOptions[2], emailOptions[3]]}
                     isMulti
                     name="colors"
                     options={emailOptions}
@@ -160,6 +262,7 @@ const Messages = (props: Props) => {
                   type="text"
                   className="form-control outline-none pl-4 w-full"
                   placeholder="Subject"
+                  {...register("subject")}
                 />
               </div>
             </div>

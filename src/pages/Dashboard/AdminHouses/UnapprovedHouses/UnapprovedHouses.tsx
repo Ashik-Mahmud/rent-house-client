@@ -9,7 +9,7 @@ const UnapprovedHouses = (props: Props) => {
     <>
       <div>
         <div className="p-3 sm:p-5 my-5 bg-white">
-          <div className="title flex items-center justify-between bg-base-200 p-3 rounded">
+          <div className="title flex items-center justify-between bg-gray-50 p-3 rounded">
             <MobileView>
               <h3 className="text-2xl font-bold">Unapproved </h3>
             </MobileView>
