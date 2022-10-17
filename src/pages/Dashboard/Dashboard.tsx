@@ -266,6 +266,7 @@ const Dashboard = (props: Props) => {
   const { requestBlogCount, requestHouseCount, pendingCount } = useAppSelector(
     (state) => state.request
   );
+  const { name } = useAppSelector((state) => state.appOption);
 
   let title: string = "";
 
@@ -299,13 +300,13 @@ const Dashboard = (props: Props) => {
                   <MobileView>
                     Welcome to{" "}
                     <Link to="/" className="text-success">
-                      houseLagbe?
+                      {name}
                     </Link>
                   </MobileView>
                   <BrowserView>
                     Welcome to{" "}
                     <Link to="/" className="text-success">
-                      houseLagbe?
+                      {name}
                     </Link>{" "}
                     <span className="capitalize">
                       {data?.role === "user" ? "House Holder" : data?.role}

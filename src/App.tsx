@@ -77,7 +77,7 @@ function App() {
   };
 
   /* Get House Option*/
-  const { data, isLoading } = useQuery("appOptions", async () => {
+  const { data, isLoading, refetch } = useQuery("appOptions", async () => {
     const res = await axios.get(
       `http://localhost:5000/api/v1/admin/app-options`
     );
@@ -88,8 +88,9 @@ function App() {
     if (isLoading) return;
     if (data) {
       dispatch(setAppOptions(data?.app));
+      refetch();
     }
-  }, [data, dispatch, isLoading]);
+  }, [data, dispatch, isLoading, refetch]);
 
   return (
     <div className="App font-open font-medium bg-cover bg-center bg-base-100">
@@ -211,7 +212,10 @@ function App() {
             element={<FeatureRequest />}
           />
           <Route path="profile" element={<Profile />} />
-          <Route path="settings" element={<Settings />} />
+          <Route
+            path="settings"
+            element={<Settings appChangeRefetch={refetch} />}
+          />
 
           {/* Customers Routes */}
           <Route

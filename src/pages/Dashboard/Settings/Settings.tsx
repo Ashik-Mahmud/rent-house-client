@@ -6,7 +6,7 @@ import { toast } from "react-hot-toast";
 import { BiCheck, BiEdit, BiLockAlt, BiX } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
-import { useAppDispatch } from "../../../app/store";
+import { useAppDispatch, useAppSelector } from "../../../app/store";
 import { logout } from "../../../features/AuthSlice";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
@@ -15,10 +15,13 @@ import { stateOptions, themeOptions } from "../../../utilities/data";
 import RequestModalForHouseHolder from "./RequestModalForHouseHolder";
 import VerifyBlogModal from "./VerifyBlogModal";
 
-type Props = {};
+type Props = {
+  appChangeRefetch: () => void;
+};
 
-const Settings = (props: Props) => {
+const Settings = ({ appChangeRefetch }: Props) => {
   const { updatedUser, setUser, user } = useAuth<authUserInterface | any>({});
+  const { name } = useAppSelector((state) => state.appOption);
   const role = updatedUser?.role;
   const isVerify = updatedUser?.isVerified;
   const isBlogAllowed = updatedUser?.blogAllowed;
@@ -84,14 +87,15 @@ const Settings = (props: Props) => {
 
       cogoToast.success(data?.message);
       setIsEdit(false);
+      appChangeRefetch();
     } catch (err) {
       console.log(err);
     }
   });
 
   useEffect(() => {
-    setValue("appName", "HouseLagbe");
-  }, [setValue]);
+    setValue("appName", name);
+  }, [setValue, name]);
 
   return (
     <>
@@ -179,7 +183,7 @@ const Settings = (props: Props) => {
                       autoComplete="off"
                     />
                   ) : (
-                    <h2 className="text-2xl">HouseLagbe </h2>
+                    <h2 className="text-2xl">{name} </h2>
                   )}
 
                   {isEdit ? (
