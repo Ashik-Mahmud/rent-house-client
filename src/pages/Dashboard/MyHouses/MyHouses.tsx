@@ -20,10 +20,6 @@ const MyHouses = (props: Props) => {
     if (isError) {
       console.log(error);
     }
-
-    if (isSuccess) {
-      console.log(data);
-    }
   }, [isError, error, isSuccess, data]);
 
   return (

@@ -498,14 +498,14 @@ const AddHouse = (props: Props) => {
               </ul>
             </HouseInput>
             <div>
-              <HouseInput title="Image">
+              <HouseInput title="Image" condition={"file-upload"}>
                 <input
                   type="file"
                   {...register("previewImage")}
                   accept="image/*"
                 />
               </HouseInput>
-              <HouseInput title="Galleries">
+              <HouseInput title="Galleries" condition={"files-upload"}>
                 <input
                   type="file"
                   multiple
