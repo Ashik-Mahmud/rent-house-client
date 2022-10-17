@@ -499,18 +499,44 @@ const AddHouse = (props: Props) => {
             </HouseInput>
             <div>
               <HouseInput title="Image" condition={"file-upload"}>
+                <div className="flex items-center gap-2">
+                  <label
+                    htmlFor="file"
+                    className="px-3 py-2 bg-info rounded-full text-sm text-white"
+                  >
+                    Upload Image
+                  </label>
+                  <label htmlFor="file" className="bg-white">
+                    No file choose
+                  </label>
+                </div>
                 <input
                   type="file"
                   {...register("previewImage")}
                   accept="image/*"
+                  className="hidden"
+                  id="file"
                 />
               </HouseInput>
               <HouseInput title="Galleries" condition={"files-upload"}>
+                <div className="flex items-center gap-2">
+                  <label
+                    htmlFor="galleries"
+                    className="p-2 px-4 bg-info rounded-full text-sm text-white cursor-pointer"
+                  >
+                    Upload Galleries
+                  </label>
+                  <label htmlFor="file" className="bg-white">
+                    No file choose
+                  </label>
+                </div>
                 <input
                   type="file"
                   multiple
                   {...register("galleryImage")}
                   accept="image/*"
+                  id="galleries"
+                  className="hidden"
                 />
               </HouseInput>
             </div>
