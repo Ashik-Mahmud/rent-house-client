@@ -1,6 +1,6 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import { AxiosRequest } from "../../../api/Axios";
 import { useAppDispatch } from "../../../app/store";
 import GlobalLoader from "../../../components/GlobalLoader";
 import NoDataComponent from "../../../components/NoDataComponent";
@@ -8,11 +8,14 @@ import {
   setPendingCount,
   setRequestBlogCount,
 } from "../../../features/RequestSlice";
+import useAuth from "../../../hooks/useAuth";
+import { authUserInterface } from "../../../interfaces/UserInterface";
 import { RequestFromUserRow } from "./RequestFromUsers";
 
 type Props = {};
 
 const ForBlogsRequest = (props: Props) => {
+  const { user } = useAuth<authUserInterface | any>({});
   /* Pagination code */
   const [currentPage, setCurrentPage] = useState(1);
   const [limit, setLimit] = useState(10);
@@ -20,8 +23,13 @@ const ForBlogsRequest = (props: Props) => {
 
   /* Try to fetch blog using UseQuery */
   const { data, refetch, isLoading } = useQuery("fetchBlog", async () => {
-    const res = await AxiosRequest.get(
-      `/all-request?page=${currentPage}&limit=${limit}&role=blog`
+    const res = await axios.get(
+      `http://localhost:5000/api/v1/request/all-request?page=${currentPage}&limit=${limit}&role=blog`,
+      {
+        headers: {
+          Authorization: `Bearer ${user?.token}`,
+        },
+      }
     );
     return res?.data;
   });

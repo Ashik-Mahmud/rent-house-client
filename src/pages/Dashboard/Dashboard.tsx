@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import {
   BrowserView,
@@ -20,7 +21,6 @@ import {
 } from "react-icons/bs";
 import { useQuery } from "react-query";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { AxiosRequest } from "../../api/Axios";
 import { useAppDispatch, useAppSelector } from "../../app/store";
 import { logout } from "../../features/AuthSlice";
 import { setPendingCount } from "../../features/RequestSlice";
@@ -244,7 +244,14 @@ const Dashboard = (props: Props) => {
     ["fetchUnapprovedData", user],
     async () => {
       if (role === "admin" || role === "manager") {
-        const res = await AxiosRequest.get(`/all-request`);
+        const res = await axios.get(
+          `http://localhost:5000/api/v1/request/all-request`,
+          {
+            headers: {
+              Authorization: `Bearer ${user?.token}`,
+            },
+          }
+        );
         return res?.data;
       }
     }
