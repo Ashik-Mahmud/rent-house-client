@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { BiUser } from "react-icons/bi";
 import { toast } from "react-toastify";
 import { AxiosUser } from "../../../api/Axios";
+import { useAppSelector } from "../../../app/store";
 import SendVerifyEmail from "../../../components/SendVerifyEmail";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
@@ -11,6 +12,7 @@ import FeatureRequestEditor from "./FeatureRequestEditor";
 type Props = {};
 
 const FeatureRequest = (props: Props) => {
+  const { name } = useAppSelector((state) => state.appOption);
   const { updatedUser } = useAuth<authUserInterface | any>({});
   const [isReadonly, setIsReadonly] = useState<boolean>(true);
   const { register, handleSubmit, setValue } = useForm();
@@ -56,7 +58,7 @@ const FeatureRequest = (props: Props) => {
         <div className="title">
           <h3 className="text-2xl font-bold">Feature Request & Bugs</h3>
           <p className="text-sm text-gray-500 my-2">
-            If you got any bugs to browsing our houseLagbe Please let me know to
+            If you got any bugs to browsing our {name} Please let me know to
             fill up below form and also can send us with your creative features
             which one you think to putting our web app much better then now.
           </p>

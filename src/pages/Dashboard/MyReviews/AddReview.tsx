@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Rating } from "react-simple-star-rating";
 import { toast } from "react-toastify";
+import { useAppSelector } from "../../../app/store";
 import SendVerifyEmail from "../../../components/SendVerifyEmail";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
@@ -14,6 +15,7 @@ import {
 type Props = {};
 
 const AddReview = (props: Props) => {
+  const { name } = useAppSelector((state) => state.appOption);
   const { updatedUser } = useAuth<authUserInterface | any>({});
   const isVerify = updatedUser?.isVerified;
   const { handleSubmit, register, reset } = useForm();
@@ -91,7 +93,7 @@ const AddReview = (props: Props) => {
                   id="content"
                   cols={4}
                   className="w-full p-5 border outline-none rounded"
-                  placeholder="What's your mind about this houseLagbe?"
+                  placeholder={`What's your mind about this ${name}`}
                   rows={6}
                   {...register("content", { required: true })}
                 ></textarea>

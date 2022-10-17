@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { BiBook } from "react-icons/bi";
+import { useAppSelector } from "../../app/store";
 
 type Props = {};
 
 const Hero = (props: Props) => {
+  const { name } = useAppSelector((state) => state.appOption);
   /* Create Image Slider */
   let images = [
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWw_fKQ6H8mfIq0v-fvyUiJL0osaQODoC2og&usqp=CAU",
@@ -33,11 +35,11 @@ const Hero = (props: Props) => {
       <div className="hero-content text-center text-neutral-content">
         <div className="sm:px-40">
           <h1 className="mb-5 text-4xl sm:text-5xl font-bold">
-            Welcome To the <span className="text-success"> houseLagbe?</span>
+            Welcome To the <span className="text-success"> {name}</span>
           </h1>
           <p className="mb-5">
-            <b className="text-success">houseLagbe?</b> one of the best platform
-            to find your dream house in the best price and location in the
+            <b className="text-success">{name}</b> one of the best platform to
+            find your dream house in the best price and location in the
             Bangladesh. We have a huge collection of houses and apartments for
             sale and rent. You can choose your dream house from our huge
             collection of houses and apartments.

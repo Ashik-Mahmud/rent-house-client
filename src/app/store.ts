@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import type { TypedUseSelectorHook } from "react-redux";
 import { useDispatch, useSelector } from "react-redux";
+import AppReducer from "../features/AppSlice";
 import AuthReducer from "../features/AuthSlice";
 import RequestReducer from "../features/RequestSlice";
 import { authApi } from "../services/AuthApi";
@@ -15,6 +16,7 @@ const store = configureStore({
     // Add the generated reducer as a specific top-level slice
     auth: AuthReducer,
     request: RequestReducer,
+    appOption: AppReducer,
     [authApi.reducerPath]: authApi.reducer,
     [ReviewApi.reducerPath]: ReviewApi.reducer,
     [HouseApi.reducerPath]: HouseApi.reducer,

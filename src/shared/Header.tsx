@@ -1,7 +1,7 @@
 import { BrowserView } from "react-device-detect";
 import toast from "react-hot-toast";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../app/store";
+import { useAppDispatch, useAppSelector } from "../app/store";
 import { logout } from "../features/AuthSlice";
 import useAuth from "../hooks/useAuth";
 import { authUserInterface } from "../interfaces/UserInterface";
@@ -9,6 +9,7 @@ import { authUserInterface } from "../interfaces/UserInterface";
 type Props = {};
 
 const Header = (props: Props) => {
+  const { name } = useAppSelector((state) => state.appOption);
   const {
     user,
     setUser,
@@ -96,7 +97,7 @@ const Header = (props: Props) => {
             </ul>
           </div>
           <Link to="/" className="btn btn-ghost normal-case text-xl">
-            HouseLagbe?
+            {name}
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
