@@ -421,6 +421,7 @@ const Dashboard = (props: Props) => {
                 <button
                   className="btn  btn-warning btn-circle btn-sm mb-5 absolute right-4 top-3 text-xl "
                   title="Logout"
+                  onClick={handleLogout}
                 >
                   <BiLogOut />
                 </button>

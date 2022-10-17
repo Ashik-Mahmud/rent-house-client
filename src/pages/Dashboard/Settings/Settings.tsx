@@ -109,7 +109,7 @@ const Settings = ({ appChangeRefetch }: Props) => {
             {role !== "admin" && role !== "manager" && (
               <>
                 {!isBlogAllowed && (
-                  <div className="req-for-blog flex-col justify-center sm:justify-between sm:flex-row flex items-center my-8 bg-base-200 p-5 rounded-lg">
+                  <div className="req-for-blog flex-col justify-center sm:justify-between sm:flex-row flex items-center my-8 bg-gray-50  p-5 rounded-lg">
                     <h3 className="text-xl font-bold text-center sm:text-left">
                       If you want to get Blogs writing authority
                     </h3>
@@ -138,7 +138,7 @@ const Settings = ({ appChangeRefetch }: Props) => {
                   </div>
                 )}
                 {role === "customer" && (
-                  <div className="req-for-blog flex items-center  my-8 bg-base-200 p-5 rounded-lg flex-col justify-center sm:justify-between sm:flex-row">
+                  <div className="req-for-blog flex items-center  my-8 bg-gray-50  p-5 rounded-lg flex-col justify-center sm:justify-between sm:flex-row">
                     <h3 className="text-xl font-bold text-center sm:text-left">
                       If you want to get House Holder Account
                     </h3>
