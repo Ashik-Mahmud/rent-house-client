@@ -1,3 +1,6 @@
+import axios from "axios";
+import { useEffect } from "react";
+import { useQuery } from "react-query";
 import { Route, Routes, useLocation } from "react-router-dom";
 import AuthChangeRoute from "./auth/AuthChangeRoute";
 import RequireAdmin from "./auth/RequireAdmin";
@@ -69,6 +72,19 @@ function App() {
       return <CustomerDashboard />;
     }
   };
+
+  /* Get House Option*/
+  const { data, isLoading } = useQuery("appOptions", async () => {
+    const res = await axios.get(
+      `http://localhost:5000/api/v1/admin/app-options`
+    );
+    return res?.data?.data;
+  });
+
+  useEffect(() => {}, []);
+
+  console.log(data);
+
   return (
     <div className="App font-open font-medium bg-cover bg-center bg-base-100">
       {!location.pathname.includes("dashboard") && <Header />}

@@ -1,4 +1,5 @@
 import axios from "axios";
+import cogoToast from "cogo-toast";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -70,11 +71,10 @@ const Settings = (props: Props) => {
   const handleChangeAppName = handleSubmit(async (formData) => {
     const { appName } = formData;
     if (!appName) return toast.error("App name is required.");
-    console.log(appName);
     try {
       const { data } = await axios.post(
-        `http://localhost:5000/api/v1/admin/app-options`,
-        { appName },
+        `http://localhost:5000/api/v1/admin/change-app-name`,
+        { name: appName },
         {
           headers: {
             Authorization: `Bearer ${user?.token}`,
@@ -82,8 +82,8 @@ const Settings = (props: Props) => {
         }
       );
 
-      console.log(data);
-      toast.success(data.message);
+      cogoToast.success(data?.message);
+      setIsEdit(false);
     } catch (err) {
       console.log(err);
     }
@@ -176,6 +176,7 @@ const Settings = (props: Props) => {
                       placeholder="Change App Name"
                       className="input input-sm"
                       {...register("appName")}
+                      autoComplete="off"
                     />
                   ) : (
                     <h2 className="text-2xl">HouseLagbe </h2>
