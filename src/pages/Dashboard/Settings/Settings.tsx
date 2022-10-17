@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { BiLockAlt } from "react-icons/bi";
+import { BiCheck, BiEdit, BiLockAlt, BiX } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import { useAppDispatch } from "../../../app/store";
@@ -16,16 +17,17 @@ import VerifyBlogModal from "./VerifyBlogModal";
 type Props = {};
 
 const Settings = (props: Props) => {
-  const { updatedUser, setUser } = useAuth<authUserInterface | any>({});
+  const { updatedUser, setUser, user } = useAuth<authUserInterface | any>({});
   const role = updatedUser?.role;
   const isVerify = updatedUser?.isVerified;
   const isBlogAllowed = updatedUser?.blogAllowed;
   const navigate = useNavigate();
+  const [isEdit, setIsEdit] = useState<boolean>(false);
 
   const [changePassword, { data, isSuccess, error }] =
     useChangePasswordMutation();
 
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset, setValue } = useForm();
   const dispatch = useAppDispatch();
 
   /* Handle Change Password Form */
@@ -64,7 +66,32 @@ const Settings = (props: Props) => {
     }
   }, [isSuccess, data, error, dispatch, setUser, navigate]);
 
-  /* Request For Blog */
+  /* Handle Change App Name */
+  const handleChangeAppName = handleSubmit(async (formData) => {
+    const { appName } = formData;
+    if (!appName) return toast.error("App name is required.");
+    console.log(appName);
+    try {
+      const { data } = await axios.post(
+        `http://localhost:5000/api/v1/admin/app-options`,
+        { appName },
+        {
+          headers: {
+            Authorization: `Bearer ${user?.token}`,
+          },
+        }
+      );
+
+      console.log(data);
+      toast.success(data.message);
+    } catch (err) {
+      console.log(err);
+    }
+  });
+
+  useEffect(() => {
+    setValue("appName", "HouseLagbe");
+  }, [setValue]);
 
   return (
     <>
@@ -135,6 +162,50 @@ const Settings = (props: Props) => {
                   </div>
                 )}
               </>
+            )}
+            {role === "admin" && (
+              <div className="flex items-center justify-between py-6 rounded my-4 bg-gray-50 px-5">
+                <h2 className="text-xl font-bold">Change App Name</h2>
+                <form
+                  onSubmit={handleChangeAppName}
+                  className="flex items-center gap-3"
+                >
+                  {isEdit ? (
+                    <input
+                      type="text"
+                      placeholder="Change App Name"
+                      className="input input-sm"
+                      {...register("appName")}
+                    />
+                  ) : (
+                    <h2 className="text-2xl">HouseLagbe </h2>
+                  )}
+
+                  {isEdit ? (
+                    <>
+                      <button
+                        type="submit"
+                        className="cursor-pointer text-primary font-bold text-2xl"
+                      >
+                        <BiCheck />
+                      </button>{" "}
+                      <span
+                        className="cursor-pointer text-error font-bold text-2xl"
+                        onClick={() => setIsEdit(false)}
+                      >
+                        <BiX />
+                      </span>
+                    </>
+                  ) : (
+                    <span
+                      className="cursor-pointer text-primary font-bold"
+                      onClick={() => setIsEdit(true)}
+                    >
+                      <BiEdit />
+                    </span>
+                  )}
+                </form>
+              </div>
             )}
 
             <div className="flex items-center justify-between py-6 rounded my-4 bg-gray-50 px-5">

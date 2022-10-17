@@ -12,12 +12,12 @@ const HouseInput = ({ title, children, icon, condition }: Props) => {
         <h3 className="text-xs font-poppins">
           {title}{" "}
           {condition === "files-upload" && (
-            <span className="badge badge-error badge-sm text-xs text-white ml-3">
+            <span className="badge badge-warning  badge-sm text-xs ml-3">
               You can only upload 5 images & each image size will be 1 MB.
             </span>
           )}
           {condition === "file-upload" && (
-            <span className="badge badge-error badge-sm text-xs text-white ml-3">
+            <span className="badge badge-warning  badge-sm text-xs ml-3">
               Image size will be 1 MB.
             </span>
           )}
