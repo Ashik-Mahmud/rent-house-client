@@ -42,6 +42,33 @@ const UnapprovedRow = ({ ind, house, refetch }: Props) => {
     }
   };
 
+  /* Delete House By Id for admin/manager */
+  const deleteHouseById = async (id: string) => {
+    const isConfirm = await swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this imaginary file!",
+      icon: "warning",
+      buttons: ["cancel", "okay"],
+      dangerMode: true,
+    });
+    if (isConfirm) {
+      const { data } = await axios.delete(
+        `http://localhost:5000/api/v1/admin/house/delete/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+
+      console.log(data);
+      swal(`${data?.message}`, {
+        icon: "success",
+      });
+      refetch();
+    }
+  };
+
   return (
     <>
       <tr>
@@ -123,7 +150,10 @@ const UnapprovedRow = ({ ind, house, refetch }: Props) => {
           </div>
         </td>
         <td>
-          <button className="text-error text-lg">
+          <button
+            className="text-error text-lg"
+            onClick={() => deleteHouseById(house?._id)}
+          >
             <BiTrashAlt />
           </button>
         </td>
