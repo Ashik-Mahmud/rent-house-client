@@ -8,7 +8,6 @@ import NoDataComponent from "../../../../components/NoDataComponent";
 import { setRejectedHouseCount } from "../../../../features/HouseSlice";
 import useAuth from "../../../../hooks/useAuth";
 import { authUserInterface } from "../../../../interfaces/UserInterface";
-import RejectedHouseModal from "../UnapprovedHouses/RejectedHouseModal";
 import RejectedRow from "./RejectedRow";
 
 type Props = {};
@@ -133,7 +132,6 @@ const RejectedHouses = (props: Props) => {
           </div>
         </div>
       </div>
-      <RejectedHouseModal />
     </>
   );
 };

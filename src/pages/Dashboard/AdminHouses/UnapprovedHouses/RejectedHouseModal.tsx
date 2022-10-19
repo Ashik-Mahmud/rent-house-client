@@ -1,10 +1,52 @@
+import axios from "axios";
+import cogoToast from "cogo-toast";
+import { useForm } from "react-hook-form";
 import { BiReceipt } from "react-icons/bi";
+import swal from "sweetalert";
+import useAuth from "../../../../hooks/useAuth";
+import { authUserInterface } from "../../../../interfaces/UserInterface";
 
-type Props = {};
+type Props = { houseId: String; refetch: () => void };
 
-const RejectedHouseModal = (props: Props) => {
+const RejectedHouseModal = ({ houseId, refetch }: Props) => {
+  const { user } = useAuth<authUserInterface | any>({});
+  const { register, handleSubmit, reset } = useForm();
+
+  /* Handle Reject House */
+  const handleRejectHouse = handleSubmit(async (data) => {
+    if (!data?.notes) return cogoToast.warn(`Reject notes is required.`);
+    const isConfirm = await swal({
+      title: "Are you sure?",
+      text: "Once rejected, you will be able to recover again!",
+      icon: "warning",
+      buttons: ["cancel", "okay"],
+      dangerMode: true,
+    });
+    if (isConfirm) {
+      const rejectContent = {
+        notes: data?.notes,
+      };
+      const { data: newData } = await axios.patch(
+        `http://localhost:5000/api/v1/admin/reject/${houseId}`,
+        rejectContent,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+
+      console.log(newData);
+      swal(`${(data as any)?.message}`, {
+        icon: "success",
+      });
+      refetch();
+      reset();
+    }
+  });
+
   return (
-    <div>
+    <form onSubmit={handleRejectHouse}>
       <input
         type="checkbox"
         id="permission-no-modal"
@@ -29,12 +71,12 @@ const RejectedHouseModal = (props: Props) => {
                 </div>
               </label>
               <textarea
-                name=""
                 id=""
                 cols={5}
                 rows={6}
                 className="w-full font-poppins outline-none border p-4 rounded"
                 placeholder="Why are you reject?"
+                {...register("notes")}
               ></textarea>
             </div>
             {/* End */}
@@ -47,7 +89,7 @@ const RejectedHouseModal = (props: Props) => {
           </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 
