@@ -27,4 +27,4 @@ export const {
   setUnapprovedHouseCount,
   setRejectedHouseCount,
 } = houseSlice.actions;
-export default houseSlice;
+export default houseSlice.reducer;
