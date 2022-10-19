@@ -104,7 +104,12 @@ const RejectedHouses = (props: Props) => {
                   <tbody>
                     {rejectedHouses?.data?.houses.map(
                       (house: any, ind: number) => (
-                        <RejectedRow key={house?._id} house={house} ind={ind} />
+                        <RejectedRow
+                          refetch={refetch}
+                          key={house?._id}
+                          house={house}
+                          ind={ind}
+                        />
                       )
                     )}
                   </tbody>

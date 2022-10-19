@@ -35,9 +35,7 @@ const RejectedHouseModal = ({ houseId, refetch }: Props) => {
           },
         }
       );
-
-      console.log(newData);
-      swal(`${(data as any)?.message}`, {
+      swal(`${newData?.message}`, {
         icon: "success",
       });
       refetch();

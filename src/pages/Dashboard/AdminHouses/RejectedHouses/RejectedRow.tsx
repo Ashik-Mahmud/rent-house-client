@@ -1,13 +1,44 @@
+import axios from "axios";
 import { BiBath, BiBed, BiCheck, BiTrashAlt } from "react-icons/bi";
 import { BsEyeFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import swal from "sweetalert";
+import useAuth from "../../../../hooks/useAuth";
+import { authUserInterface } from "../../../../interfaces/UserInterface";
 
 type Props = {
   house: any;
   ind: number;
+  refetch: () => void;
 };
 
-const RejectedRow = ({ ind, house }: Props) => {
+const RejectedRow = ({ ind, house, refetch }: Props) => {
+  const { user } = useAuth<authUserInterface | any>({});
+  /* Handle Approved Houses */
+  const handleApprovedHouse = async (id: string) => {
+    const isConfirm = await swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this imaginary file!",
+      icon: "warning",
+      buttons: ["cancel", "okay"],
+      dangerMode: true,
+    });
+    if (isConfirm) {
+      const { data } = await axios.patch(
+        `http://localhost:5000/api/v1/admin/accept/${id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+      swal(`${data?.message}`, {
+        icon: "success",
+      });
+      refetch();
+    }
+  };
   return (
     <tr>
       <th>{ind + 1}</th>
@@ -65,6 +96,7 @@ const RejectedRow = ({ ind, house }: Props) => {
       <td>
         <div className="flex items-center gap-2">
           <label
+            onClick={() => handleApprovedHouse(house?._id)}
             htmlFor="permission-yes-modal"
             className="flex items-center gap-1 bg-success rounded px-2 cursor-pointer"
           >
