@@ -8,7 +8,6 @@ const AdminHouses = (props: Props) => {
   const { approvedHouseCount, rejectedHouseCount, unapprovedHouseCount } =
     useAppSelector((state) => state.housesReqCount);
 
-  console.log(unapprovedHouseCount);
   return (
     <div>
       <div className="p-5 my-5 bg-white">

@@ -22,7 +22,10 @@ const AddHouse = (props: Props) => {
   const navigate = useNavigate();
 
   /* Handle Add House Form Submit */
-  const { handleSubmit, register, reset } = useForm();
+  const { handleSubmit, register, reset, watch } = useForm();
+
+  const previewImage = watch("previewImage");
+  const galleryImage = watch("galleryImage");
 
   const handleAddHouseFormSubmit = handleSubmit(async (data) => {
     /* Validation */
@@ -201,7 +204,7 @@ const AddHouse = (props: Props) => {
             <div className="flex flex-col md:flex-row gap-3">
               <HouseInput title="Put Your House Price" icon={<BiMoney />}>
                 <input
-                  type="text"
+                  type="number"
                   className="form-control outline-none pl-4 w-full"
                   placeholder="Price"
                   {...register("price")}
@@ -507,7 +510,9 @@ const AddHouse = (props: Props) => {
                     Upload Image
                   </label>
                   <label htmlFor="file" className="bg-white">
-                    No file choose
+                    {previewImage?.length > 0 && previewImage[0]?.name
+                      ? previewImage[0]?.name
+                      : "No file choose"}
                   </label>
                 </div>
                 <input
@@ -526,8 +531,10 @@ const AddHouse = (props: Props) => {
                   >
                     Upload Galleries
                   </label>
-                  <label htmlFor="file" className="bg-white">
-                    No file choose
+                  <label htmlFor="galleries" className="bg-white">
+                    {galleryImage?.length > 0
+                      ? galleryImage.length + " files selected"
+                      : "No files choose"}{" "}
                   </label>
                 </div>
                 <input
