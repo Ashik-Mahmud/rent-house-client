@@ -16,6 +16,7 @@ const ApprovedHouses = (props: Props) => {
   /*  for pagination  */
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [limit, setLimit] = useState<number>(3);
+  const [filter, setFilter] = useState<string>("-createdAt");
   /* Get Approved House */
   const {
     data: approvedHouses,
@@ -26,7 +27,7 @@ const ApprovedHouses = (props: Props) => {
   /* Get Approved Houses Function */
   const getApprovedHouses = async () => {
     const { data } = await axios.get(
-      `http://localhost:5000/api/v1/admin/houses/approved?page=${currentPage}&limit=${limit}`,
+      `http://localhost:5000/api/v1/admin/houses/approved?page=${currentPage}&limit=${limit}&filter=${filter}`,
       {
         headers: {
           Authorization: `Bearer ${user.token}`,
@@ -47,8 +48,9 @@ const ApprovedHouses = (props: Props) => {
   useEffect(() => {
     setCurrentPage(currentPage);
     setLimit(limit);
+    setFilter(filter);
     refetch();
-  }, [limit, currentPage, refetch]);
+  }, [limit, currentPage, refetch, filter]);
 
   return (
     <div className="">
@@ -64,6 +66,7 @@ const ApprovedHouses = (props: Props) => {
             <select
               name=""
               id=""
+              onChange={(e) => setFilter(e.target.value)}
               className="cursor-pointer font-poppins outline-none p-1 rounded border border-base-300"
             >
               <option value="">Recent</option>
