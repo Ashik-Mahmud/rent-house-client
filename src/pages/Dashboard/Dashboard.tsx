@@ -23,6 +23,7 @@ import { useQuery } from "react-query";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/store";
 import { logout } from "../../features/AuthSlice";
+import { setUnapprovedHouseCount } from "../../features/HouseSlice";
 import { setPendingCount } from "../../features/RequestSlice";
 import useAuth from "../../hooks/useAuth";
 
@@ -40,6 +41,7 @@ const Dashboard = (props: Props) => {
     user,
     setUser,
     updatedUser: data,
+    isLoading,
   } = useAuth<authUserInterface | any>({});
   const role = data?.role;
 
@@ -239,10 +241,10 @@ const Dashboard = (props: Props) => {
   }
 
   /* Try to fetch blog using UseQuery */
-
   const { data: countData } = useQuery(
     ["fetchUnapprovedData", user],
     async () => {
+      if (isLoading) return;
       if (role === "admin" || role === "manager") {
         const res = await axios.get(
           `http://localhost:5000/api/v1/request/all-request`,
@@ -257,9 +259,26 @@ const Dashboard = (props: Props) => {
     }
   );
 
+  /* Get Unapproved House */
+  const { data: unapprovedHouses } = useQuery("unapprovedHouses", async () => {
+    if (role === "admin" || role === "manager") {
+      const res = await axios.get(
+        `http://localhost:5000/api/v1/admin/houses/unapproved`,
+        {
+          headers: {
+            Authorization: `Bearer ${user?.token}`,
+          },
+        }
+      );
+
+      return res?.data;
+    }
+  });
+
   useEffect(() => {
     dispatch(setPendingCount(countData?.unapprovedCount));
-  }, [countData, dispatch]);
+    dispatch(setUnapprovedHouseCount(unapprovedHouses?.data?.count));
+  }, [countData, dispatch, unapprovedHouses]);
 
   /* Handle Logout */
 
@@ -273,6 +292,10 @@ const Dashboard = (props: Props) => {
   const { requestBlogCount, requestHouseCount, pendingCount } = useAppSelector(
     (state) => state.request
   );
+  const { unapprovedHouseCount } = useAppSelector(
+    (state) => state.housesReqCount
+  );
+
   const { name } = useAppSelector((state) => state.appOption);
 
   let title: string = "";
@@ -454,6 +477,14 @@ const Dashboard = (props: Props) => {
                         title={title}
                       >
                         {pendingCount > 9 ? "+9" : pendingCount}
+                      </span>
+                    )}
+                    {unapprovedHouseCount > 0 && item.title === "Houses" && (
+                      <span
+                        className="btn btn-circle btn-xs  btn-info "
+                        title={"Unapproved Houses"}
+                      >
+                        {unapprovedHouseCount > 9 ? "+9" : unapprovedHouseCount}
                       </span>
                     )}
                   </Link>
