@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { BrowserView, MobileView } from "react-device-detect";
 import { useQuery } from "react-query";
 import GlobalLoader from "../../../../components/GlobalLoader";
@@ -12,10 +13,15 @@ type Props = {};
 
 const RejectedHouses = (props: Props) => {
   const { user } = useAuth<authUserInterface | any>({});
+  /*  for pagination  */
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [limit, setLimit] = useState<number>(3);
   /* Get Approved House */
-  const { data: rejectedHouses, isLoading } = useQuery("unapprovedHouses", () =>
-    getApprovedHouses()
-  );
+  const {
+    data: rejectedHouses,
+    isLoading,
+    refetch,
+  } = useQuery("unapprovedHouses", () => getApprovedHouses());
 
   /* Get Approved Houses Function */
   const getApprovedHouses = async () => {
@@ -29,6 +35,20 @@ const RejectedHouses = (props: Props) => {
     );
     return data;
   };
+
+  /* pagination code */
+  const totalItems = rejectedHouses?.data?.count;
+  const totalPages = Math.ceil(totalItems / limit);
+  let paginationButtons = [];
+  for (let i = 1; i <= totalPages; i++) {
+    paginationButtons.push(i);
+  }
+
+  useEffect(() => {
+    setCurrentPage(currentPage);
+    setLimit(limit);
+    refetch();
+  }, [limit, currentPage, refetch]);
 
   return (
     <>
@@ -86,20 +106,21 @@ const RejectedHouses = (props: Props) => {
               )}
             </div>
             {/* Pagination */}
-            <div className="pagination flex items-center justify-end my-3">
-              <a href="/" className="btn btn-circle btn-ghost btn-sm">
-                1
-              </a>
-              <a
-                href="/"
-                className="btn btn-circle btn-ghost btn-sm btn-active"
-              >
-                2
-              </a>
-              <a href="/" className="btn btn-circle btn-ghost btn-sm">
-                3
-              </a>
-            </div>
+            {limit < totalItems && (
+              <div className="pagination flex items-center justify-end my-3">
+                {paginationButtons?.map((page: number) => (
+                  <span
+                    className={`btn btn-circle btn-ghost btn-sm ${
+                      page === currentPage && "btn-active"
+                    }`}
+                    key={page}
+                    onClick={() => setCurrentPage(page)}
+                  >
+                    {page}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
