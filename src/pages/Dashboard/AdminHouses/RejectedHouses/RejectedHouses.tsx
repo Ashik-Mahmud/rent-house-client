@@ -77,8 +77,8 @@ const RejectedHouses = (props: Props) => {
                 onChange={(e) => setFilter(e.target.value)}
                 className="cursor-pointer font-poppins outline-none p-1 rounded border border-base-300"
               >
-                <option value="">Recent</option>
-                <option value="">Oldest</option>
+                <option value="-createdAt">Recent</option>
+                <option value="createdAt">Oldest</option>
               </select>
             </div>
           </div>

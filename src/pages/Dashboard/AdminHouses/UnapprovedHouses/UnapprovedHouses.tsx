@@ -109,6 +109,7 @@ const UnapprovedHouses = (props: Props) => {
                           key={house._id}
                           house={house}
                           ind={ind}
+                          refetch={refetch}
                         />
                       )
                     )}
