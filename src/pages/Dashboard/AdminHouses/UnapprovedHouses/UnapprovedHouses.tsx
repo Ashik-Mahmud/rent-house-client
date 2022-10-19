@@ -2,8 +2,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { BrowserView, MobileView } from "react-device-detect";
 import { useQuery } from "react-query";
+import { useAppDispatch } from "../../../../app/store";
 import GlobalLoader from "../../../../components/GlobalLoader";
 import NoDataComponent from "../../../../components/NoDataComponent";
+import { setUnapprovedHouseCount } from "../../../../features/HouseSlice";
 import useAuth from "../../../../hooks/useAuth";
 import { authUserInterface } from "../../../../interfaces/UserInterface";
 import RejectedHouseModal from "./RejectedHouseModal";
@@ -18,7 +20,7 @@ const UnapprovedHouses = (props: Props) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [limit, setLimit] = useState<number>(3);
   const [filter, setFilter] = useState<string>("-createdAt");
-
+  const dispatch = useAppDispatch();
   /* Get Unapproved House */
   const {
     data: unapprovedHouses,
@@ -52,7 +54,8 @@ const UnapprovedHouses = (props: Props) => {
     setLimit(limit);
     setFilter(filter);
     refetch();
-  }, [limit, currentPage, refetch, filter]);
+    dispatch(setUnapprovedHouseCount(totalItems));
+  }, [limit, currentPage, refetch, filter, dispatch, totalItems]);
 
   return (
     <>

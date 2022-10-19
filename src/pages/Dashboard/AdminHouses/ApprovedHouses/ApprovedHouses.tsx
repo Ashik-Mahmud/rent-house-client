@@ -2,8 +2,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { BrowserView, MobileView } from "react-device-detect";
 import { useQuery } from "react-query";
+import { useAppDispatch } from "../../../../app/store";
 import GlobalLoader from "../../../../components/GlobalLoader";
 import NoDataComponent from "../../../../components/NoDataComponent";
+import { setApprovedHouseCount } from "../../../../features/HouseSlice";
 import useAuth from "../../../../hooks/useAuth";
 import { authUserInterface } from "../../../../interfaces/UserInterface";
 import ApprovedRow from "./ApprovedRow";
@@ -17,6 +19,7 @@ const ApprovedHouses = (props: Props) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [limit, setLimit] = useState<number>(3);
   const [filter, setFilter] = useState<string>("-createdAt");
+  const dispatch = useAppDispatch();
   /* Get Approved House */
   const {
     data: approvedHouses,
@@ -50,7 +53,8 @@ const ApprovedHouses = (props: Props) => {
     setLimit(limit);
     setFilter(filter);
     refetch();
-  }, [limit, currentPage, refetch, filter]);
+    dispatch(setApprovedHouseCount(totalItems));
+  }, [limit, currentPage, refetch, filter, dispatch, totalItems]);
 
   return (
     <div className="">
