@@ -27,7 +27,12 @@ const UnapprovedRow = ({ ind, house }: Props) => {
             </div>
           </div>
           <div>
-            <div className="font-bold">{house?.name}</div>
+            <div
+              className="font-bold tooltip tooltip-success"
+              data-tip={house?.name}
+            >
+              {house?.name.slice(0, 15) + "..."}
+            </div>
             <div className="text-sm opacity-50">{house?.address}</div>
           </div>
         </div>
@@ -44,8 +49,11 @@ const UnapprovedRow = ({ ind, house }: Props) => {
       </td>
       <td> {house?.houseType}</td>
       <td>
-        <div className="badge badge-ghost text-xs">
-          {house?.owner?.name} / {house?.owner?.email}
+        <div
+          className="badge badge-ghost text-xs tooltip tooltip-success"
+          data-tip={house?.owner?.name + " / " + house?.owner?.email}
+        >
+          {house?.owner?.name} / {house?.owner?.email.slice(0, 15) + "..."}
         </div>
       </td>
       <td>{house?.price}</td>

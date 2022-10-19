@@ -63,7 +63,7 @@ const UnapprovedHouses = (props: Props) => {
                     <tr>
                       <th></th>
                       <th>Image</th>
-                      <th>Bedrooms & Bathrooms</th>
+                      <th>Bed & Bathrooms</th>
                       <th>House Type</th>
                       <th>User - Name/Email</th>
                       <th>Price</th>

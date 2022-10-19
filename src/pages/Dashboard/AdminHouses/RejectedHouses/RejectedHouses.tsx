@@ -30,8 +30,6 @@ const RejectedHouses = (props: Props) => {
     return data;
   };
 
-  console.log(rejectedHouses);
-
   return (
     <>
       {" "}
