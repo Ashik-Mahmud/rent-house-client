@@ -26,7 +26,7 @@ const ApprovedHouses = (props: Props) => {
   /* Get Approved Houses Function */
   const getApprovedHouses = async () => {
     const { data } = await axios.get(
-      "http://localhost:5000/api/v1/admin/houses/approved",
+      `http://localhost:5000/api/v1/admin/houses/approved?page=${currentPage}&limit=${limit}`,
       {
         headers: {
           Authorization: `Bearer ${user.token}`,

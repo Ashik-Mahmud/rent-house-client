@@ -17,6 +17,7 @@ const UnapprovedHouses = (props: Props) => {
   /*  for pagination  */
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [limit, setLimit] = useState<number>(3);
+  const [filter, setFilter] = useState<string>("-createdAt");
 
   /* Get Unapproved House */
   const {
@@ -28,7 +29,7 @@ const UnapprovedHouses = (props: Props) => {
   /* Get Unapproved Houses Function */
   const getUnapprovedHouses = async () => {
     const { data } = await axios.get(
-      `http://localhost:5000/api/v1/admin/houses/unapproved?page=${currentPage}&limit=${limit}`,
+      `http://localhost:5000/api/v1/admin/houses/unapproved?page=${currentPage}&limit=${limit}&filter=${filter}`,
       {
         headers: {
           Authorization: `Bearer ${user.token}`,
@@ -49,8 +50,9 @@ const UnapprovedHouses = (props: Props) => {
   useEffect(() => {
     setCurrentPage(currentPage);
     setLimit(limit);
+    setFilter(filter);
     refetch();
-  }, [limit, currentPage, refetch]);
+  }, [limit, currentPage, refetch, filter]);
 
   return (
     <>
@@ -67,10 +69,11 @@ const UnapprovedHouses = (props: Props) => {
               <select
                 name=""
                 id=""
+                onChange={(e) => setFilter(e.target.value)}
                 className="cursor-pointer font-poppins outline-none p-1 rounded border border-base-300"
               >
-                <option value="">Recent</option>
-                <option value="">Oldest</option>
+                <option value="-createdAt">Recent</option>
+                <option value="createdAt">Oldest</option>
               </select>
             </div>
           </div>
