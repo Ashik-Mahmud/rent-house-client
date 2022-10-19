@@ -26,7 +26,9 @@ const UnapprovedHouses = (props: Props) => {
     data: unapprovedHouses,
     isLoading,
     refetch,
-  } = useQuery("unapprovedHouses", () => getUnapprovedHouses());
+  } = useQuery(["unapprovedHouses", limit, filter, currentPage], () =>
+    getUnapprovedHouses()
+  );
 
   /* Get Unapproved Houses Function */
   const getUnapprovedHouses = async () => {
@@ -53,9 +55,9 @@ const UnapprovedHouses = (props: Props) => {
     setCurrentPage(currentPage);
     setLimit(limit);
     setFilter(filter);
-    refetch();
     dispatch(setUnapprovedHouseCount(totalItems));
-  }, [limit, currentPage, refetch, filter, dispatch, totalItems]);
+    refetch();
+  }, [limit, currentPage, filter, dispatch, totalItems, refetch]);
 
   return (
     <>

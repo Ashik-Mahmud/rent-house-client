@@ -93,7 +93,7 @@ function App() {
   }, [data, dispatch, isLoading, refetch]);
 
   return (
-    <div className="App font-open font-medium bg-cover bg-center bg-base-100">
+    <div className="App font-open font-medium bg-cover bg-center bg-slate-50">
       {!location.pathname.includes("dashboard") && <Header />}
       <Routes>
         {/* Pages Routes */}

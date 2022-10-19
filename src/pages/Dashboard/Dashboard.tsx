@@ -23,7 +23,7 @@ import { useQuery } from "react-query";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/store";
 import { logout } from "../../features/AuthSlice";
-import { setUnapprovedHouseCount } from "../../features/HouseSlice";
+import { setPendingHouseCount } from "../../features/HouseSlice";
 import { setPendingCount } from "../../features/RequestSlice";
 import useAuth from "../../hooks/useAuth";
 
@@ -277,7 +277,7 @@ const Dashboard = (props: Props) => {
 
   useEffect(() => {
     dispatch(setPendingCount(countData?.unapprovedCount));
-    dispatch(setUnapprovedHouseCount(unapprovedHouses?.data?.count));
+    dispatch(setPendingHouseCount(unapprovedHouses?.data?.count));
   }, [countData, dispatch, unapprovedHouses]);
 
   /* Handle Logout */
@@ -292,9 +292,7 @@ const Dashboard = (props: Props) => {
   const { requestBlogCount, requestHouseCount, pendingCount } = useAppSelector(
     (state) => state.request
   );
-  const { unapprovedHouseCount } = useAppSelector(
-    (state) => state.housesReqCount
-  );
+  const { pendingHouseCount } = useAppSelector((state) => state.housesReqCount);
 
   const { name } = useAppSelector((state) => state.appOption);
 
@@ -479,12 +477,12 @@ const Dashboard = (props: Props) => {
                         {pendingCount > 9 ? "+9" : pendingCount}
                       </span>
                     )}
-                    {unapprovedHouseCount > 0 && item.title === "Houses" && (
+                    {pendingHouseCount > 0 && item.title === "Houses" && (
                       <span
                         className="btn btn-circle btn-xs  btn-info "
                         title={"Unapproved Houses"}
                       >
-                        {unapprovedHouseCount > 9 ? "+9" : unapprovedHouseCount}
+                        {pendingHouseCount > 9 ? "+9" : pendingHouseCount}
                       </span>
                     )}
                   </Link>

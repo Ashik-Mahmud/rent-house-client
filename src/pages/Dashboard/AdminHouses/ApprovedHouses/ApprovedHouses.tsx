@@ -25,7 +25,9 @@ const ApprovedHouses = (props: Props) => {
     data: approvedHouses,
     isLoading,
     refetch,
-  } = useQuery("unapprovedHouses", () => getApprovedHouses());
+  } = useQuery(["approvedHouses", limit, filter, currentPage], () =>
+    getApprovedHouses()
+  );
 
   /* Get Approved Houses Function */
   const getApprovedHouses = async () => {

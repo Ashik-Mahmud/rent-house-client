@@ -4,6 +4,7 @@ const initialState = {
   unapprovedHouseCount: 0,
   approvedHouseCount: 0,
   rejectedHouseCount: 0,
+  pendingHouseCount: 0,
 };
 
 const houseSlice = createSlice({
@@ -19,6 +20,9 @@ const houseSlice = createSlice({
     setRejectedHouseCount: (state, { payload }) => {
       state.rejectedHouseCount = payload;
     },
+    setPendingHouseCount: (state, { payload }) => {
+      state.pendingHouseCount = payload;
+    },
   },
 });
 
@@ -26,5 +30,6 @@ export const {
   setApprovedHouseCount,
   setUnapprovedHouseCount,
   setRejectedHouseCount,
+  setPendingHouseCount,
 } = houseSlice.actions;
 export default houseSlice.reducer;
