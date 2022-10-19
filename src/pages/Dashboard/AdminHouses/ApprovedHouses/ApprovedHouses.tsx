@@ -54,7 +54,7 @@ const ApprovedHouses = (props: Props) => {
           <div className="overflow-x-auto">
             {isLoading ? (
               <GlobalLoader />
-            ) : approvedHouses?.houses?.length > 0 ? (
+            ) : approvedHouses?.data?.houses?.length > 0 ? (
               <table className="table w-full">
                 <thead>
                   <tr>
@@ -70,9 +70,11 @@ const ApprovedHouses = (props: Props) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {approvedHouses?.house?.map((house: any, ind: number) => (
-                    <ApprovedRow key={house?._id} ind={ind} house={house} />
-                  ))}
+                  {approvedHouses?.data?.houses?.map(
+                    (house: any, ind: number) => (
+                      <ApprovedRow key={house?._id} ind={ind} house={house} />
+                    )
+                  )}
                 </tbody>
               </table>
             ) : (

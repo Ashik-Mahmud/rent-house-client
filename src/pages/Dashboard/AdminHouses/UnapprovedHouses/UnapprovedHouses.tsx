@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { BrowserView, MobileView } from "react-device-detect";
 import { useQuery } from "react-query";
 import GlobalLoader from "../../../../components/GlobalLoader";
@@ -12,16 +13,22 @@ type Props = {};
 
 const UnapprovedHouses = (props: Props) => {
   const { user } = useAuth<authUserInterface | any>({});
+
+  /*  for pagination  */
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [limit, setLimit] = useState<number>(3);
+
   /* Get Unapproved House */
-  const { data: unapprovedHouses, isLoading } = useQuery(
-    "unapprovedHouses",
-    () => getUnapprovedHouses()
-  );
+  const {
+    data: unapprovedHouses,
+    isLoading,
+    refetch,
+  } = useQuery("unapprovedHouses", () => getUnapprovedHouses());
 
   /* Get Unapproved Houses Function */
   const getUnapprovedHouses = async () => {
     const { data } = await axios.get(
-      "http://localhost:5000/api/v1/admin/houses/unapproved",
+      `http://localhost:5000/api/v1/admin/houses/unapproved?page=${currentPage}&limit=${limit}`,
       {
         headers: {
           Authorization: `Bearer ${user.token}`,
@@ -30,6 +37,20 @@ const UnapprovedHouses = (props: Props) => {
     );
     return data;
   };
+
+  /* pagination code */
+  const totalItems = unapprovedHouses?.data?.count;
+  const totalPages = Math.ceil(totalItems / limit);
+  let paginationButtons = [];
+  for (let i = 1; i <= totalPages; i++) {
+    paginationButtons.push(i);
+  }
+
+  useEffect(() => {
+    setCurrentPage(currentPage);
+    setLimit(limit);
+    refetch();
+  }, [limit, currentPage, refetch]);
 
   return (
     <>
@@ -57,7 +78,7 @@ const UnapprovedHouses = (props: Props) => {
             <div className="overflow-x-auto">
               {isLoading ? (
                 <GlobalLoader />
-              ) : unapprovedHouses?.houses.length > 0 ? (
+              ) : unapprovedHouses?.data?.houses.length > 0 ? (
                 <table className="table w-full">
                   <thead>
                     <tr>
@@ -74,9 +95,15 @@ const UnapprovedHouses = (props: Props) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {unapprovedHouses?.houses.map((house: any, ind: number) => (
-                      <UnapprovedRow key={house._id} house={house} ind={ind} />
-                    ))}
+                    {unapprovedHouses?.data?.houses.map(
+                      (house: any, ind: number) => (
+                        <UnapprovedRow
+                          key={house._id}
+                          house={house}
+                          ind={ind}
+                        />
+                      )
+                    )}
                   </tbody>
                 </table>
               ) : (
@@ -84,20 +111,21 @@ const UnapprovedHouses = (props: Props) => {
               )}
             </div>
             {/* Pagination */}
-            <div className="pagination flex items-center justify-end my-3">
-              <a href="/" className="btn btn-circle btn-ghost btn-sm">
-                1
-              </a>
-              <a
-                href="/"
-                className="btn btn-circle btn-ghost btn-sm btn-active"
-              >
-                2
-              </a>
-              <a href="/" className="btn btn-circle btn-ghost btn-sm">
-                3
-              </a>
-            </div>
+            {limit < totalItems && (
+              <div className="pagination flex items-center justify-end my-3">
+                {paginationButtons?.map((page: number) => (
+                  <span
+                    className={`btn btn-circle btn-ghost btn-sm ${
+                      page === currentPage && "btn-active"
+                    }`}
+                    key={page}
+                    onClick={() => setCurrentPage(page)}
+                  >
+                    {page}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

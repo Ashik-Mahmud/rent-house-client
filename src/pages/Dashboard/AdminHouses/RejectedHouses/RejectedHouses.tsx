@@ -57,7 +57,7 @@ const RejectedHouses = (props: Props) => {
             <div className="overflow-x-auto">
               {isLoading ? (
                 <GlobalLoader />
-              ) : rejectedHouses?.houses?.length > 0 ? (
+              ) : rejectedHouses?.data?.houses?.length > 0 ? (
                 <table className="table w-full">
                   <thead>
                     <tr>
@@ -74,9 +74,11 @@ const RejectedHouses = (props: Props) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {rejectedHouses?.houses.map((house: any, ind: number) => (
-                      <RejectedRow key={house?._id} house={house} ind={ind} />
-                    ))}
+                    {rejectedHouses?.data?.houses.map(
+                      (house: any, ind: number) => (
+                        <RejectedRow key={house?._id} house={house} ind={ind} />
+                      )
+                    )}
                   </tbody>
                 </table>
               ) : (
