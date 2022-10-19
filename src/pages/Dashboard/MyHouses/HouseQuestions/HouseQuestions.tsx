@@ -11,7 +11,10 @@ const HouseQuestions = (props: Props) => {
     <>
       <div>
         <div className="p-5 my-4 bg-white">
-          {/* Houses Card */}
+          {/* Houses Card */}{" "}
+          <div className="title mb-5">
+            <h3 className="text-2xl font-bold mb-2">Manage Questions</h3>
+          </div>
           <div className="card sm:card-side bg-base-100 p-3 border py-1">
             <figure>
               <img
@@ -57,13 +60,9 @@ const HouseQuestions = (props: Props) => {
               </p>
             </div>
           </div>
-
           {/* Houses Questions */}
           <div className="house-questions mt-4">
             <div className="houses-questions-content py-5">
-              <div className="title">
-                <h3 className="text-2xl font-bold mb-2">Manage Questions</h3>
-              </div>
               <AnsweredQuestions />
             </div>
           </div>

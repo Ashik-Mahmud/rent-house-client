@@ -1,10 +1,12 @@
-import { useEffect } from "react";
+import axios from "axios";
+import cogoToast from "cogo-toast";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { BiLockAlt } from "react-icons/bi";
+import { BiCheck, BiEdit, BiLockAlt, BiX } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
-import { useAppDispatch } from "../../../app/store";
+import { useAppDispatch, useAppSelector } from "../../../app/store";
 import { logout } from "../../../features/AuthSlice";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
@@ -13,19 +15,23 @@ import { stateOptions, themeOptions } from "../../../utilities/data";
 import RequestModalForHouseHolder from "./RequestModalForHouseHolder";
 import VerifyBlogModal from "./VerifyBlogModal";
 
-type Props = {};
+type Props = {
+  appChangeRefetch: () => void;
+};
 
-const Settings = (props: Props) => {
-  const { updatedUser, setUser } = useAuth<authUserInterface | any>({});
+const Settings = ({ appChangeRefetch }: Props) => {
+  const { updatedUser, setUser, user } = useAuth<authUserInterface | any>({});
+  const { name } = useAppSelector((state) => state.appOption);
   const role = updatedUser?.role;
   const isVerify = updatedUser?.isVerified;
   const isBlogAllowed = updatedUser?.blogAllowed;
   const navigate = useNavigate();
+  const [isEdit, setIsEdit] = useState<boolean>(false);
 
   const [changePassword, { data, isSuccess, error }] =
     useChangePasswordMutation();
 
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset, setValue } = useForm();
   const dispatch = useAppDispatch();
 
   /* Handle Change Password Form */
@@ -64,7 +70,32 @@ const Settings = (props: Props) => {
     }
   }, [isSuccess, data, error, dispatch, setUser, navigate]);
 
-  /* Request For Blog */
+  /* Handle Change App Name */
+  const handleChangeAppName = handleSubmit(async (formData) => {
+    const { appName } = formData;
+    if (!appName) return toast.error("App name is required.");
+    try {
+      const { data } = await axios.post(
+        `http://localhost:5000/api/v1/admin/change-app-name`,
+        { name: appName },
+        {
+          headers: {
+            Authorization: `Bearer ${user?.token}`,
+          },
+        }
+      );
+
+      cogoToast.success(data?.message);
+      setIsEdit(false);
+      appChangeRefetch();
+    } catch (err) {
+      console.log(err);
+    }
+  });
+
+  useEffect(() => {
+    setValue("appName", name);
+  }, [setValue, name]);
 
   return (
     <>
@@ -78,7 +109,7 @@ const Settings = (props: Props) => {
             {role !== "admin" && role !== "manager" && (
               <>
                 {!isBlogAllowed && (
-                  <div className="req-for-blog flex-col justify-center sm:justify-between sm:flex-row flex items-center my-8 bg-base-200 p-5 rounded-lg">
+                  <div className="req-for-blog flex-col justify-center sm:justify-between sm:flex-row flex items-center my-8 bg-gray-50  p-5 rounded-lg">
                     <h3 className="text-xl font-bold text-center sm:text-left">
                       If you want to get Blogs writing authority
                     </h3>
@@ -107,7 +138,7 @@ const Settings = (props: Props) => {
                   </div>
                 )}
                 {role === "customer" && (
-                  <div className="req-for-blog flex items-center  my-8 bg-base-200 p-5 rounded-lg flex-col justify-center sm:justify-between sm:flex-row">
+                  <div className="req-for-blog flex items-center  my-8 bg-gray-50  p-5 rounded-lg flex-col justify-center sm:justify-between sm:flex-row">
                     <h3 className="text-xl font-bold text-center sm:text-left">
                       If you want to get House Holder Account
                     </h3>
@@ -135,6 +166,51 @@ const Settings = (props: Props) => {
                   </div>
                 )}
               </>
+            )}
+            {role === "admin" && (
+              <div className="flex items-center justify-between py-6 rounded my-4 bg-gray-50 px-5">
+                <h2 className="text-xl font-bold">Change App Name</h2>
+                <form
+                  onSubmit={handleChangeAppName}
+                  className="flex items-center gap-3"
+                >
+                  {isEdit ? (
+                    <input
+                      type="text"
+                      placeholder="Change App Name"
+                      className="input input-sm"
+                      {...register("appName")}
+                      autoComplete="off"
+                    />
+                  ) : (
+                    <h2 className="text-2xl">{name} </h2>
+                  )}
+
+                  {isEdit ? (
+                    <>
+                      <button
+                        type="submit"
+                        className="cursor-pointer text-primary font-bold text-2xl"
+                      >
+                        <BiCheck />
+                      </button>{" "}
+                      <span
+                        className="cursor-pointer text-error font-bold text-2xl"
+                        onClick={() => setIsEdit(false)}
+                      >
+                        <BiX />
+                      </span>
+                    </>
+                  ) : (
+                    <span
+                      className="cursor-pointer text-primary font-bold"
+                      onClick={() => setIsEdit(true)}
+                    >
+                      <BiEdit />
+                    </span>
+                  )}
+                </form>
+              </div>
             )}
 
             <div className="flex items-center justify-between py-6 rounded my-4 bg-gray-50 px-5">

@@ -1,4 +1,8 @@
+import axios from "axios";
+import { useEffect } from "react";
+import { useQuery } from "react-query";
 import { Route, Routes, useLocation } from "react-router-dom";
+import { useAppDispatch } from "./app/store";
 import AuthChangeRoute from "./auth/AuthChangeRoute";
 import RequireAdmin from "./auth/RequireAdmin";
 import RequireAuth from "./auth/RequireAuth";
@@ -6,6 +10,7 @@ import RequireBlog from "./auth/RequireBlog";
 import RequireCustomer from "./auth/RequireCustomer";
 import RequireSupAdmin from "./auth/RequireSupAdmin";
 import RequireUser from "./auth/RequireUser";
+import { setAppOptions } from "./features/AppSlice";
 import useAuth from "./hooks/useAuth";
 import { authUserInterface } from "./interfaces/UserInterface";
 import About from "./pages/About";
@@ -58,6 +63,7 @@ import NotFoundPage from "./shared/NotFoundPage";
 
 function App() {
   const { updatedUser } = useAuth<authUserInterface | any>({});
+  const dispatch = useAppDispatch();
 
   const location = useLocation();
   const sendDashboardForParticularRole = () => {
@@ -69,6 +75,23 @@ function App() {
       return <CustomerDashboard />;
     }
   };
+
+  /* Get House Option*/
+  const { data, isLoading, refetch } = useQuery("appOptions", async () => {
+    const res = await axios.get(
+      `http://localhost:5000/api/v1/admin/app-options`
+    );
+    return res?.data;
+  });
+
+  useEffect(() => {
+    if (isLoading) return;
+    if (data) {
+      dispatch(setAppOptions(data?.app));
+      refetch();
+    }
+  }, [data, dispatch, isLoading, refetch]);
+
   return (
     <div className="App font-open font-medium bg-cover bg-center bg-base-100">
       {!location.pathname.includes("dashboard") && <Header />}
@@ -189,7 +212,10 @@ function App() {
             element={<FeatureRequest />}
           />
           <Route path="profile" element={<Profile />} />
-          <Route path="settings" element={<Settings />} />
+          <Route
+            path="settings"
+            element={<Settings appChangeRefetch={refetch} />}
+          />
 
           {/* Customers Routes */}
           <Route
