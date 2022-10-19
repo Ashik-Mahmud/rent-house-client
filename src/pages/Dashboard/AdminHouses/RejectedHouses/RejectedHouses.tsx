@@ -1,10 +1,37 @@
+import axios from "axios";
 import { BrowserView, MobileView } from "react-device-detect";
+import { useQuery } from "react-query";
+import GlobalLoader from "../../../../components/GlobalLoader";
+import NoDataComponent from "../../../../components/NoDataComponent";
+import useAuth from "../../../../hooks/useAuth";
+import { authUserInterface } from "../../../../interfaces/UserInterface";
 import RejectedHouseModal from "../UnapprovedHouses/RejectedHouseModal";
 import RejectedRow from "./RejectedRow";
 
 type Props = {};
 
 const RejectedHouses = (props: Props) => {
+  const { user } = useAuth<authUserInterface | any>({});
+  /* Get Approved House */
+  const { data: rejectedHouses, isLoading } = useQuery("unapprovedHouses", () =>
+    getApprovedHouses()
+  );
+
+  /* Get Approved Houses Function */
+  const getApprovedHouses = async () => {
+    const { data } = await axios.get(
+      "http://localhost:5000/api/v1/admin/houses/rejected",
+      {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
+    return data;
+  };
+
+  console.log(rejectedHouses);
+
   return (
     <>
       {" "}
@@ -30,27 +57,33 @@ const RejectedHouses = (props: Props) => {
           </div>
           <div className="unapproved-houses-content my-5">
             <div className="overflow-x-auto">
-              <table className="table w-full">
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th>Image</th>
-                    <th>Bedrooms & Bathrooms</th>
-                    <th>House Type</th>
-                    <th>User - Name/Email</th>
-                    <th>Price</th>
-                    <th>status</th>
-                    <th>View</th>
-                    <th>permission</th>
-                    <th>action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <RejectedRow />
-                  <RejectedRow />
-                  <RejectedRow />
-                </tbody>
-              </table>
+              {isLoading ? (
+                <GlobalLoader />
+              ) : rejectedHouses?.houses?.length > 0 ? (
+                <table className="table w-full">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Image</th>
+                      <th>Bedrooms & Bathrooms</th>
+                      <th>House Type</th>
+                      <th>User - Name/Email</th>
+                      <th>Price</th>
+                      <th>status</th>
+                      <th>View</th>
+                      <th>permission</th>
+                      <th>action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {rejectedHouses?.houses.map((house: any, ind: number) => (
+                      <RejectedRow key={house?._id} house={house} ind={ind} />
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <NoDataComponent />
+              )}
             </div>
             {/* Pagination */}
             <div className="pagination flex items-center justify-end my-3">
