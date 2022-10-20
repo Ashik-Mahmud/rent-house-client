@@ -1,13 +1,29 @@
-import { BiBath, BiBed, BiMoney } from "react-icons/bi";
+import { BiBath, BiBed, BiLeftArrow, BiMoney } from "react-icons/bi";
 import { BsAlignEnd, BsHouse, BsLink, BsPen } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import GlobalLoader from "../../../components/GlobalLoader";
+import { useGetHouseByHouseIdQuery } from "../../../services/HouseApi";
 import HouseInput from "../AddHouse/HouseInput";
 type Props = {};
 
 const UpdateHouse = (props: Props) => {
+  const navigate = useNavigate();
+  const { houseId } = useParams();
+  const { data, isLoading } = useGetHouseByHouseIdQuery(houseId);
+  console.log(data);
+
+  if (isLoading) {
+    return <GlobalLoader />;
+  }
+
   return (
     <div className="p-5 my-5 bg-white rounded">
-      <h1 className="text-2xl font-bold">Update House</h1>
+      <div className="flex items-center gap-3">
+        <span className="cursor-pointer" onClick={() => navigate(-1)}>
+          <BiLeftArrow />
+        </span>
+        <h1 className="text-2xl font-bold">Update House</h1>
+      </div>
       <div className="mt-5">
         <form>
           <div className="flex flex-col md:flex-row gap-3">

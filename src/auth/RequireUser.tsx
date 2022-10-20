@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
 import { Navigate, useLocation } from "react-router-dom";
-import { PulseLoader } from "react-spinners";
+import GlobalLoader from "../components/GlobalLoader";
 import useAuth from "../hooks/useAuth";
 import { authUserInterface } from "../interfaces/UserInterface";
 
@@ -11,7 +11,7 @@ type Props = {
 const RequireUser = ({ children }: Props) => {
   const { updatedUser, isLoading } = useAuth<authUserInterface | any>({});
   const location = useLocation();
-  if (isLoading) return <PulseLoader size={40} />;
+  if (isLoading) return <GlobalLoader />;
   if (updatedUser?.role !== "user") {
     toast.error("Access Denied");
     return <Navigate to={"/dashboard"} replace state={{ from: location }} />;

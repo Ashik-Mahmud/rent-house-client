@@ -117,7 +117,7 @@ const HouseRow = ({ approved, house, index, refetch }: Props) => {
       <td className="py-3 ">
         <Link
           data-tip="Edit House"
-          to="/dashboard/houses/edit/4343"
+          to={`/dashboard/houses/edit/${house._id}`}
           className="btn btn-xs btn-circle btn-success flex items-center gap-2 text-xs tooltip"
         >
           <AiFillEdit />
