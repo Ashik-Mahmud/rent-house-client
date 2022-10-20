@@ -29,6 +29,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import AdminDashboard from "./pages/Dashboard/Dashboard/AdminDashboard/AdminDashboard";
 import CustomerDashboard from "./pages/Dashboard/Dashboard/CustomerDashboard/CustomerDashboard";
 import HouseHolderDashboard from "./pages/Dashboard/Dashboard/HouseHolderDashboard/HouseHolderDashboard";
+import ManagerDashboard from "./pages/Dashboard/Dashboard/ManagerDashboard/ManagerDashboard";
 import FeatureRequest from "./pages/Dashboard/FeatureRequest/FeatureRequest";
 import Messages from "./pages/Dashboard/Messages/Messages";
 import AddBlog from "./pages/Dashboard/MyBlogs/AddBlog/AddBlog";
@@ -67,8 +68,10 @@ function App() {
 
   const location = useLocation();
   const sendDashboardForParticularRole = () => {
-    if (updatedUser?.role === "admin" || updatedUser?.role === "manager") {
+    if (updatedUser?.role === "admin") {
       return <AdminDashboard />;
+    } else if (updatedUser?.role === "manager") {
+      return <ManagerDashboard />;
     } else if (updatedUser?.role === "user") {
       return <HouseHolderDashboard />;
     } else {

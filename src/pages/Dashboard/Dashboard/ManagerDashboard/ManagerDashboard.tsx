@@ -1,42 +1,10 @@
-import axios from "axios";
-import { useQuery } from "react-query";
-import { useAppSelector } from "../../../../app/store";
-import GlobalLoader from "../../../../components/GlobalLoader";
-import useAuth from "../../../../hooks/useAuth";
-import { authUserInterface } from "../../../../interfaces/UserInterface";
-import { useGetAllBlogsQuery } from "../../../../services/BlogApi";
 import BarCharts from "./BarCharts";
 import RecentHouseRequest from "./RecentHouseRequest";
-import UsersCharts from "./UsersCharts";
-
 type Props = {};
-
-const AdminDashboard = (props: Props) => {
-  const { approvedHouseCount, rejectedHouseCount } = useAppSelector(
-    (state) => state.housesReqCount
-  );
-  const { data: blogs, isLoading: loading2 } = useGetAllBlogsQuery({} as any);
-
-  const { user, updatedUser } = useAuth<authUserInterface | any>({});
-  const { data, isLoading } = useQuery(["users"], () => getAllUserForAdmin());
-  const getAllUserForAdmin = async () => {
-    if (updatedUser?.role === "admin") {
-      const { data } = await axios.get(
-        `http://localhost:5000/api/v1/users/admin`,
-        {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
-        }
-      );
-      return data;
-    }
-  };
-
-  if (loading2 || isLoading) return <GlobalLoader />;
-
+const ManagerDashboard = (props: Props) => {
   return (
-    <div className="my-5">
+    <div className="py-5">
+      {" "}
       {/* Dashboard Statistic */}
       <div className="stats gap-4 shadow flex justify-between">
         <div className="stat ">
@@ -56,7 +24,7 @@ const AdminDashboard = (props: Props) => {
             </svg>
           </div>
           <div className="stat-title">Total Approved Houses</div>
-          <div className="stat-value">{approvedHouseCount}</div>
+          <div className="stat-value">{54}</div>
           <div className="stat-desc">Jan 1st - Feb 1st</div>
         </div>
 
@@ -77,7 +45,7 @@ const AdminDashboard = (props: Props) => {
             </svg>
           </div>
           <div className="stat-title">Total Rejected Houses</div>
-          <div className="stat-value">{rejectedHouseCount}</div>
+          <div className="stat-value">5</div>
           <div className="stat-desc">↗︎ 400 (22%)</div>
         </div>
         <div className="stat">
@@ -97,7 +65,7 @@ const AdminDashboard = (props: Props) => {
             </svg>
           </div>
           <div className="stat-title">Total Blogs</div>
-          <div className="stat-value text-primary">{blogs?.count}</div>
+          <div className="stat-value text-primary">{54}</div>
           <div className="stat-desc">21% more than last month</div>
         </div>
 
@@ -118,25 +86,21 @@ const AdminDashboard = (props: Props) => {
             </svg>
           </div>
           <div className="stat-title">Total Register Users</div>
-          <div className="stat-value">{data?.count}</div>
+          <div className="stat-value">{5}</div>
           <div className="stat-desc">↘︎ 90 (14%)</div>
         </div>
       </div>
       {/* End */}
-
       {/* Recent Bookings */}
       <div className="my-5">
         <RecentHouseRequest />
       </div>
       {/* End */}
-      {/* Charts Area */}
-
-      <div className="charts gap-6 shadow my-5 grid grid-cols-1 md:grid-cols-2 ">
-        <UsersCharts />
+      <div className="charts gap-6 shadow my-5 grid grid-cols-1 md:grid-cols-1 ">
         <BarCharts />
       </div>
     </div>
   );
 };
 
-export default AdminDashboard;
+export default ManagerDashboard;
