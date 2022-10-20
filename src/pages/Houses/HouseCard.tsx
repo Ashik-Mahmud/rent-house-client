@@ -33,8 +33,8 @@ const HouseCard = ({ gridView }: Props) => {
             {showShare ? <BiShare /> : <BiShareAlt />}
           </span>
           <div
-            className={`share-items flex absolute right-14 z-50 gap-1 items-center ${
-              showShare ? "opacity-100" : "opacity-0"
+            className={`share-items flex absolute right-14 transition-all z-50 gap-1 items-center ${
+              showShare ? "opacity-100" : "opacity-0 pointer-events-none"
             }`}
           >
             <div className="share-item" title="share on facebook">
