@@ -11,11 +11,27 @@ const HouseHolderDashboard = (props: Props) => {
       {/* Dashboard Statistic */}
       <div className="stats gap-4 shadow flex justify-between">
         <div className="stat ">
-          <div className="stat-figure text-secondary">
+          <div className="stat-figure text-success">
             <BsHouse className="text-2xl" />
           </div>
-          <div className="stat-title">Total Houses</div>
-          <div className="stat-value">5</div>
+          <div className="stat-title">Approved Houses</div>
+          <div className="stat-value text-success">5</div>
+          <div className="stat-desc">Jan 1st - Feb 1st</div>
+        </div>
+        <div className="stat ">
+          <div className="stat-figure text-info">
+            <BsHouse className="text-2xl" />
+          </div>
+          <div className="stat-title">Unapproved Houses</div>
+          <div className="stat-value text-info">5</div>
+          <div className="stat-desc">Jan 1st - Feb 1st</div>
+        </div>
+        <div className="stat ">
+          <div className="stat-figure text-error">
+            <BsHouse className="text-2xl" />
+          </div>
+          <div className="stat-title">Rejected Houses</div>
+          <div className="stat-value text-error">5</div>
           <div className="stat-desc">Jan 1st - Feb 1st</div>
         </div>
         <div className="stat">
