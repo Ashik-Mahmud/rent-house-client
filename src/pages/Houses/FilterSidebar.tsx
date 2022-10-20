@@ -164,7 +164,7 @@ const FilterSidebar = (props: Props) => {
       </div>
 
       {/* Sidebar */}
-      <div className="house-content-left sm:sticky top-10  border p-6 bg-white shadow rounded-md w-full sm:w-auto">
+      <div className="house-content-left sm:sticky  top-10  border p-6 bg-white shadow rounded-md w-full sm:w-auto">
         <div className="house-content-left-title flex items-center justify-between">
           <h2 className="text-xl font-bold">Filters Houses</h2>
           <label

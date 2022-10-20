@@ -29,7 +29,9 @@ const Houses = (props: Props) => {
         </div> */}
         <div className="house-content flex-col sm:flex-row flex items-start gap-10">
           {/* Filters Sidebar */}
+
           <FilterSidebar />
+
           {/* Filters Sidebar end */}
           {/* Content */}
           <div className="house-content-right border p-5 flex-grow bg-white">
