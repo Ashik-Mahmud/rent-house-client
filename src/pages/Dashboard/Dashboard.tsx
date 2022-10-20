@@ -273,7 +273,7 @@ const Dashboard = (props: Props) => {
   );
   /* Get Reject House */
   const { data: rejectHouses } = useQuery("rejectHouses", async () =>
-    getHouseCount("reject")
+    getHouseCount("rejected")
   );
   /* function to get house count */
   const getHouseCount = async (slug: string) => {

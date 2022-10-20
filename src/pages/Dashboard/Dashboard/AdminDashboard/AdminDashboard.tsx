@@ -1,4 +1,10 @@
+import axios from "axios";
+import { useQuery } from "react-query";
 import { useAppSelector } from "../../../../app/store";
+import GlobalLoader from "../../../../components/GlobalLoader";
+import useAuth from "../../../../hooks/useAuth";
+import { authUserInterface } from "../../../../interfaces/UserInterface";
+import { useGetAllBlogsQuery } from "../../../../services/BlogApi";
 import BarCharts from "./BarCharts";
 import RecentBookings from "./RecentBookings";
 import UsersCharts from "./UsersCharts";
@@ -9,6 +15,24 @@ const AdminDashboard = (props: Props) => {
   const { approvedHouseCount, rejectedHouseCount } = useAppSelector(
     (state) => state.housesReqCount
   );
+  const { data: blogs, isLoading: loading2 } = useGetAllBlogsQuery({} as any);
+
+  const { user } = useAuth<authUserInterface | any>({});
+  const { data, isLoading } = useQuery(["users"], () => getAllUserForAdmin());
+  const getAllUserForAdmin = async () => {
+    const { data } = await axios.get(
+      `http://localhost:5000/api/v1/users/admin`,
+      {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
+    return data;
+  };
+
+  if (loading2 || isLoading) return <GlobalLoader />;
+
   return (
     <div className="my-5">
       {/* Dashboard Statistic */}
@@ -71,7 +95,7 @@ const AdminDashboard = (props: Props) => {
             </svg>
           </div>
           <div className="stat-title">Total Blogs</div>
-          <div className="stat-value text-primary">25</div>
+          <div className="stat-value text-primary">{blogs?.count}</div>
           <div className="stat-desc">21% more than last month</div>
         </div>
 
@@ -92,7 +116,7 @@ const AdminDashboard = (props: Props) => {
             </svg>
           </div>
           <div className="stat-title">Total Register Users</div>
-          <div className="stat-value">100</div>
+          <div className="stat-value">{data?.count}</div>
           <div className="stat-desc">↘︎ 90 (14%)</div>
         </div>
       </div>
