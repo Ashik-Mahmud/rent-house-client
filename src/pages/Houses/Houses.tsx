@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BsGrid1X2, BsGrid3X2 } from "react-icons/bs";
 import FilterSidebar from "./FilterSidebar";
 import HouseCard from "./HouseCard";
@@ -7,7 +7,19 @@ type Props = {};
 const Houses = (props: Props) => {
   const [gridView, setGridView] = useState(true);
 
-  console.log(gridView);
+  /* Handle Grid View With LocalStorage Database*/
+  const handleGridView = () => {
+    localStorage.setItem("gridView", JSON.stringify(!gridView));
+    setGridView(() => {
+      return localStorage.getItem("gridView") === "true" ? true : false;
+    });
+  };
+
+  useEffect(() => {
+    const getGridViewValue: any = localStorage.getItem("gridView");
+    const parsedValue = JSON.parse(getGridViewValue);
+    setGridView(parsedValue);
+  }, [gridView]);
 
   return (
     <section id="houses" className="overflow-x-hidden">
@@ -49,7 +61,7 @@ const Houses = (props: Props) => {
                   <div className="grid-view">
                     <span
                       className="text-xl cursor-pointer bg-white p-2 block rounded"
-                      onClick={() => setGridView((state) => !state)}
+                      onClick={handleGridView}
                     >
                       {gridView ? <BsGrid1X2 /> : <BsGrid3X2 />}
                     </span>

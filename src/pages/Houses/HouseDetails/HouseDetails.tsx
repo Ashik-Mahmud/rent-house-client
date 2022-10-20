@@ -32,7 +32,11 @@ const HouseDetails = (props: Props) => {
   if (isLoading) return <GlobalLoader />;
   if (error) {
     console.log(error);
-    return <h1>Oh nooo!!! Something went wrong. Please try again.</h1>;
+    return (
+      <h1 className="p-10 text-center text-3xl py-20">
+        Oh nooo!!! Something went wrong. Please try again.
+      </h1>
+    );
   }
 
   return (
