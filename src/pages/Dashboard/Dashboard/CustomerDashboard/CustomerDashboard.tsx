@@ -1,3 +1,6 @@
+import RecentBookedHouses from "./RecentBookedHouses";
+import StatisticChart from "./StatisticChart";
+
 type Props = {};
 
 const CustomerDashboard = (props: Props) => {
@@ -91,13 +94,14 @@ const CustomerDashboard = (props: Props) => {
       {/* End */}
 
       {/* Recent Bookings */}
-      <div className="my-5">{/*    <RecentBookings /> */}</div>
+      <div className="my-5">
+        <RecentBookedHouses />
+      </div>
       {/* End */}
       {/* Charts Area */}
 
-      <div className="charts gap-6 shadow my-5 grid grid-cols-1 md:grid-cols-2 ">
-        {/* <UsersCharts />
-        <BarCharts /> */}
+      <div className="charts gap-6 shadow my-5 grid grid-cols-1 h-60">
+        <StatisticChart />
       </div>
     </div>
   );
