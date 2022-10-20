@@ -1,26 +1,29 @@
-import { useEffect } from "react";
+import axios from "axios";
 import { BiExport } from "react-icons/bi";
+import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import GlobalLoader from "../../../components/GlobalLoader";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
-import { useGetHouseByUserQuery } from "../../../services/HouseApi";
 import HouseRow from "./HouseRow";
 
 type Props = {};
 
 const MyHouses = (props: Props) => {
-  const { updatedUser } = useAuth<authUserInterface | any>({});
+  const { updatedUser, user } = useAuth<authUserInterface | any>({});
 
-  const { data, isError, isSuccess, error, isLoading } = useGetHouseByUserQuery(
-    updatedUser?._id
-  );
-
-  useEffect(() => {
-    if (isError) {
-      console.log(error);
-    }
-  }, [isError, error, isSuccess, data]);
+  const { data, isLoading } = useQuery(["houses", user], () => getMyHouses());
+  const getMyHouses = async () => {
+    const { data } = await axios.get(
+      `http://localhost:5000/api/v1/houses/get-house-by-user/${updatedUser?._id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${user?.token}`,
+        },
+      }
+    );
+    return data;
+  };
 
   return (
     <div className="p-10 my-5 bg-white rounded shadow">

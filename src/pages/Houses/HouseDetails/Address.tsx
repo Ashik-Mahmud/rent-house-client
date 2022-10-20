@@ -36,13 +36,17 @@ const Address = ({ data }: Props) => {
                 <th>
                   <span className="badge badge-ghost">
                     {" "}
-                    <a
-                      href={data?.googleMapLocation}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Go to Map
-                    </a>{" "}
+                    {data?.googleMapLocation ? (
+                      <a
+                        href={data?.googleMapLocation}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Go to Map
+                      </a>
+                    ) : (
+                      "Not Available"
+                    )}
                   </span>
                 </th>
                 <td className="flex items-center gap-2">
