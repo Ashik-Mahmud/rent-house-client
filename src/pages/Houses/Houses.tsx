@@ -1,9 +1,14 @@
+import { useState } from "react";
+import { BsGrid1X2, BsGrid3X2 } from "react-icons/bs";
 import FilterSidebar from "./FilterSidebar";
 import HouseCard from "./HouseCard";
-
 type Props = {};
 
 const Houses = (props: Props) => {
+  const [gridView, setGridView] = useState(true);
+
+  console.log(gridView);
+
   return (
     <section id="houses" className="overflow-x-hidden">
       <div className="container mx-auto pb-20 pt-20 px-5">
@@ -39,23 +44,36 @@ const Houses = (props: Props) => {
                     </div>
                   </div>
                 </div>
-                <h2 className="text-2xl font-bold">Most Popular</h2>
+                <div className="flex items-center gap-4">
+                  <h2 className="text-2xl font-bold">Most Popular</h2>
+                  <div className="grid-view">
+                    <span
+                      className="text-xl cursor-pointer bg-white p-2 block rounded"
+                      onClick={() => setGridView((state) => !state)}
+                    >
+                      {gridView ? <BsGrid1X2 /> : <BsGrid3X2 />}
+                    </span>
+                  </div>
+                </div>
               </div>
 
               {/* Houses Main Content */}
-              <div className="house-main-content p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                <HouseCard />
-                <HouseCard />
-                <HouseCard />
-                <HouseCard />
-                <HouseCard />
-                <HouseCard />
-                <HouseCard />
-                <HouseCard />
-                <HouseCard />
-                <HouseCard />
-                <HouseCard />
-                <HouseCard />
+              <div
+                className={`house-main-content p-6 grid  gap-6 ${
+                  gridView
+                    ? "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3"
+                    : "grid-cols-1 "
+                }`}
+              >
+                <HouseCard gridView={gridView} />
+                <HouseCard gridView={gridView} />
+                <HouseCard gridView={gridView} />
+                <HouseCard gridView={gridView} />
+                <HouseCard gridView={gridView} />
+                <HouseCard gridView={gridView} />
+                <HouseCard gridView={gridView} />
+                <HouseCard gridView={gridView} />
+                <HouseCard gridView={gridView} />
               </div>
               {/* House Main Content End */}
               {/* pagination */}
