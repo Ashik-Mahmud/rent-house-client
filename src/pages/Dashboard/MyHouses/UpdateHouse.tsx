@@ -3,8 +3,13 @@ import { useForm } from "react-hook-form";
 import { BiBath, BiBed, BiLeftArrow, BiMoney } from "react-icons/bi";
 import { BsAlignEnd, BsHouse, BsLink, BsPen } from "react-icons/bs";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { PulseLoader } from "react-spinners";
+import swal from "sweetalert";
 import GlobalLoader from "../../../components/GlobalLoader";
-import { useGetHouseByHouseIdQuery } from "../../../services/HouseApi";
+import {
+  useGetHouseByHouseIdQuery,
+  useUpdateHouseByIdMutation,
+} from "../../../services/HouseApi";
 import HouseInput from "../AddHouse/HouseInput";
 type Props = {};
 
@@ -13,48 +18,10 @@ const UpdateHouse = (props: Props) => {
   const { houseId } = useParams();
   const { data, isLoading } = useGetHouseByHouseIdQuery(houseId);
   const { register, handleSubmit, setValue } = useForm();
-  /*  const {
-    name,
-    address,
-    category,
-    allowQuestion,
-    allowReview,
-    bathrooms,
-    bedrooms,
-    city,
-    description,
-    district,
-    googleMapLocation,
-    houseType,
-    houseUseFor,
-    isAvailable,
-    isBachelorRoom,
-    isBlock,
-    isBooked,
-    price,
-
-hasCCTV
-hasCarParking
-hasDinningRoom
-hasDrawingRoom
-hasGarage
-hasGas
-hasGenerator
-hasGym
-hasInternet
-hasKitchen
-hasLawn
-hasLift
-hasSecurity
-hasServantRoom
-hasStore
-hasSwimmingPool
-
-  } = data?.data; */
+  const [updateHouseById, { isLoading: isUpdating, data: updateData }] =
+    useUpdateHouseByIdMutation();
 
   const udata = data?.data;
-
-  console.log(data?.data);
 
   useEffect(() => {
     setValue("name", udata?.name);
@@ -93,6 +60,60 @@ hasSwimmingPool
     setValue("hasSwimmingPool", udata?.others?.hasSwimmingPool);
   }, [udata, setValue]);
 
+  /* Handle Update House Data */
+  const handeUpdateHouseForm = handleSubmit(async (data) => {
+    const sendingDataForHouse = {
+      name: data.name,
+      price: data.price,
+      category: data.category,
+      houseType: data.houseType,
+      houseUseFor: data.houseUseFor,
+      googleMapLocation: data.googleMapLink,
+      bathrooms: data.bathrooms,
+      bedrooms: data.bedrooms,
+      address: data.address,
+      district: data.district,
+      city: data.city,
+      description: data.description,
+      allowQuestion: data.allowQuestion,
+      allowReview: data.allowReview,
+      isAvailable: data.isAvailable,
+      isBachelorRoom: data.isBachelorRoom,
+      isBooked: data.isBooked,
+      others: {
+        hasDrawingRoom: data.hasDrawingRoom,
+        hasDinningRoom: data.hasDinningRoom,
+        hasKitchen: data.hasKitchen,
+        hasStore: data.hasStore,
+        hasServantRoom: data.hasServantRoom,
+        hasSwimmingPool: data.hasSwimmingPool,
+        hasGym: data.hasGym,
+        hasLawn: data.hasLawn,
+        hasGarage: data.hasGarage,
+        hasCarParking: data.hasCarParking,
+        hasLift: data.hasLift,
+        hasGenerator: data.hasGenerator,
+        hasSecurity: data.hasSecurity,
+        hasCCTV: data.hasCCTV,
+        hasInternet: data.hasInternet,
+        hasGas: data.hasGas,
+      },
+    };
+    const res = await updateHouseById({
+      id: houseId,
+      data: sendingDataForHouse,
+    });
+    if ((res as any).data) {
+      navigate("/dashboard/houses");
+    }
+  });
+
+  useEffect(() => {
+    if (updateData) {
+      swal("Success", "House Updated Successfully", "success");
+    }
+  }, [updateData]);
+
   if (isLoading) {
     return <GlobalLoader />;
   }
@@ -106,7 +127,7 @@ hasSwimmingPool
         <h1 className="text-2xl font-bold">Update House</h1>
       </div>
       <div className="mt-5">
-        <form>
+        <form onSubmit={handeUpdateHouseForm}>
           <div className="flex flex-col md:flex-row gap-3">
             <HouseInput title="Put Your House Name" icon={<BsHouse />}>
               <input
@@ -468,7 +489,13 @@ hasSwimmingPool
             >
               Back
             </Link>
-            <button className="btn btn-success btn-md">Update House</button>
+            {isUpdating ? (
+              <button type="button" className="btn btn-success btn-md">
+                <PulseLoader size={8} />
+              </button>
+            ) : (
+              <button className="btn btn-success btn-md">Update House</button>
+            )}
           </div>
         </form>
       </div>

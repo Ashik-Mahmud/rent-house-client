@@ -38,6 +38,15 @@ export const HouseApi = createApi({
       }),
       providesTags: ["House"],
     }),
+    updateHouseById: builder.mutation({
+      query: (body) => ({
+        url: `/update/${body.id}`,
+        method: "PATCH",
+        body: body.data,
+      }),
+      invalidatesTags: ["House"],
+    }),
+
     deleteHouseById: builder.mutation({
       query: (id) => ({
         url: `/delete/${id}`,
@@ -53,4 +62,5 @@ export const {
   useGetHouseByUserQuery,
   useGetHouseByHouseIdQuery,
   useDeleteHouseByIdMutation,
+  useUpdateHouseByIdMutation,
 } = HouseApi;
