@@ -9,6 +9,8 @@ import { MdReportGmailerrorred } from "react-icons/md";
 import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import GlobalLoader from "../../../components/GlobalLoader";
+import useAuth from "../../../hooks/useAuth";
+import { authUserInterface } from "../../../interfaces/UserInterface";
 import Address from "./Address";
 import BookNow from "./BookNowModal";
 import Gallery from "./Gallery";
@@ -26,6 +28,7 @@ type Props = {};
 
 const HouseDetails = (props: Props) => {
   /* Get House ID */
+  const { updatedUser } = useAuth<authUserInterface | any>({});
   const { houseId } = useParams<{ houseId: string }>();
 
   const { data, isLoading, error, refetch } = useQuery(
@@ -223,17 +226,21 @@ const HouseDetails = (props: Props) => {
               <Others />
               <Gallery gallery={data?.data?.gallery} />
               <Question data={data?.data} />
-              <Reviews />
+              <Reviews data={data?.data} />
             </div>
           </div>
         </div>
         <div className="book-now text-center mb-8">
-          <label
-            htmlFor="book-now-modal"
-            className="btn btn-lg btn-success modal-button"
-          >
-            Book Now
-          </label>
+          {data?.data?.owner?._id !== updatedUser?._id &&
+            updatedUser?.role !== "admin" &&
+            updatedUser?.role !== "manager" && (
+              <label
+                htmlFor="book-now-modal"
+                className="btn btn-lg btn-success modal-button"
+              >
+                Book Now
+              </label>
+            )}
         </div>
       </section>
 

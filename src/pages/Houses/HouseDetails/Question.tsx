@@ -1,10 +1,14 @@
 import { BsPlus } from "react-icons/bs";
+import useAuth from "../../../hooks/useAuth";
+import { authUserInterface } from "../../../interfaces/UserInterface";
 
 type Props = {
   data: any;
 };
 
 const Question = ({ data }: Props) => {
+  const { updatedUser } = useAuth<authUserInterface | any>({});
+
   return (
     <div>
       {/* Question Area */}
@@ -15,14 +19,15 @@ const Question = ({ data }: Props) => {
             <span className="w-10 h-1 bg-success block"></span>
           </div>
 
-          {data?.allowQuestion === "Yes" && (
-            <label
-              htmlFor="question-modal"
-              className=" modal-button btn btn-success rounded-none btn-sm flex items-center gap-2"
-            >
-              Add Question <BsPlus />
-            </label>
-          )}
+          {data?.allowQuestion === "Yes" &&
+            data?.owner?._id !== updatedUser?._id && (
+              <label
+                htmlFor="question-modal"
+                className=" modal-button btn btn-success rounded-none btn-sm flex items-center gap-2"
+              >
+                Add Question <BsPlus />
+              </label>
+            )}
         </div>
         <div className="question-answer">
           <ul className="flex gap-1 items-center ">
