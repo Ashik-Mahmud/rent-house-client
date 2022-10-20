@@ -12,18 +12,18 @@ type Props = {};
 
 const MyHouses = (props: Props) => {
   const { updatedUser, user } = useAuth<authUserInterface | any>({});
-
+  const [search, setSearch] = useState<string>("");
   /* Pagination State */
   const [currentPage, setCurrentPage] = useState(1);
   const [limit, setLimit] = useState(1);
 
   const { data, isLoading, refetch } = useQuery(
-    ["houses", user, limit, currentPage],
+    ["houses", user, limit, currentPage, search],
     () => getMyHouses()
   );
   const getMyHouses = async () => {
     const { data } = await axios.get(
-      `http://localhost:5000/api/v1/houses/get-house-by-user/${updatedUser?._id}?page=${currentPage}&limit=${limit}`,
+      `http://localhost:5000/api/v1/houses/get-house-by-user/${updatedUser?._id}?page=${currentPage}&limit=${limit}&q=${search}`,
       {
         headers: {
           Authorization: `Bearer ${user?.token}`,
@@ -49,8 +49,6 @@ const MyHouses = (props: Props) => {
     }
   };
 
-  console.log(data, totalPage, currentPage);
-
   return (
     <div className="p-10 my-5 bg-white rounded shadow">
       <div className="title flex-col sm:flex-row flex items-center justify-between mb-3">
@@ -66,6 +64,7 @@ const MyHouses = (props: Props) => {
           className="input input-bordered"
           id="search-field"
           placeholder="Search"
+          onInput={(e) => setSearch(e.currentTarget.value)}
         />
       </div>
       <div className="export-btn flex items-center gap-5 justify-end">
