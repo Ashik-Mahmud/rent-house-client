@@ -6,16 +6,6 @@ import useAuth from "../../../../hooks/useAuth";
 import { authUserInterface } from "../../../../interfaces/UserInterface";
 type Props = {};
 const UsersCharts = (props: Props) => {
-  const options = {
-    chart: {
-      id: "basic-bar",
-    },
-    xaxis: {
-      categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999],
-    },
-    labels: ["Users", "Customers", "Admin", "Manager"],
-  };
-
   const { user } = useAuth<authUserInterface | any>({});
   const { data, isLoading } = useQuery(["users"], () => getAllUserForAdmin());
   const getAllUserForAdmin = async () => {
@@ -30,6 +20,8 @@ const UsersCharts = (props: Props) => {
     return data;
   };
 
+  if (isLoading) return <GlobalLoader />;
+
   const users = data?.data?.filter((user: any) => user.role === "user");
   const customers = data?.data?.filter((user: any) => user.role === "customer");
   const admins = data?.data?.filter((user: any) => user.role === "admin");
@@ -39,7 +31,15 @@ const UsersCharts = (props: Props) => {
   const adminsCount = admins?.length;
   const managersCount = managers?.length;
   const series = [usersCount, customersCount, adminsCount, managersCount];
-
+  const options = {
+    chart: {
+      id: "basic-bar",
+    },
+    xaxis: {
+      categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999],
+    },
+    labels: ["Users", "Customers", "Admin", "Manager"],
+  };
   return (
     <div className="bg-white">
       <h2 className="text-2xl font-bold p-5">Register Users Variations</h2>

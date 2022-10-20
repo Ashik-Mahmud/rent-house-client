@@ -8,7 +8,7 @@ const HouseReportChart = (props: Props) => {
     xaxis: {
       categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999],
     },
-    labels: ["Questions", "Reviews", "Reports"],
+    labels: ["Questions", "Reviews", "Reports", "Bookings"],
   };
   /* const series = [
     {
@@ -17,7 +17,7 @@ const HouseReportChart = (props: Props) => {
     },
   ]; */
 
-  const series = [44, 55, 41];
+  const series = [44, 55, 41, 6];
 
   return (
     <div className="bg-white">

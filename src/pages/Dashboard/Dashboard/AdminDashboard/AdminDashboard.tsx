@@ -6,7 +6,7 @@ import useAuth from "../../../../hooks/useAuth";
 import { authUserInterface } from "../../../../interfaces/UserInterface";
 import { useGetAllBlogsQuery } from "../../../../services/BlogApi";
 import BarCharts from "./BarCharts";
-import RecentBookings from "./RecentBookings";
+import RecentHouseRequest from "./RecentHouseRequest";
 import UsersCharts from "./UsersCharts";
 
 type Props = {};
@@ -124,7 +124,7 @@ const AdminDashboard = (props: Props) => {
 
       {/* Recent Bookings */}
       <div className="my-5">
-        <RecentBookings />
+        <RecentHouseRequest />
       </div>
       {/* End */}
       {/* Charts Area */}
