@@ -12,7 +12,9 @@ type Props = {};
 const MyHouses = (props: Props) => {
   const { updatedUser, user } = useAuth<authUserInterface | any>({});
 
-  const { data, isLoading } = useQuery(["houses", user], () => getMyHouses());
+  const { data, isLoading, refetch } = useQuery(["houses", user], () =>
+    getMyHouses()
+  );
   const getMyHouses = async () => {
     const { data } = await axios.get(
       `http://localhost:5000/api/v1/houses/get-house-by-user/${updatedUser?._id}`,
@@ -73,7 +75,12 @@ const MyHouses = (props: Props) => {
             </thead>
             <tbody>
               {data?.data?.map((house: any, index: number) => (
-                <HouseRow key={index} house={house} index={index} />
+                <HouseRow
+                  key={index}
+                  house={house}
+                  index={index}
+                  refetch={refetch}
+                />
               ))}
             </tbody>
           </table>
