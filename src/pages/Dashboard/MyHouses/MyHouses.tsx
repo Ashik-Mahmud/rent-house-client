@@ -15,7 +15,7 @@ const MyHouses = (props: Props) => {
   const [search, setSearch] = useState<string>("");
   /* Pagination State */
   const [currentPage, setCurrentPage] = useState(1);
-  const [limit, setLimit] = useState(1);
+  const [limit, setLimit] = useState(5);
 
   const { data, isLoading, refetch } = useQuery(
     ["houses", user, limit, currentPage, search],
@@ -137,8 +137,8 @@ const MyHouses = (props: Props) => {
               onChange={(event) => setLimit(Number(event.target.value))}
             >
               <option value="5">5</option>
-              <option value="5">10</option>
-              <option value="5">15</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
             </select>
             entries
           </div>

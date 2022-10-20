@@ -54,6 +54,13 @@ export const HouseApi = createApi({
       }),
       invalidatesTags: ["House"],
     }),
+    addFavoriteHouse: builder.mutation({
+      query: (body) => ({
+        url: `/like-count/${body.id}?clicked=${body?.clicked}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["House"],
+    }),
   }),
 });
 
@@ -63,4 +70,5 @@ export const {
   useGetHouseByHouseIdQuery,
   useDeleteHouseByIdMutation,
   useUpdateHouseByIdMutation,
+  useAddFavoriteHouseMutation,
 } = HouseApi;
