@@ -26,16 +26,30 @@ const HouseRow = ({ approved, house, index }: Props) => {
       <td className="py-3">{house?.price}</td>
       <td className="py-3">{house?.bathrooms}</td>
       <td className="py-3">
-        <div
-          className={`badge badge-${
-            house.status === "approved"
-              ? "success"
-              : "warning tooltip tooltip-warning"
-          } text-xs `}
-          data-tip="Waiting for Admin Approval"
-        >
-          {house.status}
-        </div>
+        {house?.status === "approved" && (
+          <div
+            className="tooltip tooltip-success text-xs badge badge-success"
+            data-tip="Approved by Admin"
+          >
+            <span>approved</span>
+          </div>
+        )}{" "}
+        {house?.status === "pending" && (
+          <div
+            className="tooltip  tooltip-warning text-xs badge badge-warning"
+            data-tip="Waiting for Admin Approval"
+          >
+            <span>pending</span>
+          </div>
+        )}
+        {house?.status === "rejected" && (
+          <div
+            className="tooltip tooltip-error badge badge-error text-xs"
+            data-tip="Rejected by Admin"
+          >
+            <span>Rejected</span>
+          </div>
+        )}
       </td>
       <td>
         <div className="badge badge-secondary">{house?.likes}</div>
