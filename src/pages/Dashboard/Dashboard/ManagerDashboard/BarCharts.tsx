@@ -46,7 +46,13 @@ const BarCharts = (props: Props) => {
   return (
     <div className="p-7 bg-white">
       <h3 className="text-lg font-bold">Details for Maximum Subject</h3>
-      <Chart options={options} series={series} type="bar" width="100%" />
+      <Chart
+        options={options}
+        series={series}
+        type="bar"
+        width="100%"
+        height={"400"}
+      />
     </div>
   );
 };

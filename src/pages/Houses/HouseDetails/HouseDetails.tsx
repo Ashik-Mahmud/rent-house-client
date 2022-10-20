@@ -1,12 +1,16 @@
-import { useState } from "react";
+import axios from "axios";
+import cogoToast from "cogo-toast";
+import { useEffect, useState } from "react";
 import { BiMap } from "react-icons/bi";
-import { BsArrowLeft, BsHeartFill } from "react-icons/bs";
+import { BsArrowLeft, BsHeart, BsHeartFill } from "react-icons/bs";
 import { FiMaximize2 } from "react-icons/fi";
 import { GoHome } from "react-icons/go";
 import { MdReportGmailerrorred } from "react-icons/md";
+import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import GlobalLoader from "../../../components/GlobalLoader";
-import { useGetHouseByHouseIdQuery } from "../../../services/HouseApi";
+import useAuth from "../../../hooks/useAuth";
+import { authUserInterface } from "../../../interfaces/UserInterface";
 import Address from "./Address";
 import BookNow from "./BookNowModal";
 import Gallery from "./Gallery";
@@ -24,15 +28,54 @@ type Props = {};
 
 const HouseDetails = (props: Props) => {
   /* Get House ID */
+  const { updatedUser } = useAuth<authUserInterface | any>({});
   const { houseId } = useParams<{ houseId: string }>();
-  const { data, isLoading, error } = useGetHouseByHouseIdQuery(houseId);
+
+  const { data, isLoading, error, refetch } = useQuery(
+    ["houseDetails", houseId],
+    () => getHouseDetails()
+  );
+
+  /* Get House Details Function */
+  const getHouseDetails = async () => {
+    const { data } = await axios.get(
+      `http://localhost:5000/api/v1/houses/${houseId}`
+    );
+    return data;
+  };
+
+  const [clicked, setClicked] = useState(false);
+
   const [isBigImage, setIsBigImage] = useState(false);
   const navigate = useNavigate();
+
+  /* Handle Favorite */
+  const handleFavorite = async () => {
+    localStorage.setItem("favorite", JSON.stringify(!clicked));
+    setClicked(() => {
+      return localStorage.getItem("favorite") === "true" ? true : false;
+    });
+    const { data } = await axios.patch(
+      `http://localhost:5000/api/v1/houses/like-count/${houseId}?like=${clicked}`
+    );
+    cogoToast.success(data.message);
+    refetch();
+  };
+
+  useEffect(() => {
+    const favoriteValue: any = localStorage.getItem("favorite");
+    const parsedValue = JSON.parse(favoriteValue);
+    setClicked(parsedValue || false);
+  }, [clicked]);
 
   if (isLoading) return <GlobalLoader />;
   if (error) {
     console.log(error);
-    return <h1>Oh nooo!!! Something went wrong. Please try again.</h1>;
+    return (
+      <h1 className="p-10 text-center text-3xl py-20">
+        Oh nooo!!! Something went wrong. Please try again.
+      </h1>
+    );
   }
 
   return (
@@ -61,9 +104,15 @@ const HouseDetails = (props: Props) => {
                 </label>
                 <div
                   className="heart tooltip flex items-center gap-2 btn btn-ghost"
-                  data-tip="Loved House"
+                  data-tip={clicked ? "Dislike" : "Like"}
+                  onClick={() => handleFavorite()}
                 >
-                  <BsHeartFill /> {data?.data?.likes}
+                  {clicked ? (
+                    <BsHeartFill className="text-red-500" />
+                  ) : (
+                    <BsHeart />
+                  )}{" "}
+                  {data?.data?.likes}
                 </div>
                 <div className="flex items-center gap-2">
                   <BiMap /> {data?.data?.address}
@@ -177,17 +226,21 @@ const HouseDetails = (props: Props) => {
               <Others />
               <Gallery gallery={data?.data?.gallery} />
               <Question data={data?.data} />
-              <Reviews />
+              <Reviews data={data?.data} />
             </div>
           </div>
         </div>
         <div className="book-now text-center mb-8">
-          <label
-            htmlFor="book-now-modal"
-            className="btn btn-lg btn-success modal-button"
-          >
-            Book Now
-          </label>
+          {data?.data?.owner?._id !== updatedUser?._id &&
+            updatedUser?.role !== "admin" &&
+            updatedUser?.role !== "manager" && (
+              <label
+                htmlFor="book-now-modal"
+                className="btn btn-lg btn-success modal-button"
+              >
+                Book Now
+              </label>
+            )}
         </div>
       </section>
 

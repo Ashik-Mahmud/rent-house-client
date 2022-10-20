@@ -1,11 +1,15 @@
 import { BsPlus } from "react-icons/bs";
 import Slider from "react-slick";
 import slickSettings from "../../../configs/slickConfig";
+import useAuth from "../../../hooks/useAuth";
+import { authUserInterface } from "../../../interfaces/UserInterface";
 import HouseReviewCard from "./HouseReviewCard";
 
-type Props = {};
+type Props = { data: any };
 
-const Reviews = (props: Props) => {
+const Reviews = ({ data }: Props) => {
+  const { updatedUser } = useAuth<authUserInterface | any>({});
+
   return (
     <>
       {/* Review Area */}
@@ -16,12 +20,14 @@ const Reviews = (props: Props) => {
             <span className="w-10 h-1 bg-success block"></span>
           </div>
 
-          <label
-            htmlFor="review-modal"
-            className=" modal-button btn btn-success rounded-none btn-sm flex items-center gap-2"
-          >
-            Add Review <BsPlus />
-          </label>
+          {data.allowReview === "Yes" && data?.owner?._id !== updatedUser?._id && (
+            <label
+              htmlFor="review-modal"
+              className=" modal-button btn btn-success rounded-none btn-sm flex items-center gap-2"
+            >
+              Add Review <BsPlus />
+            </label>
+          )}
         </div>
         <div className="question-answer">
           <ul className="">

@@ -41,15 +41,16 @@ const Payments = (props: Props) => {
               <thead>
                 <tr>
                   <th></th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Phone</th>
-                  <th>House ID</th>
-                  <th>House</th>
+                  <th>CUSTOMER</th>
+                  <th>INFO</th>
+                  <th>HOUSES</th>
+                  <th>Bed/Bath rooms</th>
+                  <th>Price</th>
+                  <th>Method</th>
                   <th>Transaction ID</th>
-                  <th>Status</th>
-                  <th>View</th>
-                  <th>Action</th>
+                  <th>status</th>
+
+                  <th>permission</th>
                 </tr>
               </thead>
               <tbody>

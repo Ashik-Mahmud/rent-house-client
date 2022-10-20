@@ -5,7 +5,7 @@ type Props = {};
 const DuelSlider = (props: Props) => {
   const [min, setMin] = useState(0);
   const [max, setMax] = useState(100000);
-  console.log(min, max);
+
   return (
     <div className="w-full p-2">
       <ReactSlider

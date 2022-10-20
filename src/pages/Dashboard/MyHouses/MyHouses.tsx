@@ -1,26 +1,53 @@
-import { useEffect } from "react";
-import { BiExport } from "react-icons/bi";
+import axios from "axios";
+import { useState } from "react";
+import { BiExport, BiPlus } from "react-icons/bi";
+import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import GlobalLoader from "../../../components/GlobalLoader";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
-import { useGetHouseByUserQuery } from "../../../services/HouseApi";
 import HouseRow from "./HouseRow";
 
 type Props = {};
 
 const MyHouses = (props: Props) => {
-  const { updatedUser } = useAuth<authUserInterface | any>({});
+  const { updatedUser, user } = useAuth<authUserInterface | any>({});
+  const [search, setSearch] = useState<string>("");
+  /* Pagination State */
+  const [currentPage, setCurrentPage] = useState(1);
+  const [limit, setLimit] = useState(5);
 
-  const { data, isError, isSuccess, error, isLoading } = useGetHouseByUserQuery(
-    updatedUser?._id
+  const { data, isLoading, refetch } = useQuery(
+    ["houses", user, limit, currentPage, search],
+    () => getMyHouses()
   );
+  const getMyHouses = async () => {
+    const { data } = await axios.get(
+      `http://localhost:5000/api/v1/houses/get-house-by-user/${updatedUser?._id}?page=${currentPage}&limit=${limit}&q=${search}`,
+      {
+        headers: {
+          Authorization: `Bearer ${user?.token}`,
+        },
+      }
+    );
+    return data;
+  };
 
-  useEffect(() => {
-    if (isError) {
-      console.log(error);
+  /* Handle Pagination */
+  const totalPage = Math.ceil(data?.count / limit);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPage) {
+      setCurrentPage(currentPage + 1);
+      refetch();
     }
-  }, [isError, error, isSuccess, data]);
+  };
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+      refetch();
+    }
+  };
 
   return (
     <div className="p-10 my-5 bg-white rounded shadow">
@@ -37,12 +64,19 @@ const MyHouses = (props: Props) => {
           className="input input-bordered"
           id="search-field"
           placeholder="Search"
+          onInput={(e) => setSearch(e.currentTarget.value)}
         />
       </div>
-      <div className="export-btn">
-        <button className="badge badge-ghost badge-lg flex items-center gap-2 font-poppins">
-          Export Collection <BiExport className="text-xl" />
+      <div className="export-btn flex items-center gap-5 justify-end">
+        <button className="btn btn-xs btn-info rounded-none badge-lg flex items-center gap-2 font-poppins">
+          Export Collection <BiExport className="text-md" />
         </button>
+        <Link
+          to="/dashboard/houses/add"
+          className="btn btn-xs btn-success rounded-none badge-lg flex items-center gap-2 font-poppins"
+        >
+          Post House <BiPlus className="text-md" />
+        </Link>
       </div>
       <div className="my-5 overflow-x-auto">
         {isLoading ? (
@@ -70,7 +104,12 @@ const MyHouses = (props: Props) => {
             </thead>
             <tbody>
               {data?.data?.map((house: any, index: number) => (
-                <HouseRow key={index} house={house} index={index} />
+                <HouseRow
+                  key={index}
+                  house={house}
+                  index={index}
+                  refetch={refetch}
+                />
               ))}
             </tbody>
           </table>
@@ -86,10 +125,47 @@ const MyHouses = (props: Props) => {
           </div>
         )}
       </div>
-      <div className="pagination">
-        <button className="btn btn-ghost">Previous</button>
-        <button className="btn btn-ghost">Next</button>
-      </div>
+      {limit < data?.count && (
+        <div className="pagination flex items-center justify-between">
+          <div className="flex items-center gap-2 text-sm">
+            Show{" "}
+            <select
+              name=""
+              id=""
+              className="select select-sm select-bordered rounded-none tooltip tooltip-info"
+              title="Limit for showing"
+              onChange={(event) => setLimit(Number(event.target.value))}
+            >
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+            </select>
+            entries
+          </div>
+          <div className="flex items-center gap-6">
+            <div>
+              <button
+                className="btn btn-sm btn-ghost"
+                onClick={handlePrevPage}
+                disabled={currentPage === 1}
+              >
+                Previous
+              </button>
+
+              <button
+                className="btn btn-sm btn-ghost "
+                disabled={currentPage === totalPage}
+                onClick={handleNextPage}
+              >
+                Next
+              </button>
+            </div>
+            <span>
+              Page <b>{currentPage} </b> of <b>{totalPage}</b>
+            </span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,6 +1,36 @@
+import axios from "axios";
 import Chart from "react-apexcharts";
+import { useQuery } from "react-query";
+import GlobalLoader from "../../../../components/GlobalLoader";
+import useAuth from "../../../../hooks/useAuth";
+import { authUserInterface } from "../../../../interfaces/UserInterface";
 type Props = {};
 const UsersCharts = (props: Props) => {
+  const { user } = useAuth<authUserInterface | any>({});
+  const { data, isLoading } = useQuery(["users"], () => getAllUserForAdmin());
+  const getAllUserForAdmin = async () => {
+    const { data } = await axios.get(
+      `http://localhost:5000/api/v1/users/admin`,
+      {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
+    return data;
+  };
+
+  if (isLoading) return <GlobalLoader />;
+
+  const users = data?.data?.filter((user: any) => user.role === "user");
+  const customers = data?.data?.filter((user: any) => user.role === "customer");
+  const admins = data?.data?.filter((user: any) => user.role === "admin");
+  const managers = data?.data?.filter((user: any) => user.role === "manager");
+  const usersCount = users?.length;
+  const customersCount = customers?.length;
+  const adminsCount = admins?.length;
+  const managersCount = managers?.length;
+  const series = [usersCount, customersCount, adminsCount, managersCount];
   const options = {
     chart: {
       id: "basic-bar",
@@ -10,19 +40,14 @@ const UsersCharts = (props: Props) => {
     },
     labels: ["Users", "Customers", "Admin", "Manager"],
   };
-  /* const series = [
-    {
-      name: "series-1",
-      data: [30, 40, 45, 50, 49, 60, 70, 91],
-    },
-  ]; */
-
-  const series = [44, 55, 41, 15];
-
   return (
     <div className="bg-white">
       <h2 className="text-2xl font-bold p-5">Register Users Variations</h2>
-      <Chart options={options} series={series} type="donut" width={"80%"} />
+      {isLoading ? (
+        <GlobalLoader />
+      ) : (
+        <Chart options={options} series={series} type="donut" width={"80%"} />
+      )}
     </div>
   );
 };

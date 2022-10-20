@@ -56,6 +56,11 @@ export const BlogApi = createApi({
       }),
       invalidatesTags: ["getBlog"],
     }),
+    getAllBlogs: builder.query({
+      query: (data) =>
+        `/all?page=${data?.page}&limit=${data?.limit}&q=${data?.q}`,
+      providesTags: ["getBlog"],
+    }),
   }),
 });
 
@@ -66,4 +71,5 @@ export const {
   useUpdateBlogByIdMutation,
   useGetBlogByIdQuery,
   useChangeStatusByIdMutation,
+  useGetAllBlogsQuery,
 } = BlogApi;

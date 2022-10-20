@@ -23,6 +23,11 @@ import { useQuery } from "react-query";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/store";
 import { logout } from "../../features/AuthSlice";
+import {
+  setApprovedHouseCount,
+  setPendingHouseCount,
+  setRejectedHouseCount,
+} from "../../features/HouseSlice";
 import { setPendingCount } from "../../features/RequestSlice";
 import useAuth from "../../hooks/useAuth";
 
@@ -40,6 +45,7 @@ const Dashboard = (props: Props) => {
     user,
     setUser,
     updatedUser: data,
+    isLoading,
   } = useAuth<authUserInterface | any>({});
   const role = data?.role;
 
@@ -239,10 +245,10 @@ const Dashboard = (props: Props) => {
   }
 
   /* Try to fetch blog using UseQuery */
-
   const { data: countData } = useQuery(
     ["fetchUnapprovedData", user],
     async () => {
+      if (isLoading) return;
       if (role === "admin" || role === "manager") {
         const res = await axios.get(
           `http://localhost:5000/api/v1/request/all-request`,
@@ -257,9 +263,40 @@ const Dashboard = (props: Props) => {
     }
   );
 
+  /* Get Unapproved House */
+  const { data: unapprovedHouses } = useQuery("unapprovedHouses", async () =>
+    getHouseCount("unapproved")
+  );
+  /* Get approved House */
+  const { data: approvedHouses } = useQuery("approvedHouses", async () =>
+    getHouseCount("approved")
+  );
+  /* Get Reject House */
+  const { data: rejectHouses } = useQuery("rejectHouses", async () =>
+    getHouseCount("rejected")
+  );
+  /* function to get house count */
+  const getHouseCount = async (slug: string) => {
+    if (role === "admin" || role === "manager") {
+      const res = await axios.get(
+        `http://localhost:5000/api/v1/admin/houses/${slug}`,
+        {
+          headers: {
+            Authorization: `Bearer ${user?.token}`,
+          },
+        }
+      );
+
+      return res?.data;
+    }
+  };
+
   useEffect(() => {
     dispatch(setPendingCount(countData?.unapprovedCount));
-  }, [countData, dispatch]);
+    dispatch(setPendingHouseCount(unapprovedHouses?.data?.count));
+    dispatch(setApprovedHouseCount(approvedHouses?.data?.count));
+    dispatch(setRejectedHouseCount(rejectHouses?.data?.count));
+  }, [countData, dispatch, unapprovedHouses, approvedHouses, rejectHouses]);
 
   /* Handle Logout */
 
@@ -273,6 +310,8 @@ const Dashboard = (props: Props) => {
   const { requestBlogCount, requestHouseCount, pendingCount } = useAppSelector(
     (state) => state.request
   );
+  const { pendingHouseCount } = useAppSelector((state) => state.housesReqCount);
+
   const { name } = useAppSelector((state) => state.appOption);
 
   let title: string = "";
@@ -454,6 +493,14 @@ const Dashboard = (props: Props) => {
                         title={title}
                       >
                         {pendingCount > 9 ? "+9" : pendingCount}
+                      </span>
+                    )}
+                    {pendingHouseCount > 0 && item.title === "Houses" && (
+                      <span
+                        className="btn btn-circle btn-xs  btn-info "
+                        title={"Unapproved Houses"}
+                      >
+                        {pendingHouseCount > 9 ? "+9" : pendingHouseCount}
                       </span>
                     )}
                   </Link>

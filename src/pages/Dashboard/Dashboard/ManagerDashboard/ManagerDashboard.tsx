@@ -1,11 +1,10 @@
-import RecentBookedHouses from "./RecentBookedHouses";
-import StatisticChart from "./StatisticChart";
-
+import BarCharts from "./BarCharts";
+import RecentHouseRequest from "./RecentHouseRequest";
 type Props = {};
-
-const CustomerDashboard = (props: Props) => {
+const ManagerDashboard = (props: Props) => {
   return (
-    <div className="my-5">
+    <div className="py-5">
+      {" "}
       {/* Dashboard Statistic */}
       <div className="stats gap-4 shadow flex justify-between">
         <div className="stat ">
@@ -24,8 +23,8 @@ const CustomerDashboard = (props: Props) => {
               ></path>
             </svg>
           </div>
-          <div className="stat-title">Booked House</div>
-          <div className="stat-value">31</div>
+          <div className="stat-title">Total Approved Houses</div>
+          <div className="stat-value">{54}</div>
           <div className="stat-desc">Jan 1st - Feb 1st</div>
         </div>
 
@@ -45,8 +44,8 @@ const CustomerDashboard = (props: Props) => {
               ></path>
             </svg>
           </div>
-          <div className="stat-title">Total Reviews</div>
-          <div className="stat-value">40</div>
+          <div className="stat-title">Total Rejected Houses</div>
+          <div className="stat-value">5</div>
           <div className="stat-desc">↗︎ 400 (22%)</div>
         </div>
         <div className="stat">
@@ -65,8 +64,8 @@ const CustomerDashboard = (props: Props) => {
               ></path>
             </svg>
           </div>
-          <div className="stat-title">Blogs</div>
-          <div className="stat-value text-primary">5</div>
+          <div className="stat-title">Total Blogs</div>
+          <div className="stat-value text-primary">{54}</div>
           <div className="stat-desc">21% more than last month</div>
         </div>
 
@@ -86,25 +85,22 @@ const CustomerDashboard = (props: Props) => {
               ></path>
             </svg>
           </div>
-          <div className="stat-title">Blog Total Likes</div>
-          <div className="stat-value">1,200</div>
+          <div className="stat-title">Total Register Users</div>
+          <div className="stat-value">{5}</div>
           <div className="stat-desc">↘︎ 90 (14%)</div>
         </div>
       </div>
       {/* End */}
-
       {/* Recent Bookings */}
       <div className="my-5">
-        <RecentBookedHouses />
+        <RecentHouseRequest />
       </div>
       {/* End */}
-      {/* Charts Area */}
-
-      <div className="charts gap-6 shadow my-5 grid grid-cols-1 h-60">
-        <StatisticChart />
+      <div className="charts gap-6 shadow my-5 grid grid-cols-1 md:grid-cols-1 ">
+        <BarCharts />
       </div>
     </div>
   );
 };
 
-export default CustomerDashboard;
+export default ManagerDashboard;

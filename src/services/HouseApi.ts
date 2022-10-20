@@ -14,6 +14,7 @@ export const HouseApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ["House"],
   endpoints: (builder) => ({
     createHouse: builder.mutation({
       query: (body) => ({
@@ -21,18 +22,44 @@ export const HouseApi = createApi({
         method: "POST",
         body,
       }),
+      invalidatesTags: ["House"],
     }),
     getHouseByUser: builder.query({
       query: (id) => ({
         url: `/get-house-by-user/${id}`,
         method: "GET",
       }),
+      providesTags: ["House"],
     }),
     getHouseByHouseId: builder.query({
       query: (id) => ({
         url: `/${id}`,
         method: "GET",
       }),
+      providesTags: ["House"],
+    }),
+    updateHouseById: builder.mutation({
+      query: (body) => ({
+        url: `/update/${body.id}`,
+        method: "PATCH",
+        body: body.data,
+      }),
+      invalidatesTags: ["House"],
+    }),
+
+    deleteHouseById: builder.mutation({
+      query: (id) => ({
+        url: `/delete/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["House"],
+    }),
+    addFavoriteHouse: builder.mutation({
+      query: (body) => ({
+        url: `/like-count/${body.id}?clicked=${body?.clicked}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["House"],
     }),
   }),
 });
@@ -41,4 +68,7 @@ export const {
   useCreateHouseMutation,
   useGetHouseByUserQuery,
   useGetHouseByHouseIdQuery,
+  useDeleteHouseByIdMutation,
+  useUpdateHouseByIdMutation,
+  useAddFavoriteHouseMutation,
 } = HouseApi;

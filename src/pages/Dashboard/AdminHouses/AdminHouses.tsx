@@ -1,9 +1,13 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
+import { useAppSelector } from "../../../app/store";
 
 type Props = {};
 
 const AdminHouses = (props: Props) => {
   const { pathname } = useLocation();
+  const { approvedHouseCount, rejectedHouseCount, unapprovedHouseCount } =
+    useAppSelector((state) => state.housesReqCount);
+
   return (
     <div>
       <div className="p-5 my-5 bg-white">
@@ -22,7 +26,8 @@ const AdminHouses = (props: Props) => {
                   : "bg-gray-50"
               } border-r`}
             >
-              Unapproved Houses <div className="badge badge-ghost">5</div>
+              Unapproved Houses{" "}
+              <div className="badge badge-ghost">{unapprovedHouseCount}</div>
             </Link>
             <Link
               to="/dashboard/admin/houses/approved"
@@ -32,7 +37,8 @@ const AdminHouses = (props: Props) => {
                   : "bg-gray-50"
               } border-r`}
             >
-              Approved Houses <div className="badge badge-ghost">10</div>
+              Approved Houses{" "}
+              <div className="badge badge-ghost">{approvedHouseCount}</div>
             </Link>
             <Link
               to="/dashboard/admin/houses/rejected"
@@ -40,7 +46,8 @@ const AdminHouses = (props: Props) => {
                 pathname.includes("rejected") ? "bg-success" : "bg-gray-50"
               }  border-r`}
             >
-              Reject Houses <div className="badge badge-ghost">2</div>
+              Reject Houses{" "}
+              <div className="badge badge-ghost">{rejectedHouseCount}</div>
             </Link>
           </div>
           <div className="houses-content">

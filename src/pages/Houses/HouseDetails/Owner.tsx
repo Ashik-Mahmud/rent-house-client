@@ -5,15 +5,18 @@ import {
   BsInstagram,
   BsPhoneFill,
   BsTwitter,
-  BsYoutube,
 } from "react-icons/bs";
 import { GoHome } from "react-icons/go";
+import useAuth from "../../../hooks/useAuth";
+import { authUserInterface } from "../../../interfaces/UserInterface";
 
 type Props = {
   owner: any;
 };
 
 const Owner = ({ owner }: Props) => {
+  const { updatedUser } = useAuth<authUserInterface | any>({});
+
   return (
     <div>
       {" "}
@@ -24,7 +27,7 @@ const Owner = ({ owner }: Props) => {
           <span className="w-10 h-1 bg-success block"></span>
         </div>
         <div className="owner-content overflow-x-auto">
-          {!owner ? (
+          {updatedUser?.role === "admin" || updatedUser?.role === "manager" ? (
             <table className="table">
               <tbody>
                 <tr>
@@ -38,13 +41,13 @@ const Owner = ({ owner }: Props) => {
                     <BsEnvelopeOpen /> Email
                   </td>
                   <th>
-                    <span className="badge badge-ghost">ashik@gmail.com</span>
+                    <span className="badge badge-ghost">{owner?.email}</span>
                   </th>
                   <td className="flex items-center gap-2">
                     <BsPhoneFill /> Phone
                   </td>
                   <th>
-                    <span className="badge badge-ghost">+8801464445488</span>
+                    <span className="badge badge-ghost">+{owner?.phone}</span>
                   </th>
                 </tr>
 
@@ -55,18 +58,36 @@ const Owner = ({ owner }: Props) => {
                   </td>
                   <th>
                     <div className="flex items-center gap-4">
-                      <a href="/" className="text-xl">
-                        <BsFacebook />
-                      </a>
-                      <a href="/" className="text-xl">
-                        <BsTwitter />
-                      </a>
-                      <a href="/" className="text-xl">
-                        <BsInstagram />
-                      </a>
-                      <a href="/" className="text-xl">
-                        <BsYoutube />
-                      </a>
+                      {owner?.facebookLink && (
+                        <a
+                          href={owner?.facebookLink}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-xl"
+                        >
+                          <BsFacebook />
+                        </a>
+                      )}
+                      {owner?.twitterLink && (
+                        <a
+                          href={owner?.twitterLink}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-xl"
+                        >
+                          <BsTwitter />
+                        </a>
+                      )}{" "}
+                      {owner?.instagramLink && (
+                        <a
+                          href={owner?.instagramLink}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-xl"
+                        >
+                          <BsInstagram />
+                        </a>
+                      )}
                     </div>
                   </th>
                 </tr>
@@ -79,7 +100,12 @@ const Owner = ({ owner }: Props) => {
                       <div className="avatar online">
                         <div className="w-10 rounded-full">
                           <img
-                            src="https://placeimg.com/192/192/people"
+                            src={
+                              owner?.profileImage
+                                ? "http://localhost:5000/profiles/" +
+                                  owner?.profileImage
+                                : owner?.avatar
+                            }
                             alt=""
                           />
                         </div>

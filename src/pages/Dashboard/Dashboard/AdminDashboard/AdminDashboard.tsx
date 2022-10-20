@@ -1,10 +1,40 @@
+import axios from "axios";
+import { useQuery } from "react-query";
+import { useAppSelector } from "../../../../app/store";
+import GlobalLoader from "../../../../components/GlobalLoader";
+import useAuth from "../../../../hooks/useAuth";
+import { authUserInterface } from "../../../../interfaces/UserInterface";
+import { useGetAllBlogsQuery } from "../../../../services/BlogApi";
 import BarCharts from "./BarCharts";
-import RecentBookings from "./RecentBookings";
+import RecentHouseRequest from "./RecentHouseRequest";
 import UsersCharts from "./UsersCharts";
 
 type Props = {};
 
 const AdminDashboard = (props: Props) => {
+  const { approvedHouseCount, rejectedHouseCount } = useAppSelector(
+    (state) => state.housesReqCount
+  );
+  const { data: blogs, isLoading: loading2 } = useGetAllBlogsQuery({} as any);
+
+  const { user, updatedUser } = useAuth<authUserInterface | any>({});
+  const { data, isLoading } = useQuery(["users"], () => getAllUserForAdmin());
+  const getAllUserForAdmin = async () => {
+    if (updatedUser?.role === "admin") {
+      const { data } = await axios.get(
+        `http://localhost:5000/api/v1/users/admin`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+      return data;
+    }
+  };
+
+  if (loading2 || isLoading) return <GlobalLoader />;
+
   return (
     <div className="my-5">
       {/* Dashboard Statistic */}
@@ -25,8 +55,8 @@ const AdminDashboard = (props: Props) => {
               ></path>
             </svg>
           </div>
-          <div className="stat-title">Downloads</div>
-          <div className="stat-value">31K</div>
+          <div className="stat-title">Total Approved Houses</div>
+          <div className="stat-value">{approvedHouseCount}</div>
           <div className="stat-desc">Jan 1st - Feb 1st</div>
         </div>
 
@@ -46,8 +76,8 @@ const AdminDashboard = (props: Props) => {
               ></path>
             </svg>
           </div>
-          <div className="stat-title">New Users</div>
-          <div className="stat-value">4,200</div>
+          <div className="stat-title">Total Rejected Houses</div>
+          <div className="stat-value">{rejectedHouseCount}</div>
           <div className="stat-desc">↗︎ 400 (22%)</div>
         </div>
         <div className="stat">
@@ -66,8 +96,8 @@ const AdminDashboard = (props: Props) => {
               ></path>
             </svg>
           </div>
-          <div className="stat-title">Total Likes</div>
-          <div className="stat-value text-primary">25.6K</div>
+          <div className="stat-title">Total Blogs</div>
+          <div className="stat-value text-primary">{blogs?.count}</div>
           <div className="stat-desc">21% more than last month</div>
         </div>
 
@@ -87,8 +117,8 @@ const AdminDashboard = (props: Props) => {
               ></path>
             </svg>
           </div>
-          <div className="stat-title">New Registers</div>
-          <div className="stat-value">1,200</div>
+          <div className="stat-title">Total Register Users</div>
+          <div className="stat-value">{data?.count}</div>
           <div className="stat-desc">↘︎ 90 (14%)</div>
         </div>
       </div>
@@ -96,7 +126,7 @@ const AdminDashboard = (props: Props) => {
 
       {/* Recent Bookings */}
       <div className="my-5">
-        <RecentBookings />
+        <RecentHouseRequest />
       </div>
       {/* End */}
       {/* Charts Area */}
