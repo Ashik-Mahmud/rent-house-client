@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BiExport } from "react-icons/bi";
+import { BiExport, BiPlus } from "react-icons/bi";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import GlobalLoader from "../../../components/GlobalLoader";
@@ -44,10 +44,26 @@ const MyHouses = (props: Props) => {
           placeholder="Search"
         />
       </div>
-      <div className="export-btn">
-        <button className="badge badge-ghost badge-lg flex items-center gap-2 font-poppins">
-          Export Collection <BiExport className="text-xl" />
+      <div className="export-btn flex items-center gap-5 justify-end">
+        <button className="btn btn-xs btn-info rounded-none badge-lg flex items-center gap-2 font-poppins">
+          Export Collection <BiExport className="text-md" />
         </button>
+        <Link
+          to="/dashboard/houses/add"
+          className="btn btn-xs btn-success rounded-none badge-lg flex items-center gap-2 font-poppins"
+        >
+          Post House <BiPlus className="text-md" />
+        </Link>
+        <select
+          name=""
+          id=""
+          className="select select-xs select-bordered rounded-none tooltip tooltip-info"
+          title="Limit for showing"
+        >
+          <option value="5">5</option>
+          <option value="5">10</option>
+          <option value="5">15</option>
+        </select>
       </div>
       <div className="my-5 overflow-x-auto">
         {isLoading ? (

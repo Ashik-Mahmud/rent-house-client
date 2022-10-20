@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
@@ -12,8 +11,7 @@ type Props = {
 };
 
 const HouseRow = ({ approved, house, index, refetch }: Props) => {
-  const [deleteHouseById, { data, isLoading, isSuccess }] =
-    useDeleteHouseByIdMutation();
+  const [deleteHouseById, { isLoading }] = useDeleteHouseByIdMutation();
   /* Handle Delete House by Owner */
   const handleDeleteHouses = async (id: string) => {
     const isConfirm = await swal({
@@ -24,7 +22,6 @@ const HouseRow = ({ approved, house, index, refetch }: Props) => {
       dangerMode: true,
     });
     if (isConfirm) {
-      console.log(id);
       try {
         await deleteHouseById(id);
         swal("Deleted!", "Your house has been deleted!", "success");
@@ -34,12 +31,6 @@ const HouseRow = ({ approved, house, index, refetch }: Props) => {
       }
     }
   };
-
-  useEffect(() => {
-    if (isSuccess) {
-      console.log(data);
-    }
-  }, [data, isSuccess]);
 
   return (
     <tr className="border-b border-gray-200">
