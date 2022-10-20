@@ -17,8 +17,9 @@ const MyHouses = (props: Props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [limit, setLimit] = useState(1);
 
-  const { data, isLoading, refetch } = useQuery(["houses", user], () =>
-    getMyHouses()
+  const { data, isLoading, refetch } = useQuery(
+    ["houses", user, limit, currentPage],
+    () => getMyHouses()
   );
   const getMyHouses = async () => {
     const { data } = await axios.get(
@@ -38,11 +39,13 @@ const MyHouses = (props: Props) => {
   const handleNextPage = () => {
     if (currentPage < totalPage) {
       setCurrentPage(currentPage + 1);
+      refetch();
     }
   };
   const handlePrevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
+      refetch();
     }
   };
 
