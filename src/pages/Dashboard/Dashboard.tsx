@@ -23,7 +23,11 @@ import { useQuery } from "react-query";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/store";
 import { logout } from "../../features/AuthSlice";
-import { setPendingHouseCount } from "../../features/HouseSlice";
+import {
+  setApprovedHouseCount,
+  setPendingHouseCount,
+  setRejectedHouseCount,
+} from "../../features/HouseSlice";
 import { setPendingCount } from "../../features/RequestSlice";
 import useAuth from "../../hooks/useAuth";
 
@@ -260,10 +264,22 @@ const Dashboard = (props: Props) => {
   );
 
   /* Get Unapproved House */
-  const { data: unapprovedHouses } = useQuery("unapprovedHouses", async () => {
+  const { data: unapprovedHouses } = useQuery("unapprovedHouses", async () =>
+    getHouseCount("unapproved")
+  );
+  /* Get approved House */
+  const { data: approvedHouses } = useQuery("approvedHouses", async () =>
+    getHouseCount("approved")
+  );
+  /* Get Reject House */
+  const { data: rejectHouses } = useQuery("rejectHouses", async () =>
+    getHouseCount("reject")
+  );
+  /* function to get house count */
+  const getHouseCount = async (slug: string) => {
     if (role === "admin" || role === "manager") {
       const res = await axios.get(
-        `http://localhost:5000/api/v1/admin/houses/unapproved`,
+        `http://localhost:5000/api/v1/admin/houses/${slug}`,
         {
           headers: {
             Authorization: `Bearer ${user?.token}`,
@@ -273,12 +289,14 @@ const Dashboard = (props: Props) => {
 
       return res?.data;
     }
-  });
+  };
 
   useEffect(() => {
     dispatch(setPendingCount(countData?.unapprovedCount));
     dispatch(setPendingHouseCount(unapprovedHouses?.data?.count));
-  }, [countData, dispatch, unapprovedHouses]);
+    dispatch(setApprovedHouseCount(approvedHouses?.data?.count));
+    dispatch(setRejectedHouseCount(rejectHouses?.data?.count));
+  }, [countData, dispatch, unapprovedHouses, approvedHouses, rejectHouses]);
 
   /* Handle Logout */
 

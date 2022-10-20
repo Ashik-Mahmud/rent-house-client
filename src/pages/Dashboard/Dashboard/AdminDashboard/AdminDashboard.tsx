@@ -1,3 +1,4 @@
+import { useAppSelector } from "../../../../app/store";
 import BarCharts from "./BarCharts";
 import RecentBookings from "./RecentBookings";
 import UsersCharts from "./UsersCharts";
@@ -5,6 +6,9 @@ import UsersCharts from "./UsersCharts";
 type Props = {};
 
 const AdminDashboard = (props: Props) => {
+  const { approvedHouseCount, rejectedHouseCount } = useAppSelector(
+    (state) => state.housesReqCount
+  );
   return (
     <div className="my-5">
       {/* Dashboard Statistic */}
@@ -26,7 +30,7 @@ const AdminDashboard = (props: Props) => {
             </svg>
           </div>
           <div className="stat-title">Total Approved Houses</div>
-          <div className="stat-value">31</div>
+          <div className="stat-value">{approvedHouseCount}</div>
           <div className="stat-desc">Jan 1st - Feb 1st</div>
         </div>
 
@@ -47,7 +51,7 @@ const AdminDashboard = (props: Props) => {
             </svg>
           </div>
           <div className="stat-title">Total Rejected Houses</div>
-          <div className="stat-value">4</div>
+          <div className="stat-value">{rejectedHouseCount}</div>
           <div className="stat-desc">↗︎ 400 (22%)</div>
         </div>
         <div className="stat">
