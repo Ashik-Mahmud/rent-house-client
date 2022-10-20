@@ -111,7 +111,7 @@ export const authApi = createApi({
       }),
     }),
     getAllUsersForAdmin: builder.query<any, paginationType>({
-      query: (query) =>
+      query: (query: any) =>
         `/users/admin?role=${query.role}&limit=${query.limit}&page=${query.page}`,
       providesTags: ["GetUser"],
     }),

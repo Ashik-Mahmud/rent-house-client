@@ -30,8 +30,6 @@ const RecentBookings = (props: Props) => {
     return data;
   };
 
-  console.log(unapprovedHouses);
-
   return (
     <div className="p-5 bg-white rounded shadow">
       <div className="flex justify-between">
