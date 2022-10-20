@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useState } from "react";
 import { BiExport, BiPlus } from "react-icons/bi";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
@@ -12,12 +13,16 @@ type Props = {};
 const MyHouses = (props: Props) => {
   const { updatedUser, user } = useAuth<authUserInterface | any>({});
 
+  /* Pagination State */
+  const [currentPage, setCurrentPage] = useState(1);
+  const [limit, setLimit] = useState(1);
+
   const { data, isLoading, refetch } = useQuery(["houses", user], () =>
     getMyHouses()
   );
   const getMyHouses = async () => {
     const { data } = await axios.get(
-      `http://localhost:5000/api/v1/houses/get-house-by-user/${updatedUser?._id}`,
+      `http://localhost:5000/api/v1/houses/get-house-by-user/${updatedUser?._id}?page=${currentPage}&limit=${limit}`,
       {
         headers: {
           Authorization: `Bearer ${user?.token}`,
@@ -26,6 +31,22 @@ const MyHouses = (props: Props) => {
     );
     return data;
   };
+
+  /* Handle Pagination */
+  const totalPage = Math.ceil(data?.count / limit);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPage) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  console.log(data, totalPage, currentPage);
 
   return (
     <div className="p-10 my-5 bg-white rounded shadow">
@@ -54,16 +75,6 @@ const MyHouses = (props: Props) => {
         >
           Post House <BiPlus className="text-md" />
         </Link>
-        <select
-          name=""
-          id=""
-          className="select select-xs select-bordered rounded-none tooltip tooltip-info"
-          title="Limit for showing"
-        >
-          <option value="5">5</option>
-          <option value="5">10</option>
-          <option value="5">15</option>
-        </select>
       </div>
       <div className="my-5 overflow-x-auto">
         {isLoading ? (
@@ -112,10 +123,47 @@ const MyHouses = (props: Props) => {
           </div>
         )}
       </div>
-      <div className="pagination">
-        <button className="btn btn-ghost">Previous</button>
-        <button className="btn btn-ghost">Next</button>
-      </div>
+      {limit < data?.count && (
+        <div className="pagination flex items-center justify-between">
+          <div className="flex items-center gap-2 text-sm">
+            Show{" "}
+            <select
+              name=""
+              id=""
+              className="select select-sm select-bordered rounded-none tooltip tooltip-info"
+              title="Limit for showing"
+              onChange={(event) => setLimit(Number(event.target.value))}
+            >
+              <option value="5">5</option>
+              <option value="5">10</option>
+              <option value="5">15</option>
+            </select>
+            entries
+          </div>
+          <div className="flex items-center gap-6">
+            <div>
+              <button
+                className="btn btn-sm btn-ghost"
+                onClick={handlePrevPage}
+                disabled={currentPage === 1}
+              >
+                Previous
+              </button>
+
+              <button
+                className="btn btn-sm btn-ghost "
+                disabled={currentPage === totalPage}
+                onClick={handleNextPage}
+              >
+                Next
+              </button>
+            </div>
+            <span>
+              Page <b>{currentPage} </b> of <b>{totalPage}</b>
+            </span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
