@@ -1,25 +1,38 @@
 import Chart from "react-apexcharts";
+import { useAppSelector } from "../../../../app/store";
+import { useGetAllReviewsQuery } from "../../../../services/ReviewApi";
 type Props = {};
 
 const BarCharts = (props: Props) => {
+  const { approvedHouseCount, pendingHouseCount, rejectedHouseCount } =
+    useAppSelector((state) => state.housesReqCount);
+
+  const { data: reviews } = useGetAllReviewsQuery({} as any);
+
   const options = {
     chart: {
       id: "basic-bar",
     },
     xaxis: {
       categories: [
-        "Total Bookings",
-        "Total Reviews",
-        "Total Likes",
-        "Total Reports",
-        "Total Houses",
+        "Unapproved Houses",
+        "Approved Houses",
+        "Rejected Houses",
+        "Reviews",
+        "Blogs",
       ],
     },
   };
   const series = [
     {
       name: "series-1",
-      data: [30, 40, 45, 50, 49],
+      data: [
+        pendingHouseCount,
+        approvedHouseCount,
+        rejectedHouseCount,
+        reviews?.data?.length,
+        49,
+      ],
     },
   ];
 

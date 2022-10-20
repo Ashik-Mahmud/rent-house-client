@@ -62,6 +62,13 @@ export const ReviewApi = createApi({
       }),
       invalidatesTags: ["AddReview"],
     }),
+    getAllReviews: builder.query({
+      query: () => ({
+        url: `/all`,
+        method: "GET",
+      }),
+      providesTags: ["AddReview"],
+    }),
   }),
 });
 
@@ -69,4 +76,5 @@ export const {
   useAddReviewMutation,
   useGetReviewsByUserQuery,
   useDeleteReviewByIdMutation,
+  useGetAllReviewsQuery,
 } = ReviewApi;

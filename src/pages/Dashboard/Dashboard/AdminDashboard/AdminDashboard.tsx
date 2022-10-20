@@ -25,8 +25,8 @@ const AdminDashboard = (props: Props) => {
               ></path>
             </svg>
           </div>
-          <div className="stat-title">Downloads</div>
-          <div className="stat-value">31K</div>
+          <div className="stat-title">Total Approved Houses</div>
+          <div className="stat-value">31</div>
           <div className="stat-desc">Jan 1st - Feb 1st</div>
         </div>
 
@@ -46,8 +46,8 @@ const AdminDashboard = (props: Props) => {
               ></path>
             </svg>
           </div>
-          <div className="stat-title">New Users</div>
-          <div className="stat-value">4,200</div>
+          <div className="stat-title">Total Rejected Houses</div>
+          <div className="stat-value">4</div>
           <div className="stat-desc">↗︎ 400 (22%)</div>
         </div>
         <div className="stat">
@@ -66,8 +66,8 @@ const AdminDashboard = (props: Props) => {
               ></path>
             </svg>
           </div>
-          <div className="stat-title">Total Likes</div>
-          <div className="stat-value text-primary">25.6K</div>
+          <div className="stat-title">Total Blogs</div>
+          <div className="stat-value text-primary">25</div>
           <div className="stat-desc">21% more than last month</div>
         </div>
 
@@ -87,8 +87,8 @@ const AdminDashboard = (props: Props) => {
               ></path>
             </svg>
           </div>
-          <div className="stat-title">New Registers</div>
-          <div className="stat-value">1,200</div>
+          <div className="stat-title">Total Register Users</div>
+          <div className="stat-value">100</div>
           <div className="stat-desc">↘︎ 90 (14%)</div>
         </div>
       </div>
