@@ -25,13 +25,35 @@ const Houses = (props: Props) => {
   }, [gridView]);
 
   /* Get All This Approved Houses */
-  const { data, isLoading, isError } = useQuery("houses", async () =>
-    getAllHousesWithFilter()
+  const [currentPage, setCurrentPage] = useState(1);
+  const [perPage, setPerPage] = useState(1);
+  const { data, isLoading, isError, refetch } = useQuery(
+    ["houses", perPage, currentPage],
+    async () => getAllHousesWithFilter()
   );
 
   const getAllHousesWithFilter = async () => {
-    const { data } = await axios.get(`http://localhost:5000/api/v1/houses`);
+    const { data } = await axios.get(
+      `http://localhost:5000/api/v1/houses?limit=${perPage}&page=${currentPage}`
+    );
     return data?.data;
+  };
+
+  /* Pagination Handler */
+
+  const totalPage = Math.ceil(data?.totalHouses / perPage);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPage) {
+      setCurrentPage(currentPage + 1);
+      refetch();
+    }
+  };
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+      refetch();
+    }
   };
 
   if (isError) {
@@ -115,22 +137,49 @@ const Houses = (props: Props) => {
                   </div>
                   {/* House Main Content End */}
                   {/* pagination */}
-                  <div className="pagination flex justify-center py-10">
-                    <div className="btn-group ">
-                      <button className="w-10 h-10 rounded-full cursor-pointer text-xl font-bold font-poppins">
-                        1
-                      </button>
-                      <button className="w-10 h-10 rounded-full cursor-pointer text-xl font-bold font-poppins btn-active">
-                        2
-                      </button>
-                      <button className="w-10 h-10 rounded-full cursor-pointer text-xl font-bold font-poppins">
-                        3
-                      </button>
-                      <button className="w-10 h-10 rounded-full cursor-pointer text-xl font-bold font-poppins">
-                        4
-                      </button>
+                  {perPage < data?.totalHouses && (
+                    <div className="pagination flex items-center justify-between mt-20 mb-6 px-7">
+                      <div className="flex items-center gap-2 text-sm">
+                        Show{" "}
+                        <select
+                          name=""
+                          id=""
+                          className="select select-sm select-bordered rounded-none tooltip tooltip-info"
+                          title="Limit for showing"
+                          onChange={(event) =>
+                            setPerPage(Number(event.target.value))
+                          }
+                        >
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="15">15</option>
+                        </select>
+                        entries
+                      </div>
+                      <div className="flex items-center gap-6">
+                        <div>
+                          <button
+                            className="btn btn-sm btn-ghost"
+                            onClick={handlePrevPage}
+                            disabled={currentPage === 1}
+                          >
+                            Previous
+                          </button>
+
+                          <button
+                            className="btn btn-sm btn-ghost "
+                            disabled={currentPage === totalPage}
+                            onClick={handleNextPage}
+                          >
+                            Next
+                          </button>
+                        </div>
+                        <span>
+                          Page <b>{currentPage} </b> of <b>{totalPage}</b>
+                        </span>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </>
               ) : (
                 <div className="text-center text-2xl font-bold">
