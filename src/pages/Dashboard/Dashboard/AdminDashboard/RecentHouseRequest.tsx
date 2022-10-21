@@ -11,6 +11,7 @@ type Props = {};
 
 const RecentBookings = (props: Props) => {
   const { user } = useAuth<authUserInterface | any>({});
+
   /* Get Unapproved House */
   const { data: unapprovedHouses, isLoading } = useQuery(
     ["unapprovedHouses"],

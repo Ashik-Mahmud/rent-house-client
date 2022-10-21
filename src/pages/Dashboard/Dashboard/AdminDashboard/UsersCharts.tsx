@@ -7,6 +7,7 @@ import { authUserInterface } from "../../../../interfaces/UserInterface";
 type Props = {};
 const UsersCharts = (props: Props) => {
   const { user } = useAuth<authUserInterface | any>({});
+
   const { data, isLoading } = useQuery(["users"], () => getAllUserForAdmin());
   const getAllUserForAdmin = async () => {
     const { data } = await axios.get(

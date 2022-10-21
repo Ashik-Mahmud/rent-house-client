@@ -42,7 +42,7 @@ const Login = (props: Props) => {
     }
     /* If Success */
     if (isSuccess) {
-      navigate("/dashboard/profile");
+      navigate("/dashboard");
       dispatch(setAuthInformation({ user: data?.user, token: data?.token }));
       toast.success("Login Success");
     }

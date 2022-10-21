@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { Route, Routes, useLocation } from "react-router-dom";
+import Cookies from "universal-cookie";
 import { useAppDispatch } from "./app/store";
 import AuthChangeRoute from "./auth/AuthChangeRoute";
 import RequireAdmin from "./auth/RequireAdmin";
@@ -11,8 +12,6 @@ import RequireCustomer from "./auth/RequireCustomer";
 import RequireSupAdmin from "./auth/RequireSupAdmin";
 import RequireUser from "./auth/RequireUser";
 import { setAppOptions } from "./features/AppSlice";
-import useAuth from "./hooks/useAuth";
-import { authUserInterface } from "./interfaces/UserInterface";
 import About from "./pages/About";
 import Login from "./pages/Authentication/Login";
 import RegisterAuth from "./pages/Authentication/Register";
@@ -62,23 +61,12 @@ import Footer from "./shared/Footer";
 import Header from "./shared/Header";
 import NotFoundPage from "./shared/NotFoundPage";
 
-function App() {
-  const { updatedUser } = useAuth<authUserInterface | any>({});
+type Props = {};
+const App = (props: Props) => {
   const dispatch = useAppDispatch();
-
   const location = useLocation();
-  const sendDashboardForParticularRole = () => {
-    if (updatedUser?.role === "admin") {
-      return <AdminDashboard />;
-    } else if (updatedUser?.role === "manager") {
-      return <ManagerDashboard />;
-    } else if (updatedUser?.role === "user") {
-      return <HouseHolderDashboard />;
-    } else {
-      return <CustomerDashboard />;
-    }
-  };
-
+  const cookies = new Cookies();
+  const user = cookies.get("user");
   /* Get House Option*/
   const { data, isLoading, refetch } = useQuery("appOptions", async () => {
     const res = await axios.get(
@@ -86,6 +74,20 @@ function App() {
     );
     return res?.data;
   });
+  const { data: newData } = useQuery(["userInit", user], async () => {
+    if (user) {
+      const res = await axios.get(
+        `http://localhost:5000/api/v1/users/me/${user?.user?._id}`,
+        {
+          headers: {
+            authorization: `Bearer ${user?.token}`,
+          },
+        }
+      );
+      return res?.data?.data;
+    }
+  });
+  const updatedUser = newData;
 
   useEffect(() => {
     if (isLoading) return;
@@ -93,7 +95,19 @@ function App() {
       dispatch(setAppOptions(data?.app));
       refetch();
     }
-  }, [data, dispatch, isLoading, refetch]);
+  }, [data, dispatch, isLoading, refetch, updatedUser]);
+
+  const sendDashboardForParticularRole = () => {
+    if (updatedUser?.role === "admin") {
+      return <AdminDashboard />;
+    } else if (updatedUser?.role === "user") {
+      return <HouseHolderDashboard />;
+    } else if (updatedUser?.role === "manager") {
+      return <ManagerDashboard />;
+    } else if (updatedUser?.role === "customer") {
+      return <CustomerDashboard />;
+    }
+  };
 
   return (
     <div className="App font-open font-medium bg-cover bg-center bg-slate-50">
@@ -314,6 +328,6 @@ function App() {
       {!location.pathname.includes("dashboard") && <Footer />}
     </div>
   );
-}
+};
 
 export default App;

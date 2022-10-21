@@ -27,7 +27,6 @@ const useAuth = <T,>(props: Props) => {
       return res?.data?.data;
     }
   });
-
   const updatedUser = newData;
 
   return { user, isLoading, updatedUser, setUser, refetch };
