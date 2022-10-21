@@ -6,12 +6,14 @@ type Props = {
   getAllDistrict: any;
   setFilterByDistrict: React.Dispatch<React.SetStateAction<string>>;
   setSearchKey: React.Dispatch<React.SetStateAction<string>>;
+  setCategory: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const FilterSidebar = ({
   getAllDistrict,
   setFilterByDistrict,
   setSearchKey,
+  setCategory,
 }: Props) => {
   return (
     <>
@@ -240,8 +242,10 @@ const FilterSidebar = ({
                 name=""
                 className="outline-none w-full pl-4 cursor-pointer text-sm"
                 id=""
+                onChange={(event) => setCategory(event.target.value)}
               >
                 <option value="">Select Category</option>
+                <option value="General">General</option>
                 <option value="Bungalow">Bungalow</option>
                 <option value="Duplex">Duplex</option>
                 <option value="Flat">Flat</option>
