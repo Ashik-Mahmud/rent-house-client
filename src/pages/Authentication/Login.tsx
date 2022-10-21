@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { BiLogIn } from "react-icons/bi";
 import { Link, useNavigate } from "react-router-dom";
 import { PulseLoader } from "react-spinners";
 import { toast } from "react-toastify";
@@ -49,42 +50,41 @@ const Login = (props: Props) => {
   }, [isSuccess, error, data, navigate, dispatch]);
 
   return (
-    <div
-      className="flex justify-center sm:p-20 bg-cover"
-      style={{
-        backgroundImage: `url(${require("../../assets/images/bg.png")})`,
-      }}
-    >
+    <div className="flex justify-center sm:p-20 bg-cover bg-gray-50">
       <div>
-        <div className="hero-content flex-col lg:flex-row-reverse shadow-lg border rounded-lg sm:p-10 bg-white">
-          <div className="text-center lg:text-left max-w-md ">
+        <div className="hero-content flex-col border  sm:p-10 bg-white">
+          {/* <div className="text-center lg:text-left max-w-md ">
             <img
               src="https://i.ibb.co/HVBwcZT/undraw-Access-account-re-8spm.png"
               alt="loginImage"
             />
-          </div>
-          <div className="divider lg:divider-horizontal">+</div>
+          </div> 
+          <div className="divider lg:divider-horizontal">+</div>*/}
           <form
             onSubmit={loginForm}
-            className="card flex-shrink-0 w-full sm:max-w-sm  "
+            className="card flex-shrink-0 w-full sm:w-[30rem]  bg-white"
           >
-            <div className="card-body p-5">
+            <div className="card-body p-5  ">
               <div className="card-header mb-3">
+                <span className="text-3xl  w-20 h-20 bg-gray-100 grid place-items-center mb-4">
+                  <BiLogIn />
+                </span>
                 <h3 className="text-2xl">Login to Account</h3>
               </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Email</span>
-                </label>
-                <input
-                  type="text"
-                  placeholder="email"
-                  className="input input-bordered"
-                  {...register("email", {
-                    required: true,
-                    pattern: /^\S+@\S+$/i,
-                  })}
-                />
+              <div className="form-control rounded-none">
+                <div className="input-group my-1 flex items-start gap-3 flex-col rounded-none">
+                  <label htmlFor="email">Email</label>
+                  <input
+                    id="email"
+                    type="email"
+                    placeholder="Email"
+                    className="w-full p-5 border focus:outline-gray-200 focus:outline-none rounded-none"
+                    {...register("email", {
+                      required: true,
+                      pattern: /^\S+@\S+$/i,
+                    })}
+                  />
+                </div>
                 {errors.email?.type === "required" && (
                   <small className="text-xs py-1 text-error font-poppins">
                     {" "}
@@ -99,15 +99,16 @@ const Login = (props: Props) => {
                 )}
               </div>
               <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Password</span>
-                </label>
-                <input
-                  type="password"
-                  placeholder="password"
-                  className="input input-bordered"
-                  {...register("password", { required: true })}
-                />
+                <div className="input-group my-0 flex items-start gap-3 flex-col rounded-none">
+                  <label htmlFor="password">Password</label>
+                  <input
+                    id="password"
+                    type="password"
+                    placeholder="Password"
+                    className="w-full p-5 border focus:outline-gray-200 focus:outline-none rounded-none"
+                    {...register("password", { required: true })}
+                  />
+                </div>
                 {errors.password?.type === "required" && (
                   <small className="text-xs text-error font-poppins py-1">
                     Password field is required
@@ -124,11 +125,16 @@ const Login = (props: Props) => {
               </div>
               <div className="form-control mt-6">
                 {isLoading ? (
-                  <button type="button" className="btn btn-success">
+                  <button
+                    type="button"
+                    className="w-full btn btn-success rounded-none btn-lg z-10 cursor-pointer"
+                  >
                     <PulseLoader size={8} />
                   </button>
                 ) : (
-                  <button className="btn btn-success">Login</button>
+                  <button className="w-full btn btn-success rounded-none btn-lg z-10 cursor-pointer">
+                    Login
+                  </button>
                 )}
               </div>
               <p className="my-2">

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";
 import { authUserInterface } from "../../interfaces/UserInterface";
@@ -64,6 +64,11 @@ const ResetPassword = (props: Props) => {
           <button className="w-full btn btn-success rounded-none btn-lg z-10 cursor-pointer">
             Send Verification Link
           </button>
+          <div className="text-center py-5">
+            <Link to="/login" className="text-success font-poppins font-bold">
+              Login Page
+            </Link>
+          </div>
         </div>
       </form>
     </div>
