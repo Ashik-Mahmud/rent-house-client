@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
@@ -8,6 +8,7 @@ import { useRegisterAuthMutation } from "../../services/AuthApi";
 type Props = {};
 
 const RegisterAuth = (props: Props) => {
+  const [userRole, setUserRole] = useState(false);
   const [registerAuth, { isLoading, error, isSuccess, data }] =
     useRegisterAuthMutation();
 
@@ -27,9 +28,11 @@ const RegisterAuth = (props: Props) => {
   } = useForm<registerFormType>();
 
   const registerForm = handleSubmit(async (formData) => {
+    let role: string = userRole ? "customer" : "user";
     if (formData.password === formData.confirmPassword) {
       await registerAuth({
         ...formData,
+        role: role,
         confirmPassword: undefined,
       });
     } else {
@@ -63,8 +66,19 @@ const RegisterAuth = (props: Props) => {
           >
             <div className="card-body p-3">
               <div className="card-header mb-3">
-                <h3 className="font-bold text-2xl">Register</h3>
-                <h3 className="text-2xl">For List Your Houses Here</h3>
+                <h3 className="text-2xl">
+                  {userRole ? "Customer Account" : "House Holder Account"}
+                </h3>
+                <span className="text-md block mt-4 select-none">
+                  Register as
+                  <span
+                    className="text-success cursor-pointer font-bold"
+                    onClick={() => setUserRole((state) => !state)}
+                  >
+                    {" "}
+                    {userRole ? " House Holder" : "Customer"}
+                  </span>
+                </span>
               </div>
 
               <div className="form-control">
