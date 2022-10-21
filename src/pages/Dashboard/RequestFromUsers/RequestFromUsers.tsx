@@ -20,15 +20,15 @@ const RequestFromUsers = (props: Props) => {
     <div>
       <div className="p-5 my-5 bg-white">
         <h3 className="text-2xl font-bold">Request From Users</h3>
-        <div className="request-content">
-          <div className="request-tabs flex items-center mt-5 rounded overflow-hidden">
+        <div className="request-content font-poppins">
+          <div className="request-tabs flex items-center rounded-none mt-5 justify-center overflow-hidden">
             <Link
               to="/dashboard/request-from-users/for-blogs"
               className={`p-3 px-6  ${
                 pathname.includes("for-blogs") ||
                 pathname === "/dashboard/request-from-users"
-                  ? "bg-secondary text-white"
-                  : "bg-base-300 text-secondary"
+                  ? "bg-success"
+                  : "bg-base-200 text-black"
               }`}
             >
               For Blogs{" "}
@@ -40,8 +40,8 @@ const RequestFromUsers = (props: Props) => {
               to="/dashboard/request-from-users/for-house-holder"
               className={`p-3 px-6  ${
                 pathname.includes("for-house-holder")
-                  ? "bg-secondary text-white"
-                  : "bg-base-300 text-secondary"
+                  ? "bg-success"
+                  : "bg-base-200 text-black"
               }`}
             >
               For House Holder{" "}
