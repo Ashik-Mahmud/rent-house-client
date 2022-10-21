@@ -16,6 +16,7 @@ type UserType = {
   password: string;
   confirmPassword?: string;
   role?: string;
+  phone?: string;
 };
 
 type LoginType = {

@@ -45,6 +45,7 @@ const SendVerifyEmail = ({ title, desc }: Props) => {
         please check your email and verify it
       </small>
       <button
+        type="button"
         className="btn btn-lg btn-success rounded-full"
         onClick={handleVerificationEmail}
       >
