@@ -5,9 +5,14 @@ import DuelSlider from "../../components/DuelSlider";
 type Props = {
   getAllDistrict: any;
   setFilterByDistrict: React.Dispatch<React.SetStateAction<string>>;
+  setSearchKey: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const FilterSidebar = ({ getAllDistrict, setFilterByDistrict }: Props) => {
+const FilterSidebar = ({
+  getAllDistrict,
+  setFilterByDistrict,
+  setSearchKey,
+}: Props) => {
   return (
     <>
       {/* Advanced Filters Modal */}
@@ -196,7 +201,9 @@ const FilterSidebar = ({ getAllDistrict, setFilterByDistrict }: Props) => {
               >
                 <option value="">Select District</option>
                 {getAllDistrict?.map((district: string) => (
-                  <option value={district}>{district}</option>
+                  <option key={district} value={district}>
+                    {district}
+                  </option>
                 ))}
               </select>
             </div>
@@ -215,6 +222,7 @@ const FilterSidebar = ({ getAllDistrict, setFilterByDistrict }: Props) => {
                 type="text"
                 className="form-control outline-none pl-4"
                 placeholder="Search by name"
+                onInput={(e) => setSearchKey(e.currentTarget.value)}
               />
             </div>
           </div>

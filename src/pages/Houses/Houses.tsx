@@ -30,15 +30,15 @@ const Houses = (props: Props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
   const [filterByDistrict, setFilterByDistrict] = useState("");
-
+  const [searchKey, setSearchKey] = useState("");
   const { data, isLoading, isError, refetch } = useQuery(
-    ["houses", perPage, currentPage, sortBy, filterByDistrict],
+    ["houses", perPage, currentPage, sortBy, filterByDistrict, searchKey],
     async () => getAllHousesWithFilter()
   );
 
   const getAllHousesWithFilter = async () => {
     const { data } = await axios.get(
-      `http://localhost:5000/api/v1/houses?limit=${perPage}&page=${currentPage}&sortBy=${sortBy}&district=${filterByDistrict}`
+      `http://localhost:5000/api/v1/houses?limit=${perPage}&page=${currentPage}&sortBy=${sortBy}&district=${filterByDistrict}&name=${searchKey}`
     );
     return data?.data;
   };
@@ -92,6 +92,7 @@ const Houses = (props: Props) => {
           <FilterSidebar
             getAllDistrict={getAllDistrict}
             setFilterByDistrict={setFilterByDistrict}
+            setSearchKey={setSearchKey}
           />
 
           {/* Filters Sidebar end */}
