@@ -158,7 +158,7 @@ const HouseCard = ({ gridView, house }: Props) => {
           </p>
         )}
         <Link
-          to="/house/4334232"
+          to={`/house/${house?._id}`}
           className={`btn bg-base-200 btn-sm btn-ghost border   gap-3 ${
             gridView ? "flex items-center" : "flex items-center"
           }`}

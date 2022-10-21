@@ -30,11 +30,9 @@ const Houses = (props: Props) => {
   );
 
   const getAllHousesWithFilter = async () => {
-    const { data } = await axios.get("http://localhost:5000/api/v1/houses");
+    const { data } = await axios.get(`http://localhost:5000/api/v1/houses`);
     return data?.data;
   };
-
-  console.log(data?.houses);
 
   if (isError) {
     return (
