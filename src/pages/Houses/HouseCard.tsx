@@ -1,3 +1,4 @@
+import formatDistance from "date-fns/formatDistance";
 import { useEffect, useState } from "react";
 import { BiShare, BiShareAlt } from "react-icons/bi";
 import {
@@ -40,6 +41,12 @@ const HouseCard = ({ gridView, house }: Props) => {
       setIsCopyLink(false);
     }, 2000);
   }, [isCopyLink]);
+
+  /* Time and date */
+  const timeDistance = formatDistance(new Date(house.createdAt), new Date(), {
+    addSuffix: true,
+  });
+  console.log(timeDistance);
 
   return (
     <HouseCardContainer
@@ -151,9 +158,16 @@ const HouseCard = ({ gridView, house }: Props) => {
           !gridView && "justify-start items-start w-3/4"
         }`}
       >
-        <h2 className="text-lg font-bold text-gray-900 ">
-          {house?.name || "loading..."}
-        </h2>
+        <div
+          className={`flex items-center justify-between ${
+            !gridView && "gap-5"
+          }`}
+        >
+          <h2 className="text-lg font-bold text-gray-900 ">
+            {house?.name || "loading..."}
+          </h2>
+          <small className="text-gray-400">{timeDistance}</small>
+        </div>
         <ul
           className={`text-sm font-poppins flex  gap-1 ${
             gridView ? "flex-col" : "flex-row gap-7"

@@ -81,7 +81,7 @@ const AddHouse = (props: Props) => {
 
     const sendingDataForHouse = {
       name: data.name,
-      price: data.price,
+      price: Number(data.price),
       category: data.category,
       houseType: data.houseType,
       houseUseFor: data.houseUseFor,

@@ -25,16 +25,17 @@ const Houses = (props: Props) => {
   }, [gridView]);
 
   /* Get All This Approved Houses */
+  const [sortBy, setSortBy] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
   const { data, isLoading, isError, refetch } = useQuery(
-    ["houses", perPage, currentPage],
+    ["houses", perPage, currentPage, sortBy],
     async () => getAllHousesWithFilter()
   );
 
   const getAllHousesWithFilter = async () => {
     const { data } = await axios.get(
-      `http://localhost:5000/api/v1/houses?limit=${perPage}&page=${currentPage}`
+      `http://localhost:5000/api/v1/houses?limit=${perPage}&page=${currentPage}&sortBy=${sortBy}`
     );
     return data?.data;
   };
@@ -53,6 +54,13 @@ const Houses = (props: Props) => {
       setCurrentPage(currentPage - 1);
       refetch();
     }
+  };
+
+  /* Handle Sort By */
+
+  const handleSortBy = (e: any) => {
+    setSortBy(e.target.value);
+    refetch();
   };
 
   if (isError) {
@@ -90,12 +98,17 @@ const Houses = (props: Props) => {
                         name=""
                         className="outline-none  w-full pl-4 cursor-pointer text-sm bg-slate-50"
                         id=""
+                        onChange={(e) => handleSortBy(e)}
                       >
-                        <option value="">All</option>
-                        <option value="Bungalow">Most Recent</option>
-                        <option value="Duplex">Last Weeks</option>
-                        <option value="Flat">Last Month</option>
-                        <option value="Flat">Last Year</option>
+                        <option value="all">All</option>
+                        <option value="-createdAt">Most Recent</option>
+                        <option value="-views">Most Popular</option>
+                        <option value="-price">Most Expensive</option>
+                        <option value="price">Most Cheapest</option>
+                        <option value="week">Last Weeks</option>
+                        <option value="month">Last Month</option>
+                        <option value="year">Last Year</option>
+                        <option value="createdAt">Oldest</option>
                       </select>
                     </div>
                   </div>
