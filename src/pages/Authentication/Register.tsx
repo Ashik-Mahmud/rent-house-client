@@ -31,6 +31,12 @@ const RegisterAuth = (props: Props) => {
 
   const registerForm = handleSubmit(async (formData) => {
     let role: string = userRole ? "customer" : "user";
+    if (!userRole) {
+      /* Phone Number Validation */
+      if (!/^(?:\+88|01)?\d{11}$/.test((formData as any)?.phone)) {
+        return toast.error("Invalid Phone Number");
+      }
+    }
 
     if (formData.password === formData.confirmPassword) {
       await registerAuth({

@@ -1,3 +1,4 @@
+import cogoToast from "cogo-toast";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { BiLogIn } from "react-icons/bi";
@@ -45,7 +46,7 @@ const Login = (props: Props) => {
     if (isSuccess) {
       navigate("/dashboard/profile");
       dispatch(setAuthInformation({ user: data?.user, token: data?.token }));
-      toast.success("Login Success");
+      cogoToast.success("Login Success");
     }
   }, [isSuccess, error, data, navigate, dispatch]);
 

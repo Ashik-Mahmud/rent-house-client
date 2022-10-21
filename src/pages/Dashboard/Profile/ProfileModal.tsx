@@ -1,3 +1,4 @@
+import cogoToast from "cogo-toast";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -25,6 +26,10 @@ const ProfileModal = ({ refetch }: Props) => {
   const { register, handleSubmit, reset, setValue } = useForm();
 
   const handleUpdateProfile = handleSubmit(async (formData) => {
+    if (formData?.phone.length < 11 || formData?.phone.length > 11) {
+      return cogoToast.error("Phone number must be 11 digits");
+    }
+
     const bodyData = { ...formData, email: updatedUser?.email };
     await updateProfile(bodyData);
     reset();
