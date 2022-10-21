@@ -7,6 +7,9 @@ type Props = {
   setFilterByDistrict: React.Dispatch<React.SetStateAction<string>>;
   setSearchKey: React.Dispatch<React.SetStateAction<string>>;
   setCategory: React.Dispatch<React.SetStateAction<string>>;
+  setMinPrice: React.Dispatch<React.SetStateAction<number>>;
+  setMaxPrice: React.Dispatch<React.SetStateAction<number>>;
+  priceFilter: any;
 };
 
 const FilterSidebar = ({
@@ -14,7 +17,17 @@ const FilterSidebar = ({
   setFilterByDistrict,
   setSearchKey,
   setCategory,
+  setMinPrice,
+  setMaxPrice,
+  priceFilter,
 }: Props) => {
+  /* Handle Reset Filter */
+  const handleResetFilter = () => {
+    setFilterByDistrict("");
+    setSearchKey("");
+    setCategory("");
+  };
+
   return (
     <>
       {/* Advanced Filters Modal */}
@@ -174,7 +187,7 @@ const FilterSidebar = ({
       </div>
 
       {/* Sidebar */}
-      <div className="house-content-left sm:sticky  top-10  border p-6 bg-white shadow rounded-md w-full sm:w-auto">
+      <form className="house-content-left sm:sticky  top-10  border p-6 bg-white shadow rounded-md w-full sm:w-auto">
         <div className="house-content-left-title flex items-center justify-between">
           <h2 className="text-xl font-bold">Filters Houses</h2>
           <label
@@ -257,13 +270,38 @@ const FilterSidebar = ({
           {/* Filter by Price */}
           <div className="filter-by-name border  rounded p-3 relative mt-10">
             <div className="filter-by-name-title absolute -top-4 bg-white border rounded p-1">
-              <h3 className="text-xs font-poppins">Filter by Price</h3>
+              <h3 className="text-xs font-poppins">Filter by Price Range</h3>
             </div>
             <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
-              <DuelSlider />
+              <DuelSlider priceFilter={priceFilter} />
             </div>
           </div>
           {/* End */}
+          {/* Filter by Price */}
+          <div className="filter-by-name border  rounded p-3 relative mt-10">
+            <div className="filter-by-name-title absolute -top-4 bg-white border rounded p-1">
+              <h3 className="text-xs font-poppins">Filter by Price Input</h3>
+            </div>
+            <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
+              <div className="icon">
+                <BsSearch />
+              </div>
+              <input
+                type="number"
+                className="form-control outline-none pl-4 w-28"
+                placeholder="Min Price"
+                onBlur={(e) => setMinPrice(Number(e.target.value))}
+              />
+              <input
+                type="number"
+                className="form-control outline-none pl-4 w-28"
+                placeholder="Max Price"
+                onBlur={(e) => setMaxPrice(Number(e.target.value))}
+              />
+            </div>
+          </div>
+          {/* End */}
+
           {/* Filter by House Type */}
           <div className="filter-by-name border  rounded p-3 relative mt-10">
             <div className="filter-by-name-title absolute -top-4 bg-white border rounded p-1">
@@ -295,8 +333,15 @@ const FilterSidebar = ({
             </div>
           </div>
           {/* End */}
+          <button
+            type="reset"
+            className="font-poppins text-sm mt-4 text-error underline"
+            onClick={handleResetFilter}
+          >
+            Clear All
+          </button>
         </div>
-      </div>
+      </form>
     </>
   );
 };

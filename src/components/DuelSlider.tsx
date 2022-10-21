@@ -1,17 +1,30 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import ReactSlider from "react-slider";
-type Props = {};
+type Props = {
+  priceFilter: any;
+};
 
-const DuelSlider = (props: Props) => {
-  const [min, setMin] = useState(0);
-  const [max, setMax] = useState(100000);
+const DuelSlider = ({ priceFilter }: Props) => {
+  const {
+    minPrice,
+    maxPrice,
+    setMinPrice,
+    lowestPrice,
+    setMaxPrice,
+    highestPrice,
+  } = priceFilter;
+
+  useEffect(() => {
+    setMinPrice(minPrice);
+    setMaxPrice(maxPrice);
+  }, [setMaxPrice, setMinPrice, maxPrice, minPrice]);
 
   return (
     <div className="w-full p-2">
       <ReactSlider
         className="horizontal-slider"
         thumbClassName="thumb "
-        defaultValue={[min, max]}
+        defaultValue={[minPrice, 150000000000000]}
         renderThumb={(props, state) => (
           <div
             {...props}
@@ -29,14 +42,14 @@ const DuelSlider = (props: Props) => {
             <div {...props} className="track h-1 bg-base-300 rounded"></div>
           </>
         )}
-        minDistance={10}
-        step={1000}
+        minDistance={1}
+        step={100}
         onChange={([min, max]) => {
-          setMin(min);
-          setMax(max);
+          setMinPrice(min);
+          setMaxPrice(max);
         }}
-        min={0}
-        max={100000}
+        min={lowestPrice}
+        max={15000 || highestPrice}
       />
     </div>
   );

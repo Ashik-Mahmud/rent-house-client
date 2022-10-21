@@ -32,8 +32,22 @@ const Houses = (props: Props) => {
   const [filterByDistrict, setFilterByDistrict] = useState("");
   const [searchKey, setSearchKey] = useState("");
   const [category, setCategory] = useState("");
-  console.log(category);
 
+  /* by search */
+  const [highestPrice, setHighestPrice] = useState(0);
+  const [lowestPrice, setLowestPrice] = useState(0);
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(0);
+  const priceFilter = {
+    minPrice,
+    maxPrice,
+    setMinPrice,
+    setMaxPrice,
+    highestPrice,
+    lowestPrice,
+  };
+
+  /* Get All the Approved houses With Advanced Filter */
   const { data, isLoading, isError, refetch } = useQuery(
     [
       "houses",
@@ -43,13 +57,15 @@ const Houses = (props: Props) => {
       filterByDistrict,
       searchKey,
       category,
+      maxPrice,
+      minPrice,
     ],
     async () => getAllHousesWithFilter()
   );
 
   const getAllHousesWithFilter = async () => {
     const { data } = await axios.get(
-      `http://localhost:5000/api/v1/houses?limit=${perPage}&page=${currentPage}&sortBy=${sortBy}&district=${filterByDistrict}&name=${searchKey}&category=${category}`
+      `http://localhost:5000/api/v1/houses?limit=${perPage}&page=${currentPage}&sortBy=${sortBy}&district=${filterByDistrict}&name=${searchKey}&category=${category}&startPrice=${minPrice}&endPrice=${maxPrice}`
     );
     return data?.data;
   };
@@ -81,7 +97,17 @@ const Houses = (props: Props) => {
     setGetAllDistrict(() => {
       return data?.allHouse.map((house: any) => house.district);
     });
-  }, [data]);
+
+    if (!isLoading) {
+      const priceArr = data?.allHouse?.map((house: any) => house?.price);
+      setHighestPrice(Math.max(...priceArr));
+      setLowestPrice(Math.min(...priceArr));
+    }
+
+    return () => {
+      setGetAllDistrict([]);
+    };
+  }, [data, isLoading]);
 
   if (isError) {
     return (
@@ -105,6 +131,9 @@ const Houses = (props: Props) => {
             setFilterByDistrict={setFilterByDistrict}
             setSearchKey={setSearchKey}
             setCategory={setCategory}
+            setMinPrice={setMinPrice}
+            setMaxPrice={setMaxPrice}
+            priceFilter={priceFilter}
           />
 
           {/* Filters Sidebar end */}
