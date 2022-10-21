@@ -1,18 +1,30 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { BiBath, BiBed, BiMoney } from "react-icons/bi";
 import { BsAlignEnd, BsHouse, BsLink, BsPen } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import Select from "react-select";
 import SendVerifyEmail from "../../../components/SendVerifyEmail";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import { useCreateHouseMutation } from "../../../services/HouseApi";
+import {
+  getAllTheCity,
+  getDistrictByDivision,
+} from "../../../utilities/Helpers";
 import HouseInput from "./HouseInput";
-
 type Props = {};
 
 const AddHouse = (props: Props) => {
+  /* Showing All The District & City */
+  const [city, setCity] = useState<string[]>([]);
+  const [selectCity, setSelectCity] = useState<any | null>(null);
+
+  const [district, setDistrict] = useState<string[]>([]);
+  const [selectDistrict, setSelectDistrict] = useState<any | null>(null);
+  const [districtLoading, setDistrictLoading] = useState<boolean>(true);
+
   const { updatedUser } = useAuth<authUserInterface | any>({});
   const [createHouse, { data, isSuccess, isError, error }] =
     useCreateHouseMutation();
@@ -30,13 +42,13 @@ const AddHouse = (props: Props) => {
   const handleAddHouseFormSubmit = handleSubmit(async (data) => {
     /* Validation */
     if (!data.name) return toast.error(`Name is required`);
-    if (!data.district) return toast.error(`District is required`);
-    if (!data.city) return toast.error(`City is required`);
+    if (!data.price) return toast.error(`Price is required`);
     if (!data.bedrooms) return toast.error(`Bedrooms is required`);
     if (!data.bathrooms) return toast.error(`Bathrooms is required`);
+    if (!selectCity?.value) return toast.error(`City is required`);
+    if (!selectDistrict?.value) return toast.error(`District is required`);
     if (!data.address) return toast.error(`Address is required`);
     if (!data.description) return toast.error(`Description is required`);
-    if (!data.price) return toast.error(`Price is required`);
     if (!data.isBooked) return toast.error(`isBooked is required`);
     if (!data.isBachelorRoom) return toast.error(`isBachelorRoom is required`);
     if (!data.allowQuestion) return toast.error(`Allow Question is required`);
@@ -77,8 +89,8 @@ const AddHouse = (props: Props) => {
       bathrooms: data.bathrooms,
       bedrooms: data.bedrooms,
       address: data.address,
-      district: data.district,
-      city: data.city,
+      district: selectDistrict.value,
+      city: selectCity.value,
       description: data.description,
       allowQuestion: data.allowQuestion,
       allowReview: data.allowReview,
@@ -137,8 +149,43 @@ const AddHouse = (props: Props) => {
     }
   }, [isError, error, isSuccess, data, reset, navigate]);
 
+  useEffect(() => {
+    setDistrictLoading(true);
+    const cities = getAllTheCity();
+    cities.then((res) => {
+      setCity(() => {
+        return res?.data?.map((city: any) => {
+          return {
+            value: city?.division,
+            label: city?.division,
+          };
+        });
+      });
+      setDistrictLoading(false);
+    });
+    const districtByDivision = getDistrictByDivision(
+      (selectCity as any)?.value
+    );
+    districtByDivision.then((res) => {
+      setDistrict(() => {
+        return res?.data?.map((district: any) => {
+          return {
+            value: district?.district,
+            label: district?.district,
+          };
+        });
+      });
+      setDistrictLoading(false);
+    });
+
+    return () => {
+      setCity([]);
+      setDistrict([]);
+    };
+  }, [selectCity]);
+
   return (
-    <div className="p-5 my-5 bg-white rounded">
+    <div className="p-5 my-5 bg-white rounded font-poppins">
       <div className="flex items-center gap-2">
         <h1 className="text-2xl font-bold">Add House</h1>
         <small className="badge badge-success">House Holder</small>
@@ -232,21 +279,38 @@ const AddHouse = (props: Props) => {
                 />
               </HouseInput>
 
-              <HouseInput title="Put Your District" icon={<BsHouse />}>
-                <input
-                  type="text"
-                  className="form-control outline-none pl-4 w-full"
-                  placeholder="District"
-                  {...register("district")}
-                />
-              </HouseInput>
-
               <HouseInput title="Put Your City" icon={<BsAlignEnd />}>
-                <input
+                {/* <input
                   type="text"
                   className="form-control outline-none pl-4 w-full"
                   placeholder="City"
                   {...register("city")}
+                /> */}
+                <Select
+                  className="basic-single w-full pl-3"
+                  classNamePrefix="select"
+                  defaultValue={city[0]}
+                  name="color"
+                  options={city}
+                  onChange={(e) => setSelectCity(e)}
+                />
+              </HouseInput>
+              <HouseInput title="Put Your District" icon={<BsHouse />}>
+                {/* <input
+                  type="text"
+                  className="form-control outline-none pl-4 w-full"
+                  placeholder="District"
+                  {...register("district")}
+                /> */}
+                <Select
+                  className="basic-single w-full pl-3"
+                  classNamePrefix="select"
+                  placeholder="Select District"
+                  name="color"
+                  options={district}
+                  isLoading={districtLoading}
+                  isClearable={districtLoading}
+                  onChange={(e) => setSelectDistrict(e)}
                 />
               </HouseInput>
             </div>
