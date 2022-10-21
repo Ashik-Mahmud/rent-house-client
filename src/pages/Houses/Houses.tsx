@@ -26,7 +26,7 @@ const Houses = (props: Props) => {
 
   /* Get All This Approved Houses */
   const [currentPage, setCurrentPage] = useState(1);
-  const [perPage, setPerPage] = useState(1);
+  const [perPage, setPerPage] = useState(10);
   const { data, isLoading, isError, refetch } = useQuery(
     ["houses", perPage, currentPage],
     async () => getAllHousesWithFilter()
@@ -40,7 +40,6 @@ const Houses = (props: Props) => {
   };
 
   /* Pagination Handler */
-
   const totalPage = Math.ceil(data?.totalHouses / perPage);
 
   const handleNextPage = () => {
@@ -82,7 +81,7 @@ const Houses = (props: Props) => {
               <div className="house-header sm:flex bg-slate-50 rounded-lg justify-between text-sm px-7 items-center">
                 <div className="filter-by-recent flex items-center justify-start gap-6 flex-1">
                   <div className="flex items-center gap-2">
-                    <b>452445</b> results{" "}
+                    <b>{data?.houses?.length}</b> results{" "}
                   </div>
                   <div className="flex items-center gap-4 ">
                     <div className="w-20">Sort By</div>

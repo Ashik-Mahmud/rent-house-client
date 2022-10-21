@@ -1,15 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiShare, BiShareAlt } from "react-icons/bi";
 import {
   BsArrowDownRight,
   BsFacebook,
-  BsInstagram,
   BsLink,
   BsLinkedin,
   BsTwitter,
+  BsWhatsapp,
 } from "react-icons/bs";
 import { GiBed, GiShower } from "react-icons/gi";
 import { Link } from "react-router-dom";
+import {
+  FacebookShareButton,
+  LinkedinShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+} from "react-share";
 import styled from "styled-components";
 
 type Props = {
@@ -19,6 +25,22 @@ type Props = {
 
 const HouseCard = ({ gridView, house }: Props) => {
   const [showShare, setShowShare] = useState(false);
+  const [isCopyLink, setIsCopyLink] = useState(false);
+
+  /* Handle Copy Link to the Houses */
+  const handleCopyLink = (id: string) => {
+    const location = window.location.origin;
+    const link = `${location}/house/${id}`;
+    navigator.clipboard.writeText(link);
+    setIsCopyLink(true);
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsCopyLink(false);
+    }, 2000);
+  }, [isCopyLink]);
+
   return (
     <HouseCardContainer
       className={`card group ${
@@ -39,29 +61,51 @@ const HouseCard = ({ gridView, house }: Props) => {
             }`}
           >
             <div className="share-item" title="share on facebook">
-              <a href="/" className="btn btn-xs btn-circle btn-ghost">
-                <BsFacebook />
-              </a>
+              <span className="btn btn-xs btn-circle btn-ghost">
+                <FacebookShareButton
+                  url={window.location.origin + "/house/" + house?._id}
+                >
+                  <BsFacebook />
+                </FacebookShareButton>
+              </span>
             </div>
-            <div className="share-item" title="share on Instagram">
-              <a href="/" className="btn btn-xs btn-circle btn-ghost">
-                <BsInstagram />
-              </a>
+            <div className="share-item" title="share on Whatsapp">
+              <span className="btn btn-xs btn-circle btn-ghost">
+                <WhatsappShareButton
+                  url={window.location.origin + "/house/" + house?._id}
+                >
+                  <BsWhatsapp />
+                </WhatsappShareButton>
+              </span>
             </div>
             <div className="share-item" title="share on Twitter">
-              <a href="/" className="btn btn-xs btn-circle btn-ghost">
-                <BsTwitter />
-              </a>
+              <span className="btn btn-xs btn-circle btn-ghost">
+                <TwitterShareButton
+                  url={window.location.origin + "/house/" + house?._id}
+                >
+                  <BsTwitter />
+                </TwitterShareButton>
+              </span>
             </div>
             <div className="share-item" title="share on Linkedin">
-              <a href="/" className="btn btn-xs btn-circle btn-ghost">
-                <BsLinkedin />
-              </a>
+              <span className="btn btn-xs btn-circle btn-ghost">
+                <LinkedinShareButton
+                  url={window.location.origin + "/house/" + house?._id}
+                >
+                  <BsLinkedin />
+                </LinkedinShareButton>
+              </span>
             </div>
-            <div className="share-item" title="Copy Link">
-              <a href="/" className="btn btn-xs btn-circle btn-ghost">
+            <div
+              className="share-item tooltip tooltip-left"
+              data-tip={isCopyLink ? "Copied" : "Copy Link"}
+            >
+              <button
+                onClick={() => handleCopyLink(house._id)}
+                className="btn btn-xs btn-circle btn-ghost"
+              >
                 <BsLink />
-              </a>
+              </button>
             </div>
           </div>
         </div>

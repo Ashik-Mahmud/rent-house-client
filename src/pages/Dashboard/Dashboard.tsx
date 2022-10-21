@@ -8,7 +8,13 @@ import {
 } from "react-device-detect";
 import toast from "react-hot-toast";
 import { AiOutlineUser } from "react-icons/ai";
-import { BiGitPullRequest, BiLogOut, BiPlus, BiUser } from "react-icons/bi";
+import {
+  BiGitPullRequest,
+  BiHomeAlt,
+  BiLogOut,
+  BiPlus,
+  BiUser,
+} from "react-icons/bi";
 import {
   BsBookFill,
   BsCardChecklist,
@@ -385,6 +391,14 @@ const Dashboard = (props: Props) => {
                         </Link>
                       </>
                     ) : null}
+                    {role === "customer" && (
+                      <Link
+                        to="/houses"
+                        className="flex items-center gap-2 btn btn-success  rounded-sm btn-sm"
+                      >
+                        Find Houses <BiHomeAlt />
+                      </Link>
+                    )}
                   </>
                 )}
 
