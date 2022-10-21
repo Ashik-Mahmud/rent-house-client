@@ -46,7 +46,6 @@ const HouseCard = ({ gridView, house }: Props) => {
   const timeDistance = formatDistance(new Date(house.createdAt), new Date(), {
     addSuffix: true,
   });
-  console.log(timeDistance);
 
   return (
     <HouseCardContainer

@@ -25,17 +25,20 @@ const Houses = (props: Props) => {
   }, [gridView]);
 
   /* Get All This Approved Houses */
+  const [getAllDistrict, setGetAllDistrict] = useState([]);
   const [sortBy, setSortBy] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
+  const [filterByDistrict, setFilterByDistrict] = useState("");
+
   const { data, isLoading, isError, refetch } = useQuery(
-    ["houses", perPage, currentPage, sortBy],
+    ["houses", perPage, currentPage, sortBy, filterByDistrict],
     async () => getAllHousesWithFilter()
   );
 
   const getAllHousesWithFilter = async () => {
     const { data } = await axios.get(
-      `http://localhost:5000/api/v1/houses?limit=${perPage}&page=${currentPage}&sortBy=${sortBy}`
+      `http://localhost:5000/api/v1/houses?limit=${perPage}&page=${currentPage}&sortBy=${sortBy}&district=${filterByDistrict}`
     );
     return data?.data;
   };
@@ -63,6 +66,12 @@ const Houses = (props: Props) => {
     refetch();
   };
 
+  useEffect(() => {
+    setGetAllDistrict(() => {
+      return data?.allHouse.map((house: any) => house.district);
+    });
+  }, [data]);
+
   if (isError) {
     return (
       <div className="py-10 text-center">
@@ -80,7 +89,10 @@ const Houses = (props: Props) => {
         <div className="house-content flex-col sm:flex-row flex items-start gap-10">
           {/* Filters Sidebar */}
 
-          <FilterSidebar />
+          <FilterSidebar
+            getAllDistrict={getAllDistrict}
+            setFilterByDistrict={setFilterByDistrict}
+          />
 
           {/* Filters Sidebar end */}
           {/* Content */}

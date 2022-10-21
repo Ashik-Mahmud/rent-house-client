@@ -2,9 +2,12 @@ import { BsSearch } from "react-icons/bs";
 import { RiEqualizerLine } from "react-icons/ri";
 import DuelSlider from "../../components/DuelSlider";
 
-type Props = {};
+type Props = {
+  getAllDistrict: any;
+  setFilterByDistrict: React.Dispatch<React.SetStateAction<string>>;
+};
 
-const FilterSidebar = (props: Props) => {
+const FilterSidebar = ({ getAllDistrict, setFilterByDistrict }: Props) => {
   return (
     <>
       {/* Advanced Filters Modal */}
@@ -189,12 +192,12 @@ const FilterSidebar = (props: Props) => {
                 name=""
                 className="outline-none  w-full pl-4 cursor-pointer text-sm"
                 id=""
+                onChange={(e) => setFilterByDistrict(e.target.value)}
               >
                 <option value="">Select District</option>
-                <option value="Bungalow">Dhaka</option>
-                <option value="Duplex">Rangpur</option>
-                <option value="Flat">Gobindagonj</option>
-                <option value="Terrace">Gaibanda</option>
+                {getAllDistrict?.map((district: string) => (
+                  <option value={district}>{district}</option>
+                ))}
               </select>
             </div>
           </div>
