@@ -13,6 +13,7 @@ type Props = {
   setHouseType: any;
   setSearchAddress: React.Dispatch<React.SetStateAction<string>>;
   setBathrooms: React.Dispatch<React.SetStateAction<number>>;
+  setBedrooms: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const FilterSidebar = ({
@@ -26,6 +27,7 @@ const FilterSidebar = ({
   setHouseType,
   setSearchAddress,
   setBathrooms,
+  setBedrooms,
 }: Props) => {
   /* Handle Reset Filter */
   const handleResetFilter = () => {
@@ -134,6 +136,7 @@ const FilterSidebar = ({
                     type="number"
                     className="form-control outline-none pl-4 w-full"
                     placeholder="Search by bedrooms"
+                    onBlur={(e) => setBedrooms(Number(e.target.value))}
                   />
                 </div>
               </div>
