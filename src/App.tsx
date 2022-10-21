@@ -95,7 +95,7 @@ const App = (props: Props) => {
       dispatch(setAppOptions(data?.app));
       refetch();
     }
-  }, [data, dispatch, isLoading, refetch, updatedUser]);
+  }, [data, dispatch, isLoading, refetch]);
 
   const sendDashboardForParticularRole = () => {
     if (updatedUser?.role === "admin") {

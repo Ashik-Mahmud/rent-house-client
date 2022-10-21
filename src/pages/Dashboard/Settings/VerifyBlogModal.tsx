@@ -28,14 +28,13 @@ const VerifyBlogModal = (props: Props) => {
     try {
       await sendRequestForBlog(sendingContent);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   });
 
   /* Handle error */
   useEffect(() => {
     if (error) {
-      console.log(error);
       cogoToast.error((error as any)?.data?.message);
     }
     if (isSuccess) {

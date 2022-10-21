@@ -1,10 +1,12 @@
+import axios from "axios";
 import cogoToast from "cogo-toast";
 import { BiCheck, BiX } from "react-icons/bi";
 import { BsLink45Deg, BsX } from "react-icons/bs";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import swal from "sweetalert";
-import { AxiosRequest } from "../../../api/Axios";
 import { useAppSelector } from "../../../app/store";
+import useAuth from "../../../hooks/useAuth";
+import { authUserInterface } from "../../../interfaces/UserInterface";
 
 type Props = {};
 
@@ -65,6 +67,7 @@ type rowType = {
   refetch: () => void;
 };
 export const RequestFromUserRow = ({ data, ind, refetch }: rowType) => {
+  const { user } = useAuth<authUserInterface | any>({});
   /* Handle Confirm Blog Request */
   const handleConfirmBlogReq = async () => {
     try {
@@ -79,8 +82,14 @@ export const RequestFromUserRow = ({ data, ind, refetch }: rowType) => {
       if (isConfirm) {
         // User pressed the confirm button
         // Will make an api call to confirm user blog
-        const { data: info } = await AxiosRequest.patch(
-          `/approve-request/${data?._id}?authorId=${data?.author?._id}&role=blog`
+        const { data: info } = await axios.patch(
+          `http://localhost:5000/api/v1/request/approve-request/${data?._id}?authorId=${data?.author?._id}&role=blog`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
         );
         cogoToast.success(info?.message);
         refetch();
@@ -102,8 +111,13 @@ export const RequestFromUserRow = ({ data, ind, refetch }: rowType) => {
       if (isConfirm) {
         // User pressed the confirm button
         // Will make an api call to confirm user blog
-        const { data: info } = await AxiosRequest.delete(
-          `/cancel-request/${data._id}?authorId=${data?.author?._id}&role=blog`
+        const { data: info } = await axios.delete(
+          `http://localhost:5000/api/v1/request/cancel-request/${data._id}?authorId=${data?.author?._id}&role=blog`,
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
         );
         cogoToast.success(info.message);
         refetch();
