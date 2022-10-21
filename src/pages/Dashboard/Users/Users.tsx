@@ -1,22 +1,34 @@
+import axios from "axios";
 import { useState } from "react";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
-import { useGetAllUsersForAdminQuery } from "../../../services/AuthApi";
+import { useQuery } from "react-query";
+import useAuth from "../../../hooks/useAuth";
+import { authUserInterface } from "../../../interfaces/UserInterface";
 import UserRow from "./UserRow";
 type Props = {};
 
 const Users = (props: Props) => {
+  const { user } = useAuth<authUserInterface | any>({});
   const [filterRole, setFilterRole] = useState<string>("All");
   const [limitPerPage, setLimitPerPage] = useState<number>(5);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const queryData = {
-    role: filterRole,
-    page: currentPage,
-    limit: limitPerPage,
-  };
+  const { data, refetch, isLoading, error } = useQuery(
+    ["users", currentPage, limitPerPage, filterRole],
+    () => getAllUserForAdmin()
+  );
 
-  const { data, isLoading, error, refetch } =
-    useGetAllUsersForAdminQuery(queryData);
+  const getAllUserForAdmin = async () => {
+    const { data } = await axios.get(
+      `http://localhost:5000/api/v1/users/admin?page=${currentPage}&limit=${limitPerPage}&role=${filterRole}`,
+      {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
+    return data;
+  };
 
   if (error) {
     console.log(error);
