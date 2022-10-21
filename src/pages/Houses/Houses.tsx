@@ -26,10 +26,12 @@ const Houses = (props: Props) => {
 
   /* Get All This Approved Houses */
   const [getAllDistrict, setGetAllDistrict] = useState([]);
+  const [getAllCity, setGetAllCity] = useState([]);
   const [sortBy, setSortBy] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
   const [filterByDistrict, setFilterByDistrict] = useState("");
+  const [filterByCity, setFilterByCity] = useState("");
   const [searchKey, setSearchKey] = useState("");
   const [category, setCategory] = useState("");
   const [houseType, setHouseType] = useState({
@@ -44,8 +46,6 @@ const Houses = (props: Props) => {
   const [bathrooms, setBathrooms] = useState(0);
   const [bedrooms, setBedrooms] = useState(0);
   const [isBachelor, setIsBachelor] = useState(false);
-
-  console.log(houseUseFor);
 
   /* by search */
   const [highestPrice, setHighestPrice] = useState(0);
@@ -79,6 +79,7 @@ const Houses = (props: Props) => {
       bedrooms,
       isBachelor,
       houseUseFor,
+      filterByCity,
     ],
     async () => getAllHousesWithFilter()
   );
@@ -89,7 +90,7 @@ const Houses = (props: Props) => {
         houseType
       )}&address=${searchAddress}&bathrooms=${bathrooms}&bedrooms=${bedrooms}&isBachelor=${isBachelor}&houseUseFor=${JSON.stringify(
         houseUseFor
-      )} `
+      )}&city=${filterByCity}`
     );
     return data?.data;
   };
@@ -120,6 +121,10 @@ const Houses = (props: Props) => {
   useEffect(() => {
     setGetAllDistrict(() => {
       return data?.allHouse.map((house: any) => house.district);
+    });
+
+    setGetAllCity(() => {
+      return data?.allHouse.map((house: any) => house.city);
     });
 
     if (!isLoading) {
@@ -164,6 +169,8 @@ const Houses = (props: Props) => {
             setBedrooms={setBedrooms}
             setIsBachelor={setIsBachelor}
             setHouseUseFor={setHouseUseFor}
+            getAllCity={getAllCity}
+            setFilterByCity={setFilterByCity}
           />
 
           {/* Filters Sidebar end */}

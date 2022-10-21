@@ -15,7 +15,9 @@ type Props = {
   setBathrooms: React.Dispatch<React.SetStateAction<number>>;
   setBedrooms: React.Dispatch<React.SetStateAction<number>>;
   setIsBachelor: React.Dispatch<React.SetStateAction<boolean>>;
+  setFilterByCity: React.Dispatch<React.SetStateAction<string>>;
   setHouseUseFor: any;
+  getAllCity: any;
 };
 
 const FilterSidebar = ({
@@ -32,12 +34,23 @@ const FilterSidebar = ({
   setIsBachelor,
   setBedrooms,
   setHouseUseFor,
+  getAllCity,
+  setFilterByCity,
 }: Props) => {
   /* Handle Reset Filter */
   const handleResetFilter = () => {
     setFilterByDistrict("");
     setSearchKey("");
     setCategory("");
+    setMinPrice(0);
+    setMaxPrice(0);
+    setHouseType("");
+    setSearchAddress("");
+    setBathrooms(0);
+    setIsBachelor(false);
+    setBedrooms(0);
+    setHouseUseFor("");
+    setFilterByCity("");
   };
 
   return (
@@ -115,12 +128,14 @@ const FilterSidebar = ({
                     name=""
                     className="outline-none  w-full pl-4 cursor-pointer text-sm"
                     id=""
+                    onChange={(e) => setFilterByCity(e.target.value)}
                   >
                     <option value="">Select City</option>
-                    <option value="Bungalow">Dhaka</option>
-                    <option value="Duplex">Rangpur</option>
-                    <option value="Flat">Gobindagonj</option>
-                    <option value="Terrace">Gaibanda</option>
+                    {getAllCity?.map((city: string) => (
+                      <option key={city} value={city}>
+                        {city}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -235,6 +250,9 @@ const FilterSidebar = ({
             <label htmlFor="advanced-filter-modal" className="btn btn-warning">
               Cancel
             </label>
+            <button className="btn btn-primary" onClick={handleResetFilter}>
+              Reset Filter
+            </button>
           </div>
         </div>
       </div>
