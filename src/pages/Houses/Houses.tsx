@@ -1,5 +1,8 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { BsGrid1X2, BsGrid3X2 } from "react-icons/bs";
+import { useQuery } from "react-query";
+import GlobalLoader from "../../components/GlobalLoader";
 import FilterSidebar from "./FilterSidebar";
 import HouseCard from "./HouseCard";
 type Props = {};
@@ -20,6 +23,26 @@ const Houses = (props: Props) => {
     const parsedValue = JSON.parse(getGridViewValue);
     setGridView(parsedValue);
   }, [gridView]);
+
+  /* Get All This Approved Houses */
+  const { data, isLoading, isError } = useQuery("houses", async () =>
+    getAllHousesWithFilter()
+  );
+
+  const getAllHousesWithFilter = async () => {
+    const { data } = await axios.get("http://localhost:5000/api/v1/houses");
+    return data?.data;
+  };
+
+  console.log(data?.houses);
+
+  if (isError) {
+    return (
+      <div className="py-10 text-center">
+        <h3 className="font-bold text-4xl">Something went wrong</h3>
+      </div>
+    );
+  }
 
   return (
     <section id="houses" className="overflow-x-hidden">
@@ -72,41 +95,50 @@ const Houses = (props: Props) => {
               </div>
 
               {/* Houses Main Content */}
-              <div
-                className={`house-main-content p-6 grid  gap-6 ${
-                  gridView
-                    ? "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3"
-                    : "grid-cols-1 "
-                }`}
-              >
-                <HouseCard gridView={gridView} />
-                <HouseCard gridView={gridView} />
-                <HouseCard gridView={gridView} />
-                <HouseCard gridView={gridView} />
-                <HouseCard gridView={gridView} />
-                <HouseCard gridView={gridView} />
-                <HouseCard gridView={gridView} />
-                <HouseCard gridView={gridView} />
-                <HouseCard gridView={gridView} />
-              </div>
-              {/* House Main Content End */}
-              {/* pagination */}
-              <div className="pagination flex justify-center py-10">
-                <div className="btn-group ">
-                  <button className="w-10 h-10 rounded-full cursor-pointer text-xl font-bold font-poppins">
-                    1
-                  </button>
-                  <button className="w-10 h-10 rounded-full cursor-pointer text-xl font-bold font-poppins btn-active">
-                    2
-                  </button>
-                  <button className="w-10 h-10 rounded-full cursor-pointer text-xl font-bold font-poppins">
-                    3
-                  </button>
-                  <button className="w-10 h-10 rounded-full cursor-pointer text-xl font-bold font-poppins">
-                    4
-                  </button>
+              {isLoading ? (
+                <GlobalLoader />
+              ) : data?.houses?.length > 0 ? (
+                <>
+                  {" "}
+                  <div
+                    className={`house-main-content p-6 grid  gap-6 ${
+                      gridView
+                        ? "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3"
+                        : "grid-cols-1 "
+                    }`}
+                  >
+                    {data?.houses?.map((house: any) => (
+                      <HouseCard
+                        key={house._id}
+                        house={house}
+                        gridView={gridView}
+                      />
+                    ))}
+                  </div>
+                  {/* House Main Content End */}
+                  {/* pagination */}
+                  <div className="pagination flex justify-center py-10">
+                    <div className="btn-group ">
+                      <button className="w-10 h-10 rounded-full cursor-pointer text-xl font-bold font-poppins">
+                        1
+                      </button>
+                      <button className="w-10 h-10 rounded-full cursor-pointer text-xl font-bold font-poppins btn-active">
+                        2
+                      </button>
+                      <button className="w-10 h-10 rounded-full cursor-pointer text-xl font-bold font-poppins">
+                        3
+                      </button>
+                      <button className="w-10 h-10 rounded-full cursor-pointer text-xl font-bold font-poppins">
+                        4
+                      </button>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <div className="text-center text-2xl font-bold">
+                  No Houses Found
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>

@@ -27,7 +27,9 @@ const Owner = ({ owner }: Props) => {
           <span className="w-10 h-1 bg-success block"></span>
         </div>
         <div className="owner-content overflow-x-auto">
-          {updatedUser?.role === "admin" || updatedUser?.role === "manager" ? (
+          {updatedUser?.role === "admin" ||
+          updatedUser?.role === "manager" ||
+          updatedUser?._id === owner?._id ? (
             <table className="table">
               <tbody>
                 <tr>
