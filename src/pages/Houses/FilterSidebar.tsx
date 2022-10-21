@@ -15,6 +15,7 @@ type Props = {
   setBathrooms: React.Dispatch<React.SetStateAction<number>>;
   setBedrooms: React.Dispatch<React.SetStateAction<number>>;
   setIsBachelor: React.Dispatch<React.SetStateAction<boolean>>;
+  setHouseUseFor: any;
 };
 
 const FilterSidebar = ({
@@ -30,6 +31,7 @@ const FilterSidebar = ({
   setBathrooms,
   setIsBachelor,
   setBedrooms,
+  setHouseUseFor,
 }: Props) => {
   /* Handle Reset Filter */
   const handleResetFilter = () => {
@@ -176,6 +178,11 @@ const FilterSidebar = ({
                         type="checkbox"
                         className="toggle toggle-sm  rounded-full"
                         id="Commercial"
+                        onClick={(e: any) =>
+                          setHouseUseFor((state: any) => {
+                            return { ...state, commercial: e.target.checked };
+                          })
+                        }
                       />{" "}
                       <label htmlFor="Commercial" className="cursor-pointer">
                         Commercial
@@ -186,6 +193,11 @@ const FilterSidebar = ({
                         type="checkbox"
                         className="toggle toggle-sm  rounded-full"
                         id="residential"
+                        onClick={(e: any) =>
+                          setHouseUseFor((state: any) => {
+                            return { ...state, residential: e.target.checked };
+                          })
+                        }
                       />{" "}
                       <label htmlFor="residential" className="cursor-pointer">
                         Residential
