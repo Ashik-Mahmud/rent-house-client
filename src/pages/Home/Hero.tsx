@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { BiBook } from "react-icons/bi";
+import { Link } from "react-router-dom";
 import { useAppSelector } from "../../app/store";
 
 type Props = {};
@@ -96,9 +97,12 @@ const Hero = (props: Props) => {
             </div>
 
             <div className="flex items-start flex-col mt-10">
-              <button className="btn btn-primary mr-7  h-[94px] rounded-l-none">
+              <Link
+                to="/houses"
+                className="btn btn-primary mr-7  h-[94px] rounded-l-none"
+              >
                 Find Houses
-              </button>
+              </Link>
             </div>
           </div>
         </div>
