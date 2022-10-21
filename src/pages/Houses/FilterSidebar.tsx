@@ -10,6 +10,7 @@ type Props = {
   setMinPrice: React.Dispatch<React.SetStateAction<number>>;
   setMaxPrice: React.Dispatch<React.SetStateAction<number>>;
   priceFilter: any;
+  setHouseType: any;
 };
 
 const FilterSidebar = ({
@@ -20,6 +21,7 @@ const FilterSidebar = ({
   setMinPrice,
   setMaxPrice,
   priceFilter,
+  setHouseType,
 }: Props) => {
   /* Handle Reset Filter */
   const handleResetFilter = () => {
@@ -62,29 +64,57 @@ const FilterSidebar = ({
               </div>
             </div>
             {/* End */}
-            {/* Filter by City */}
-            <div className="filter-by-name border  rounded p-3 relative mt-10">
-              <div className="filter-by-name-title absolute -top-4 bg-white border rounded p-1">
-                <h3 className="text-xs font-poppins">Filter by City</h3>
-              </div>
-              <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
-                <div className="icon">
-                  <BsSearch />
+            <div className="flex justify-between items-center gap-5">
+              {/* Filter by Price */}
+              <div className="filter-by-name border  rounded p-3 relative mt-10 flex-1">
+                <div className="filter-by-name-title absolute -top-4 bg-white border rounded p-1">
+                  <h3 className="text-xs font-poppins">
+                    Filter by Price Input
+                  </h3>
                 </div>
-                <select
-                  name=""
-                  className="outline-none  w-full pl-4 cursor-pointer text-sm"
-                  id=""
-                >
-                  <option value="">Select City</option>
-                  <option value="Bungalow">Dhaka</option>
-                  <option value="Duplex">Rangpur</option>
-                  <option value="Flat">Gobindagonj</option>
-                  <option value="Terrace">Gaibanda</option>
-                </select>
+                <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
+                  <div className="icon">
+                    <BsSearch />
+                  </div>
+                  <input
+                    type="number"
+                    className="form-control outline-none pl-4 w-20 text-sm"
+                    placeholder="Min "
+                    onBlur={(e) => setMinPrice(Number(e.target.value))}
+                  />
+                  <input
+                    type="number"
+                    className="form-control outline-none pl-4 w-20 text-sm"
+                    placeholder="Max "
+                    onBlur={(e) => setMaxPrice(Number(e.target.value))}
+                  />
+                </div>
               </div>
+              {/* End */}
+              {/* Filter by City */}
+              <div className="filter-by-name border  rounded p-3 relative mt-10 flex-1">
+                <div className="filter-by-name-title absolute -top-4 bg-white border rounded p-1">
+                  <h3 className="text-xs font-poppins">Filter by City</h3>
+                </div>
+                <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
+                  <div className="icon">
+                    <BsSearch />
+                  </div>
+                  <select
+                    name=""
+                    className="outline-none  w-full pl-4 cursor-pointer text-sm"
+                    id=""
+                  >
+                    <option value="">Select City</option>
+                    <option value="Bungalow">Dhaka</option>
+                    <option value="Duplex">Rangpur</option>
+                    <option value="Flat">Gobindagonj</option>
+                    <option value="Terrace">Gaibanda</option>
+                  </select>
+                </div>
+              </div>
+              {/* End */}
             </div>
-            {/* End */}
             <div className="flex justify-between items-stretch gap-5">
               {/* Filter by Bedrooms */}
               <div className="filter-by-name border  rounded p-3 relative mt-10 flex-1">
@@ -277,30 +307,6 @@ const FilterSidebar = ({
             </div>
           </div>
           {/* End */}
-          {/* Filter by Price */}
-          <div className="filter-by-name border  rounded p-3 relative mt-10">
-            <div className="filter-by-name-title absolute -top-4 bg-white border rounded p-1">
-              <h3 className="text-xs font-poppins">Filter by Price Input</h3>
-            </div>
-            <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
-              <div className="icon">
-                <BsSearch />
-              </div>
-              <input
-                type="number"
-                className="form-control outline-none pl-4 w-28"
-                placeholder="Min Price"
-                onBlur={(e) => setMinPrice(Number(e.target.value))}
-              />
-              <input
-                type="number"
-                className="form-control outline-none pl-4 w-28"
-                placeholder="Max Price"
-                onBlur={(e) => setMaxPrice(Number(e.target.value))}
-              />
-            </div>
-          </div>
-          {/* End */}
 
           {/* Filter by House Type */}
           <div className="filter-by-name border  rounded p-3 relative mt-10">
@@ -314,6 +320,11 @@ const FilterSidebar = ({
                     type="checkbox"
                     className="toggle toggle-sm  rounded-full"
                     id="rent"
+                    onClick={(e: any) =>
+                      setHouseType((state: any) => {
+                        return { ...state, rent: e.target.checked };
+                      })
+                    }
                   />{" "}
                   <label htmlFor="rent" className="cursor-pointer">
                     Rent
@@ -322,6 +333,11 @@ const FilterSidebar = ({
                 <li className="flex items-center gap-4 ">
                   <input
                     type="checkbox"
+                    onClick={(e: any) =>
+                      setHouseType((state: any) => {
+                        return { ...state, sale: e.target.checked };
+                      })
+                    }
                     className="toggle toggle-sm  rounded-full"
                     id="sale"
                   />{" "}

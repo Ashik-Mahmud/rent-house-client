@@ -32,6 +32,10 @@ const Houses = (props: Props) => {
   const [filterByDistrict, setFilterByDistrict] = useState("");
   const [searchKey, setSearchKey] = useState("");
   const [category, setCategory] = useState("");
+  const [houseType, setHouseType] = useState({
+    rent: false,
+    sale: false,
+  });
 
   /* by search */
   const [highestPrice, setHighestPrice] = useState(0);
@@ -59,13 +63,16 @@ const Houses = (props: Props) => {
       category,
       maxPrice,
       minPrice,
+      houseType,
     ],
     async () => getAllHousesWithFilter()
   );
 
   const getAllHousesWithFilter = async () => {
     const { data } = await axios.get(
-      `http://localhost:5000/api/v1/houses?limit=${perPage}&page=${currentPage}&sortBy=${sortBy}&district=${filterByDistrict}&name=${searchKey}&category=${category}&startPrice=${minPrice}&endPrice=${maxPrice}`
+      `http://localhost:5000/api/v1/houses?limit=${perPage}&page=${currentPage}&sortBy=${sortBy}&district=${filterByDistrict}&name=${searchKey}&category=${category}&startPrice=${minPrice}&endPrice=${maxPrice}&houseType=${JSON.stringify(
+        houseType
+      )}`
     );
     return data?.data;
   };
@@ -134,6 +141,7 @@ const Houses = (props: Props) => {
             setMinPrice={setMinPrice}
             setMaxPrice={setMaxPrice}
             priceFilter={priceFilter}
+            setHouseType={setHouseType}
           />
 
           {/* Filters Sidebar end */}
