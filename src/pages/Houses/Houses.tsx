@@ -39,8 +39,9 @@ const Houses = (props: Props) => {
   const [searchAddress, setSearchAddress] = useState("");
   const [bathrooms, setBathrooms] = useState(0);
   const [bedrooms, setBedrooms] = useState(0);
+  const [isBachelor, setIsBachelor] = useState(false);
 
-  console.log(bedrooms);
+  console.log(isBachelor);
 
   /* by search */
   const [highestPrice, setHighestPrice] = useState(0);
@@ -72,6 +73,7 @@ const Houses = (props: Props) => {
       searchAddress,
       bathrooms,
       bedrooms,
+      isBachelor,
     ],
     async () => getAllHousesWithFilter()
   );
@@ -80,7 +82,7 @@ const Houses = (props: Props) => {
     const { data } = await axios.get(
       `http://localhost:5000/api/v1/houses?limit=${perPage}&page=${currentPage}&sortBy=${sortBy}&district=${filterByDistrict}&name=${searchKey}&category=${category}&startPrice=${minPrice}&endPrice=${maxPrice}&houseType=${JSON.stringify(
         houseType
-      )}&address=${searchAddress}&bathrooms=${bathrooms}&bedrooms=${bedrooms}`
+      )}&address=${searchAddress}&bathrooms=${bathrooms}&bedrooms=${bedrooms}&isBachelor=${isBachelor}`
     );
     return data?.data;
   };
@@ -153,6 +155,7 @@ const Houses = (props: Props) => {
             setSearchAddress={setSearchAddress}
             setBathrooms={setBathrooms}
             setBedrooms={setBedrooms}
+            setIsBachelor={setIsBachelor}
           />
 
           {/* Filters Sidebar end */}

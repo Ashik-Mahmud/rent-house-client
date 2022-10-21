@@ -14,6 +14,7 @@ type Props = {
   setSearchAddress: React.Dispatch<React.SetStateAction<string>>;
   setBathrooms: React.Dispatch<React.SetStateAction<number>>;
   setBedrooms: React.Dispatch<React.SetStateAction<number>>;
+  setIsBachelor: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const FilterSidebar = ({
@@ -27,6 +28,7 @@ const FilterSidebar = ({
   setHouseType,
   setSearchAddress,
   setBathrooms,
+  setIsBachelor,
   setBedrooms,
 }: Props) => {
   /* Handle Reset Filter */
@@ -204,6 +206,7 @@ const FilterSidebar = ({
                       <input
                         type="checkbox"
                         className="toggle toggle-sm  rounded-full"
+                        onClick={(e: any) => setIsBachelor(e.target.checked)}
                         id="Yes"
                       />{" "}
                       <label htmlFor="Yes" className="cursor-pointer">
@@ -220,7 +223,6 @@ const FilterSidebar = ({
             <label htmlFor="advanced-filter-modal" className="btn btn-warning">
               Cancel
             </label>
-            <button className="btn btn-success">Apply Filter</button>
           </div>
         </div>
       </div>
