@@ -11,6 +11,8 @@ type Props = {
   setMaxPrice: React.Dispatch<React.SetStateAction<number>>;
   priceFilter: any;
   setHouseType: any;
+  setSearchAddress: React.Dispatch<React.SetStateAction<string>>;
+  setBathrooms: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const FilterSidebar = ({
@@ -22,6 +24,8 @@ const FilterSidebar = ({
   setMaxPrice,
   priceFilter,
   setHouseType,
+  setSearchAddress,
+  setBathrooms,
 }: Props) => {
   /* Handle Reset Filter */
   const handleResetFilter = () => {
@@ -57,9 +61,10 @@ const FilterSidebar = ({
                   <BsSearch />
                 </div>
                 <input
-                  type="number"
+                  type="text"
                   className="form-control outline-none pl-4 w-full"
                   placeholder="Search by Address"
+                  onInput={(e) => setSearchAddress(e.currentTarget.value)}
                 />
               </div>
             </div>
@@ -146,6 +151,7 @@ const FilterSidebar = ({
                     type="number"
                     className="form-control outline-none pl-4 w-full"
                     placeholder="Search by Bathrooms"
+                    onBlur={(e) => setBathrooms(Number(e.target.value))}
                   />
                 </div>
               </div>

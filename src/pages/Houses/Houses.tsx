@@ -36,6 +36,10 @@ const Houses = (props: Props) => {
     rent: false,
     sale: false,
   });
+  const [searchAddress, setSearchAddress] = useState("");
+  const [bathrooms, setBathrooms] = useState(0);
+
+  console.log(bathrooms);
 
   /* by search */
   const [highestPrice, setHighestPrice] = useState(0);
@@ -64,6 +68,8 @@ const Houses = (props: Props) => {
       maxPrice,
       minPrice,
       houseType,
+      searchAddress,
+      bathrooms,
     ],
     async () => getAllHousesWithFilter()
   );
@@ -72,7 +78,7 @@ const Houses = (props: Props) => {
     const { data } = await axios.get(
       `http://localhost:5000/api/v1/houses?limit=${perPage}&page=${currentPage}&sortBy=${sortBy}&district=${filterByDistrict}&name=${searchKey}&category=${category}&startPrice=${minPrice}&endPrice=${maxPrice}&houseType=${JSON.stringify(
         houseType
-      )}`
+      )}&address=${searchAddress}&bathrooms=${bathrooms}`
     );
     return data?.data;
   };
@@ -142,6 +148,8 @@ const Houses = (props: Props) => {
             setMaxPrice={setMaxPrice}
             priceFilter={priceFilter}
             setHouseType={setHouseType}
+            setSearchAddress={setSearchAddress}
+            setBathrooms={setBathrooms}
           />
 
           {/* Filters Sidebar end */}
