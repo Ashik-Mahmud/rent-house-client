@@ -6,6 +6,7 @@ import {
   fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react";
 import Cookies from "universal-cookie";
+import { base_backend_url } from "../configs/config";
 import { LoginAuthState, UserInterface } from "../interfaces/UserInterface";
 const cookies = new Cookies();
 
@@ -45,7 +46,7 @@ interface CustomError {
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "${base_backend_url}/api/v1",
+    baseUrl: `${base_backend_url}/api/v1`,
     prepareHeaders(headers, api) {
       const cookie = cookies.get("user");
       const token = cookie?.token;

@@ -71,7 +71,7 @@ const RecentBookings = (props: Props) => {
                             <img
                               src={
                                 house?.image
-                                  ? "${base_backend_url}/previews/" +
+                                  ? `${base_backend_url}/previews/` +
                                     house?.image
                                   : "https://placeimg.com/400/225/arch"
                               }

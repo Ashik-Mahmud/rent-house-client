@@ -412,7 +412,7 @@ const Dashboard = (props: Props) => {
                       <img
                         src={
                           data?.profileImage
-                            ? "${base_backend_url}/profiles/" +
+                            ? `${base_backend_url}/profiles/` +
                               data?.profileImage
                             : user?.user?.avatar
                         }
@@ -460,7 +460,7 @@ const Dashboard = (props: Props) => {
                     <img
                       src={
                         data?.profileImage
-                          ? "${base_backend_url}/profiles/" + data?.profileImage
+                          ? `${base_backend_url}/profiles/` + data?.profileImage
                           : user?.user?.avatar
                       }
                       alt={data?.name}

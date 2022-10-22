@@ -8,6 +8,7 @@ import {
 } from "react-device-detect";
 import { BiCamera, BiEdit } from "react-icons/bi";
 import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
+import { base_backend_url } from "../../../configs/config";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import DeleteVerificationModal from "./DeleteVerificationModal";
@@ -52,7 +53,7 @@ const Profile = (props: Props) => {
                 <img
                   src={
                     data?.profileImage
-                      ? "${base_backend_url}/profiles/" + data?.profileImage
+                      ? `${base_backend_url}/profiles/` + data?.profileImage
                       : data?.avatar
                   }
                   alt={data?.name}
