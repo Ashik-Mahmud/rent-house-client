@@ -1,5 +1,6 @@
 import axios from "axios";
 import cogoToast from "cogo-toast";
+import { useState } from "react";
 import { BiTrashAlt } from "react-icons/bi";
 import { MdOutlineQuestionAnswer } from "react-icons/md";
 import { useQuery } from "react-query";
@@ -17,15 +18,17 @@ type Props = {};
 const AnsweredQuestions = (props: Props) => {
   const { user } = useAuth<authUserInterface | any>({});
   const { houseId } = useParams();
-  console.log(houseId);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [perPage, setPerPage] = useState(1);
 
-  const { data, isLoading, refetch } = useQuery("houseQuestions", () =>
-    getQuestionByHouseId()
+  const { data, isLoading, refetch } = useQuery(
+    ["houseQuestions", currentPage, perPage],
+    () => getQuestionByHouseId()
   );
 
   const getQuestionByHouseId = async () => {
     const response = await axios.get(
-      `${base_backend_url}/api/v1/questions/questions-for-house/${houseId}`,
+      `${base_backend_url}/api/v1/questions/questions-for-house/${houseId}?page=${currentPage}&limit=${perPage}`,
       {
         headers: {
           Authorization: `Bearer ${user?.token}`,
@@ -63,16 +66,31 @@ const AnsweredQuestions = (props: Props) => {
     }
   };
 
+  /* Pagination Handler */
+  const totalPage = Math.ceil(data?.count / perPage);
+  const handleNextPage = () => {
+    if (currentPage < totalPage) {
+      setCurrentPage(currentPage + 1);
+      refetch();
+    }
+  };
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+      refetch();
+    }
+  };
+
   if (isLoading) {
     return <GlobalLoader />;
   }
   return (
     <>
-      <div>
-        <div className="p-2 my-1 bg-white">
-          {/* Unanswered Tables */}
-          <div className="overflow-x-auto">
-            {data?.data?.length > 0 ? (
+      <div data-theme="winter">
+        {data?.data?.length > 0 ? (
+          <div className="p-2 my-1 bg-white">
+            {/* Unanswered Tables */}
+            <div className="overflow-x-auto">
               <table className="table w-full">
                 <thead>
                   <tr>
@@ -151,32 +169,56 @@ const AnsweredQuestions = (props: Props) => {
                   ))}
                 </tbody>
               </table>
-            ) : (
-              <div className="text-center">
-                <NoDataComponent />
+            </div>
+            {/* End */}
+            {/* Pagination */}
+            {perPage < data?.count && (
+              <div className="pagination flex items-center justify-between mt-20 mb-6 px-7">
+                <div className="flex items-center gap-2 text-sm">
+                  Show{" "}
+                  <select
+                    name=""
+                    id=""
+                    className="select select-sm select-bordered rounded-none tooltip tooltip-info"
+                    title="Limit for showing"
+                    onChange={(event) => setPerPage(Number(event.target.value))}
+                  >
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                  </select>
+                  entries
+                </div>
+                <div className="flex items-center gap-6">
+                  <div>
+                    <button
+                      className="btn btn-sm btn-ghost"
+                      onClick={handlePrevPage}
+                      disabled={currentPage === 1}
+                    >
+                      Previous
+                    </button>
+
+                    <button
+                      className="btn btn-sm btn-ghost "
+                      disabled={currentPage === totalPage}
+                      onClick={handleNextPage}
+                    >
+                      Next
+                    </button>
+                  </div>
+                  <span>
+                    Page <b>{currentPage} </b> of <b>{totalPage}</b>
+                  </span>
+                </div>
               </div>
             )}
           </div>
-          {/* End */}
-          {/* Pagination */}
-          <div className="flex-col sm:flex-row flex items-center justify-between  text-sm mt-10">
-            <div className="flex items-center gap-4">
-              <span className="text-gray-600">Show</span>
-              <select className="select select-bordered w-20 select-xs">
-                <option>10</option>
-                <option>20</option>
-                <option>30</option>
-                <option>40</option>
-              </select>
-              <span className="text-gray-600">entries</span>
-            </div>
-            <div className="flex items-center gap-4">
-              <span className="text-gray-600">Page 1 of 10</span>
-              <button className="btn btn-ghost btn-sm">Previous</button>
-              <button className="btn btn-ghost btn-sm">Next</button>
-            </div>
+        ) : (
+          <div className="text-center">
+            <NoDataComponent />
           </div>
-        </div>
+        )}
       </div>
       <AnsweredModal />
     </>
