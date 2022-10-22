@@ -3,6 +3,7 @@
 import axios from "axios";
 import cogoToast from "cogo-toast";
 import { useForm } from "react-hook-form";
+import swal from "sweetalert";
 import { base_backend_url } from "../../../configs/config";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
@@ -22,11 +23,14 @@ const QuestionModal = ({ houseId }: Props) => {
     if (!updatedUser?._id)
       return cogoToast.warn("Please login to ask a question");
 
+    const questionContent = {
+      question,
+      author: updatedUser?._id,
+    };
+
     const { data } = await axios.post(
       `${base_backend_url}/api/v1/questions/ask-question/${houseId}`,
-      {
-        question,
-      },
+      questionContent,
       {
         headers: {
           Authorization: `Bearer ${user?.token}`,
@@ -38,6 +42,7 @@ const QuestionModal = ({ houseId }: Props) => {
 
     if (data.success) {
       reset();
+      swal("Success", data.message, "success");
       cogoToast.success("Question sent successfully");
     } else {
       cogoToast.error("Something went wrong");
