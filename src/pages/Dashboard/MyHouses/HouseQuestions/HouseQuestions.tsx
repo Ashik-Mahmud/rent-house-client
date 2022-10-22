@@ -1,6 +1,6 @@
 import { BiCommentAdd } from "react-icons/bi";
-import { BsEye } from "react-icons/bs";
-import { Link, useParams } from "react-router-dom";
+import { BsArrowLeft, BsEye } from "react-icons/bs";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import GlobalLoader from "../../../../components/GlobalLoader";
 import { base_backend_url } from "../../../../configs/config";
 import { useGetHouseByHouseIdQuery } from "../../../../services/HouseApi";
@@ -12,6 +12,7 @@ const HouseQuestions = (props: Props) => {
   const { houseId } = useParams();
 
   const { data, isLoading } = useGetHouseByHouseIdQuery(houseId);
+  const navigate = useNavigate();
 
   if (isLoading) {
     return <GlobalLoader />;
@@ -93,6 +94,15 @@ const HouseQuestions = (props: Props) => {
           </div>
           {/* Houses Questions */}
           <div className="house-questions mt-4">
+            <div className="flex items-center gap-4 mb-6">
+              <span
+                className="cursor-pointer text-xl"
+                onClick={() => navigate(-1)}
+              >
+                <BsArrowLeft />
+              </span>
+              <h3 className="text-2xl font-bold">Question's </h3>
+            </div>
             <div className="houses-questions-content py-5">
               <AnsweredQuestions />
             </div>

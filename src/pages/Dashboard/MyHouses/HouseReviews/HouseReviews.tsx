@@ -1,8 +1,8 @@
 import axios from "axios";
 import { BiCommentAdd } from "react-icons/bi";
-import { BsEye } from "react-icons/bs";
+import { BsArrowLeft, BsEye } from "react-icons/bs";
 import { useQuery } from "react-query";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import GlobalLoader from "../../../../components/GlobalLoader";
 import NoDataComponent from "../../../../components/NoDataComponent";
 import { base_backend_url } from "../../../../configs/config";
@@ -16,6 +16,7 @@ const HouseReviews = (props: Props) => {
   const { user } = useAuth<authUserInterface | any>({});
   const { houseId } = useParams<{ houseId: string }>();
   const { data, isLoading } = useGetHouseByHouseIdQuery(houseId);
+  const navigate = useNavigate();
 
   /* Get All Review For This Houses */
   const {
@@ -99,6 +100,12 @@ const HouseReviews = (props: Props) => {
         </div>
 
         {/* Houses Reviews */}
+        <div className="flex items-center gap-4 my-6">
+          <span className="cursor-pointer text-xl" onClick={() => navigate(-1)}>
+            <BsArrowLeft />
+          </span>
+          <h3 className="text-2xl font-bold">Review's </h3>
+        </div>
         {reviews?.internal?.data?.length > 0 ? (
           <div className="houses-reviews py-6 grid grid-col-1 sm:grid-col-2 md:grid-col-3 lg:grid-cols-4 gap-5">
             {reviews?.internal?.data?.map((review: any) => (

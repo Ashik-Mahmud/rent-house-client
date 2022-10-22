@@ -1,8 +1,8 @@
 import axios from "axios";
 import { BiCommentAdd } from "react-icons/bi";
-import { BsEye } from "react-icons/bs";
+import { BsArrowLeft, BsEye } from "react-icons/bs";
 import { useQuery } from "react-query";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import GlobalLoader from "../../../../components/GlobalLoader";
 import { base_backend_url } from "../../../../configs/config";
 import useAuth from "../../../../hooks/useAuth";
@@ -17,6 +17,7 @@ const ReportedHouses = (props: Props) => {
   const { user } = useAuth<authUserInterface | any>({});
 
   const { data, isLoading } = useGetHouseByHouseIdQuery(houseId);
+  const navigate = useNavigate();
 
   const {
     data: reports,
@@ -105,7 +106,15 @@ const ReportedHouses = (props: Props) => {
         </div>
         {/* Reported Users */}
         <div className="report-houses-content my-5">
-          <h3 className="text-2xl font-bold mb-6">Report's </h3>
+          <div className="flex items-center gap-4 mb-6">
+            <span
+              className="cursor-pointer text-xl"
+              onClick={() => navigate(-1)}
+            >
+              <BsArrowLeft />
+            </span>
+            <h3 className="text-2xl font-bold">Report's </h3>
+          </div>
           {reportsLoading ? (
             <GlobalLoader />
           ) : reports?.data?.length > 0 ? (
