@@ -3,6 +3,7 @@ import cogoToast from "cogo-toast";
 import { useState } from "react";
 import { BiCommentDetail, BiTrash } from "react-icons/bi";
 import { BsPlus } from "react-icons/bs";
+import { useQuery } from "react-query";
 import swal from "sweetalert";
 import GlobalLoader from "../../../components/GlobalLoader";
 import { base_backend_url } from "../../../configs/config";
@@ -45,6 +46,20 @@ const Question = ({ data, questions, loading: isLoading, newFetch }: Props) => {
       }
     }
   };
+
+  /* Get All Approved Questions  */
+  const { data: approvedQuestions, isLoading: approvedQuestionsLoading } =
+    useQuery(["approvedQuestions"], () => getApprovedQuestions());
+
+  const getApprovedQuestions = async () => {
+    const response = await axios.get(
+      `${base_backend_url}/api/v1/questions/all`
+    );
+
+    return response.data;
+  };
+
+  console.log(approvedQuestions);
 
   return (
     <div>
@@ -149,24 +164,64 @@ const Question = ({ data, questions, loading: isLoading, newFetch }: Props) => {
               </div>
             </div>
           ) : (
-            <ul className="flex gap-1 items-center ">
-              <li
-                tabIndex={0}
-                className="collapse collapse-plus border border-base-300 bg-slate-50   w-full"
-              >
-                <input type="checkbox" className="peer" />
-                <div className="collapse-title text-xl font-medium ">
-                  <b>Q1:</b> Do you have an any discount offer for this house?
-                </div>
-                <div className="collapse-content bg-white peer-checked:pt-5">
-                  <p>
-                    <b>Ans: </b>
-                    Yeah! you got a 30% cash off. If you are purchase whole
-                    offeres with all the facilities unless not. Thanks
-                  </p>
-                </div>
-              </li>
-            </ul>
+            <>
+              {approvedQuestionsLoading ? (
+                <GlobalLoader />
+              ) : (
+                <>
+                  {approvedQuestions?.data?.length > 0 ? (
+                    <ul className="flex gap-1 items-center ">
+                      {approvedQuestions?.data?.map((question: any) => (
+                        <li
+                          key={question?._id}
+                          tabIndex={0}
+                          className="collapse collapse-plus border border-base-300 bg-slate-50   w-full"
+                        >
+                          <input type="checkbox" className="peer" />
+                          <div className="collapse-title text-xl font-medium flex items-center gap-3">
+                            <b>Q1:</b>
+                            {/* User Avatar */}
+                            <div
+                              className="user-avatar z-50"
+                              title={question?.author?.name}
+                            >
+                              <img
+                                src={
+                                  question?.author?.profileImage
+                                    ? `${base_backend_url}/profiles/${question?.author?.profileImage}`
+                                    : question?.author?.avatar
+                                }
+                                alt="user-avatar"
+                                className="w-8 h-8 rounded-full border-2 border-success object-cover "
+                              />
+                            </div>
+                            <span>{question?.question}</span>
+                          </div>
+                          <div className="collapse-content bg-white peer-checked:pt-5">
+                            <p>
+                              <b>Ans: </b>
+                              {question?.answer}
+                            </p>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <div className="text-center">
+                      <h3 className="text-xl font-bold font-poppins my-4">
+                        No Question Found
+                      </h3>
+                      <label
+                        htmlFor="question-modal"
+                        className="btn btn-success btn-xs py-4"
+                      >
+                        Ask
+                      </label>
+                    </div>
+                  )}
+                </>
+              )}
+            </>
           )}
         </div>
       </div>
