@@ -14,7 +14,7 @@ type Props = {
 const ReviewModal = ({ houseId, refetch }: Props) => {
   const { updatedUser, user } = useAuth<authUserInterface | any>({});
   const [review, setReview] = useState("");
-  const [rating, setRating] = useState(1);
+  const [rating, setRating] = useState(5);
   const [loading, setLoading] = useState(false);
 
   const formRef = useRef(null);
@@ -88,6 +88,7 @@ const ReviewModal = ({ houseId, refetch }: Props) => {
                 <Rating
                   onClick={ratingChanged}
                   showTooltip
+                  initialValue={rating}
                   tooltipArray={[
                     "Terrible",
                     "Bad",
@@ -112,7 +113,14 @@ const ReviewModal = ({ houseId, refetch }: Props) => {
               </div>
             </div>
             <div className="modal-action">
-              <label htmlFor="review-modal" className="btn btn-warning">
+              <label
+                htmlFor="review-modal"
+                onClick={() => {
+                  setReview("");
+                  setRating(0);
+                }}
+                className="btn btn-warning"
+              >
                 Cancel
               </label>
               {loading ? (
