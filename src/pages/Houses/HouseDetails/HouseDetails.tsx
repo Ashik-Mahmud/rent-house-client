@@ -77,15 +77,17 @@ const HouseDetails = (Props: Props) => {
   } = useQuery("question", () => getQuestionsByAuthor());
 
   const getQuestionsByAuthor = async () => {
-    const { data } = await axios.get(
-      `${base_backend_url}/api/v1/questions/questions-by-author/${user?.user?._id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      }
-    );
-    return data;
+    if (updatedUser?._id) {
+      const { data } = await axios.get(
+        `${base_backend_url}/api/v1/questions/questions-by-author/${user?.user?._id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${user?.token}`,
+          },
+        }
+      );
+      return data;
+    }
   };
 
   if (isLoading) return <GlobalLoader />;
@@ -272,7 +274,7 @@ const HouseDetails = (Props: Props) => {
       {/* Modals */}
       <BookNow />
       <QuestionModal houseId={data?.data?._id} newFetch={newFetch} />
-      <ReviewModal />
+      <ReviewModal houseId={data?.data?._id} />
       <ReportModal />
     </>
   );

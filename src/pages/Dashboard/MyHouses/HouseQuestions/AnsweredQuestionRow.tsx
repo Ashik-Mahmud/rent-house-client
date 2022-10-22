@@ -85,10 +85,7 @@ const AnsweredQuestionRow = ({ question, ind, refetch }: Props) => {
         {question?.answer === "none" ? (
           <span className="badge badge-warning">No</span>
         ) : (
-          <span
-            className="badge badge-success tooltip"
-            data-tip={question?.answer}
-          >
+          <span className="badge badge-success" title={question?.answer}>
             yes
           </span>
         )}

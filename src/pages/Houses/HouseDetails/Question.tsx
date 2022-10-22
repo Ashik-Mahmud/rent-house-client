@@ -123,7 +123,12 @@ const Question = ({ data, questions, loading: isLoading, newFetch }: Props) => {
                           <td>{question?.question}</td>
                           <td>
                             {question?.answer !== "none" ? (
-                              question?.answer
+                              <span
+                                className="badge badge-success"
+                                title={question?.answer}
+                              >
+                                yes
+                              </span>
                             ) : (
                               <span className="badge badge-ghost">
                                 no answer
@@ -195,7 +200,7 @@ const Question = ({ data, questions, loading: isLoading, newFetch }: Props) => {
                                       ? `${base_backend_url}/profiles/${question?.author?.profileImage}`
                                       : question?.author?.avatar
                                   }
-                                  alt="user-avatar"
+                                  alt={question?.author?.name}
                                   className="w-8 h-8 rounded-full border-2 border-success object-cover "
                                 />
                               </div>

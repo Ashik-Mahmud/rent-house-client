@@ -1,58 +1,131 @@
-import ReactStars from "react-stars";
+import axios from "axios";
+import cogoToast from "cogo-toast";
+import { useRef, useState } from "react";
+import { Rating } from "react-simple-star-rating";
+import { PulseLoader } from "react-spinners";
+import { base_backend_url } from "../../../configs/config";
+import useAuth from "../../../hooks/useAuth";
+import { authUserInterface } from "../../../interfaces/UserInterface";
+type Props = {
+  houseId: string;
+};
 
-type Props = {};
+const ReviewModal = ({ houseId }: Props) => {
+  const { updatedUser, user } = useAuth<authUserInterface | any>({});
+  const [review, setReview] = useState("");
+  const [rating, setRating] = useState(1);
+  const [loading, setLoading] = useState(false);
 
-const ReviewModal = (props: Props) => {
+  const formRef = useRef(null);
+
+  const ratingChanged = (newRating: number) => {
+    setRating(newRating);
+  };
+
+  /* Handle Submit Review */
+  const handleSubmitReview = async () => {
+    if (!updatedUser?._id)
+      return cogoToast.error("Please login to review this house");
+
+    if (!rating) {
+      cogoToast.error("Please give a rating");
+      return;
+    }
+
+    if (review.length < 10) {
+      cogoToast.error("Review must be at least 10 characters long");
+      return;
+    }
+
+    setLoading(true);
+    const { data } = await axios.post(
+      `${base_backend_url}/api/v1/reviews/create-review-for-house`,
+      {
+        comment: review,
+        rating,
+        house: houseId,
+        author: updatedUser?._id,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${user?.token}`,
+        },
+      }
+    );
+
+    if (data.success) {
+      cogoToast.success("Review added successfully");
+      setReview("");
+      setRating(0);
+      setLoading(false);
+      (formRef as any).current.reset();
+    } else {
+      cogoToast.error("Something went wrong");
+      setLoading(false);
+    }
+  };
+
   return (
     <>
-      <input type="checkbox" id="review-modal" className="modal-toggle" />
-      <div className="modal modal-middle sm:modal-middle">
-        <div className="modal-box">
-          <h3 className="font-bold text-lg">Leave Your Review</h3>
-          <p className="py-4 text-error">
-            Make sure ask the related question about this House unless your
-            question will not be approved.
-          </p>
-          <div className="modal-body">
-            <div className="flex flex-col gap-2 mb-5">
-              <label htmlFor="">Name</label>
-              <input
-                type="text"
-                placeholder="Type Name here"
-                className="input input-bordered w-full"
-              />
+      <form action="" ref={formRef}>
+        <input type="checkbox" id="review-modal" className="modal-toggle" />
+        <div className="modal modal-middle sm:modal-middle">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">Leave Your Review</h3>
+            <p className="py-4 text-error">
+              Make sure ask the related question about this House unless your
+              question will not be approved.
+            </p>
+            <div className="modal-body">
+              <div className="flex flex-col gap-2 mb-5">
+                <label htmlFor="">Stars</label>
+                <Rating
+                  onClick={ratingChanged}
+                  showTooltip
+                  tooltipArray={[
+                    "Terrible",
+                    "Bad",
+                    "Average",
+                    "Great",
+                    "Prefect",
+                  ]}
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <label htmlFor="">Review Comment</label>
+                <textarea
+                  name=""
+                  className="textarea textarea-bordered w-full"
+                  id=""
+                  cols={5}
+                  placeholder="Review"
+                  onChange={(e) => setReview(e.target.value)}
+                  value={review}
+                  rows={3}
+                ></textarea>
+              </div>
             </div>
-            <div className="flex flex-col gap-2 mb-5">
-              <label htmlFor="">Email</label>
-              <input
-                type="email"
-                placeholder="Type Email here"
-                className="input input-bordered w-full"
-              />
+            <div className="modal-action">
+              <label htmlFor="review-modal" className="btn btn-warning">
+                Cancel
+              </label>
+              {loading ? (
+                <button type="button" className="btn btn-success">
+                  <PulseLoader size={8} />
+                </button>
+              ) : (
+                <button
+                  onClick={handleSubmitReview}
+                  type="button"
+                  className="btn btn-success"
+                >
+                  Submit Review
+                </button>
+              )}
             </div>
-            <div className="flex flex-col gap-2 mb-5">
-              <label htmlFor="">Stars</label>
-              <ReactStars count={5} size={24} color2={"#ffd700"} />
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="">Review Comment</label>
-              <textarea
-                name=""
-                className="textarea textarea-bordered w-full"
-                id=""
-                cols={5}
-                placeholder="Review"
-                rows={3}
-              ></textarea>
-            </div>
-          </div>
-          <div className="modal-action">
-            <label htmlFor="review-modal" className="btn btn-success">
-              Submit Review
-            </label>
           </div>
         </div>
-      </div>
+      </form>
     </>
   );
 };
