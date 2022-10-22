@@ -1,10 +1,13 @@
 import axios from "axios";
+import { useEffect } from "react";
 import { BiCommentAdd } from "react-icons/bi";
 import { BsArrowLeft, BsEye } from "react-icons/bs";
 import { useQuery } from "react-query";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { useAppDispatch } from "../../../../app/store";
 import GlobalLoader from "../../../../components/GlobalLoader";
 import { base_backend_url } from "../../../../configs/config";
+import { setReportsCount } from "../../../../features/HouseActionSlice";
 import useAuth from "../../../../hooks/useAuth";
 import { authUserInterface } from "../../../../interfaces/UserInterface";
 import { useGetHouseByHouseIdQuery } from "../../../../services/HouseApi";
@@ -35,6 +38,12 @@ const ReportedHouses = (props: Props) => {
 
     return data;
   });
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(setReportsCount(reports?.data?.length));
+  }, [dispatch, reports]);
 
   if (isLoading || reportsLoading) {
     return <GlobalLoader />;

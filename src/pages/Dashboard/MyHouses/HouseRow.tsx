@@ -1,6 +1,7 @@
 import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
+import { useAppSelector } from "../../../app/store";
 import { useDeleteHouseByIdMutation } from "../../../services/HouseApi";
 
 type Props = {
@@ -11,6 +12,10 @@ type Props = {
 };
 
 const HouseRow = ({ approved, house, index, refetch }: Props) => {
+  const { questionsCount, reportsCount, reviewsCount } = useAppSelector(
+    (state) => state.houseAction
+  );
+
   const [deleteHouseById, { isLoading }] = useDeleteHouseByIdMutation();
   /* Handle Delete House by Owner */
   const handleDeleteHouses = async (id: string) => {
@@ -84,7 +89,7 @@ const HouseRow = ({ approved, house, index, refetch }: Props) => {
           to={`/dashboard/houses/reviews/${house._id}`}
           className="btn btn-xs btn-circle btn-info flex items-center gap-2 text-xs tooltip"
         >
-          10
+          {reviewsCount}
         </Link>
       </td>
       <td className="py-3 ">
@@ -93,7 +98,7 @@ const HouseRow = ({ approved, house, index, refetch }: Props) => {
           to={`/dashboard/houses/questions/${house._id}`}
           className="btn btn-xs btn-circle btn-accent flex items-center gap-2 text-xs tooltip"
         >
-          40
+          {questionsCount}
         </Link>
       </td>
       <td className="py-3 ">
@@ -102,7 +107,7 @@ const HouseRow = ({ approved, house, index, refetch }: Props) => {
           to={`/dashboard/houses/reports/${house._id}`}
           className="btn btn-xs btn-circle btn-warning flex items-center gap-2 text-xs tooltip"
         >
-          5
+          {reportsCount}
         </Link>
       </td>
       <td className="py-3 ">

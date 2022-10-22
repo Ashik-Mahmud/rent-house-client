@@ -4,7 +4,8 @@ import type { TypedUseSelectorHook } from "react-redux";
 import { useDispatch, useSelector } from "react-redux";
 import AppReducer from "../features/AppSlice";
 import AuthReducer from "../features/AuthSlice";
-import houseReducer from "../features/HouseSlice";
+import HouseActionReducer from "../features/HouseActionSlice";
+import HouseSlice from "../features/HouseSlice";
 import RequestReducer from "../features/RequestSlice";
 import { authApi } from "../services/AuthApi";
 import { BlogApi } from "../services/BlogApi";
@@ -18,7 +19,8 @@ const store = configureStore({
     auth: AuthReducer,
     request: RequestReducer,
     appOption: AppReducer,
-    housesReqCount: houseReducer,
+    housesReqCount: HouseSlice,
+    houseAction: HouseActionReducer,
     [authApi.reducerPath]: authApi.reducer,
     [ReviewApi.reducerPath]: ReviewApi.reducer,
     [HouseApi.reducerPath]: HouseApi.reducer,

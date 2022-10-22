@@ -1,10 +1,12 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
+import { useAppDispatch } from "../../../../app/store";
 import GlobalLoader from "../../../../components/GlobalLoader";
 import NoDataComponent from "../../../../components/NoDataComponent";
 import { base_backend_url } from "../../../../configs/config";
+import { setQuestionsCount } from "../../../../features/HouseActionSlice";
 import useAuth from "../../../../hooks/useAuth";
 import { authUserInterface } from "../../../../interfaces/UserInterface";
 import AnsweredQuestionRow from "./AnsweredQuestionRow";
@@ -48,6 +50,12 @@ const AnsweredQuestions = (props: Props) => {
       refetch();
     }
   };
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(setQuestionsCount(data?.data?.length));
+  }, [dispatch, data]);
 
   if (isLoading) {
     return <GlobalLoader />;
