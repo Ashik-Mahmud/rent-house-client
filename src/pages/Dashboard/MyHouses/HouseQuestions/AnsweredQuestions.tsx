@@ -19,7 +19,7 @@ const AnsweredQuestions = (props: Props) => {
   const { user } = useAuth<authUserInterface | any>({});
   const { houseId } = useParams();
   const [currentPage, setCurrentPage] = useState(1);
-  const [perPage, setPerPage] = useState(1);
+  const [perPage, setPerPage] = useState(10);
 
   const { data, isLoading, refetch } = useQuery(
     ["houseQuestions", currentPage, perPage],
@@ -144,11 +144,22 @@ const AnsweredQuestions = (props: Props) => {
                         {question?.answer === "none" ? (
                           <span className="badge badge-warning">No</span>
                         ) : (
-                          <span className="badge badge-success">yes</span>
+                          <span
+                            className="badge badge-success tooltip"
+                            data-tip={question?.answer}
+                          >
+                            yes
+                          </span>
                         )}
                       </td>
                       <td>
                         <div className="flex items-center gap-4">
+                          <AnsweredModal
+                            question={question?.question}
+                            questionId={question?._id}
+                            refetch={refetch}
+                            answer={question?.answer}
+                          />
                           <label
                             htmlFor="answered-question-modal"
                             className="text-success cursor-pointer tooltip text-xl"
@@ -220,7 +231,6 @@ const AnsweredQuestions = (props: Props) => {
           </div>
         )}
       </div>
-      <AnsweredModal />
     </>
   );
 };

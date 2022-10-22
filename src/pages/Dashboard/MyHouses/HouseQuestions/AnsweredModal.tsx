@@ -1,10 +1,55 @@
+import axios from "axios";
+import cogoToast from "cogo-toast";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { MdQuestionAnswer } from "react-icons/md";
+import { base_backend_url } from "../../../../configs/config";
+import useAuth from "../../../../hooks/useAuth";
+import { authUserInterface } from "../../../../interfaces/UserInterface";
 
-type Props = {};
+type Props = {
+  question: string;
+  questionId: string;
+  refetch: () => void;
+  answer: string;
+};
 
-const AnsweredModal = (props: Props) => {
+const AnsweredModal = ({ question, questionId, refetch, answer }: Props) => {
+  /* Handle Answer to the Question */
+  const { user } = useAuth<authUserInterface | any>({});
+  const { handleSubmit, register, reset, setValue } = useForm();
+
+  const handleAnswer = handleSubmit(async (data) => {
+    if (!data?.answer) {
+      return cogoToast.error("Please enter your answer");
+    }
+
+    const { data: response } = await axios.patch(
+      `${base_backend_url}/api/v1/questions/answer-question`,
+      {
+        questionId,
+        answer: data.answer,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${user?.token}`,
+        },
+      }
+    );
+
+    if (response.success) {
+      cogoToast.success("Answered Successfully");
+      reset();
+      refetch();
+    }
+  });
+
+  useEffect(() => {
+    setValue("answer", answer);
+  }, [answer, setValue]);
+
   return (
-    <div>
+    <form onSubmit={handleAnswer}>
       <input
         type="checkbox"
         id="answered-question-modal"
@@ -21,9 +66,7 @@ const AnsweredModal = (props: Props) => {
                 <h3 className="text-xs font-poppins">Question</h3>
               </div>
               <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
-                <p className="text-md font-poppins">
-                  What is the best way to get a house in the city of New York?
-                </p>
+                <p className="text-md font-poppins">{question}</p>
               </div>
             </div>
             {/* End */}
@@ -40,12 +83,12 @@ const AnsweredModal = (props: Props) => {
                   <MdQuestionAnswer />
                 </div>
                 <textarea
-                  name=""
                   id=""
                   cols={5}
                   rows={6}
                   className="w-full text-md font-poppins outline-none"
                   placeholder="Write Answer"
+                  {...register("answer")}
                 ></textarea>
               </div>
             </div>
@@ -62,7 +105,7 @@ const AnsweredModal = (props: Props) => {
           </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 
