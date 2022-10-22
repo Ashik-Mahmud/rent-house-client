@@ -89,7 +89,7 @@ const HouseReviews = (props: Props) => {
             >
               {" "}
               <Link
-                to={`/dashboard/houses/reviews/${data?.data?._id}`}
+                to={`/dashboard/houses/questions/${data?.data?._id}`}
                 className="btn btn-ghost btn-circle "
               >
                 <BiCommentAdd />
