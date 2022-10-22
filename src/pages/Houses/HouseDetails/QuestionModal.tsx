@@ -10,9 +10,10 @@ import { authUserInterface } from "../../../interfaces/UserInterface";
 
 type Props = {
   houseId: string;
+  newFetch: () => void;
 };
 
-const QuestionModal = ({ houseId }: Props) => {
+const QuestionModal = ({ houseId, newFetch }: Props) => {
   const { updatedUser, user } = useAuth<authUserInterface | any>({});
 
   const { handleSubmit, register, reset } = useForm();
@@ -44,6 +45,7 @@ const QuestionModal = ({ houseId }: Props) => {
       reset();
       swal("Success", data.message, "success");
       cogoToast.success("Question sent successfully");
+      newFetch();
     } else {
       cogoToast.error("Something went wrong");
     }

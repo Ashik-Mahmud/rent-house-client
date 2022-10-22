@@ -1,36 +1,18 @@
-import axios from "axios";
 import { useState } from "react";
 import { BiCommentDetail, BiEdit, BiTrash } from "react-icons/bi";
 import { BsPlus } from "react-icons/bs";
-import { useQuery } from "react-query";
-import { base_backend_url } from "../../../configs/config";
+import GlobalLoader from "../../../components/GlobalLoader";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 type Props = {
   data: any;
+  loading: boolean;
+  questions: any;
 };
 
-const Question = ({ data }: Props) => {
-  const { updatedUser, user } = useAuth<authUserInterface | any>({});
+const Question = ({ data, questions, loading: isLoading }: Props) => {
+  const { updatedUser } = useAuth<authUserInterface | any>({});
   const [openQuestions, setOpenQuestions] = useState(false);
-
-  const { data: questions } = useQuery("question", () =>
-    getQuestionsByAuthor()
-  );
-
-  const getQuestionsByAuthor = async () => {
-    const { data } = await axios.get(
-      `${base_backend_url}/api/v1/questions/questions-by-author/${updatedUser?._id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      }
-    );
-    return data;
-  };
-
-  console.log(questions?.data);
 
   return (
     <div>
@@ -71,35 +53,47 @@ const Question = ({ data }: Props) => {
                 Your Asked Questions
               </h3>
               <div className="overflow-x-auto">
-                <table className="table w-full table-compact">
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th>Question</th>
-                      <th>Answer</th>
-                      <th className="w-20">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th>1</th>
-                      <td>How to get?</td>
-                      <td>
-                        <span className="badge badge-ghost">none</span>
-                      </td>
-                      <td>
-                        <div>
-                          <button className="btn btn-ghost btn-sm">
-                            <BiEdit />
-                          </button>
-                          <button className="btn btn-ghost btn-sm">
-                            <BiTrash />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                {isLoading ? (
+                  <GlobalLoader />
+                ) : questions?.data?.length > 0 ? (
+                  <table className="table w-full table-compact">
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>Question</th>
+                        <th>Answer</th>
+                        <th className="w-20">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {questions?.data?.map((question: any, ind: number) => (
+                        <tr>
+                          <th>{ind + 1}</th>
+                          <td>{question?.question}</td>
+                          <td>
+                            <span className="badge badge-ghost">none</span>
+                          </td>
+                          <td>
+                            <div className="flex items-center gap-3">
+                              <button className="btn btn-ghost btn-xs">
+                                <BiEdit />
+                              </button>
+                              <button className="rounded-full text-error">
+                                <BiTrash />
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                ) : (
+                  <div className="text-center">
+                    <h3 className="text-xl font-bold font-poppins my-4">
+                      No Question Found
+                    </h3>
+                  </div>
+                )}
               </div>
             </div>
           ) : (

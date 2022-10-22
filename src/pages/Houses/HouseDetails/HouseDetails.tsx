@@ -29,7 +29,7 @@ type Props = {};
 
 const HouseDetails = (props: Props) => {
   /* Get House ID */
-  const { updatedUser } = useAuth<authUserInterface | any>({});
+  const { updatedUser, user } = useAuth<authUserInterface | any>({});
   const { houseId } = useParams<{ houseId: string }>();
 
   const { data, isLoading, error, refetch } = useQuery(
@@ -68,6 +68,25 @@ const HouseDetails = (props: Props) => {
     const parsedValue = JSON.parse(favoriteValue);
     setClicked(parsedValue || false);
   }, [clicked]);
+
+  /* get question by user id */
+  const {
+    data: questions,
+    isLoading: loading,
+    refetch: newFetch,
+  } = useQuery("question", () => getQuestionsByAuthor());
+
+  const getQuestionsByAuthor = async () => {
+    const { data } = await axios.get(
+      `${base_backend_url}/api/v1/questions/questions-by-author/${updatedUser?._id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
+    return data;
+  };
 
   if (isLoading) return <GlobalLoader />;
   if (error) {
@@ -226,7 +245,11 @@ const HouseDetails = (props: Props) => {
               <Owner owner={data?.data?.owner} />
               <Others />
               <Gallery gallery={data?.data?.gallery} />
-              <Question data={data?.data} />
+              <Question
+                data={data?.data}
+                questions={questions}
+                loading={loading}
+              />
               <Reviews data={data?.data} />
             </div>
           </div>
@@ -247,7 +270,7 @@ const HouseDetails = (props: Props) => {
 
       {/* Modals */}
       <BookNow />
-      <QuestionModal houseId={data?.data?._id} />
+      <QuestionModal houseId={data?.data?._id} newFetch={newFetch} />
       <ReviewModal />
       <ReportModal />
     </>
