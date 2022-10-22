@@ -27,7 +27,7 @@ import Reviews from "./Reviews";
 
 type Props = {};
 
-const HouseDetails = (props: Props) => {
+const HouseDetails = (Props: Props) => {
   /* Get House ID */
   const { updatedUser, user } = useAuth<authUserInterface | any>({});
   const { houseId } = useParams<{ houseId: string }>();
@@ -249,6 +249,7 @@ const HouseDetails = (props: Props) => {
                 data={data?.data}
                 questions={questions}
                 loading={loading}
+                newFetch={newFetch}
               />
               <Reviews data={data?.data} />
             </div>

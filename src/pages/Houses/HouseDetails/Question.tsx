@@ -1,18 +1,50 @@
+import axios from "axios";
+import cogoToast from "cogo-toast";
 import { useState } from "react";
 import { BiCommentDetail, BiEdit, BiTrash } from "react-icons/bi";
 import { BsPlus } from "react-icons/bs";
+import swal from "sweetalert";
 import GlobalLoader from "../../../components/GlobalLoader";
+import { base_backend_url } from "../../../configs/config";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 type Props = {
   data: any;
   loading: boolean;
   questions: any;
+  newFetch: () => void;
 };
 
-const Question = ({ data, questions, loading: isLoading }: Props) => {
-  const { updatedUser } = useAuth<authUserInterface | any>({});
+const Question = ({ data, questions, loading: isLoading, newFetch }: Props) => {
+  const { updatedUser, user } = useAuth<authUserInterface | any>({});
   const [openQuestions, setOpenQuestions] = useState(false);
+
+  const handleDeleteQuestion = async (questionId: string) => {
+    const isConfirm = await swal({
+      title: "Are you sure?",
+      icon: "warning",
+      buttons: ["cancel", "yes, delete it"],
+      dangerMode: true,
+    });
+
+    if (isConfirm) {
+      const { data } = await axios.delete(
+        `${base_backend_url}/api/v1/questions/delete-question/${questionId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${user?.token}`,
+          },
+        }
+      );
+
+      if (data.success) {
+        cogoToast.success("Question deleted successfully");
+        newFetch();
+      } else {
+        cogoToast.error("Something went wrong");
+      }
+    }
+  };
 
   return (
     <div>
@@ -62,6 +94,7 @@ const Question = ({ data, questions, loading: isLoading }: Props) => {
                         <th></th>
                         <th>Question</th>
                         <th>Answer</th>
+                        <th>status</th>
                         <th className="w-20">Action</th>
                       </tr>
                     </thead>
@@ -71,14 +104,36 @@ const Question = ({ data, questions, loading: isLoading }: Props) => {
                           <th>{ind + 1}</th>
                           <td>{question?.question}</td>
                           <td>
-                            <span className="badge badge-ghost">none</span>
+                            {question?.question?.answer ? (
+                              question?.question?.answer
+                            ) : (
+                              <span className="badge badge-ghost">
+                                no answer
+                              </span>
+                            )}
+                          </td>
+                          <td>
+                            {question?.question?.accepted ? (
+                              <span className="badge badge-success">
+                                accepted
+                              </span>
+                            ) : (
+                              <span className="badge badge-warning">
+                                pending
+                              </span>
+                            )}
                           </td>
                           <td>
                             <div className="flex items-center gap-3">
                               <button className="btn btn-ghost btn-xs">
                                 <BiEdit />
                               </button>
-                              <button className="rounded-full text-error">
+                              <button
+                                onClick={() =>
+                                  handleDeleteQuestion(question?.question?._id)
+                                }
+                                className="rounded-full text-error"
+                              >
                                 <BiTrash />
                               </button>
                             </div>
