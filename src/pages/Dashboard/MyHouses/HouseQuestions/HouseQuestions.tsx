@@ -3,7 +3,6 @@ import { BsEye } from "react-icons/bs";
 import { Link, useParams } from "react-router-dom";
 import GlobalLoader from "../../../../components/GlobalLoader";
 import { useGetHouseByHouseIdQuery } from "../../../../services/HouseApi";
-import AnsweredModal from "./AnsweredModal";
 import AnsweredQuestions from "./AnsweredQuestions";
 
 type Props = {};
@@ -95,7 +94,6 @@ const HouseQuestions = (props: Props) => {
           </div>
         </div>
       </div>
-      <AnsweredModal />
     </>
   );
 };
