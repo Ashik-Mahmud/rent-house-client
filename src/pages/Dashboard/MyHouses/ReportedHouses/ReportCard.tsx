@@ -1,25 +1,34 @@
-type Props = {};
-
-const ReportCard = (props: Props) => {
+import { useState } from "react";
+type Props = {
+  report: any;
+};
+const ReportCard = ({ report }: Props) => {
+  const [isShow, setIsShow] = useState(false);
   return (
     <div className="report-houses-user card shadow p-5">
-      <div className="report-houses-user-img">
-        <img
-          src="https://placeimg.com/200/280/arch"
-          alt="user"
-          className="w-20 h-20 rounded-full mx-auto"
-        />
-      </div>
-      <div className="report-houses-user-info my-2 text-center">
-        <h4 className="text-lg font-bold">Ashik Mahmud</h4>
-        <small className="text-gray-500">ashik@gmail.com</small>
-      </div>
       <div>
-        <h3 className="text-lg font-bold">Why Report?</h3>
+        <h3 className="text-lg font-bold">{report?.reportType}</h3>
         <p className="text-gray-500 text-sm font-poppins">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-          quae.
+          {isShow
+            ? report?.reportMessage
+            : report?.reportMessage?.length > 200
+            ? report?.reportMessage?.slice(0, 200) + "..."
+            : report?.reportMessage}
+
+          {report?.reportMessage?.length > 200 && (
+            <span
+              className="text-success cursor-pointer select-none"
+              onClick={() => setIsShow((state) => !state)}
+            >
+              {" "}
+              {isShow ? "Show Less" : "Show More"}
+            </span>
+          )}
         </p>
+        {/* Action Report */}
+        <div className="report-houses-user-action flex items-center gap-4 mt-5">
+          <button className="btn btn-danger btn-sm">Delete</button>
+        </div>
       </div>
     </div>
   );
