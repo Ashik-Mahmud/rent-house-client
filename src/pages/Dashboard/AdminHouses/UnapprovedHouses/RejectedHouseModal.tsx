@@ -13,6 +13,8 @@ const RejectedHouseModal = ({ houseId, refetch }: Props) => {
   const { user } = useAuth<authUserInterface | any>({});
   const { register, handleSubmit, reset } = useForm();
 
+  console.log(houseId);
+
   /* Handle Reject House */
   const handleRejectHouse = handleSubmit(async (data) => {
     if (!data?.notes) return cogoToast.warn(`Reject notes is required.`);
@@ -53,8 +55,7 @@ const RejectedHouseModal = ({ houseId, refetch }: Props) => {
       />
       <div className="modal modal-bottom sm:modal-middle">
         <div className="modal-box w-11/12 max-w-5xl">
-          <h3 className="font-bold text-xl">Reject Notes</h3>
-
+          <h3 className="font-bold text-xl">Reject Notes </h3>
           <div className="modal-body">
             {/* Name */}
             <div className="name border  rounded p-3 relative mt-10 flex-1">

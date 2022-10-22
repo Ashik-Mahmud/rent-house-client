@@ -39,8 +39,6 @@ const QuestionModal = ({ houseId, newFetch }: Props) => {
       }
     );
 
-    console.log(data);
-
     if (data.success) {
       reset();
       swal("Success", data.message, "success");

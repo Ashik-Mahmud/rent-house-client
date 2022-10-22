@@ -1,17 +1,13 @@
 import axios from "axios";
-import cogoToast from "cogo-toast";
 import { useState } from "react";
-import { BiTrashAlt } from "react-icons/bi";
-import { MdOutlineQuestionAnswer } from "react-icons/md";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
-import swal from "sweetalert";
 import GlobalLoader from "../../../../components/GlobalLoader";
 import NoDataComponent from "../../../../components/NoDataComponent";
 import { base_backend_url } from "../../../../configs/config";
 import useAuth from "../../../../hooks/useAuth";
 import { authUserInterface } from "../../../../interfaces/UserInterface";
-import AnsweredModal from "./AnsweredModal";
+import AnsweredQuestionRow from "./AnsweredQuestionRow";
 
 type Props = {};
 
@@ -38,34 +34,6 @@ const AnsweredQuestions = (props: Props) => {
     return response.data;
   };
 
-  /* Handle Delete Question by ID */
-  const handleDeleteQuestion = async (questionId: string) => {
-    const isConfirm = await swal({
-      title: "Are you sure?",
-      icon: "warning",
-      buttons: ["cancel", "yes, delete it"],
-      dangerMode: true,
-    });
-
-    if (isConfirm) {
-      const { data } = await axios.delete(
-        `${base_backend_url}/api/v1/questions/delete-question/${questionId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${user?.token}`,
-          },
-        }
-      );
-
-      if (data.success) {
-        cogoToast.success("Question deleted successfully");
-        refetch();
-      } else {
-        cogoToast.error("Something went wrong");
-      }
-    }
-  };
-
   /* Pagination Handler */
   const totalPage = Math.ceil(data?.count / perPage);
   const handleNextPage = () => {
@@ -88,9 +56,9 @@ const AnsweredQuestions = (props: Props) => {
     <>
       <div data-theme="winter">
         {data?.data?.length > 0 ? (
-          <div className="p-2 my-1 bg-white">
+          <div className="p-2 my-1 bg-white font-poppins">
             {/* Unanswered Tables */}
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto font-poppins">
               <table className="table w-full">
                 <thead>
                   <tr>
@@ -104,79 +72,12 @@ const AnsweredQuestions = (props: Props) => {
                 </thead>
                 <tbody>
                   {data?.data?.map((question: any, ind: number) => (
-                    <tr key={question?._id}>
-                      <th>{ind + 1}</th>
-                      <td>
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <div className="w-12 h-12">
-                              <img
-                                src={`${base_backend_url}/profiles/${question?.author?.profileImage}`}
-                                alt=""
-                                className="w-full h-full rounded-full object-cover"
-                              />
-                            </div>
-                            <div>
-                              <h3
-                                className="text-lg font-bold tooltip"
-                                data-tip={question?.author?.email}
-                              >
-                                {question?.author?.name}
-                              </h3>
-                              <p className="text-gray-500 capitalize">
-                                {question?.author?.role === "user"
-                                  ? "House Holder"
-                                  : question?.author?.role}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td>{question?.question}</td>
-                      <td>
-                        {question?.accepted ? (
-                          <span className="badge badge-success">accepted</span>
-                        ) : (
-                          <span className="badge badge-warning">pending</span>
-                        )}
-                      </td>
-                      <td>
-                        {question?.answer === "none" ? (
-                          <span className="badge badge-warning">No</span>
-                        ) : (
-                          <span
-                            className="badge badge-success tooltip"
-                            data-tip={question?.answer}
-                          >
-                            yes
-                          </span>
-                        )}
-                      </td>
-                      <td>
-                        <div className="flex items-center gap-4">
-                          <AnsweredModal
-                            question={question?.question}
-                            questionId={question?._id}
-                            refetch={refetch}
-                            answer={question?.answer}
-                          />
-                          <label
-                            htmlFor="answered-question-modal"
-                            className="text-success cursor-pointer tooltip text-xl"
-                            data-tip="Answer to the Question"
-                          >
-                            <MdOutlineQuestionAnswer />
-                          </label>
-                          <span
-                            className="text-error cursor-pointer tooltip text-xl"
-                            data-tip="Remove this Question"
-                            onClick={() => handleDeleteQuestion(question?._id)}
-                          >
-                            <BiTrashAlt />
-                          </span>
-                        </div>
-                      </td>
-                    </tr>
+                    <AnsweredQuestionRow
+                      key={question?._id}
+                      question={question}
+                      ind={ind}
+                      refetch={refetch}
+                    />
                   ))}
                 </tbody>
               </table>

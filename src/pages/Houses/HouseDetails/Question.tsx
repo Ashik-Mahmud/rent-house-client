@@ -20,6 +20,22 @@ const Question = ({ data, questions, loading: isLoading, newFetch }: Props) => {
   const { updatedUser, user } = useAuth<authUserInterface | any>({});
   const [openQuestions, setOpenQuestions] = useState(false);
 
+  /* Get All Approved Questions  */
+  const {
+    data: approvedQuestions,
+    isLoading: approvedQuestionsLoading,
+    refetch,
+  } = useQuery(["approvedQuestions"], () => getApprovedQuestions());
+
+  const getApprovedQuestions = async () => {
+    const response = await axios.get(
+      `${base_backend_url}/api/v1/questions/all`
+    );
+
+    return response.data;
+  };
+
+  /* Delete Question */
   const handleDeleteQuestion = async (questionId: string) => {
     const isConfirm = await swal({
       title: "Are you sure?",
@@ -41,25 +57,12 @@ const Question = ({ data, questions, loading: isLoading, newFetch }: Props) => {
       if (data.success) {
         cogoToast.success("Question deleted successfully");
         newFetch();
+        refetch();
       } else {
         cogoToast.error("Something went wrong");
       }
     }
   };
-
-  /* Get All Approved Questions  */
-  const { data: approvedQuestions, isLoading: approvedQuestionsLoading } =
-    useQuery(["approvedQuestions"], () => getApprovedQuestions());
-
-  const getApprovedQuestions = async () => {
-    const response = await axios.get(
-      `${base_backend_url}/api/v1/questions/all`
-    );
-
-    return response.data;
-  };
-
-  console.log(approvedQuestions);
 
   return (
     <div>
@@ -170,41 +173,43 @@ const Question = ({ data, questions, loading: isLoading, newFetch }: Props) => {
               ) : (
                 <>
                   {approvedQuestions?.data?.length > 0 ? (
-                    <ul className="flex gap-1 items-center ">
-                      {approvedQuestions?.data?.map((question: any) => (
-                        <li
-                          key={question?._id}
-                          tabIndex={0}
-                          className="collapse collapse-plus border border-base-300 bg-slate-50   w-full"
-                        >
-                          <input type="checkbox" className="peer" />
-                          <div className="collapse-title text-xl font-medium flex items-center gap-3">
-                            <b>Q1:</b>
-                            {/* User Avatar */}
-                            <div
-                              className="user-avatar z-50"
-                              title={question?.author?.name}
-                            >
-                              <img
-                                src={
-                                  question?.author?.profileImage
-                                    ? `${base_backend_url}/profiles/${question?.author?.profileImage}`
-                                    : question?.author?.avatar
-                                }
-                                alt="user-avatar"
-                                className="w-8 h-8 rounded-full border-2 border-success object-cover "
-                              />
+                    <ul className="flex gap-1 items-center flex-col">
+                      {approvedQuestions?.data?.map(
+                        (question: any, ind: number) => (
+                          <li
+                            key={question?._id}
+                            tabIndex={0}
+                            className="collapse collapse-plus border border-base-300 bg-slate-50   w-full"
+                          >
+                            <input type="checkbox" className="peer" />
+                            <div className="collapse-title text-md font-medium flex items-center gap-3 ">
+                              <b>Q{ind + 1}:</b>
+                              {/* User Avatar */}
+                              <div
+                                className="user-avatar z-50"
+                                title={question?.author?.name}
+                              >
+                                <img
+                                  src={
+                                    question?.author?.profileImage
+                                      ? `${base_backend_url}/profiles/${question?.author?.profileImage}`
+                                      : question?.author?.avatar
+                                  }
+                                  alt="user-avatar"
+                                  className="w-8 h-8 rounded-full border-2 border-success object-cover "
+                                />
+                              </div>
+                              <span>{question?.question}</span>
                             </div>
-                            <span>{question?.question}</span>
-                          </div>
-                          <div className="collapse-content bg-white peer-checked:pt-5">
-                            <p>
-                              <b>Ans: </b>
-                              {question?.answer}
-                            </p>
-                          </div>
-                        </li>
-                      ))}
+                            <div className="collapse-content bg-white peer-checked:pt-5">
+                              <p>
+                                <b>Ans: </b>
+                                {question?.answer}
+                              </p>
+                            </div>
+                          </li>
+                        )
+                      )}
                     </ul>
                   ) : (
                     <div className="text-center">
@@ -213,7 +218,7 @@ const Question = ({ data, questions, loading: isLoading, newFetch }: Props) => {
                       </h3>
                       <label
                         htmlFor="question-modal"
-                        className="btn btn-success btn-xs py-4"
+                        className="btn btn-success btn-xs "
                       >
                         Ask
                       </label>

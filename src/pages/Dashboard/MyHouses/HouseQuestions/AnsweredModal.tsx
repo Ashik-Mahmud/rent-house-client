@@ -19,6 +19,8 @@ const AnsweredModal = ({ question, questionId, refetch, answer }: Props) => {
   const { user } = useAuth<authUserInterface | any>({});
   const { handleSubmit, register, reset, setValue } = useForm();
 
+  console.log(question, questionId, answer);
+
   const handleAnswer = handleSubmit(async (data) => {
     if (!data?.answer) {
       return cogoToast.error("Please enter your answer");
@@ -52,7 +54,7 @@ const AnsweredModal = ({ question, questionId, refetch, answer }: Props) => {
     <form onSubmit={handleAnswer}>
       <input
         type="checkbox"
-        id="answered-question-modal"
+        id={`answered-question-modal-${questionId}`}
         className="modal-toggle"
       />
       <div className="modal modal-middle sm:modal-middle">
@@ -66,7 +68,9 @@ const AnsweredModal = ({ question, questionId, refetch, answer }: Props) => {
                 <h3 className="text-xs font-poppins">Question</h3>
               </div>
               <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
-                <p className="text-md font-poppins">{question}</p>
+                <p className="text-md font-poppins whitespace-pre-wrap">
+                  {question}
+                </p>
               </div>
             </div>
             {/* End */}
@@ -96,7 +100,7 @@ const AnsweredModal = ({ question, questionId, refetch, answer }: Props) => {
           </div>
           <div className="modal-action">
             <label
-              htmlFor="answered-question-modal"
+              htmlFor={`answered-question-modal-${questionId}`}
               className="btn btn-warning"
             >
               Cancel
