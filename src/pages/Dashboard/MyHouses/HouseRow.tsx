@@ -90,7 +90,7 @@ const HouseRow = ({ approved, house, index, refetch }: Props) => {
       <td className="py-3 ">
         <Link
           data-tip="View Questions"
-          to="/dashboard/houses/questions/3423"
+          to={`/dashboard/houses/questions/${house._id}`}
           className="btn btn-xs btn-circle btn-accent flex items-center gap-2 text-xs tooltip"
         >
           40
@@ -99,7 +99,7 @@ const HouseRow = ({ approved, house, index, refetch }: Props) => {
       <td className="py-3 ">
         <Link
           data-tip="View Reports"
-          to="/dashboard/houses/reports/3423"
+          to={`/dashboard/houses/reports/${house._id}`}
           className="btn btn-xs btn-circle btn-warning flex items-center gap-2 text-xs tooltip"
         >
           5

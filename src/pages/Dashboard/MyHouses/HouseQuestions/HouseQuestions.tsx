@@ -1,12 +1,22 @@
 import { BiCommentAdd } from "react-icons/bi";
 import { BsEye } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import GlobalLoader from "../../../../components/GlobalLoader";
+import { useGetHouseByHouseIdQuery } from "../../../../services/HouseApi";
 import AnsweredModal from "./AnsweredModal";
 import AnsweredQuestions from "./AnsweredQuestions";
 
 type Props = {};
 
 const HouseQuestions = (props: Props) => {
+  const { houseId } = useParams();
+
+  const { data, isLoading } = useGetHouseByHouseIdQuery(houseId);
+
+  if (isLoading) {
+    return <GlobalLoader />;
+  }
+
   return (
     <>
       <div>
@@ -24,28 +34,42 @@ const HouseQuestions = (props: Props) => {
               />
             </figure>
             <div className="card-body">
-              <h2 className="card-title">Rajbari New Villa</h2>
-              <p className="card-subtitle text-gray-500">Rajbar, Rangpur</p>
+              <h2 className="card-title">{data?.data?.name}</h2>
+              <p className="card-subtitle text-gray-500">
+                {data?.data?.address}
+              </p>
               <ul className="flex items-center gap-5 flex-wrap">
                 <li>
-                  Price - <div className="badge badge-ghost">1200/m</div>
+                  Price -{" "}
+                  <div className="badge badge-ghost">{data?.data?.price}</div>
                 </li>
                 <li>
-                  House Type - <div className="badge badge-ghost">Rent</div>
+                  House Type -{" "}
+                  <div className="badge badge-ghost">
+                    {data?.data?.houseType}
+                  </div>
                 </li>
                 <li>
-                  Category - <div className="badge badge-ghost">Duplex</div>
+                  Category -{" "}
+                  <div className="badge badge-ghost">
+                    {data?.data?.category}
+                  </div>
                 </li>
                 <li>
                   House Use For -{" "}
-                  <div className="badge badge-ghost">Residential</div>
+                  <div className="badge badge-ghost">
+                    {data?.data?.houseUseFor}
+                  </div>
                 </li>
               </ul>
             </div>
             <div className="card-end flex items-center gap-4">
               <p className="tooltip" data-tip="View House">
                 {" "}
-                <Link to="/house/4343" className="btn btn-ghost btn-circle ">
+                <Link
+                  to={`/house/${data?.data?._id}`}
+                  className="btn btn-ghost btn-circle "
+                >
                   <BsEye />
                 </Link>
               </p>
@@ -54,7 +78,10 @@ const HouseQuestions = (props: Props) => {
                 data-tip="View Reviews for this house"
               >
                 {" "}
-                <Link to="/house/4343" className="btn btn-ghost btn-circle ">
+                <Link
+                  to={`/dashboard/houses/reviews/${data?.data?._id}`}
+                  className="btn btn-ghost btn-circle "
+                >
                   <BiCommentAdd />
                 </Link>
               </p>
