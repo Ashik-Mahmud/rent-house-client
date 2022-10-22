@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { BsGrid1X2, BsGrid3X2 } from "react-icons/bs";
 import { useQuery } from "react-query";
 import GlobalLoader from "../../components/GlobalLoader";
+import NoDataComponent from "../../components/NoDataComponent";
 import FilterSidebar from "./FilterSidebar";
 import HouseCard from "./HouseCard";
 type Props = {};
@@ -286,7 +287,7 @@ const Houses = (props: Props) => {
                 </>
               ) : (
                 <div className="text-center text-2xl font-bold">
-                  No Houses Found
+                  <NoDataComponent />
                 </div>
               )}
             </div>
