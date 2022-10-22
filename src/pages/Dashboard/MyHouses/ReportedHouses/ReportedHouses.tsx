@@ -18,22 +18,22 @@ const ReportedHouses = (props: Props) => {
 
   const { data, isLoading } = useGetHouseByHouseIdQuery(houseId);
 
-  const { data: reports, isLoading: reportsLoading } = useQuery(
-    "reports",
-    async () => {
-      const { data } = await axios.get(
-        `${base_backend_url}/api/v1/reports/reports-by-house/${houseId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
-        }
-      );
+  const {
+    data: reports,
+    isLoading: reportsLoading,
+    refetch,
+  } = useQuery("reports", async () => {
+    const { data } = await axios.get(
+      `${base_backend_url}/api/v1/reports/reports-by-house/${houseId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
 
-      return data;
-    }
-  );
-  console.log(reports?.data);
+    return data;
+  });
 
   if (isLoading || reportsLoading) {
     return <GlobalLoader />;
@@ -111,7 +111,11 @@ const ReportedHouses = (props: Props) => {
           ) : reports?.data?.length > 0 ? (
             <div className="report-houses-users grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
               {reports?.data?.map((report: any) => (
-                <ReportCard key={report._id} report={report} />
+                <ReportCard
+                  key={report._id}
+                  report={report}
+                  refetch={refetch}
+                />
               ))}
             </div>
           ) : (

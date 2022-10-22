@@ -1,9 +1,46 @@
+import axios from "axios";
 import { useState } from "react";
+import swal from "sweetalert";
+import { base_backend_url } from "../../../../configs/config";
+import useAuth from "../../../../hooks/useAuth";
+import { authUserInterface } from "../../../../interfaces/UserInterface";
 type Props = {
   report: any;
+  refetch: () => void;
 };
-const ReportCard = ({ report }: Props) => {
+const ReportCard = ({ report, refetch }: Props) => {
   const [isShow, setIsShow] = useState(false);
+  const { user } = useAuth<authUserInterface | any>({});
+
+  /* Handle Report Delete */
+  const handleReportDelete = async () => {
+    console.log("Delete Report");
+    const isConfirm = await swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this imaginary file!",
+      icon: "warning",
+      buttons: ["cancel", "delete"],
+      dangerMode: true,
+    });
+    if (isConfirm) {
+      console.log("Delete Report");
+      const { data } = await axios.delete(
+        `${base_backend_url}/api/v1/reports/delete/${report._id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+      if (data.status) {
+        swal("Report Deleted!", {
+          icon: "success",
+        });
+      }
+      refetch();
+    }
+  };
+
   return (
     <div className="report-houses-user card shadow p-5">
       <div>
@@ -27,7 +64,12 @@ const ReportCard = ({ report }: Props) => {
         </p>
         {/* Action Report */}
         <div className="report-houses-user-action flex items-center gap-4 mt-5">
-          <button className="btn btn-danger btn-sm">Delete</button>
+          <button
+            className="btn btn-danger btn-sm"
+            onClick={handleReportDelete}
+          >
+            Delete
+          </button>
         </div>
       </div>
     </div>
