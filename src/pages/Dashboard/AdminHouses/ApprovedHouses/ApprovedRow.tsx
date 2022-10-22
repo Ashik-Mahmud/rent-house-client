@@ -1,6 +1,7 @@
 import { BiBath, BiBed, BiBlock } from "react-icons/bi";
 import { BsEyeFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { base_backend_url } from "../../../../configs/config";
 import RejectedHouseModal from "../UnapprovedHouses/RejectedHouseModal";
 
 type Props = {
@@ -21,7 +22,7 @@ const ApprovedRow = ({ ind, house, refetch }: Props) => {
               <img
                 src={
                   house?.image
-                    ? "${base_backend_url}/previews/" + house?.image
+                    ? `${base_backend_url}/previews/` + house?.image
                     : "https://placeimg.com/400/225/arch"
                 }
                 alt={house?.name}
