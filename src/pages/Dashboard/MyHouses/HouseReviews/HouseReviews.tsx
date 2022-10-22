@@ -15,23 +15,22 @@ type Props = {};
 const HouseReviews = (props: Props) => {
   const { user } = useAuth<authUserInterface | any>({});
   const { houseId } = useParams<{ houseId: string }>();
-  const { data, isLoading, refetch } = useGetHouseByHouseIdQuery(houseId);
+  const { data, isLoading } = useGetHouseByHouseIdQuery(houseId);
 
   /* Get All Review For This Houses */
-  const { data: reviews, isLoading: reviewsLoading } = useQuery(
-    "reviews",
-    async () => {
-      const { data } = await axios.get(
-        `${base_backend_url}/api/v1/reviews/get-reviews-by-house-id/${houseId}`,
-        {
-          headers: { Authorization: `Bearer ${user.token}` },
-        }
-      );
-      return data;
-    }
-  );
-
-  console.log(reviews);
+  const {
+    data: reviews,
+    isLoading: reviewsLoading,
+    refetch: newRefetch,
+  } = useQuery("reviews", async () => {
+    const { data } = await axios.get(
+      `${base_backend_url}/api/v1/reviews/get-reviews-by-house-id/${houseId}`,
+      {
+        headers: { Authorization: `Bearer ${user.token}` },
+      }
+    );
+    return data;
+  });
 
   if (isLoading || reviewsLoading) return <GlobalLoader />;
   return (
@@ -103,7 +102,11 @@ const HouseReviews = (props: Props) => {
         {reviews?.data?.length > 0 ? (
           <div className="houses-reviews py-6 grid grid-col-1 sm:grid-col-2 md:grid-col-3 lg:grid-cols-4 gap-5">
             {reviews?.data?.map((review: any) => (
-              <HouseReviewCard key={review._id} review={review} />
+              <HouseReviewCard
+                key={review._id}
+                review={review}
+                refetch={newRefetch}
+              />
             ))}
           </div>
         ) : (

@@ -1,12 +1,20 @@
 import { BiStar } from "react-icons/bi";
 import { BsFillStarFill, BsTrash } from "react-icons/bs";
 
+import axios from "axios";
+import cogoToast from "cogo-toast";
 import { useState } from "react";
+import swal from "sweetalert";
+import { base_backend_url } from "../../../../configs/config";
+import useAuth from "../../../../hooks/useAuth";
+import { authUserInterface } from "../../../../interfaces/UserInterface";
 type Props = {
   review: any;
+  refetch: () => void;
 };
 
-const HouseReviewCard = ({ review }: Props) => {
+const HouseReviewCard = ({ review, refetch }: Props) => {
+  const { user } = useAuth<authUserInterface | any>({});
   const [isShow, setIsShow] = useState(false);
   /* stars */
   let stars = [];
@@ -17,6 +25,35 @@ const HouseReviewCard = ({ review }: Props) => {
     stars.push(<BiStar key={i} className="text-success" />);
   }
 
+  /* Handle Delete Review */
+  /* Handle Delete */
+  const handleDelete = async () => {
+    const isConfirm = await swal({
+      title: "Are you sure?",
+      icon: "warning",
+      buttons: ["cancel", "yes, delete it"],
+      dangerMode: true,
+    });
+
+    if (isConfirm) {
+      try {
+        const { data: deleteData } = await axios.delete(
+          `${base_backend_url}/api/v1/reviews/delete-review/${review?._id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${user?.token}`,
+            },
+          }
+        );
+        if (deleteData.success) {
+          cogoToast.success("Review deleted successfully");
+          refetch();
+        }
+      } catch (error) {
+        cogoToast.error("Something went wrong");
+      }
+    }
+  };
   return (
     <div className="card bg-base-100 shadow-xl">
       <div className="card-body gap-1 pb-1">
@@ -46,7 +83,10 @@ const HouseReviewCard = ({ review }: Props) => {
       </div>
       <div className="flex justify-end px-3 pb-3">
         <p data-tip="Trash Review" className="tooltip tooltip-left">
-          <button className="btn btn-ghost text-error btn-circle ">
+          <button
+            onClick={handleDelete}
+            className="btn btn-ghost text-error btn-circle "
+          >
             <BsTrash />
           </button>
         </p>
