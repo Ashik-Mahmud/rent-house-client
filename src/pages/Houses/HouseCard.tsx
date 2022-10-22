@@ -18,6 +18,7 @@ import {
   WhatsappShareButton,
 } from "react-share";
 import styled from "styled-components";
+import { base_backend_url } from "../../configs/config";
 
 type Props = {
   gridView: Boolean;
@@ -127,7 +128,7 @@ const HouseCard = ({ gridView, house }: Props) => {
         <img
           src={
             house?.image
-              ? "http://localhost:5000/previews/" + house?.image
+              ? `${base_backend_url}/previews/` + house?.image
               : "https://placeimg.com/400/225/arch"
           }
           alt={house?.name || "loading..."}

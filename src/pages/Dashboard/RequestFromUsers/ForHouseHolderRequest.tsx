@@ -4,6 +4,7 @@ import { useQuery } from "react-query";
 import { useAppDispatch } from "../../../app/store";
 import GlobalLoader from "../../../components/GlobalLoader";
 import NoDataComponent from "../../../components/NoDataComponent";
+import { base_backend_url } from "../../../configs/config";
 import {
   setPendingCount,
   setRequestHouseCount,
@@ -23,7 +24,7 @@ const ForHouseHolderRequest = (props: Props) => {
   /* Try to fetch blog using UseQuery */
   const { data, refetch, isLoading } = useQuery("fetchBlog", async () => {
     const res = await axios.get(
-      `http://localhost:5000/api/v1/request/all-request?page=${currentPage}&limit=${limit}&role=householder`,
+      `${base_backend_url}/api/v1/request/all-request?page=${currentPage}&limit=${limit}&role=householder`,
       {
         headers: {
           Authorization: `Bearer ${user?.token}`,

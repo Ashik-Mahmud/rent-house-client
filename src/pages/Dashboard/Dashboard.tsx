@@ -28,6 +28,7 @@ import {
 import { useQuery } from "react-query";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/store";
+import { base_backend_url } from "../../configs/config";
 import { logout } from "../../features/AuthSlice";
 import {
   setApprovedHouseCount,
@@ -257,7 +258,7 @@ const Dashboard = (props: Props) => {
       if (isLoading) return;
       if (role === "admin" || role === "manager") {
         const res = await axios.get(
-          `http://localhost:5000/api/v1/request/all-request`,
+          `${base_backend_url}/api/v1/request/all-request`,
           {
             headers: {
               Authorization: `Bearer ${user?.token}`,
@@ -285,7 +286,7 @@ const Dashboard = (props: Props) => {
   const getHouseCount = async (slug: string) => {
     if (role === "admin" || role === "manager") {
       const res = await axios.get(
-        `http://localhost:5000/api/v1/admin/houses/${slug}`,
+        `${base_backend_url}/api/v1/admin/houses/${slug}`,
         {
           headers: {
             Authorization: `Bearer ${user?.token}`,
@@ -411,7 +412,7 @@ const Dashboard = (props: Props) => {
                       <img
                         src={
                           data?.profileImage
-                            ? "http://localhost:5000/profiles/" +
+                            ? "${base_backend_url}/profiles/" +
                               data?.profileImage
                             : user?.user?.avatar
                         }
@@ -459,8 +460,7 @@ const Dashboard = (props: Props) => {
                     <img
                       src={
                         data?.profileImage
-                          ? "http://localhost:5000/profiles/" +
-                            data?.profileImage
+                          ? "${base_backend_url}/profiles/" + data?.profileImage
                           : user?.user?.avatar
                       }
                       alt={data?.name}

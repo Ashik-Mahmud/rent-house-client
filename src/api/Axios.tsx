@@ -6,7 +6,7 @@ const cookie = cookies.get("user");
 const token = cookie?.token;
 
 export const AxiosUser = axios.create({
-  baseURL: "http://localhost:5000/api/v1/users",
+  baseURL: "${base_backend_url}/api/v1/users",
   headers: {
     "Content-Type": "application/json",
     Authorization: `Bearer ${token}`,
@@ -14,7 +14,7 @@ export const AxiosUser = axios.create({
 });
 
 export const AxiosRequest = axios.create({
-  baseURL: "http://localhost:5000/api/v1/request",
+  baseURL: "${base_backend_url}/api/v1/request",
   headers: {
     "Content-Type": "application/json",
     Authorization: `Bearer ${token}`,

@@ -104,7 +104,7 @@ const Owner = ({ owner }: Props) => {
                           <img
                             src={
                               owner?.profileImage
-                                ? "http://localhost:5000/profiles/" +
+                                ? "${base_backend_url}/profiles/" +
                                   owner?.profileImage
                                 : owner?.avatar
                             }

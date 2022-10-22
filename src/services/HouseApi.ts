@@ -1,10 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 import Cookies from "universal-cookie";
+import { base_backend_url } from "../configs/config";
 const cookies = new Cookies();
 export const HouseApi = createApi({
   reducerPath: "HouseApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `http://localhost:5000/api/v1/houses`,
+    baseUrl: `${base_backend_url}/api/v1/houses`,
     prepareHeaders: (headers, api) => {
       const cookie = cookies.get("user");
       const token = cookie.token;

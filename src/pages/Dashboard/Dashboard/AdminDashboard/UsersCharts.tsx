@@ -2,6 +2,7 @@ import axios from "axios";
 import Chart from "react-apexcharts";
 import { useQuery } from "react-query";
 import GlobalLoader from "../../../../components/GlobalLoader";
+import { base_backend_url } from "../../../../configs/config";
 import useAuth from "../../../../hooks/useAuth";
 import { authUserInterface } from "../../../../interfaces/UserInterface";
 type Props = {};
@@ -10,14 +11,11 @@ const UsersCharts = (props: Props) => {
 
   const { data, isLoading } = useQuery(["users"], () => getAllUserForAdmin());
   const getAllUserForAdmin = async () => {
-    const { data } = await axios.get(
-      `http://localhost:5000/api/v1/users/admin`,
-      {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      }
-    );
+    const { data } = await axios.get(`${base_backend_url}/api/v1/users/admin`, {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
     return data;
   };
 

@@ -26,7 +26,7 @@ type deleteReviewType = {
 export const ReviewApi = createApi({
   reducerPath: "ReviewApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5000/api/v1/reviews",
+    baseUrl: "${base_backend_url}/api/v1/reviews",
     prepareHeaders: (headers, api) => {
       const cookie = cookies.get("user");
       const token = cookie?.token;

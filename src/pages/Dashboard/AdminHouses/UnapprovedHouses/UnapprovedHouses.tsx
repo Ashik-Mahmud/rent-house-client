@@ -5,6 +5,7 @@ import { useQuery } from "react-query";
 import { useAppDispatch } from "../../../../app/store";
 import GlobalLoader from "../../../../components/GlobalLoader";
 import NoDataComponent from "../../../../components/NoDataComponent";
+import { base_backend_url } from "../../../../configs/config";
 import { setUnapprovedHouseCount } from "../../../../features/HouseSlice";
 import useAuth from "../../../../hooks/useAuth";
 import { authUserInterface } from "../../../../interfaces/UserInterface";
@@ -32,7 +33,7 @@ const UnapprovedHouses = (props: Props) => {
   /* Get Unapproved Houses Function */
   const getUnapprovedHouses = async () => {
     const { data } = await axios.get(
-      `http://localhost:5000/api/v1/admin/houses/unapproved?page=${currentPage}&limit=${limit}&filter=${filter}`,
+      `${base_backend_url}/api/v1/admin/houses/unapproved?page=${currentPage}&limit=${limit}&filter=${filter}`,
       {
         headers: {
           Authorization: `Bearer ${user.token}`,

@@ -7,6 +7,7 @@ import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import swal from "sweetalert";
+import { base_backend_url } from "../../../configs/config";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import MessageBoxEditor from "./MessageBoxEditor";
@@ -20,7 +21,7 @@ const Messages = (props: Props) => {
     "users-with-profiles",
     async () =>
       await axios
-        .get("http://localhost:5000/api/v1/admin/users", {
+        .get(`${base_backend_url}/api/v1/admin/users`, {
           headers: { Authorization: `Bearer ${user?.token}` },
         })
         .then((res) => res.data)
@@ -116,7 +117,7 @@ const Messages = (props: Props) => {
 
     /* Send Message */
     const { data: mailedData } = await axios.post(
-      `http://localhost:5000/api/v1/admin/emails/send`,
+      `${base_backend_url}/api/v1/admin/emails/send`,
       { ...sendMessageContent },
       {
         headers: { Authorization: `Bearer ${user?.token}` },

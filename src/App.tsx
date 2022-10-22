@@ -11,6 +11,7 @@ import RequireBlog from "./auth/RequireBlog";
 import RequireCustomer from "./auth/RequireCustomer";
 import RequireSupAdmin from "./auth/RequireSupAdmin";
 import RequireUser from "./auth/RequireUser";
+import { base_backend_url } from "./configs/config";
 import { setAppOptions } from "./features/AppSlice";
 import About from "./pages/About";
 import Login from "./pages/Authentication/Login";
@@ -69,15 +70,13 @@ const App = (props: Props) => {
   const user = cookies.get("user");
   /* Get House Option*/
   const { data, isLoading, refetch } = useQuery("appOptions", async () => {
-    const res = await axios.get(
-      `http://localhost:5000/api/v1/admin/app-options`
-    );
+    const res = await axios.get(`${base_backend_url}/api/v1/admin/app-options`);
     return res?.data;
   });
   const { data: newData } = useQuery(["userInit", user], async () => {
     if (user) {
       const res = await axios.get(
-        `http://localhost:5000/api/v1/users/me/${user?.user?._id}`,
+        `${base_backend_url}/api/v1/users/me/${user?.user?._id}`,
         {
           headers: {
             authorization: `Bearer ${user?.token}`,

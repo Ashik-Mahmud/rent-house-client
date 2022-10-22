@@ -5,6 +5,7 @@ import { BiUserCheck } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import { useAppDispatch } from "../../../app/store";
+import { base_backend_url } from "../../../configs/config";
 import { logout } from "../../../features/AuthSlice";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
@@ -37,7 +38,7 @@ const DeleteVerificationModal = (props: Props) => {
       }).then(async (value) => {
         if (value) {
           await axios.delete(
-            `http://localhost:5000/api/v1/users/delete-account/${updatedUser?._id}`,
+            `${base_backend_url}/api/v1/users/delete-account/${updatedUser?._id}`,
             {
               headers: {
                 "Content-Type": "application/json",

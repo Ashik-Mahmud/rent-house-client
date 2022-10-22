@@ -4,6 +4,7 @@ import { BiExport, BiPlus } from "react-icons/bi";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import GlobalLoader from "../../../components/GlobalLoader";
+import { base_backend_url } from "../../../configs/config";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import HouseRow from "./HouseRow";
@@ -23,7 +24,7 @@ const MyHouses = (props: Props) => {
   );
   const getMyHouses = async () => {
     const { data } = await axios.get(
-      `http://localhost:5000/api/v1/houses/get-house-by-user/${updatedUser?._id}?page=${currentPage}&limit=${limit}&q=${search}`,
+      `${base_backend_url}/api/v1/houses/get-house-by-user/${updatedUser?._id}?page=${currentPage}&limit=${limit}&q=${search}`,
       {
         headers: {
           Authorization: `Bearer ${user?.token}`,

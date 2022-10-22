@@ -124,7 +124,7 @@ const Header = (props: Props) => {
                   <img
                     src={
                       data?.profileImage
-                        ? "http://localhost:5000/profiles/" + data?.profileImage
+                        ? "${base_backend_url}/profiles/" + data?.profileImage
                         : user?.user?.avatar
                     }
                     alt={data?.name}

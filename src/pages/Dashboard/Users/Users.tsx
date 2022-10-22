@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { useQuery } from "react-query";
+import { base_backend_url } from "../../../configs/config";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import UserRow from "./UserRow";
@@ -20,7 +21,7 @@ const Users = (props: Props) => {
 
   const getAllUserForAdmin = async () => {
     const { data } = await axios.get(
-      `http://localhost:5000/api/v1/users/admin?page=${currentPage}&limit=${limitPerPage}&role=${filterRole}`,
+      `${base_backend_url}/api/v1/users/admin?page=${currentPage}&limit=${limitPerPage}&role=${filterRole}`,
       {
         headers: {
           Authorization: `Bearer ${user.token}`,

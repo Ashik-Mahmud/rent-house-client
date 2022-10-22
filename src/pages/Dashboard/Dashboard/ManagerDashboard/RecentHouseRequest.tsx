@@ -4,6 +4,7 @@ import { BsEyeFill } from "react-icons/bs";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import GlobalLoader from "../../../../components/GlobalLoader";
+import { base_backend_url } from "../../../../configs/config";
 import useAuth from "../../../../hooks/useAuth";
 import { authUserInterface } from "../../../../interfaces/UserInterface";
 
@@ -20,7 +21,7 @@ const RecentBookings = (props: Props) => {
   /* Get Unapproved Houses Function */
   const getUnapprovedHouses = async () => {
     const { data } = await axios.get(
-      `http://localhost:5000/api/v1/admin/houses/unapproved?filter=-createdAt`,
+      `${base_backend_url}/api/v1/admin/houses/unapproved?filter=-createdAt`,
       {
         headers: {
           Authorization: `Bearer ${user.token}`,
@@ -70,7 +71,7 @@ const RecentBookings = (props: Props) => {
                             <img
                               src={
                                 house?.image
-                                  ? "http://localhost:5000/previews/" +
+                                  ? "${base_backend_url}/previews/" +
                                     house?.image
                                   : "https://placeimg.com/400/225/arch"
                               }

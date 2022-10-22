@@ -52,7 +52,7 @@ const Profile = (props: Props) => {
                 <img
                   src={
                     data?.profileImage
-                      ? "http://localhost:5000/profiles/" + data?.profileImage
+                      ? "${base_backend_url}/profiles/" + data?.profileImage
                       : data?.avatar
                   }
                   alt={data?.name}

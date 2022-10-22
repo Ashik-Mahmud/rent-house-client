@@ -7,6 +7,7 @@ import { BiCheck, BiEdit, BiLockAlt, BiX } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import { useAppDispatch, useAppSelector } from "../../../app/store";
+import { base_backend_url } from "../../../configs/config";
 import { logout } from "../../../features/AuthSlice";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
@@ -76,7 +77,7 @@ const Settings = ({ appChangeRefetch }: Props) => {
     if (!appName) return toast.error("App name is required.");
     try {
       const { data } = await axios.post(
-        `http://localhost:5000/api/v1/admin/change-app-name`,
+        `${base_backend_url}/api/v1/admin/change-app-name`,
         { name: appName },
         {
           headers: {

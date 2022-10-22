@@ -3,6 +3,7 @@ import { BiBath, BiBed, BiCheck, BiTrashAlt } from "react-icons/bi";
 import { BsEyeFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
+import { base_backend_url } from "../../../../configs/config";
 import useAuth from "../../../../hooks/useAuth";
 import { authUserInterface } from "../../../../interfaces/UserInterface";
 
@@ -25,7 +26,7 @@ const RejectedRow = ({ ind, house, refetch }: Props) => {
     });
     if (isConfirm) {
       const { data } = await axios.patch(
-        `http://localhost:5000/api/v1/admin/accept/${id}`,
+        `${base_backend_url}/api/v1/admin/accept/${id}`,
         {},
         {
           headers: {
@@ -51,7 +52,7 @@ const RejectedRow = ({ ind, house, refetch }: Props) => {
     });
     if (isConfirm) {
       const { data } = await axios.delete(
-        `http://localhost:5000/api/v1/admin/house/delete/${id}`,
+        `${base_backend_url}/api/v1/admin/house/delete/${id}`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,
@@ -78,7 +79,7 @@ const RejectedRow = ({ ind, house, refetch }: Props) => {
               <img
                 src={
                   house?.image
-                    ? "http://localhost:5000/previews/" + house?.image
+                    ? "${base_backend_url}/previews/" + house?.image
                     : "https://placeimg.com/400/225/arch"
                 }
                 alt={house?.name}

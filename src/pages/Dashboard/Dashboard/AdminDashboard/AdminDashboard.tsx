@@ -4,6 +4,7 @@ import { BsBook, BsHouse, BsHouseDoor, BsHouseDoorFill } from "react-icons/bs";
 import { useQuery } from "react-query";
 import { useAppSelector } from "../../../../app/store";
 import GlobalLoader from "../../../../components/GlobalLoader";
+import { base_backend_url } from "../../../../configs/config";
 import useAuth from "../../../../hooks/useAuth";
 import { authUserInterface } from "../../../../interfaces/UserInterface";
 import { useGetAllBlogsQuery } from "../../../../services/BlogApi";
@@ -23,7 +24,7 @@ const AdminDashboard = (props: Props) => {
   const getAllUserForAdmin = async () => {
     if (updatedUser?.role === "admin") {
       const { data } = await axios.get(
-        `http://localhost:5000/api/v1/users/admin`,
+        `${base_backend_url}/api/v1/users/admin`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,

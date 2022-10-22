@@ -9,6 +9,7 @@ import { MdReportGmailerrorred } from "react-icons/md";
 import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import GlobalLoader from "../../../components/GlobalLoader";
+import { base_backend_url } from "../../../configs/config";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import Address from "./Address";
@@ -39,7 +40,7 @@ const HouseDetails = (props: Props) => {
   /* Get House Details Function */
   const getHouseDetails = async () => {
     const { data } = await axios.get(
-      `http://localhost:5000/api/v1/houses/${houseId}`
+      `${base_backend_url}/api/v1/houses/${houseId}`
     );
     return data;
   };
@@ -56,7 +57,7 @@ const HouseDetails = (props: Props) => {
       return localStorage.getItem("favorite") === "true" ? true : false;
     });
     const { data } = await axios.patch(
-      `http://localhost:5000/api/v1/houses/like-count/${houseId}?like=${clicked}`
+      `${base_backend_url}/api/v1/houses/like-count/${houseId}?like=${clicked}`
     );
     cogoToast.success(data.message);
     refetch();
@@ -135,7 +136,7 @@ const HouseDetails = (props: Props) => {
                 <img
                   src={
                     data?.data?.image
-                      ? "http://localhost:5000/previews/" + data?.data?.image
+                      ? `${base_backend_url}/previews/` + data?.data?.image
                       : "https://placeimg.com/400/225/arch"
                   }
                   alt={data?.data?.name}

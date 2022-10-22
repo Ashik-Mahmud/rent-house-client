@@ -4,6 +4,7 @@ import { BsGrid1X2, BsGrid3X2 } from "react-icons/bs";
 import { useQuery } from "react-query";
 import GlobalLoader from "../../components/GlobalLoader";
 import NoDataComponent from "../../components/NoDataComponent";
+import { base_backend_url } from "../../configs/config";
 import FilterSidebar from "./FilterSidebar";
 import HouseCard from "./HouseCard";
 type Props = {};
@@ -87,7 +88,7 @@ const Houses = (props: Props) => {
 
   const getAllHousesWithFilter = async () => {
     const { data } = await axios.get(
-      `http://localhost:5000/api/v1/houses?limit=${perPage}&page=${currentPage}&sortBy=${sortBy}&district=${filterByDistrict}&name=${searchKey}&category=${category}&startPrice=${minPrice}&endPrice=${maxPrice}&houseType=${JSON.stringify(
+      `${base_backend_url}/api/v1/houses?limit=${perPage}&page=${currentPage}&sortBy=${sortBy}&district=${filterByDistrict}&name=${searchKey}&category=${category}&startPrice=${minPrice}&endPrice=${maxPrice}&houseType=${JSON.stringify(
         houseType
       )}&address=${searchAddress}&bathrooms=${bathrooms}&bedrooms=${bedrooms}&isBachelor=${isBachelor}&houseUseFor=${JSON.stringify(
         houseUseFor

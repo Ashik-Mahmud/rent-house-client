@@ -1,5 +1,6 @@
 import axios from "axios";
 import swal from "sweetalert";
+import { base_backend_url } from "../configs/config";
 import useAuth from "../hooks/useAuth";
 import { authUserInterface } from "../interfaces/UserInterface";
 
@@ -19,7 +20,7 @@ const SendVerifyEmail = ({ title, desc }: Props) => {
     });
     if (isConfirm) {
       const { data } = await axios.get(
-        `http://localhost:5000/api/v1/users/send-verification-email/${updatedUser?._id}`,
+        `${base_backend_url}/api/v1/users/send-verification-email/${updatedUser?._id}`,
         {
           headers: {
             Authorization: `Bearer ${user?.token}`,
