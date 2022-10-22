@@ -1,7 +1,7 @@
 import axios from "axios";
 import cogoToast from "cogo-toast";
 import { useState } from "react";
-import { BiCommentDetail, BiEdit, BiTrash } from "react-icons/bi";
+import { BiCommentDetail, BiTrash } from "react-icons/bi";
 import { BsPlus } from "react-icons/bs";
 import swal from "sweetalert";
 import GlobalLoader from "../../../components/GlobalLoader";
@@ -100,12 +100,12 @@ const Question = ({ data, questions, loading: isLoading, newFetch }: Props) => {
                     </thead>
                     <tbody>
                       {questions?.data?.map((question: any, ind: number) => (
-                        <tr>
+                        <tr key={question?._id}>
                           <th>{ind + 1}</th>
                           <td>{question?.question}</td>
                           <td>
-                            {question?.question?.answer ? (
-                              question?.question?.answer
+                            {question?.answer !== "none" ? (
+                              question?.answer
                             ) : (
                               <span className="badge badge-ghost">
                                 no answer
@@ -113,7 +113,7 @@ const Question = ({ data, questions, loading: isLoading, newFetch }: Props) => {
                             )}
                           </td>
                           <td>
-                            {question?.question?.accepted ? (
+                            {question?.accepted ? (
                               <span className="badge badge-success">
                                 accepted
                               </span>
@@ -124,13 +124,10 @@ const Question = ({ data, questions, loading: isLoading, newFetch }: Props) => {
                             )}
                           </td>
                           <td>
-                            <div className="flex items-center gap-3">
-                              <button className="btn btn-ghost btn-xs">
-                                <BiEdit />
-                              </button>
+                            <div className="flex items-center justify-center">
                               <button
                                 onClick={() =>
-                                  handleDeleteQuestion(question?.question?._id)
+                                  handleDeleteQuestion(question?._id)
                                 }
                                 className="rounded-full text-error"
                               >
