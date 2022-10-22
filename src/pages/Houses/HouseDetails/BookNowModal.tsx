@@ -16,8 +16,6 @@ const BookNow = (props: Props) => {
   /* Payment state */
   const [isStripe, setIsStripe] = useState(false);
 
-  console.log(isStripe);
-
   return (
     <div>
       <input type="checkbox" id="book-now-modal" className="modal-toggle" />

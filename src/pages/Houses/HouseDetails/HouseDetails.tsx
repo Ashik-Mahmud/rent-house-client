@@ -247,7 +247,7 @@ const HouseDetails = (props: Props) => {
 
       {/* Modals */}
       <BookNow />
-      <QuestionModal />
+      <QuestionModal houseId={data?.data?._id} />
       <ReviewModal />
       <ReportModal />
     </>
