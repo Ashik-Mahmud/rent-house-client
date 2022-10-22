@@ -8,9 +8,10 @@ import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 type Props = {
   houseId: string;
+  refetch: () => void;
 };
 
-const ReviewModal = ({ houseId }: Props) => {
+const ReviewModal = ({ houseId, refetch }: Props) => {
   const { updatedUser, user } = useAuth<authUserInterface | any>({});
   const [review, setReview] = useState("");
   const [rating, setRating] = useState(1);
@@ -36,31 +37,36 @@ const ReviewModal = ({ houseId }: Props) => {
       cogoToast.error("Review must be at least 10 characters long");
       return;
     }
-
-    setLoading(true);
-    const { data } = await axios.post(
-      `${base_backend_url}/api/v1/reviews/create-review-for-house`,
-      {
-        comment: review,
-        rating,
-        house: houseId,
-        author: updatedUser?._id,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${user?.token}`,
+    try {
+      setLoading(true);
+      const { data } = await axios.post(
+        `${base_backend_url}/api/v1/reviews/create-review-for-house`,
+        {
+          comment: review,
+          rating,
+          house: houseId,
+          author: updatedUser?._id,
         },
-      }
-    );
+        {
+          headers: {
+            Authorization: `Bearer ${user?.token}`,
+          },
+        }
+      );
 
-    if (data.success) {
-      cogoToast.success("Review added successfully");
-      setReview("");
-      setRating(0);
-      setLoading(false);
-      (formRef as any).current.reset();
-    } else {
-      cogoToast.error("Something went wrong");
+      if (data.success) {
+        cogoToast.success("Review added successfully");
+        setReview("");
+        setRating(0);
+        setLoading(false);
+        (formRef as any).current.reset();
+        refetch();
+      } else {
+        cogoToast.error("Something went wrong");
+        setLoading(false);
+      }
+    } catch (err) {
+      cogoToast.error((err as any)?.response?.data?.message);
       setLoading(false);
     }
   };

@@ -20,7 +20,6 @@ import Owner from "./Owner";
 import Question from "./Question";
 import QuestionModal from "./QuestionModal";
 import ReportModal from "./ReportModal";
-import ReviewModal from "./ReviewModal";
 import Reviews from "./Reviews";
 
 /* Question Modal */
@@ -274,7 +273,7 @@ const HouseDetails = (Props: Props) => {
       {/* Modals */}
       <BookNow />
       <QuestionModal houseId={data?.data?._id} newFetch={newFetch} />
-      <ReviewModal houseId={data?.data?._id} />
+
       <ReportModal />
     </>
   );

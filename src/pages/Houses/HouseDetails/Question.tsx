@@ -29,7 +29,7 @@ const Question = ({ data, questions, loading: isLoading, newFetch }: Props) => {
 
   const getApprovedQuestions = async () => {
     const response = await axios.get(
-      `${base_backend_url}/api/v1/questions/all`
+      `${base_backend_url}/api/v1/questions/all/${data?._id}`
     );
 
     return response.data;
