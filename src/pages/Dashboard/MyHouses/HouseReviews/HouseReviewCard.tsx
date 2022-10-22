@@ -1,5 +1,5 @@
 import { BiStar } from "react-icons/bi";
-import { BsFillStarFill, BsTrash } from "react-icons/bs";
+import { BsCheck, BsFillStarFill, BsTrash } from "react-icons/bs";
 
 import axios from "axios";
 import cogoToast from "cogo-toast";
@@ -54,6 +54,36 @@ const HouseReviewCard = ({ review, refetch }: Props) => {
       }
     }
   };
+
+  /* Handle Accept Review */
+  const handleAccept = async () => {
+    const isConfirm = await swal({
+      title: "Are you sure?",
+      icon: "warning",
+      buttons: ["cancel", "yes, accept it"],
+      dangerMode: true,
+    });
+    if (isConfirm) {
+      try {
+        const { data: acceptData } = await axios.patch(
+          `${base_backend_url}/api/v1/reviews/accept-review/${review?._id}`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${user?.token}`,
+            },
+          }
+        );
+        if (acceptData.success) {
+          cogoToast.success("Review accepted successfully");
+          refetch();
+        }
+      } catch (error) {
+        cogoToast.error("Something went wrong");
+      }
+    }
+  };
+
   return (
     <div className="card bg-base-100 shadow-xl">
       <div className="card-body gap-1 pb-1">
@@ -81,11 +111,28 @@ const HouseReviewCard = ({ review, refetch }: Props) => {
           )}
         </p>
       </div>
-      <div className="flex justify-end px-3 pb-3">
-        <p data-tip="Trash Review" className="tooltip tooltip-left">
+      <div className="flex justify-end px-3 pb-3 gap-3">
+        {!review?.isAccepted && (
+          <p
+            data-tip="Accept Review"
+            className="tooltip tooltip-left tooltip-success"
+          >
+            <button
+              onClick={handleAccept}
+              className="btn btn-success btn-xs btn-circle text-2xl"
+            >
+              <BsCheck />
+            </button>
+          </p>
+        )}
+
+        <p
+          data-tip="Trash Review"
+          className="tooltip tooltip-left tooltip-error"
+        >
           <button
             onClick={handleDelete}
-            className="btn btn-ghost text-error btn-circle "
+            className="btn btn-ghost btn-xs text-error btn-circle "
           >
             <BsTrash />
           </button>

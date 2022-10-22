@@ -99,9 +99,9 @@ const HouseReviews = (props: Props) => {
         </div>
 
         {/* Houses Reviews */}
-        {reviews?.data?.length > 0 ? (
+        {reviews?.internal?.data?.length > 0 ? (
           <div className="houses-reviews py-6 grid grid-col-1 sm:grid-col-2 md:grid-col-3 lg:grid-cols-4 gap-5">
-            {reviews?.data?.map((review: any) => (
+            {reviews?.internal?.data?.map((review: any) => (
               <HouseReviewCard
                 key={review._id}
                 review={review}

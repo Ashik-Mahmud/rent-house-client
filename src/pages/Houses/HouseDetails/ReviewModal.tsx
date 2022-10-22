@@ -55,7 +55,9 @@ const ReviewModal = ({ houseId, refetch }: Props) => {
       );
 
       if (data.success) {
-        cogoToast.success("Review added successfully");
+        cogoToast.success(
+          "Review added successfully Waiting for the House Owner to accept it"
+        );
         setReview("");
         setRating(5);
         setLoading(false);
