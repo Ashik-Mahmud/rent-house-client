@@ -81,7 +81,7 @@ const HouseRow = ({ approved, house, index, refetch }: Props) => {
       <td className="py-3">
         <Link
           data-tip="View Reviews"
-          to="/dashboard/houses/reviews/3423"
+          to={`/dashboard/houses/reviews/${house._id}`}
           className="btn btn-xs btn-circle btn-info flex items-center gap-2 text-xs tooltip"
         >
           10

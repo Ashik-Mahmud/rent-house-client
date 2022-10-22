@@ -19,8 +19,6 @@ const AnsweredModal = ({ question, questionId, refetch, answer }: Props) => {
   const { user } = useAuth<authUserInterface | any>({});
   const { handleSubmit, register, reset, setValue } = useForm();
 
-  console.log(question, questionId, answer);
-
   const handleAnswer = handleSubmit(async (data) => {
     if (!data?.answer) {
       return cogoToast.error("Please enter your answer");

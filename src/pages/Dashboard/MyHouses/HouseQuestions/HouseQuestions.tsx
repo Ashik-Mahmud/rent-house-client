@@ -2,6 +2,7 @@ import { BiCommentAdd } from "react-icons/bi";
 import { BsEye } from "react-icons/bs";
 import { Link, useParams } from "react-router-dom";
 import GlobalLoader from "../../../../components/GlobalLoader";
+import { base_backend_url } from "../../../../configs/config";
 import { useGetHouseByHouseIdQuery } from "../../../../services/HouseApi";
 import AnsweredQuestions from "./AnsweredQuestions";
 
@@ -27,7 +28,11 @@ const HouseQuestions = (props: Props) => {
           <div className="card sm:card-side bg-base-100 p-3 border py-1">
             <figure>
               <img
-                src="https://placeimg.com/200/280/arch"
+                src={
+                  data?.data?.image
+                    ? base_backend_url + "/previews/" + data?.data?.image
+                    : `https://placeimg.com/200/280/arch`
+                }
                 alt="Movie"
                 className="w-full h-40 sm:h-32  rounded-md"
               />
