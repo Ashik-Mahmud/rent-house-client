@@ -13,6 +13,7 @@ type Props = {
 
 const HouseReviewCard = ({ data, refetch }: Props) => {
   const { updatedUser, user } = useAuth<authUserInterface | any>({});
+
   const rating = data?.rating;
   /* Ratings */
   const ratings = [];
@@ -53,33 +54,35 @@ const HouseReviewCard = ({ data, refetch }: Props) => {
   };
 
   return (
-    <div className="card shadow m-4">
-      <div className="comment p-3 bg-slate-50 text-sm">
-        {data?.comment?.length > 300
-          ? data?.comment?.slice(0, 300) +
-            `<span className="text-success cursor-pointer text-sm">see more</span>`
-          : data?.comment}
-        <br />
-      </div>
-      <div className="card-body">
-        <small>Reviewed by </small>
-        <b>{data?.author?.name}</b>
-        <div className="stars flex items-center gap-2">
-          {ratings.map((rating) => rating)}
+    <>
+      <div className="card shadow m-4">
+        <div className="comment p-3 bg-slate-50 text-sm">
+          {data?.comment?.length > 300
+            ? data?.comment?.slice(0, 300) +
+              `<span className="text-success cursor-pointer text-sm">see more</span>`
+            : data?.comment}
+
+          <br />
         </div>
-        {data?.author?._id === updatedUser?._id && (
-          <div className="flex items-center gap-2">
-            <button className="btn btn-sm btn-success">Edit</button>
-            <button
-              className="btn btn-sm btn-danger"
-              onClick={() => handleDelete()}
-            >
-              Delete
-            </button>
+        <div className="card-body">
+          <small>Reviewed by </small>
+          <b>{data?.author?.name}</b>
+          <div className="stars flex items-center gap-2">
+            {ratings.map((rating) => rating)}
           </div>
-        )}
+          {data?.author?._id === updatedUser?._id && (
+            <div className="flex items-center gap-2">
+              <button
+                className="btn btn-sm btn-danger"
+                onClick={() => handleDelete()}
+              >
+                Delete
+              </button>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
