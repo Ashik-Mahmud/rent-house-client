@@ -4,9 +4,11 @@ import axios from "axios";
 import cogoToast from "cogo-toast";
 import { useEffect, useState } from "react";
 import { base_backend_url } from "../../../configs/config";
-type Props = {};
+type Props = {
+  title: string;
+};
 
-const ReportModal = (props: Props) => {
+const ReportModal = ({ title }: Props) => {
   const { handleSubmit, register, reset, watch } = useForm();
   const [isOther, setIsOther] = useState(false);
 
@@ -79,7 +81,7 @@ const ReportModal = (props: Props) => {
               ✕
             </label>
             <h3 className="font-bold text-lg">
-              Report <span className="text-success">Rajbari New Villa</span>
+              Report <span className="text-success">{title}</span>
             </h3>
             <p className="py-4 text-black">
               Please notes why are you report for this houses in details

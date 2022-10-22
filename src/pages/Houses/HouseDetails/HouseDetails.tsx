@@ -274,7 +274,7 @@ const HouseDetails = (Props: Props) => {
       <BookNow />
       <QuestionModal houseId={data?.data?._id} newFetch={newFetch} />
 
-      <ReportModal />
+      <ReportModal title={data?.data?.name} />
     </>
   );
 };
