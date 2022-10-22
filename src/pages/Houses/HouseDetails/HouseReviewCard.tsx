@@ -1,26 +1,34 @@
 import { BsStarFill } from "react-icons/bs";
 
-type Props = {};
+type Props = {
+  data: any;
+};
 
-const HouseReviewCard = (props: Props) => {
+const HouseReviewCard = ({ data }: Props) => {
+  const rating = data?.rating;
+  /* Ratings */
+  const ratings = [];
+  for (let i = 0; i < rating; i++) {
+    ratings.push(<BsStarFill key={i} className="text-success" />);
+  }
+  for (let i = 0; i < 5 - rating; i++) {
+    ratings.push(<BsStarFill key={i + 5} className="text-gray-300" />);
+  }
+
   return (
     <div className="card shadow m-4">
       <div className="comment p-3 bg-slate-50 text-sm">
-        House is so much good yet. Lorem ipsum dolor, sit amet consectetur
-        adipisicing elit. Molestiae nulla fuga sapiente sunt odit pariatur optio
-        architecto amet error facilis, perspiciatis iure necessitatibus fugit
-        rem, sint numquam dolor obcaecati eos. <br />
-        <span className="text-success cursor-pointer text-sm">see more</span>
+        {data?.content?.length > 300
+          ? data?.content?.slice(0, 300) +
+            `<span className="text-success cursor-pointer text-sm">see more</span>`
+          : data?.content}
+        <br />
       </div>
       <div className="card-body">
         <small>Reviewed by </small>
-        <b>Ashik Mahmud</b>
+        <b>{data?.author?.name}</b>
         <div className="stars flex items-center gap-2">
-          <BsStarFill />
-          <BsStarFill />
-          <BsStarFill />
-          <BsStarFill />
-          <BsStarFill />
+          {ratings.map((rating) => rating)}
         </div>
       </div>
     </div>
