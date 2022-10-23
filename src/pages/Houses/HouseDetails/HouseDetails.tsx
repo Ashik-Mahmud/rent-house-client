@@ -73,23 +73,22 @@ const HouseDetails = (Props: Props) => {
     data: questions,
     isLoading: loading,
     refetch: newFetch,
-  } = useQuery("question", () => getQuestionsByAuthor());
+  } = useQuery(["question"], () => updatedUser?._id && getQuestionsByAuthor());
 
   const getQuestionsByAuthor = async () => {
-    if (updatedUser?._id) {
-      const { data } = await axios.get(
-        `${base_backend_url}/api/v1/questions/questions-by-author/${user?.user?._id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${user?.token}`,
-          },
-        }
-      );
-      return data;
-    }
+    const { data } = await axios.get(
+      `${base_backend_url}/api/v1/questions/questions-by-author/${user?.user?._id}?houseId=${houseId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${user?.token}`,
+        },
+      }
+    );
+
+    return data;
   };
 
-  if (isLoading) return <GlobalLoader />;
+  if (isLoading || loading) return <GlobalLoader />;
   if (error) {
     console.log(error);
     return (
