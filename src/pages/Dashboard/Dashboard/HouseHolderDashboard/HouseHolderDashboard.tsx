@@ -2,9 +2,12 @@ import axios from "axios";
 import { BiBookAlt, BiCommentAdd } from "react-icons/bi";
 import { BsCoin, BsHouse } from "react-icons/bs";
 import { useQuery } from "react-query";
+import GlobalLoader from "../../../../components/GlobalLoader";
 import { base_backend_url } from "../../../../configs/config";
 import useAuth from "../../../../hooks/useAuth";
 import { authUserInterface } from "../../../../interfaces/UserInterface";
+import { useGetBlogsByUidQuery } from "../../../../services/BlogApi";
+import { useGetReviewsByUserQuery } from "../../../../services/ReviewApi";
 import HouseReportChart from "./HouseReportChart";
 import MostLovesHouse from "./MostLovesHouse";
 import RecentBookings from "./RecentBookings";
@@ -14,9 +17,7 @@ const HouseHolderDashboard = (props: Props) => {
   const { updatedUser, user } = useAuth<authUserInterface | any>({});
 
   /* Get All the Houses Activities  */
-  const { data, isLoading, refetch } = useQuery(["houses"], () =>
-    getMyHouses()
-  );
+  const { data, isLoading } = useQuery(["houses"], () => getMyHouses());
   const getMyHouses = async () => {
     const { data } = await axios.get(
       `${base_backend_url}/api/v1/houses/get-house-by-user/${updatedUser?._id}`,
@@ -40,6 +41,37 @@ const HouseHolderDashboard = (props: Props) => {
     (house: any) => house.status === "rejected"
   ).length;
 
+  /* Get The reviews */
+  const { data: AppReviews, isLoading: reviewLoading } =
+    useGetReviewsByUserQuery(user?.user?._id);
+
+  /* Get All the reports */
+  /* Send Request to get Notification */
+  const { data: notifications, isLoading: loading } = useQuery(
+    "notification",
+    () => getAllNotification()
+  );
+
+  const getAllNotification = async () => {
+    const { data } = await axios.get(
+      `${base_backend_url}/api/v1/request/notifications`,
+      {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
+    return data?.data;
+  };
+
+  /* Get All the Blogs */
+  const { data: blogs, isLoading: blogLoading } = useGetBlogsByUidQuery({
+    uid: updatedUser?._id,
+  });
+
+  if (isLoading || reviewLoading || loading || blogLoading)
+    return <GlobalLoader />;
+
   return (
     <div className="my-5">
       {/* Dashboard Statistic */}
@@ -49,7 +81,9 @@ const HouseHolderDashboard = (props: Props) => {
             <BsHouse className="text-2xl" />
           </div>
           <div className="stat-title">Approved Houses</div>
-          <div className="stat-value text-success">{approvedHousesCount}</div>
+          <div className="stat-value text-success">
+            {approvedHousesCount || 0}
+          </div>
           <div className="stat-desc">Jan 1st - Feb 1st</div>
         </div>
         <div className="stat ">
@@ -57,7 +91,7 @@ const HouseHolderDashboard = (props: Props) => {
             <BsHouse className="text-2xl" />
           </div>
           <div className="stat-title">Unapproved Houses</div>
-          <div className="stat-value text-info">{pendingHousesCount}</div>
+          <div className="stat-value text-info">{pendingHousesCount || 0}</div>
           <div className="stat-desc">Jan 1st - Feb 1st</div>
         </div>
         <div className="stat ">
@@ -65,7 +99,9 @@ const HouseHolderDashboard = (props: Props) => {
             <BsHouse className="text-2xl" />
           </div>
           <div className="stat-title">Rejected Houses</div>
-          <div className="stat-value text-error">{rejectedHousesCount}</div>
+          <div className="stat-value text-error">
+            {rejectedHousesCount || 0}
+          </div>
           <div className="stat-desc">Jan 1st - Feb 1st</div>
         </div>
         <div className="stat">
@@ -73,7 +109,7 @@ const HouseHolderDashboard = (props: Props) => {
             <BiCommentAdd className="text-2xl" />
           </div>
           <div className="stat-title">Your Reviews</div>
-          <div className="stat-value">4</div>
+          <div className="stat-value">{AppReviews?.count || 0}</div>
           <div className="stat-desc">↗︎ 400 (22%)</div>
         </div>{" "}
         <div className="stat">
@@ -101,7 +137,9 @@ const HouseHolderDashboard = (props: Props) => {
             </svg>
           </div>
           <div className="stat-title">Total Reports</div>
-          <div className="stat-value">10</div>
+          <div className="stat-value">
+            {notifications?.reports?.length || 0}
+          </div>
           <div className="stat-desc">↘︎ 90 (14%)</div>
         </div>{" "}
         <div className="stat">
@@ -109,7 +147,7 @@ const HouseHolderDashboard = (props: Props) => {
             <BiBookAlt className="text-2xl" />
           </div>
           <div className="stat-title">My Blogs</div>
-          <div className="stat-value">4</div>
+          <div className="stat-value">{blogs?.data?.count || 0}</div>
           <div className="stat-desc">↗︎ 400 (22%)</div>
         </div>
       </div>
