@@ -188,7 +188,7 @@ const AddHouse = (props: Props) => {
 
   return (
     <div className="p-5 my-5 bg-white rounded font-poppins relative">
-      <ScreenLoader />
+      {isLoading && <ScreenLoader />}
       <div className="flex items-center gap-2">
         <h1 className="text-2xl font-bold">Add House</h1>
         <small className="badge badge-success">House Holder</small>

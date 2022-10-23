@@ -11,14 +11,11 @@ const ScreenLoader = (props: Props) => {
     setJokes(data);
   };
   useEffect(() => {
-    setInterval(() => {
-      getJokes();
-    }, 10000);
+    getJokes();
   }, []);
-
   return (
     <div className="grid place-items-center h-screen fixed z-50 left-0 top-0 w-screen bg-[#ffffff81] backdrop-blur-sm">
-      <div className="text-center flex items-center justify-center flex-col gap-10">
+      <div className="text-center flex items-center justify-center flex-col gap-3">
         <HashLoader color="#36D399" loading={true} size={100} />
         <small className="text-xl block my-10">
           Maybe It will take while time. Hats off your patience 🙏
@@ -30,6 +27,9 @@ const ScreenLoader = (props: Props) => {
           <small className="text-lg block my-3">
             {jokes?.value || "loading...."}
           </small>
+          <button onClick={getJokes} className="btn btn-primary">
+            Get Jokes
+          </button>
         </div>
       </div>
     </div>
