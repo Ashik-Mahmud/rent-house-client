@@ -6,9 +6,10 @@ import { useEffect, useState } from "react";
 import { base_backend_url } from "../../../configs/config";
 type Props = {
   title: string;
+  houseId: any;
 };
 
-const ReportModal = ({ title }: Props) => {
+const ReportModal = ({ title, houseId }: Props) => {
   const { handleSubmit, register, reset, watch } = useForm();
   const [isOther, setIsOther] = useState(false);
 
@@ -42,7 +43,7 @@ const ReportModal = ({ title }: Props) => {
 
     try {
       const { data } = await axios.post(
-        `${base_backend_url}/api/v1/reports/create`,
+        `${base_backend_url}/api/v1/reports/create?houseId=${houseId}`,
         reportData
       );
       if (data) {
