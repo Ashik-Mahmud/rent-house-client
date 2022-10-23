@@ -49,6 +49,7 @@ const Dashboard = (props: Props) => {
   const dispatch = useAppDispatch();
 
   const [isPhone, setIsPhone] = useState<boolean>(true);
+  const [notificationCount, setNotificationCount] = useState(0);
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const {
@@ -357,14 +358,18 @@ const Dashboard = (props: Props) => {
     }
   };
 
-  if (loading) return <GlobalLoader />;
+  let reports = notifications?.reports;
+  let questions = notifications?.questions;
+  let reviews = notifications?.reviews;
 
-  const reports = notifications?.reports;
-  const questions = notifications?.questions;
-  const reviews = notifications?.reviews;
-
-  const AllNotificationCount =
+  let AllNotificationCount =
     reports?.length + questions?.length + reviews?.length;
+
+  useEffect(() => {
+    setNotificationCount(AllNotificationCount);
+  }, [AllNotificationCount]);
+
+  if (loading) return <GlobalLoader />;
 
   return (
     <>
@@ -421,32 +426,32 @@ const Dashboard = (props: Props) => {
                       <span className="text-xl">
                         <BsBell />
                       </span>
-                      {AllNotificationCount > 0 && (
+                      {notificationCount > 0 && (
                         <span className="text-xs text-white bg-success rounded-full px-1 absolute -right-1 -top-2">
-                          {AllNotificationCount > 9
+                          {notificationCount > 9
                             ? "+9"
-                            : AllNotificationCount || 0}
+                            : notificationCount || 0}
                         </span>
                       )}
                     </label>
                   )}
 
-                  {/* Pagination Dropdown */}
+                  {/* Notifications Dropdown */}
                   <div
                     tabIndex={0}
                     className=" dropdown-content notification-dropdown absolute top-10 right-0 w-[20rem] bg-white shadow-lg rounded-md p-5"
                   >
                     <div className="notification-list flex flex-col gap-2">
-                      {AllNotificationCount > 0 ? (
+                      {notificationCount > 0 ? (
                         <>
                           {reports?.length > 0 && (
                             <>
                               <div>
-                                <small className="my-2 block">Report</small>
-                                {reports?.map((report: any) => (
+                                <small className="my-2 block">Reports</small>
+                                {reports?.slice(0, 2).map((report: any) => (
                                   <div
                                     key={report?._id}
-                                    className="notification-item flex items-center gap-2 bg-gray-100 p-2 rounded"
+                                    className="notification-item flex items-center mb-2 gap-2 bg-gray-100 p-2 rounded"
                                   >
                                     <span className="text-sm">
                                       <BsBell />
@@ -462,6 +467,11 @@ const Dashboard = (props: Props) => {
                                     </span>
                                   </div>
                                 ))}
+                                {reports?.length > 2 && (
+                                  <span className="text-xs text-success">
+                                    2+ more reports
+                                  </span>
+                                )}
                               </div>
                             </>
                           )}
@@ -469,10 +479,10 @@ const Dashboard = (props: Props) => {
                             <>
                               <div>
                                 <small className="my-2 block">Questions</small>
-                                {questions?.map((question: any) => (
+                                {questions?.slice(0, 2).map((question: any) => (
                                   <div
                                     key={question?._id}
-                                    className="notification-item flex items-center gap-2 bg-gray-100 p-2 rounded"
+                                    className="notification-item flex mb-2 items-center gap-2 bg-gray-100 p-2 rounded"
                                   >
                                     <span className="text-sm">
                                       <BsBell />
@@ -480,14 +490,19 @@ const Dashboard = (props: Props) => {
                                     <span className="text-sm text-slate-400 flex  gap-2">
                                       Someone has asked question for house{" "}
                                       <Link
-                                        to={`/dashboard/houses/reports/${question?.house}`}
+                                        to={`/dashboard/houses/questions/${question?.house}`}
                                         className="text-success underline"
                                       >
                                         view
                                       </Link>
                                     </span>
                                   </div>
-                                ))}
+                                ))}{" "}
+                                {questions?.length > 2 && (
+                                  <span className="text-xs text-success">
+                                    2+ more questions
+                                  </span>
+                                )}
                               </div>
                             </>
                           )}
@@ -497,10 +512,10 @@ const Dashboard = (props: Props) => {
                                 <small className="my-2 text-gray-600 block">
                                   Reviews notifications
                                 </small>
-                                {reviews?.map((review: any) => (
+                                {reviews?.slice(0, 2).map((review: any) => (
                                   <div
                                     key={review?._id}
-                                    className="notification-item flex items-center gap-2 bg-gray-100 p-2 rounded"
+                                    className="notification-item flex items-center gap-2 mb-2 bg-gray-100 p-2 rounded"
                                   >
                                     <span className="text-sm">
                                       <BsBell />
@@ -508,27 +523,37 @@ const Dashboard = (props: Props) => {
                                     <span className="text-sm text-slate-400 flex  gap-2">
                                       Someone has reviewed for house{" "}
                                       <Link
-                                        to={`/dashboard/houses/reports/${review?.house}`}
+                                        to={`/dashboard/houses/reviews/${review?.house}`}
                                         className="text-success underline"
                                       >
                                         view
                                       </Link>
                                     </span>
                                   </div>
-                                ))}
+                                ))}{" "}
+                                {reviews?.length > 2 && (
+                                  <span className="text-xs text-success">
+                                    2+ more reviews
+                                  </span>
+                                )}
                               </div>
                             </>
                           )}
 
-                          <span className="text-error mt-3 block font-poppins text-xs underline cursor-pointer">
+                          <span
+                            onClick={() => setNotificationCount(0)}
+                            className="text-error mt-3 block font-poppins text-xs underline cursor-pointer"
+                          >
                             clear notification
                           </span>
                         </>
                       ) : (
-                        <div className="py-5 grid place-items-center">
-                          <div>
-                            <BsBellSlash />
-                            <h4 className="text-xl">No Notifications</h4>
+                        <div className="py-5 grid place-items-center text-center">
+                          <div className="text-center flex flex-col items-center gap-4">
+                            <BsBellSlash className="text-2xl" />
+                            <h4 className="text-xl font-poppins text-gray-500">
+                              No Notifications
+                            </h4>
                           </div>
                         </div>
                       )}
