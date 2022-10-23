@@ -7,9 +7,10 @@ import { base_backend_url } from "../../../configs/config";
 type Props = {
   title: string;
   houseId: any;
+  userId: string;
 };
 
-const ReportModal = ({ title, houseId }: Props) => {
+const ReportModal = ({ title, houseId, userId }: Props) => {
   const { handleSubmit, register, reset, watch } = useForm();
   const [isOther, setIsOther] = useState(false);
 
@@ -35,10 +36,12 @@ const ReportModal = ({ title, houseId }: Props) => {
     if (data.reportType === "Other") {
       data.reportType = data.otherReportType;
     }
+
     const reportData = {
       ...data,
       houseUrl,
       house: houseUrl.split("/")[4],
+      houseHolder: userId,
     };
 
     try {

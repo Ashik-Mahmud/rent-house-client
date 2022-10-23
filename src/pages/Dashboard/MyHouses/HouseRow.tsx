@@ -1,7 +1,6 @@
 import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
-import { useAppSelector } from "../../../app/store";
 import { useDeleteHouseByIdMutation } from "../../../services/HouseApi";
 
 type Props = {
@@ -12,10 +11,6 @@ type Props = {
 };
 
 const HouseRow = ({ approved, house, index, refetch }: Props) => {
-  const { questionsCount, reportsCount, reviewsCount } = useAppSelector(
-    (state) => state.houseAction
-  );
-
   const [deleteHouseById, { isLoading }] = useDeleteHouseByIdMutation();
   /* Handle Delete House by Owner */
   const handleDeleteHouses = async (id: string) => {
