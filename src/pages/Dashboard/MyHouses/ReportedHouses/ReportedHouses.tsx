@@ -48,8 +48,8 @@ const ReportedHouses = (props: Props) => {
           <figure>
             <img
               src={
-                data?.data?.image
-                  ? base_backend_url + "/previews/" + data?.data?.image
+                data?.data?.image?.img
+                  ? data?.data?.image?.img
                   : `https://placeimg.com/200/280/arch`
               }
               alt="Movie"

@@ -56,6 +56,7 @@ const ReportModal = ({ title, houseId, userId }: Props) => {
       }
     } catch (error) {
       cogoToast.error("Something went wrong");
+      console.log(error);
     }
   });
 
