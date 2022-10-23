@@ -89,7 +89,7 @@ const HouseRow = ({ approved, house, index, refetch }: Props) => {
           to={`/dashboard/houses/reviews/${house._id}`}
           className="btn btn-xs btn-circle btn-info flex items-center gap-2 text-xs tooltip"
         >
-          {reviewsCount}
+          {house?.totalReviews}
         </Link>
       </td>
       <td className="py-3 ">
@@ -98,7 +98,7 @@ const HouseRow = ({ approved, house, index, refetch }: Props) => {
           to={`/dashboard/houses/questions/${house._id}`}
           className="btn btn-xs btn-circle btn-accent flex items-center gap-2 text-xs tooltip"
         >
-          {questionsCount}
+          {house?.totalQuestions}
         </Link>
       </td>
       <td className="py-3 ">
@@ -107,7 +107,7 @@ const HouseRow = ({ approved, house, index, refetch }: Props) => {
           to={`/dashboard/houses/reports/${house._id}`}
           className="btn btn-xs btn-circle btn-warning flex items-center gap-2 text-xs tooltip"
         >
-          {reportsCount}
+          {house?.totalReports}
         </Link>
       </td>
       <td className="py-3 ">
