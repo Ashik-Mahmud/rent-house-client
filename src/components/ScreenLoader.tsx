@@ -20,11 +20,11 @@ const ScreenLoader = (props: Props) => {
         <small className="text-xl block my-10">
           Maybe It will take while time. Hats off your patience 🙏
         </small>
-        <div className="w-1/2 whitespace-pre-wrap shadow p-4 rounded">
+        <div className="w-[29rem] whitespace-pre-wrap shadow p-4 rounded card">
           <h3 className="text-xl font-bold">
             Leave Your bore ness to these Jokes.
           </h3>
-          <small className="text-lg block my-3">
+          <small className="text-sm font-poppins block my-7">
             {jokes?.value || "loading...."}
           </small>
           <button onClick={getJokes} className="btn btn-primary">

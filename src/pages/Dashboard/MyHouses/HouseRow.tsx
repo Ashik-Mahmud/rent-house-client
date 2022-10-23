@@ -1,6 +1,7 @@
 import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
+import ScreenLoader from "../../../components/ScreenLoader";
 import { useDeleteHouseByIdMutation } from "../../../services/HouseApi";
 
 type Props = {
@@ -32,8 +33,12 @@ const HouseRow = ({ approved, house, index, refetch }: Props) => {
     }
   };
 
+  if (isLoading) {
+    return <ScreenLoader />;
+  }
+
   return (
-    <tr className="border-b border-gray-200">
+    <tr className={`border-b border-gray-200 ${isLoading && "bg-red-400"}`}>
       <td className="py-3">
         H-{house._id.slice(0, 5)}
         {index}
