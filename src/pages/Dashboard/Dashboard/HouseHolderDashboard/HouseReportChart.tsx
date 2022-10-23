@@ -1,6 +1,31 @@
+import axios from "axios";
 import Chart from "react-apexcharts";
+import { useQuery } from "react-query";
+import GlobalLoader from "../../../../components/GlobalLoader";
+import { base_backend_url } from "../../../../configs/config";
+import useAuth from "../../../../hooks/useAuth";
+import { authUserInterface } from "../../../../interfaces/UserInterface";
 type Props = {};
 const HouseReportChart = (props: Props) => {
+  /* Send Request to get Notification */
+  const { user } = useAuth<authUserInterface | any>({});
+  const { data: notifications, isLoading: loading } = useQuery(
+    "notification",
+    () => getAllNotification()
+  );
+
+  const getAllNotification = async () => {
+    const { data } = await axios.get(
+      `${base_backend_url}/api/v1/request/notifications`,
+      {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
+    return data?.data;
+  };
+
   const options = {
     chart: {
       id: "basic-bar",
@@ -17,7 +42,14 @@ const HouseReportChart = (props: Props) => {
     },
   ]; */
 
-  const series = [44, 55, 41, 6];
+  const series = [
+    notifications?.questions,
+    notifications?.reviews,
+    notifications?.reports,
+    6,
+  ];
+
+  if (loading) return <GlobalLoader />;
 
   return (
     <div className="bg-white">
