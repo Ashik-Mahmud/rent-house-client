@@ -1,53 +1,93 @@
+import axios from "axios";
 import { BiBath, BiBed, BiMoney, BiTrophy } from "react-icons/bi";
+import { useQuery } from "react-query";
+import { Link } from "react-router-dom";
+import GlobalLoader from "../../../../components/GlobalLoader";
+import NoDataComponent from "../../../../components/NoDataComponent";
+import { base_backend_url } from "../../../../configs/config";
+import useAuth from "../../../../hooks/useAuth";
+import { authUserInterface } from "../../../../interfaces/UserInterface";
 
 type Props = {};
 
 const MostLovesHouse = (props: Props) => {
+  const { user } = useAuth<authUserInterface | any>({});
+  const { data, isLoading } = useQuery(["houses"], () =>
+    getMostPopularHouses()
+  );
+
+  const getMostPopularHouses = async () => {
+    const { data } = await axios.get(
+      `${base_backend_url}/api/v1/houses/top-4-houses`,
+      {
+        headers: {
+          Authorization: `Bearer ${user?.token}`,
+        },
+      }
+    );
+    return data?.data;
+  };
+
+  if (isLoading) return <GlobalLoader />;
   return (
     <div className="p-7 bg-white">
       <h3 className="text-lg font-bold">Most Loves Houses</h3>
-      <div className="content grid grid-cols-1 sm:grid-cols-2 gap-5 py-5">
-        <LovesHouseCard />
-        <LovesHouseCard />
-      </div>
+      {data?.length > 0 ? (
+        <div className="content grid grid-cols-1 sm:grid-cols-2 gap-5 py-5">
+          {data?.map((house: any) => (
+            <LovesHouseCard key={house._id} house={house} />
+          ))}
+        </div>
+      ) : (
+        <div className="text-center">
+          <NoDataComponent />
+        </div>
+      )}
     </div>
   );
 };
 
-const LovesHouseCard = () => {
+const LovesHouseCard = ({ house }: any) => {
   return (
     <div className="card   bg-base-100 shadow border p-3 rounded">
       <figure>
         <img
-          src="https://placeimg.com/400/225/arch"
+          src={
+            house?.image?.img
+              ? house?.image?.img
+              : "https://placeimg.com/400/225/arch"
+          }
           className="h-40 w-full object-cover rounded"
-          alt="Shoes"
+          alt={house?.name || "house"}
         />
       </figure>
       <div className="card-body p-0 px-6 py-4">
         <h2 className="card-title">
-          Raj Vila! <div className="badge badge-success">1k</div>
+          {house?.name || "loading..."}{" "}
+          <div className="badge badge-success">{house?.views}</div>
         </h2>
-        <small>Gaibandha/Dhaka</small>
+        <small>{house?.address}</small>
         <ul className="flex items-center flex-wrap gap-3 font-poppins text-sm">
           <li className="flex items-center gap-2">
-            <BiBed /> 3
+            <BiBed /> {house?.bedrooms}
           </li>
           <li className="flex items-center gap-2">
-            <BiBath /> 2
+            <BiBath /> {house?.bathrooms}
           </li>
           <li className="flex items-center gap-2">
-            <BiTrophy /> Family
+            <BiTrophy /> {house?.category}
           </li>
           <li className="flex items-center gap-2">
-            <BiMoney /> 154554
+            <BiMoney /> {house?.price}
           </li>
         </ul>
         <p className="text-xs font-poppins my-1">
-          Lorem ipsum dolor sit amet consectetur adip magnam?
+          {house?.description?.slice(0, 100)}
         </p>
         <div className="card-actions justify-end">
-          <button className="btn btn-primary btn-xs">View Details</button>
+          <Link to={`/house/${house?._id}`} className="btn btn-primary btn-xs">
+            View Details
+          </Link>
         </div>
       </div>
     </div>

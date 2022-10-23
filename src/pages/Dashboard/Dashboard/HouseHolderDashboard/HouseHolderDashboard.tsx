@@ -17,7 +17,9 @@ const HouseHolderDashboard = (props: Props) => {
   const { updatedUser, user } = useAuth<authUserInterface | any>({});
 
   /* Get All the Houses Activities  */
-  const { data, isLoading } = useQuery(["houses"], () => getMyHouses());
+  const { data: houseData, isLoading } = useQuery(["houses"], () =>
+    getMyHouses()
+  );
   const getMyHouses = async () => {
     const { data } = await axios.get(
       `${base_backend_url}/api/v1/houses/get-house-by-user/${updatedUser?._id}`,
@@ -29,18 +31,8 @@ const HouseHolderDashboard = (props: Props) => {
     );
     return data;
   };
-  const approvedHousesCount = data?.data.filter(
-    (house: any) => house.status === "approved"
-  ).length;
 
-  const pendingHousesCount = data?.data.filter(
-    (house: any) => house.status === "pending"
-  ).length;
-
-  const rejectedHousesCount = data?.data.filter(
-    (house: any) => house.status === "rejected"
-  ).length;
-
+  console.log(houseData?.length);
   /* Get The reviews */
   const { data: AppReviews, isLoading: reviewLoading } =
     useGetReviewsByUserQuery(user?.user?._id);
@@ -68,6 +60,23 @@ const HouseHolderDashboard = (props: Props) => {
   const { data: blogs, isLoading: blogLoading } = useGetBlogsByUidQuery({
     uid: updatedUser?._id,
   });
+
+  if (isLoading) return <GlobalLoader />;
+
+  const approvedHousesCount =
+    houseData?.data?.length > 0 &&
+    houseData?.data?.filter((house: any) => house?.status === "approved")
+      ?.length;
+
+  console.log(approvedHousesCount?.length);
+
+  const pendingHousesCount =
+    houseData?.data?.length > 0 &&
+    houseData?.data?.map((house: any) => house?.status === "pending")?.length;
+
+  const rejectedHousesCount =
+    houseData?.data?.length > 0 &&
+    houseData?.data?.map((house: any) => house?.status === "rejected")?.length;
 
   if (isLoading || reviewLoading || loading || blogLoading)
     return <GlobalLoader />;
