@@ -5,6 +5,8 @@ import { BiBath, BiBed, BiMoney } from "react-icons/bi";
 import { BsAlignEnd, BsHouse, BsLink, BsPen } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
+import { PulseLoader } from "react-spinners";
+import ScreenLoader from "../../../components/ScreenLoader";
 import SendVerifyEmail from "../../../components/SendVerifyEmail";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
@@ -26,7 +28,7 @@ const AddHouse = (props: Props) => {
   const [districtLoading, setDistrictLoading] = useState<boolean>(true);
 
   const { updatedUser } = useAuth<authUserInterface | any>({});
-  const [createHouse, { data, isSuccess, isError, error }] =
+  const [createHouse, { data, isSuccess, isError, error, isLoading }] =
     useCreateHouseMutation();
 
   const isVerify = updatedUser?.isVerified;
@@ -185,7 +187,8 @@ const AddHouse = (props: Props) => {
   }, [selectCity]);
 
   return (
-    <div className="p-5 my-5 bg-white rounded font-poppins">
+    <div className="p-5 my-5 bg-white rounded font-poppins relative">
+      <ScreenLoader />
       <div className="flex items-center gap-2">
         <h1 className="text-2xl font-bold">Add House</h1>
         <small className="badge badge-success">House Holder</small>
@@ -615,7 +618,13 @@ const AddHouse = (props: Props) => {
               <button className="btn btn-warning btn-md" type="reset">
                 Reset
               </button>
-              <button className="btn btn-success btn-md">Save House</button>
+              {isLoading ? (
+                <button className="btn btn-primary btn-md" type="button">
+                  <PulseLoader color={"#fff"} loading={isLoading} size={10} />
+                </button>
+              ) : (
+                <button className="btn btn-success btn-md">Save House</button>
+              )}
             </div>
           </form>
         ) : (
