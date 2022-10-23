@@ -45,8 +45,8 @@ const Question = ({ data, questions, loading: isLoading, newFetch }: Props) => {
     });
 
     if (isConfirm) {
-      const { data } = await axios.delete(
-        `${base_backend_url}/api/v1/questions/delete-question/${questionId}`,
+      const { data: res } = await axios.delete(
+        `${base_backend_url}/api/v1/questions/delete-question/${questionId}?houseId=${data?._id}`,
         {
           headers: {
             Authorization: `Bearer ${user?.token}`,
@@ -54,7 +54,7 @@ const Question = ({ data, questions, loading: isLoading, newFetch }: Props) => {
         }
       );
 
-      if (data.success) {
+      if (res.success) {
         cogoToast.success("Question deleted successfully");
         newFetch();
         refetch();

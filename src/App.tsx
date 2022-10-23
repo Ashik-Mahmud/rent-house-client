@@ -64,6 +64,8 @@ import NotFoundPage from "./shared/NotFoundPage";
 
 type Props = {};
 const App = (props: Props) => {
+  /* States for House Action */
+
   const dispatch = useAppDispatch();
   const location = useLocation();
   const cookies = new Cookies();

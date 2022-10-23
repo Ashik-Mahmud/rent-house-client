@@ -16,6 +16,7 @@ import {
   BiUser,
 } from "react-icons/bi";
 import {
+  BsBell,
   BsBookFill,
   BsCardChecklist,
   BsGear,
@@ -377,6 +378,54 @@ const Dashboard = (props: Props) => {
                 <div className="active-user flex items-center gap-1 text-sm text-green-500 select-none capitalize">
                   <div className="h-2 w-2 bg-green-500 rounded-full"></div>
                   {data?.role === "user" ? "House Holder" : data?.role}
+                </div>
+                <div className="notification relative dropdown dropdown-end">
+                  {/* Pagination Button */}
+                  <label
+                    tabIndex={0}
+                    className="flex items-center gap-2 cursor-pointer"
+                  >
+                    <span className="text-xl">
+                      <BsBell />
+                    </span>
+                    <span className="text-xs text-white bg-success rounded-full px-1 absolute -right-1 -top-2">
+                      {pendingCount + pendingHouseCount || 0}
+                    </span>
+                  </label>
+
+                  {/* Pagination Dropdown */}
+                  <div
+                    tabIndex={0}
+                    className=" dropdown-content notification-dropdown absolute top-10 right-0 w-[20rem] bg-white shadow-lg rounded-md p-5"
+                  >
+                    <div className="notification-list flex flex-col gap-2">
+                      <div className="notification-item flex items-center gap-2 bg-gray-100 p-2 rounded">
+                        <span className="text-sm">
+                          <BsBell />
+                        </span>
+                        <span className="text-sm text-slate-400 flex  gap-2">
+                          Someone has asked for a house{" "}
+                          <Link to="/" className="text-success underline">
+                            view
+                          </Link>
+                        </span>
+                      </div>{" "}
+                      <div className="notification-item flex items-center gap-2 bg-gray-100 p-2 rounded">
+                        <span className="text-sm">
+                          <BsBell />
+                        </span>
+                        <span className="text-sm text-slate-400 flex  gap-2">
+                          Someone has asked for a house{" "}
+                          <Link to="/" className="text-success underline">
+                            view
+                          </Link>
+                        </span>
+                      </div>
+                      <span className="text-error mt-3 block font-poppins text-xs underline cursor-pointer">
+                        clear notification
+                      </span>
+                    </div>
+                  </div>
                 </div>
                 {!pathname.includes("/dashboard/houses/add") && (
                   <>

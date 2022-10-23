@@ -14,6 +14,7 @@ type Props = {};
 const MyHouses = (props: Props) => {
   const { updatedUser, user } = useAuth<authUserInterface | any>({});
   const [search, setSearch] = useState<string>("");
+
   /* Pagination State */
   const [currentPage, setCurrentPage] = useState(1);
   const [limit, setLimit] = useState(5);

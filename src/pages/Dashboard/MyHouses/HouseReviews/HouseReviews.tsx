@@ -1,14 +1,11 @@
 import axios from "axios";
-import { useEffect } from "react";
 import { BiCommentAdd } from "react-icons/bi";
 import { BsArrowLeft, BsEye } from "react-icons/bs";
 import { useQuery } from "react-query";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useAppDispatch } from "../../../../app/store";
 import GlobalLoader from "../../../../components/GlobalLoader";
 import NoDataComponent from "../../../../components/NoDataComponent";
 import { base_backend_url } from "../../../../configs/config";
-import { setReviewsCount } from "../../../../features/HouseActionSlice";
 import useAuth from "../../../../hooks/useAuth";
 import { authUserInterface } from "../../../../interfaces/UserInterface";
 import { useGetHouseByHouseIdQuery } from "../../../../services/HouseApi";
@@ -35,11 +32,6 @@ const HouseReviews = (props: Props) => {
     );
     return data;
   });
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(setReviewsCount(reviews?.data?.length));
-  }, [dispatch, reviews]);
 
   if (isLoading || reviewsLoading) return <GlobalLoader />;
   return (
@@ -120,6 +112,7 @@ const HouseReviews = (props: Props) => {
               <HouseReviewCard
                 key={review._id}
                 review={review}
+                house={houseId}
                 refetch={newRefetch}
               />
             ))}

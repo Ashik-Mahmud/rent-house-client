@@ -11,10 +11,12 @@ import "./index.css";
 import "./utilities/modal-video.min.css";
 
 import "./utilities/App.css";
+
 const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
 root.render(
   <>
     <Toaster />

@@ -12,9 +12,10 @@ type Props = {
   question: any;
   ind: number;
   refetch: () => void;
+  houseId: any;
 };
 
-const AnsweredQuestionRow = ({ question, ind, refetch }: Props) => {
+const AnsweredQuestionRow = ({ question, ind, refetch, houseId }: Props) => {
   const { user } = useAuth<authUserInterface | any>({});
   /* Handle Delete Question by ID */
   const handleDeleteQuestion = async (questionId: string) => {
@@ -27,7 +28,7 @@ const AnsweredQuestionRow = ({ question, ind, refetch }: Props) => {
 
     if (isConfirm) {
       const { data } = await axios.delete(
-        `${base_backend_url}/api/v1/questions/delete-question/${questionId}`,
+        `${base_backend_url}/api/v1/questions/delete-question/${questionId}?houseId=${houseId}`,
         {
           headers: {
             Authorization: `Bearer ${user?.token}`,

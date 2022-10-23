@@ -14,7 +14,6 @@ const ReportCard = ({ report, refetch }: Props) => {
 
   /* Handle Report Delete */
   const handleReportDelete = async () => {
-    console.log("Delete Report");
     const isConfirm = await swal({
       title: "Are you sure?",
       text: "Once deleted, you will not be able to recover this imaginary file!",
