@@ -58,7 +58,7 @@ export const ReviewApi = createApi({
 
     DeleteReviewById: builder.mutation<deleteReviewType, string | undefined>({
       query: (reviewId) => ({
-        url: `/delete-review/${reviewId}`,
+        url: `/delete-review/${reviewId}?reviewApp=true`,
         method: "DELETE",
       }),
       invalidatesTags: ["AddReview"],

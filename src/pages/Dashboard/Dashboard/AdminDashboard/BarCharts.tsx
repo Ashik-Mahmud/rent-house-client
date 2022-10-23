@@ -9,13 +9,12 @@ const BarCharts = (props: Props) => {
   const { approvedHouseCount, pendingHouseCount, rejectedHouseCount } =
     useAppSelector((state) => state.housesReqCount);
 
-  const { data: reviews, isLoading: loading1 } = useGetAllReviewsQuery(
-    {} as any
-  );
+  const { data: reviews, isLoading: loading1 } = useGetAllReviewsQuery({});
   const { data: blogs, isLoading: loading2 } = useGetAllBlogsQuery({} as any);
 
   if (loading1 || loading2) return <GlobalLoader />;
 
+  console.log(reviews);
   const options = {
     chart: {
       id: "basic-bar",

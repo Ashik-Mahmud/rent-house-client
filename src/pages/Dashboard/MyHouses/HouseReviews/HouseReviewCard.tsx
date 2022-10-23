@@ -38,7 +38,7 @@ const HouseReviewCard = ({ review, refetch }: Props) => {
     if (isConfirm) {
       try {
         const { data: deleteData } = await axios.delete(
-          `${base_backend_url}/api/v1/reviews/delete-review/${review?._id}`,
+          `${base_backend_url}/api/v1/reviews/delete-review/${review?._id}?houseReview=true`,
           {
             headers: {
               Authorization: `Bearer ${user?.token}`,
