@@ -14,7 +14,6 @@ const BarCharts = (props: Props) => {
 
   if (loading1 || loading2) return <GlobalLoader />;
 
-  console.log(reviews);
   const options = {
     chart: {
       id: "basic-bar",

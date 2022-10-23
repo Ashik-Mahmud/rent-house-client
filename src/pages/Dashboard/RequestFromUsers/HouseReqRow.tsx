@@ -3,7 +3,6 @@ import { BiCheck, BiX } from "react-icons/bi";
 import { BsX } from "react-icons/bs";
 import swal from "sweetalert";
 import { AxiosRequest } from "../../../api/Axios";
-import { base_backend_url } from "../../../configs/config";
 type Props = {
   data: any;
   ind: number;
@@ -68,7 +67,7 @@ const HouseReqRow = ({ ind, data, refetch }: Props) => {
               <img
                 src={
                   data?.author.profileImage
-                    ? `${base_backend_url}/profiles/${data.author.profileImage}`
+                    ? data?.author?.profileImage
                     : data?.author?.avatar
                 }
                 alt={data?.author.name || "User"}

@@ -53,8 +53,12 @@ const AnsweredQuestionRow = ({ question, ind, refetch, houseId }: Props) => {
           <div className="flex items-center gap-2">
             <div className="w-12 h-12">
               <img
-                src={`${base_backend_url}/profiles/${question?.author?.profileImage}`}
-                alt=""
+                src={
+                  question?.author?.profileImage
+                    ? question?.author?.profileImage
+                    : "https://placeimg.com/400/225/arch"
+                }
+                alt={question?.author?.name || "loading..."}
                 className="w-full h-full rounded-full object-cover"
               />
             </div>

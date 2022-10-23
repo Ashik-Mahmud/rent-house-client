@@ -104,11 +104,10 @@ const Owner = ({ owner }: Props) => {
                           <img
                             src={
                               owner?.profileImage
-                                ? "${base_backend_url}/profiles/" +
-                                  owner?.profileImage
+                                ? owner?.profileImage
                                 : owner?.avatar
                             }
-                            alt=""
+                            alt={owner?.name}
                           />
                         </div>
                       </div>

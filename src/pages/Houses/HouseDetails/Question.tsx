@@ -197,7 +197,7 @@ const Question = ({ data, questions, loading: isLoading, newFetch }: Props) => {
                                 <img
                                   src={
                                     question?.author?.profileImage
-                                      ? `${base_backend_url}/profiles/${question?.author?.profileImage}`
+                                      ? question?.author?.profileImage
                                       : question?.author?.avatar
                                   }
                                   alt={question?.author?.name}
