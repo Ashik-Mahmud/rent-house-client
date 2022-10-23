@@ -8,7 +8,6 @@ import {
 } from "react-device-detect";
 import { BiCamera, BiEdit } from "react-icons/bi";
 import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
-import { base_backend_url } from "../../../configs/config";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import DeleteVerificationModal from "./DeleteVerificationModal";
@@ -51,11 +50,7 @@ const Profile = (props: Props) => {
             <div className="flex items-center justify-between">
               <div className="profile-image rounded-full  w-32 h-32 relative  ">
                 <img
-                  src={
-                    data?.profileImage
-                      ? `${base_backend_url}/profiles/` + data?.profileImage
-                      : data?.avatar
-                  }
+                  src={data?.profileImage ? data?.profileImage : data?.avatar}
                   alt={data?.name}
                   className="w-32 h-32 rounded-full border-4 border-success object-cover shadow-lg"
                 />

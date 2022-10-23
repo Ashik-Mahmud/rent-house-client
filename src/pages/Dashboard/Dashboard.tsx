@@ -593,10 +593,7 @@ const Dashboard = (props: Props) => {
                     <div className="w-10 rounded-full">
                       <img
                         src={
-                          data?.profileImage
-                            ? `${base_backend_url}/profiles/` +
-                              data?.profileImage
-                            : user?.user?.avatar
+                          data?.profileImage ? data?.profileImage : data?.avatar
                         }
                         alt={data?.name}
                       />
@@ -641,9 +638,7 @@ const Dashboard = (props: Props) => {
                   <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                     <img
                       src={
-                        data?.profileImage
-                          ? `${base_backend_url}/profiles/` + data?.profileImage
-                          : user?.user?.avatar
+                        data?.profileImage ? data?.profileImage : data?.avatar
                       }
                       alt={data?.name}
                     />
