@@ -1,11 +1,45 @@
+import axios from "axios";
 import { BiBookAlt, BiCommentAdd } from "react-icons/bi";
 import { BsCoin, BsHouse } from "react-icons/bs";
+import { useQuery } from "react-query";
+import { base_backend_url } from "../../../../configs/config";
+import useAuth from "../../../../hooks/useAuth";
+import { authUserInterface } from "../../../../interfaces/UserInterface";
 import HouseReportChart from "./HouseReportChart";
 import MostLovesHouse from "./MostLovesHouse";
 import RecentBookings from "./RecentBookings";
 type Props = {};
 
 const HouseHolderDashboard = (props: Props) => {
+  const { updatedUser, user } = useAuth<authUserInterface | any>({});
+
+  /* Get All the Houses Activities  */
+  const { data, isLoading, refetch } = useQuery(["houses"], () =>
+    getMyHouses()
+  );
+  const getMyHouses = async () => {
+    const { data } = await axios.get(
+      `${base_backend_url}/api/v1/houses/get-house-by-user/${updatedUser?._id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${user?.token}`,
+        },
+      }
+    );
+    return data;
+  };
+  const approvedHousesCount = data?.data.filter(
+    (house: any) => house.status === "approved"
+  ).length;
+
+  const pendingHousesCount = data?.data.filter(
+    (house: any) => house.status === "pending"
+  ).length;
+
+  const rejectedHousesCount = data?.data.filter(
+    (house: any) => house.status === "rejected"
+  ).length;
+
   return (
     <div className="my-5">
       {/* Dashboard Statistic */}
@@ -15,7 +49,7 @@ const HouseHolderDashboard = (props: Props) => {
             <BsHouse className="text-2xl" />
           </div>
           <div className="stat-title">Approved Houses</div>
-          <div className="stat-value text-success">5</div>
+          <div className="stat-value text-success">{approvedHousesCount}</div>
           <div className="stat-desc">Jan 1st - Feb 1st</div>
         </div>
         <div className="stat ">
@@ -23,7 +57,7 @@ const HouseHolderDashboard = (props: Props) => {
             <BsHouse className="text-2xl" />
           </div>
           <div className="stat-title">Unapproved Houses</div>
-          <div className="stat-value text-info">5</div>
+          <div className="stat-value text-info">{pendingHousesCount}</div>
           <div className="stat-desc">Jan 1st - Feb 1st</div>
         </div>
         <div className="stat ">
@@ -31,7 +65,7 @@ const HouseHolderDashboard = (props: Props) => {
             <BsHouse className="text-2xl" />
           </div>
           <div className="stat-title">Rejected Houses</div>
-          <div className="stat-value text-error">5</div>
+          <div className="stat-value text-error">{rejectedHousesCount}</div>
           <div className="stat-desc">Jan 1st - Feb 1st</div>
         </div>
         <div className="stat">
