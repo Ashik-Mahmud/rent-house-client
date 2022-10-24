@@ -18,8 +18,13 @@ const HouseReportChart = ({ reports, loading }: Props) => {
     },
   ]; */
 
-  const series = [reports?.questions, reports?.reviews, reports?.reports, 6];
   if (loading) return <GlobalLoader />;
+  const series = [
+    reports?.questions || 0,
+    reports?.reviews || 0,
+    reports?.reports || 0,
+    6,
+  ];
 
   return (
     <div className="bg-white">
