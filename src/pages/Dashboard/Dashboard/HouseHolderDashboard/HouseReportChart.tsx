@@ -42,12 +42,7 @@ const HouseReportChart = (props: Props) => {
     },
   ]; */
 
-  const series = [
-    notifications?.questions,
-    notifications?.reviews,
-    notifications?.reports,
-    6,
-  ];
+  const series = [5, 4, 5, 6];
 
   if (loading) return <GlobalLoader />;
 
