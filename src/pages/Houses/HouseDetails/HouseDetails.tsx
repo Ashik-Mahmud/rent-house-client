@@ -2,7 +2,7 @@ import axios from "axios";
 import cogoToast from "cogo-toast";
 import { useEffect, useState } from "react";
 import { BiMap } from "react-icons/bi";
-import { BsArrowLeft, BsHeart, BsHeartFill } from "react-icons/bs";
+import { BsArrowLeft } from "react-icons/bs";
 import { FiMaximize2 } from "react-icons/fi";
 import { GoHome } from "react-icons/go";
 import { MdReportGmailerrorred } from "react-icons/md";
@@ -105,7 +105,7 @@ const HouseDetails = (Props: Props) => {
       <section>
         <div className="container mx-auto py-10 ">
           <div className="cards">
-            <div className="card-header flex-col sm:flex-row flex items-center justify-between my-5 bg-white p-4 ">
+            <div className="card-header flex-col sm:flex-row flex items-center justify-between my-5 bg-white p-5">
               <div className="left flex items-center gap-4">
                 <div
                   className="back text-3xl cursor-pointer tooltip"
@@ -125,16 +125,17 @@ const HouseDetails = (Props: Props) => {
                   <MdReportGmailerrorred /> Report
                 </label>
                 <div
-                  className="heart tooltip flex items-center gap-2 btn btn-ghost"
-                  data-tip={clicked ? "Dislike" : "Like"}
+                  className="heart flex items-center gap-2 relative w-16"
                   onClick={() => handleFavorite()}
                 >
-                  {clicked ? (
-                    <BsHeartFill className="text-red-500" />
-                  ) : (
-                    <BsHeart />
-                  )}{" "}
-                  {data?.data?.likes}
+                  <div
+                    className={`loved  ${clicked ? "loved-done" : ""}`}
+                    title={clicked ? "Dislike" : "Like"}
+                  >
+                    {/* <span className="absolute top-9 right-4 btn btn-xs btn-circle btn-ghost">
+                      {data?.data?.likes}
+                    </span> */}
+                  </div>
                 </div>
                 <div className="flex items-center gap-2">
                   <BiMap /> {data?.data?.address}

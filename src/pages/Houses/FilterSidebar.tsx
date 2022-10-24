@@ -131,8 +131,8 @@ const FilterSidebar = ({
                     onChange={(e) => setFilterByCity(e.target.value)}
                   >
                     <option value="">Select City</option>
-                    {getAllCity?.map((city: string) => (
-                      <option key={city} value={city}>
+                    {getAllCity?.map((city: string, ind: number) => (
+                      <option key={city + ind} value={city}>
                         {city}
                       </option>
                     ))}
@@ -286,8 +286,8 @@ const FilterSidebar = ({
                 onChange={(e) => setFilterByDistrict(e.target.value)}
               >
                 <option value="">Select District</option>
-                {getAllDistrict?.map((district: string) => (
-                  <option key={district} value={district}>
+                {getAllDistrict?.map((district: string, ind: number) => (
+                  <option key={district + ind} value={district}>
                     {district}
                   </option>
                 ))}
