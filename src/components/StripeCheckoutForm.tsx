@@ -27,13 +27,7 @@ const StripeCheckoutForm = ({ userInfo }: Props) => {
   const { data } = useQuery("payment", async () => {
     const { data } = await axios.post(
       `${base_backend_url}/api/v1/payment/create-payment-instance`,
-      {
-        amount: 100,
-        email: userInfo.email,
-        name: userInfo.name,
-        phone: userInfo.phone,
-        password: userInfo.password,
-      },
+      {},
       {
         headers: {
           authorization: `Bearer ${user.token}`,
@@ -46,34 +40,6 @@ const StripeCheckoutForm = ({ userInfo }: Props) => {
   const handleSubmit = async (event: any) => {
     // Block native form submission.
     event.preventDefault();
-    if (!updatedUser?._id) {
-      if (
-        userInfo?.name === "" ||
-        userInfo?.email === "" ||
-        userInfo?.phone === "" ||
-        userInfo?.password === ""
-      ) {
-        cogoToast.error("Please fill up all the fields");
-        return;
-      }
-
-      /* Password validation */
-      if (userInfo?.password.length < 6) {
-        cogoToast.error("Password must be at least 6 characters");
-        return;
-      }
-      /* Is password Strong or not validation */
-      const isPasswordStrong =
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/.test(
-          userInfo?.password
-        );
-      if (!isPasswordStrong) {
-        cogoToast.error(
-          "Password must contain at least 1 uppercase, 1 lowercase, 1 number and 1 special character"
-        );
-        return;
-      }
-    }
 
     if (!stripe || !elements) {
       cogoToast.error("Information has not loaded yet");

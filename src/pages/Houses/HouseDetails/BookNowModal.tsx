@@ -20,11 +20,12 @@ const BookNow = ({ house }: Props) => {
   const [password, setPassword] = useState("");
 
   const userInfo = {
-    name: name,
-    email: email,
-    phone: phone,
-    password: password,
     house,
+  };
+
+  /* Handle Register */
+  const handleRegister = () => {
+    console.log(name, email, phone, password);
   };
 
   return (
@@ -127,68 +128,75 @@ const BookNow = ({ house }: Props) => {
                 {/* End */}
               </>
             )}
-
-            <div className="mt-5">
-              <div className="tabs">
-                <div className="tab flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="radio"
-                    name="rd"
-                    id="rd1"
-                    onClick={() => setIsStripe(false)}
-                    defaultChecked={isStripe === false}
-                  />
-                  <div className="tab-header">
-                    <label htmlFor="rd1" className="cursor-pointer">
-                      Pay with Stripe
-                    </label>
+            {updatedUser?._id && (
+              <>
+                <div className="mt-5">
+                  <div className="tabs">
+                    <div className="tab flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="rd"
+                        id="rd1"
+                        onClick={() => setIsStripe(false)}
+                        defaultChecked={isStripe === false}
+                      />
+                      <div className="tab-header">
+                        <label htmlFor="rd1" className="cursor-pointer">
+                          Pay with Stripe
+                        </label>
+                      </div>
+                    </div>
+                    <div className="tab flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="rd"
+                        id="rd2"
+                        onClick={() => setIsStripe(true)}
+                      />
+                      <div className="tab-header">
+                        <label htmlFor="rd2" className="cursor-pointer">
+                          Pay with SSLCOMMERZ
+                        </label>
+                      </div>
+                    </div>
                   </div>
+                  {!isStripe ? (
+                    <>
+                      <StripeCheckout userInfo={userInfo} />
+                    </>
+                  ) : null}
                 </div>
-                <div className="tab flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="radio"
-                    name="rd"
-                    id="rd2"
-                    onClick={() => setIsStripe(true)}
-                  />
-                  <div className="tab-header">
-                    <label htmlFor="rd2" className="cursor-pointer">
-                      Pay with SSLCOMMERZ
-                    </label>
-                  </div>
-                </div>
-              </div>
-              {!isStripe ? (
-                <>
-                  <StripeCheckout userInfo={userInfo} />
-                </>
-              ) : null}
-            </div>
+                {isStripe && (
+                  <>
+                    <button className="btn bg-[#295CAB]">
+                      Pay 100 tk With SSLCOMMERZ
+                    </button>
+                    <div className="my-3 flex items-center gap-2 font-poppins mt-3">
+                      <input
+                        type="checkbox"
+                        name="permission"
+                        className="checkbox"
+                        id="permission"
+                        required
+                      />
+                      <label htmlFor="permission">
+                        Accept all the Condition & Policy
+                      </label>
+                    </div>
+                  </>
+                )}
+              </>
+            )}
           </div>
           <div className="modal-action  items-stretch gap-3 flex-col-reverse">
+            {!updatedUser?._id && (
+              <button className="btn bg-[#295CAB]" onClick={handleRegister}>
+                Register
+              </button>
+            )}
             <label htmlFor="book-now-modal" className="btn btn-warning">
               Cancel
             </label>
-
-            {isStripe && (
-              <>
-                <button className="btn bg-[#295CAB]">
-                  Pay 100 tk With SSLCOMMERZ
-                </button>
-                <div className="my-3 flex items-center gap-2 font-poppins mt-3">
-                  <input
-                    type="checkbox"
-                    name="permission"
-                    className="checkbox"
-                    id="permission"
-                    required
-                  />
-                  <label htmlFor="permission">
-                    Accept all the Condition & Policy
-                  </label>
-                </div>
-              </>
-            )}
           </div>
         </div>
       </div>
