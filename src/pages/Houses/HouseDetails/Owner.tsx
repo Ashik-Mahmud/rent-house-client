@@ -12,11 +12,12 @@ import { authUserInterface } from "../../../interfaces/UserInterface";
 
 type Props = {
   owner: any;
+  data: any;
 };
 
-const Owner = ({ owner }: Props) => {
+const Owner = ({ owner, data }: Props) => {
   const { updatedUser } = useAuth<authUserInterface | any>({});
-
+  console.log(updatedUser);
   return (
     <div>
       {" "}
@@ -29,7 +30,8 @@ const Owner = ({ owner }: Props) => {
         <div className="owner-content overflow-x-auto">
           {updatedUser?.role === "admin" ||
           updatedUser?.role === "manager" ||
-          updatedUser?._id === owner?._id ? (
+          updatedUser?._id === owner?._id ||
+          updatedUser?.bookedHouses?.includes(data?._id) ? (
             <table className="table">
               <tbody>
                 <tr>
