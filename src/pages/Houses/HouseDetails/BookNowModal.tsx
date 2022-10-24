@@ -1,11 +1,6 @@
 import { useState } from "react";
-import {
-  BiCard,
-  BiEnvelope,
-  BiKey,
-  BiPhoneIncoming,
-  BiUser,
-} from "react-icons/bi";
+import { BiEnvelope, BiKey, BiPhoneIncoming, BiUser } from "react-icons/bi";
+import StripeCheckout from "../../../components/StripeCheckout";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 
@@ -15,6 +10,19 @@ const BookNow = (props: Props) => {
   const { updatedUser } = useAuth<authUserInterface | any>({});
   /* Payment state */
   const [isStripe, setIsStripe] = useState(false);
+
+  /* Information States */
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+
+  const userInfo = {
+    name: name,
+    email: email,
+    phone: phone,
+    password: password,
+  };
 
   return (
     <div>
@@ -44,6 +52,8 @@ const BookNow = (props: Props) => {
                       type="text"
                       className="form-control outline-none pl-4 w-full"
                       placeholder="Name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
                     />
                   </div>
                 </div>
@@ -62,6 +72,8 @@ const BookNow = (props: Props) => {
                         type="email"
                         className="form-control outline-none pl-4 w-full"
                         placeholder="Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                       />
                     </div>
                   </div>
@@ -79,6 +91,8 @@ const BookNow = (props: Props) => {
                         type="text"
                         className="form-control outline-none pl-4 w-full"
                         placeholder="Phone"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
                       />
                     </div>
                   </div>
@@ -99,6 +113,8 @@ const BookNow = (props: Props) => {
                       type="password"
                       className="form-control outline-none pl-4 w-full"
                       placeholder="Password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                     />
                   </div>
                   <small className="text-gray-400 text-xs">
@@ -117,6 +133,7 @@ const BookNow = (props: Props) => {
                     name="rd"
                     id="rd1"
                     onClick={() => setIsStripe(false)}
+                    defaultChecked={isStripe === false}
                   />
                   <div className="tab-header">
                     <label htmlFor="rd1" className="cursor-pointer">
@@ -140,53 +157,34 @@ const BookNow = (props: Props) => {
               </div>
               {!isStripe ? (
                 <>
-                  {/* Card Number */}
-                  <div className="name border  rounded p-3 relative mt-7 flex-1">
-                    <div className="name-title absolute -top-4 bg-white border rounded p-1">
-                      <h3 className="text-xs font-poppins">
-                        Put your Card Number
-                      </h3>
-                    </div>
-                    <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
-                      <div className="icon">
-                        <BiCard />
-                      </div>
-                      <input
-                        type="text"
-                        className="form-control outline-none pl-4 w-full"
-                        placeholder="Card Number"
-                      />
-                    </div>
-                  </div>
-                  {/* End */}
+                  <StripeCheckout userInfo={userInfo} />
                 </>
               ) : null}
-            </div>
-            <div className="my-3 flex items-center gap-2 font-poppins mt-3">
-              <input
-                type="checkbox"
-                name="permission"
-                className="checkbox"
-                id="permission"
-              />{" "}
-              <label htmlFor="permission">
-                Accept all the Condition & Policy
-              </label>
             </div>
           </div>
           <div className="modal-action  items-stretch gap-3 flex-col-reverse">
             <label htmlFor="book-now-modal" className="btn btn-warning">
               Cancel
             </label>
-            {!isStripe && (
-              <button className="btn btn-primary">
-                Pay 100 tk for Details & Track
-              </button>
-            )}
+
             {isStripe && (
-              <button className="btn bg-[#295CAB]">
-                Pay 100 tk With SSLCOMMERZ
-              </button>
+              <>
+                <button className="btn bg-[#295CAB]">
+                  Pay 100 tk With SSLCOMMERZ
+                </button>
+                <div className="my-3 flex items-center gap-2 font-poppins mt-3">
+                  <input
+                    type="checkbox"
+                    name="permission"
+                    className="checkbox"
+                    id="permission"
+                    required
+                  />
+                  <label htmlFor="permission">
+                    Accept all the Condition & Policy
+                  </label>
+                </div>
+              </>
             )}
           </div>
         </div>
