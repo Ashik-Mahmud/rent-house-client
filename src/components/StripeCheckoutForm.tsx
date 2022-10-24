@@ -1,7 +1,11 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import axios from "axios";
 import cogoToast from "cogo-toast";
+import { useRef, useState } from "react";
 import { useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
+import { PulseLoader } from "react-spinners";
+import swal from "sweetalert";
 import { base_backend_url } from "../configs/config";
 import useAuth from "../hooks/useAuth";
 import { authUserInterface } from "../interfaces/UserInterface";
@@ -12,8 +16,12 @@ type Props = {
 
 const StripeCheckoutForm = ({ userInfo }: Props) => {
   const { updatedUser, user } = useAuth<authUserInterface | any>({});
+  const [isLoading, setIsLoading] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
+  const navigate = useNavigate();
+
+  const formRef = useRef(null);
 
   /* Send Request to get payment instance */
   const { data } = useQuery("payment", async () => {
@@ -34,8 +42,6 @@ const StripeCheckoutForm = ({ userInfo }: Props) => {
     );
     return data;
   });
-
-  console.log(data?.client_secret);
 
   const handleSubmit = async (event: any) => {
     // Block native form submission.
@@ -94,8 +100,8 @@ const StripeCheckoutForm = ({ userInfo }: Props) => {
     } else {
       console.log("[PaymentMethod]", paymentMethod);
     }
-
     /* Create Confirmation Payment */
+    setIsLoading(true);
     const { error: confirmationErr, paymentIntent } =
       await stripe.confirmCardPayment(data?.client_secret, {
         payment_method: {
@@ -111,21 +117,44 @@ const StripeCheckoutForm = ({ userInfo }: Props) => {
     if (confirmationErr) {
       return cogoToast.error((confirmationErr as any)?.message);
     }
-
     if (paymentIntent) {
-      console.log(paymentIntent);
+      const savedContent = {
+        house: userInfo?.house?._id,
+        author: userInfo?.house?.owner,
+        user: updatedUser?._id,
+        method: "Stripe",
+        transactionId: paymentIntent?.id,
+        money: 100,
+        status: "booked",
+      };
 
       const { data: savePayment } = await axios.post(
-        `${base_backend_url}/api/v1/payment/bookings`
+        `${base_backend_url}/api/v1/payment/bookings`,
+        savedContent,
+        {
+          headers: {
+            authorization: `Bearer ${user?.token}`,
+          },
+        }
       );
-      cogoToast.success(`Payment successfully done.`);
+      if (savePayment) {
+        swal({
+          title: "Success",
+          text: "Your booking has been successfully done",
+          icon: "success",
+          buttons: ["cancel", "Ok"],
+        }).then(() => {
+          navigate("/dashboard/bookings");
+          setIsLoading(false);
+        });
+      }
     }
   };
 
   return (
     <div>
       {" "}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} ref={formRef}>
         {/* Card Number */}
         <div className="name border  rounded p-3 relative mt-7 flex-1">
           <div className="name-title absolute -top-4 bg-white border rounded p-1">
@@ -161,13 +190,21 @@ const StripeCheckoutForm = ({ userInfo }: Props) => {
           />{" "}
           <label htmlFor="permission">Accept all the Condition & Policy</label>
         </div>
-        <button
-          type="submit"
-          disabled={!stripe || !data?.client_secret}
-          className="btn btn-primary w-full"
-        >
-          Pay 100 tk for Details & Track
-        </button>
+        {isLoading ? (
+          <button className="btn btn-primary w-full mt-3" disabled>
+            <div className="flex items-center justify-center gap-2">
+              <PulseLoader size={8} color="#fff" /> <span>Processing</span>
+            </div>
+          </button>
+        ) : (
+          <button
+            type="submit"
+            disabled={!stripe || !data?.client_secret}
+            className="btn btn-primary w-full"
+          >
+            Pay 100 tk for Details & Track
+          </button>
+        )}
       </form>
     </div>
   );
