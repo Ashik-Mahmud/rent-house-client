@@ -17,7 +17,6 @@ type Props = {
 
 const Owner = ({ owner, data }: Props) => {
   const { updatedUser } = useAuth<authUserInterface | any>({});
-  console.log(updatedUser);
   return (
     <div>
       {" "}
