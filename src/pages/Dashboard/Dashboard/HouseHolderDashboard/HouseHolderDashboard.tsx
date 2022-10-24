@@ -156,7 +156,7 @@ const HouseHolderDashboard = (props: Props) => {
       {/* Charts Area */}
 
       <div className="charts gap-6 shadow my-5 grid grid-cols-1 md:grid-cols-2 ">
-        <HouseReportChart />
+        <HouseReportChart reports={reports} loading={reviewLoading} />
         <MostLovesHouse />
       </div>
     </div>
