@@ -1,7 +1,9 @@
 import { MdOutlineOtherHouses } from "react-icons/md";
-type Props = {};
+type Props = {
+  others: any;
+};
 
-const Others = (props: Props) => {
+const Others = ({ others }: Props) => {
   return (
     <>
       {/* Others */}
@@ -18,37 +20,49 @@ const Others = (props: Props) => {
                   <MdOutlineOtherHouses /> Drawing Room
                 </td>
                 <th>
-                  <span className="badge badge-ghost">Yes </span>
+                  <span className="badge badge-ghost">
+                    {others?.others?.hasDrawingRoom ? "Yes" : "N/A"}
+                  </span>
                 </th>
                 <td className="flex items-center gap-2">
                   <MdOutlineOtherHouses /> Dining Room
                 </td>
                 <th>
-                  <span className="badge badge-ghost">Yes</span>
+                  <span className="badge badge-ghost">
+                    {others?.others?.hasDinningRoom ? "Yes" : "N/A"}
+                  </span>
                 </th>
                 <td className="flex items-center gap-2">
                   <MdOutlineOtherHouses /> Kitchen
                 </td>
                 <th>
-                  <span className="badge badge-ghost"> N/A</span>
+                  <span className="badge badge-ghost">
+                    {others?.others?.hasKitchen ? "Yes" : "N/A"}
+                  </span>
                 </th>
                 <td className="flex items-center gap-2">
                   <MdOutlineOtherHouses /> Store Room
                 </td>
                 <th>
-                  <span className="badge badge-ghost">N/A</span>
+                  <span className="badge badge-ghost">
+                    {others?.others?.hasStore ? "Yes" : "N/A"}
+                  </span>
                 </th>
                 <td className="flex items-center gap-2">
                   <MdOutlineOtherHouses /> Servant Room
                 </td>
                 <th>
-                  <span className="badge badge-ghost">N/A</span>
+                  <span className="badge badge-ghost">
+                    {others?.others?.hasServantRoom ? "Yes" : "N/A"}
+                  </span>
                 </th>
                 <td className="flex items-center gap-2">
                   <MdOutlineOtherHouses /> Swiming Pool
                 </td>
                 <th>
-                  <span className="badge badge-ghost">N/A</span>
+                  <span className="badge badge-ghost">
+                    {others?.others?.hasSwimmingPool ? "Yes" : "N/A"}
+                  </span>
                 </th>
               </tr>
             </tbody>
@@ -60,52 +74,69 @@ const Others = (props: Props) => {
                   <MdOutlineOtherHouses /> Gym
                 </td>
                 <th>
-                  <span className="badge badge-ghost">N/A </span>
+                  <span className="badge badge-ghost">
+                    {others?.others?.hasGym ? "Yes" : "N/A"}
+                  </span>
                 </th>
                 <td className="flex items-center gap-2">
                   <MdOutlineOtherHouses /> Lawn
                 </td>
                 <th>
-                  <span className="badge badge-ghost">N/A</span>
+                  <span className="badge badge-ghost">
+                    {others?.others?.hasLawn ? "Yes" : "N/A"}
+                  </span>
                 </th>
                 <td className="flex items-center gap-2">
                   <MdOutlineOtherHouses /> Garage
                 </td>
                 <th>
-                  <span className="badge badge-ghost"> N/A</span>
+                  <span className="badge badge-ghost">
+                    {others?.others?.hasGarage ? "Yes" : "N/A"}
+                  </span>
                 </th>
                 <td className="flex items-center gap-2">
                   <MdOutlineOtherHouses /> Lift
                 </td>
                 <th>
-                  <span className="badge badge-ghost">N/A</span>
+                  <span className="badge badge-ghost">
+                    {others?.others?.hasLift ? "Yes" : "N/A"}
+                  </span>
                 </th>
                 <td className="flex items-center gap-2">
                   <MdOutlineOtherHouses /> Generator
                 </td>
                 <th>
-                  <span className="badge badge-ghost">N/A</span>
+                  <span className="badge badge-ghost">
+                    {others?.others?.hasGenerator ? "Yes" : "N/A"}
+                  </span>
                 </th>
                 <td className="flex items-center gap-2">
                   <MdOutlineOtherHouses />
                   Security
                 </td>
                 <th>
-                  <span className="badge badge-ghost">Yes</span>
+                  <span className="badge badge-ghost">
+                    {others?.others?.hasSecurity ? "Yes" : "N/A"}
+                  </span>
                 </th>
                 <td className="flex items-center gap-2">
                   <MdOutlineOtherHouses />
                   Internet
                 </td>
                 <th>
-                  <span className="badge badge-ghost">Yes</span>
+                  <span className="badge badge-ghost">
+                    {others?.others?.hasInternet ? "Yes" : "N/A"}
+                  </span>
                 </th>
                 <td className="flex items-center gap-2">
                   <MdOutlineOtherHouses />
                   CCTV
                 </td>
                 <th>
-                  <span className="badge badge-ghost">Yes</span>
+                  <span className="badge badge-ghost">
+                    {" "}
+                    {others?.others?.hasCCTV ? "Yes" : "N/A"}
+                  </span>
                 </th>
               </tr>
             </tbody>

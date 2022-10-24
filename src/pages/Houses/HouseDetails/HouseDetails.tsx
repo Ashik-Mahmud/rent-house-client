@@ -183,7 +183,10 @@ const HouseDetails = (Props: Props) => {
                           </td>
                           <th>
                             <span className="badge badge-ghost">
-                              {data?.data?.price}/taka
+                              {data?.data?.price}/
+                              {data?.data?.houseType === "Sale"
+                                ? "take"
+                                : "month"}
                             </span>
                           </th>
                           <td className="flex items-center gap-2">
@@ -245,7 +248,7 @@ const HouseDetails = (Props: Props) => {
 
               <Address data={data?.data} />
               <Owner owner={data?.data?.owner} />
-              <Others />
+              <Others others={data?.data} />
               <Gallery gallery={data?.data?.gallery} />
 
               {data?.data?.allowQuestion === "Yes" && (
