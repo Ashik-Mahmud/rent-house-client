@@ -37,14 +37,16 @@ const StripeCheckoutForm = ({ userInfo }: Props) => {
     return data;
   });
 
-  console.log(updatedUser);
-
   const handleSubmit = async (event: any) => {
     // Block native form submission.
     event.preventDefault();
 
     if (!updatedUser?.isVerified) {
-      return swal({ title: "Please Verify Your Email First" });
+      return swal({
+        title: "Please Verify Your Email to get Booked",
+        text: "to get verify you should go to the profile area",
+        icon: "warning",
+      });
     }
     if (!updatedUser?.phone) {
       return swal({ title: "Please Add Your Phone Number First" });

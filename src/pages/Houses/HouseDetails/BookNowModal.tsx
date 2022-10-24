@@ -216,10 +216,7 @@ const BookNow = ({ house }: Props) => {
                 </div>
                 {isStripe && (
                   <>
-                    <button className="btn bg-[#295CAB]">
-                      Pay 100 tk With SSLCOMMERZ
-                    </button>
-                    <div className="my-3 flex items-center gap-2 font-poppins mt-3">
+                    <div className="my-3 flex items-center gap-2 font-poppins mt-8">
                       <input
                         type="checkbox"
                         name="permission"
@@ -231,6 +228,9 @@ const BookNow = ({ house }: Props) => {
                         Accept all the Condition & Policy
                       </label>
                     </div>
+                    <button className="btn bg-[#295CAB] w-full">
+                      Pay 100 tk With SSLCOMMERZ
+                    </button>
                   </>
                 )}
               </>
