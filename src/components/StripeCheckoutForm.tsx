@@ -37,9 +37,18 @@ const StripeCheckoutForm = ({ userInfo }: Props) => {
     return data;
   });
 
+  console.log(updatedUser);
+
   const handleSubmit = async (event: any) => {
     // Block native form submission.
     event.preventDefault();
+
+    if (!updatedUser?.isVerified) {
+      return swal({ title: "Please Verify Your Email First" });
+    }
+    if (!updatedUser?.phone) {
+      return swal({ title: "Please Add Your Phone Number First" });
+    }
 
     if (!stripe || !elements) {
       cogoToast.error("Information has not loaded yet");

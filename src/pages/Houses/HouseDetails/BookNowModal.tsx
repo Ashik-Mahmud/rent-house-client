@@ -1,8 +1,12 @@
-import { useState } from "react";
+import cogoToast from "cogo-toast";
+import { useEffect, useState } from "react";
 import { BiEnvelope, BiKey, BiPhoneIncoming, BiUser } from "react-icons/bi";
+import { Link, useNavigate } from "react-router-dom";
+import { PulseLoader } from "react-spinners";
 import StripeCheckout from "../../../components/StripeCheckout";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
+import { useRegisterAuthMutation } from "../../../services/AuthApi";
 
 type Props = {
   house: any;
@@ -12,7 +16,10 @@ const BookNow = ({ house }: Props) => {
   const { updatedUser } = useAuth<authUserInterface | any>({});
   /* Payment state */
   const [isStripe, setIsStripe] = useState(false);
+  const [registerAuth, { isLoading, error, isSuccess, data }] =
+    useRegisterAuthMutation();
 
+  const navigate = useNavigate();
   /* Information States */
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -24,9 +31,57 @@ const BookNow = ({ house }: Props) => {
   };
 
   /* Handle Register */
-  const handleRegister = () => {
-    console.log(name, email, phone, password);
+  const handleRegister = async () => {
+    /* name */
+    if (!name) {
+      return cogoToast.error("Name is required");
+    }
+    /* email */
+    if (!email) {
+      return cogoToast.error("Email is required");
+    }
+    /* Email Validation */
+    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
+      return cogoToast.error("Invalid email address");
+    }
+
+    /* phone */
+    if (!phone) {
+      return cogoToast.error("Phone is required");
+    }
+    /* Phone Number Validation */
+    if (!/^(?:\+88|01)?\d{11}$/.test(phone)) {
+      return cogoToast.error("Invalid Phone Number");
+    }
+    /* password */
+    if (!password) {
+      return cogoToast.error("Password is required");
+    }
+    /* password validation here */
+    const passwordValidation = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    if (!passwordValidation.test(password)) {
+      return cogoToast.error(
+        "Password must be 8 characters long and must contain at least one uppercase letter, one lowercase letter and one number"
+      );
+    }
+    await registerAuth({
+      name,
+      email,
+      phone,
+      password,
+      role: "customer",
+    });
   };
+
+  useEffect(() => {
+    if (error) {
+      cogoToast.error((error as any)?.data?.message || "something went wrong");
+    }
+    if (isSuccess) {
+      cogoToast.success((data as any)?.message + " Login Here");
+      navigate("/login");
+    }
+  }, [error, isSuccess, data, navigate]);
 
   return (
     <div>
@@ -42,7 +97,6 @@ const BookNow = ({ house }: Props) => {
           <div className="modal-body">
             {!updatedUser?._id && (
               <>
-                {" "}
                 {/* Name */}
                 <div className="name border  rounded p-3 relative mt-5 flex-1">
                   <div className="name-title absolute -top-4 bg-white border rounded p-1">
@@ -188,15 +242,29 @@ const BookNow = ({ house }: Props) => {
               </>
             )}
           </div>
-          <div className="modal-action  items-stretch gap-3 flex-col-reverse">
-            {!updatedUser?._id && (
-              <button className="btn bg-[#295CAB]" onClick={handleRegister}>
-                Register
-              </button>
-            )}
+          <div className="modal-action  items-stretch gap-3 flex-col-reverse font-poppins">
             <label htmlFor="book-now-modal" className="btn btn-warning">
               Cancel
             </label>
+            {!updatedUser?._id && (
+              <>
+                {isLoading ? (
+                  <button className="btn bg-[#295CAB]" disabled>
+                    <PulseLoader size={8} color="#fff" />
+                  </button>
+                ) : (
+                  <button className="btn bg-[#295CAB]" onClick={handleRegister}>
+                    Register as customer
+                  </button>
+                )}
+                <span>
+                  Already have an account?{" "}
+                  <Link to="/login" className="text-success">
+                    login
+                  </Link>
+                </span>
+              </>
+            )}
           </div>
         </div>
       </div>
