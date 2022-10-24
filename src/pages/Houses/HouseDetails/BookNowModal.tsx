@@ -57,13 +57,7 @@ const BookNow = ({ house }: Props) => {
     if (!password) {
       return cogoToast.error("Password is required");
     }
-    /* password validation here */
-    const passwordValidation = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-    if (!passwordValidation.test(password)) {
-      return cogoToast.error(
-        "Password must be 8 characters long and must contain at least one uppercase letter, one lowercase letter and one number"
-      );
-    }
+
     await registerAuth({
       name,
       email,

@@ -15,7 +15,7 @@ const SendVerifyEmail = ({ title, desc }: Props) => {
   const handleVerificationEmail = async () => {
     const isConfirm = await swal({
       title: `Please Confirm `,
-      text: `We will sent you again verification email please check email to ${updatedUser?.email}`,
+      text: `We will sent you again send you verification email please check email to ${updatedUser?.email}`,
       buttons: ["cancel", "Confirm"],
     });
     if (isConfirm) {
