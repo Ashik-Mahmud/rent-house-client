@@ -32,7 +32,7 @@ const BookNow = (props: Props) => {
               <>
                 {" "}
                 {/* Name */}
-                <div className="name border  rounded p-3 relative mt-10 flex-1">
+                <div className="name border  rounded p-3 relative mt-5 flex-1">
                   <div className="name-title absolute -top-4 bg-white border rounded p-1">
                     <h3 className="text-xs font-poppins">Put your name</h3>
                   </div>
@@ -50,7 +50,7 @@ const BookNow = (props: Props) => {
                 {/* End */}
                 <div className="flex items-stretch justify-between gap-2">
                   {/* Email */}
-                  <div className="name border  rounded p-3 relative mt-10 flex-1">
+                  <div className="name border  rounded p-3 relative mt-7 flex-1">
                     <div className="name-title absolute -top-4 bg-white border rounded p-1">
                       <h3 className="text-xs font-poppins">Put your Email</h3>
                     </div>
@@ -67,7 +67,7 @@ const BookNow = (props: Props) => {
                   </div>
                   {/* End */}
                   {/* PHone */}
-                  <div className="name border  rounded p-3 relative mt-10 flex-1">
+                  <div className="name border  rounded p-3 relative mt-7 flex-1">
                     <div className="name-title absolute -top-4 bg-white border rounded p-1">
                       <h3 className="text-xs font-poppins">Put your Phone</h3>
                     </div>
@@ -85,7 +85,7 @@ const BookNow = (props: Props) => {
                   {/* End */}
                 </div>
                 {/* Password */}
-                <div className="name border  rounded p-3 pb-1 relative mt-10 flex-1">
+                <div className="name border  rounded p-3 pb-1 relative mt-7 flex-1">
                   <div className="name-title absolute -top-4 bg-white border rounded p-1">
                     <h3 className="text-xs font-poppins flex items-center gap-3">
                       Put your Password{" "}
@@ -109,7 +109,7 @@ const BookNow = (props: Props) => {
               </>
             )}
 
-            <div>
+            <div className="mt-5">
               <div className="tabs">
                 <div className="tab flex items-center gap-2 cursor-pointer">
                   <input
@@ -141,7 +141,7 @@ const BookNow = (props: Props) => {
               {!isStripe ? (
                 <>
                   {/* Card Number */}
-                  <div className="name border  rounded p-3 relative mt-10 flex-1">
+                  <div className="name border  rounded p-3 relative mt-7 flex-1">
                     <div className="name-title absolute -top-4 bg-white border rounded p-1">
                       <h3 className="text-xs font-poppins">
                         Put your Card Number
@@ -162,7 +162,7 @@ const BookNow = (props: Props) => {
                 </>
               ) : null}
             </div>
-            <div className="my-3 flex items-center gap-2 font-poppins mt-6">
+            <div className="my-3 flex items-center gap-2 font-poppins mt-3">
               <input
                 type="checkbox"
                 name="permission"
