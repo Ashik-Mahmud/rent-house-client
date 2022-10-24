@@ -52,8 +52,10 @@ const HouseRow = ({ approved, house, index, refetch }: Props) => {
 
       <td className="py-3">{house?.bedrooms}</td>
       <td className="py-3">{house?.bathrooms}</td>
-      <td className="py-3">{house?.price}</td>
-      <td className="py-3">{house?.bathrooms}</td>
+      <td className="py-3">
+        {house?.price} {house?.houseType === "Sale" ? " tk" : "/month"}
+      </td>
+      <td className="py-3">{house?.houseType}</td>
       <td className="py-3">
         {house?.status === "approved" && (
           <div

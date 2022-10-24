@@ -51,9 +51,11 @@ const HouseDetails = (Props: Props) => {
 
   /* Handle Favorite */
   const handleFavorite = async () => {
-    localStorage.setItem("favorite", JSON.stringify(!clicked));
+    localStorage.setItem("favorite" + houseId, JSON.stringify(!clicked));
     setClicked(() => {
-      return localStorage.getItem("favorite") === "true" ? true : false;
+      return localStorage.getItem("favorite" + houseId) === "true"
+        ? true
+        : false;
     });
     const { data } = await axios.patch(
       `${base_backend_url}/api/v1/houses/like-count/${houseId}?like=${clicked}`
@@ -63,10 +65,10 @@ const HouseDetails = (Props: Props) => {
   };
 
   useEffect(() => {
-    const favoriteValue: any = localStorage.getItem("favorite");
+    const favoriteValue: any = localStorage.getItem("favorite" + houseId);
     const parsedValue = JSON.parse(favoriteValue);
     setClicked(parsedValue || false);
-  }, [clicked]);
+  }, [clicked, houseId]);
 
   /* get question by user id */
   const {
@@ -245,13 +247,18 @@ const HouseDetails = (Props: Props) => {
               <Owner owner={data?.data?.owner} />
               <Others />
               <Gallery gallery={data?.data?.gallery} />
-              <Question
-                data={data?.data}
-                questions={questions}
-                loading={loading}
-                newFetch={newFetch}
-              />
-              <Reviews data={data?.data} />
+
+              {data?.data?.allowQuestion === "Yes" && (
+                <Question
+                  data={data?.data}
+                  questions={questions}
+                  loading={loading}
+                  newFetch={newFetch}
+                />
+              )}
+              {data?.data?.allowReview === "Yes" && (
+                <Reviews data={data?.data} />
+              )}
             </div>
           </div>
         </div>

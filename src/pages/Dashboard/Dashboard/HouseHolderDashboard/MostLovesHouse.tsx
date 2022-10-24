@@ -34,7 +34,7 @@ const MostLovesHouse = (props: Props) => {
       <h3 className="text-lg font-bold">Most Loves Houses</h3>
       {data?.length > 0 ? (
         <div className="content py-5">
-          {data?.map((house: any) => (
+          {data?.slice(0, 2).map((house: any) => (
             <LovesHouseCard key={house._id} house={house} />
           ))}
         </div>
@@ -49,7 +49,7 @@ const MostLovesHouse = (props: Props) => {
 
 const LovesHouseCard = ({ house }: any) => {
   return (
-    <div className="card card-side  bg-base-100 shadow border px-5 rounded">
+    <div className="card card-side  bg-base-100 shadow border px-5 rounded mb-5">
       <figure>
         <img
           src={
@@ -65,6 +65,12 @@ const LovesHouseCard = ({ house }: any) => {
         <h2 className="card-title">
           {house?.name || "loading..."}{" "}
           <div className="badge badge-success">{house?.views}</div>
+          {house?.status === "pending" && (
+            <span className="badge badge-warning">pending</span>
+          )}
+          {house?.status === "rejected" && (
+            <span className="badge badge-error">rejected</span>
+          )}
         </h2>
         <small>{house?.address}</small>
         <ul className="flex items-center flex-wrap gap-3 font-poppins text-sm">
