@@ -73,10 +73,13 @@ const Houses = (props: Props) => {
       filterByDistrict,
       searchKey,
       category,
+
       maxPrice,
       minPrice,
       houseType,
+
       searchAddress,
+
       bathrooms,
       bedrooms,
       isBachelor,
