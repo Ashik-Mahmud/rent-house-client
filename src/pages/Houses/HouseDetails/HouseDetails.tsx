@@ -186,7 +186,7 @@ const HouseDetails = (Props: Props) => {
                             <span className="badge badge-ghost">
                               {data?.data?.price}/
                               {data?.data?.houseType === "Sale"
-                                ? "take"
+                                ? "taka"
                                 : "month"}
                             </span>
                           </th>
