@@ -1,14 +1,12 @@
 import Chart from "react-apexcharts";
-import { useAppSelector } from "../../../../app/store";
 import GlobalLoader from "../../../../components/GlobalLoader";
 import { useGetAllBlogsQuery } from "../../../../services/BlogApi";
 import { useGetAllReviewsQuery } from "../../../../services/ReviewApi";
-type Props = {};
+type Props = {
+  houses: any;
+};
 
-const BarCharts = (props: Props) => {
-  const { approvedHouseCount, pendingHouseCount, rejectedHouseCount } =
-    useAppSelector((state) => state.housesReqCount);
-
+const BarCharts = ({ houses }: Props) => {
   const { data: reviews, isLoading: loading1 } = useGetAllReviewsQuery({});
   const { data: blogs, isLoading: loading2 } = useGetAllBlogsQuery({} as any);
 
@@ -32,9 +30,9 @@ const BarCharts = (props: Props) => {
     {
       name: "series-1",
       data: [
-        pendingHouseCount,
-        approvedHouseCount,
-        rejectedHouseCount,
+        houses?.unapproved,
+        houses?.approved,
+        houses?.rejected,
         reviews?.data?.length,
         blogs?.count,
       ],
