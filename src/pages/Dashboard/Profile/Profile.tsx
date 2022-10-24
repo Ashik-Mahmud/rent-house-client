@@ -1,3 +1,4 @@
+import axios from "axios";
 import { format } from "date-fns";
 import formatDistance from "date-fns/formatDistance";
 import {
@@ -8,6 +9,8 @@ import {
 } from "react-device-detect";
 import { BiCamera, BiEdit } from "react-icons/bi";
 import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
+import swal from "sweetalert";
+import { base_backend_url } from "../../../configs/config";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import DeleteVerificationModal from "./DeleteVerificationModal";
@@ -29,6 +32,32 @@ const Profile = (props: Props) => {
       addSuffix: true,
     }
   );
+
+  /* Handle Verification Email */
+  /* Handle Verification Email */
+  const handleVerificationEmail = async () => {
+    const isConfirm = await swal({
+      title: `Please Confirm `,
+      text: `We will sent you again send you verification email please check email to ${data?.email}`,
+      buttons: ["cancel", "Confirm"],
+    });
+    if (isConfirm) {
+      const { data: result } = await axios.get(
+        `${base_backend_url}/api/v1/users/send-verification-email/${data?._id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${user?.token}`,
+          },
+        }
+      );
+      await swal({
+        title: `${result?.message}`,
+        text: "Please check we will sent you again verification mail",
+        icon: "success",
+        buttons: ["cancel", "okay"],
+      });
+    }
+  };
 
   /* Last Login  */
   const result = format(new Date(user?.user?.updatedAt), "PPPP BBBB ppp");
@@ -119,11 +148,15 @@ const Profile = (props: Props) => {
                   ) : (
                     <>
                       <div className="flex items-center gap-3">
-                        <span className="badge badge-warning">
-                          Not Verified
-                        </span>
-                        <span className="text-sm block text-error">
+                        <span className="text-sm block badge badge-warning">
                           Please Check your Email to get verified.
+                        </span>
+                        <span>or</span>
+                        <span
+                          className="badge badge-success cursor-pointer capitalize"
+                          onClick={handleVerificationEmail}
+                        >
+                          get verify
                         </span>
                       </div>
                     </>

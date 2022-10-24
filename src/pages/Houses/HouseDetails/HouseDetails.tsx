@@ -248,7 +248,7 @@ const HouseDetails = (Props: Props) => {
               </div>
 
               <Address data={data?.data} />
-              <Owner owner={data?.data?.owner} />
+              <Owner owner={data?.data?.owner} data={data?.data} />
               <Others others={data?.data} />
               <Gallery gallery={data?.data?.gallery} />
 
@@ -269,19 +269,24 @@ const HouseDetails = (Props: Props) => {
         <div className="book-now text-center mb-8">
           {data?.data?.owner?._id !== updatedUser?._id &&
             updatedUser?.role !== "admin" &&
-            updatedUser?.role !== "manager" && (
+            updatedUser?.role !== "manager" &&
+            (updatedUser?.bookedHouses.includes(houseId) ? (
+              <button className="btn btn-lg btn-warning modal-button">
+                Already booked
+              </button>
+            ) : (
               <label
                 htmlFor="book-now-modal"
                 className="btn btn-lg btn-success modal-button"
               >
                 Book Now
               </label>
-            )}
+            ))}
         </div>
       </section>
 
       {/* Modals */}
-      <BookNow />
+      <BookNow house={data?.data} />
       <QuestionModal houseId={data?.data?._id} newFetch={newFetch} />
 
       <ReportModal

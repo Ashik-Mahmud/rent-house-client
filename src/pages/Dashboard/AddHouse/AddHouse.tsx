@@ -6,6 +6,7 @@ import { BsAlignEnd, BsHouse, BsLink, BsPen } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import { PulseLoader } from "react-spinners";
+import swal from "sweetalert";
 import ScreenLoader from "../../../components/ScreenLoader";
 import SendVerifyEmail from "../../../components/SendVerifyEmail";
 import useAuth from "../../../hooks/useAuth";
@@ -42,6 +43,17 @@ const AddHouse = (props: Props) => {
   const galleryImage = watch("galleryImage");
 
   const handleAddHouseFormSubmit = handleSubmit(async (data) => {
+    if (
+      !updatedUser?.phone ||
+      !updatedUser?.address ||
+      !updatedUser?.facebookLink
+    ) {
+      return swal({
+        title: "Your profile is uncompleted",
+        icon: "warning",
+        buttons: ["cancel"],
+      });
+    }
     /* Validation */
     if (!data.name) return toast.error(`Name is required`);
     if (!data.price) return toast.error(`Price is required`);
