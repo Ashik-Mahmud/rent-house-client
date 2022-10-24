@@ -1,5 +1,8 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import axios from "axios";
 import cogoToast from "cogo-toast";
+import { useQuery } from "react-query";
+import { base_backend_url } from "../configs/config";
 import useAuth from "../hooks/useAuth";
 import { authUserInterface } from "../interfaces/UserInterface";
 
@@ -8,9 +11,31 @@ type Props = {
 };
 
 const StripeCheckoutForm = ({ userInfo }: Props) => {
-  const { updatedUser } = useAuth<authUserInterface | any>({});
+  const { updatedUser, user } = useAuth<authUserInterface | any>({});
   const stripe = useStripe();
   const elements = useElements();
+
+  /* Send Request to get payment instance */
+  const { data } = useQuery("payment", async () => {
+    const { data } = await axios.post(
+      `${base_backend_url}/api/v1/payment/create-payment-instance`,
+      {
+        amount: 100,
+        email: userInfo.email,
+        name: userInfo.name,
+        phone: userInfo.phone,
+        password: userInfo.password,
+      },
+      {
+        headers: {
+          authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
+    return data;
+  });
+
+  console.log(data?.client_secret);
 
   const handleSubmit = async (event: any) => {
     // Block native form submission.
@@ -33,7 +58,7 @@ const StripeCheckoutForm = ({ userInfo }: Props) => {
       }
       /* Is password Strong or not validation */
       const isPasswordStrong =
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/.test(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/.test(
           userInfo?.password
         );
       if (!isPasswordStrong) {
@@ -69,7 +94,34 @@ const StripeCheckoutForm = ({ userInfo }: Props) => {
     } else {
       console.log("[PaymentMethod]", paymentMethod);
     }
+
+    /* Create Confirmation Payment */
+    const { error: confirmationErr, paymentIntent } =
+      await stripe.confirmCardPayment(data?.client_secret, {
+        payment_method: {
+          card: card,
+          billing_details: {
+            name: updatedUser?.name,
+            address: updatedUser?.address,
+            phone: updatedUser?.phone,
+          },
+        },
+      });
+
+    if (confirmationErr) {
+      return cogoToast.error((confirmationErr as any)?.message);
+    }
+
+    if (paymentIntent) {
+      console.log(paymentIntent);
+
+      const { data: savePayment } = await axios.post(
+        `${base_backend_url}/api/v1/payment/bookings`
+      );
+      cogoToast.success(`Payment successfully done.`);
+    }
   };
+
   return (
     <div>
       {" "}
@@ -111,7 +163,7 @@ const StripeCheckoutForm = ({ userInfo }: Props) => {
         </div>
         <button
           type="submit"
-          disabled={!stripe}
+          disabled={!stripe || !data?.client_secret}
           className="btn btn-primary w-full"
         >
           Pay 100 tk for Details & Track

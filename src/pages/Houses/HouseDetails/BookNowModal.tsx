@@ -4,9 +4,11 @@ import StripeCheckout from "../../../components/StripeCheckout";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 
-type Props = {};
+type Props = {
+  house: any;
+};
 
-const BookNow = (props: Props) => {
+const BookNow = ({ house }: Props) => {
   const { updatedUser } = useAuth<authUserInterface | any>({});
   /* Payment state */
   const [isStripe, setIsStripe] = useState(false);
@@ -22,6 +24,7 @@ const BookNow = (props: Props) => {
     email: email,
     phone: phone,
     password: password,
+    house,
   };
 
   return (

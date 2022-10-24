@@ -281,7 +281,7 @@ const HouseDetails = (Props: Props) => {
       </section>
 
       {/* Modals */}
-      <BookNow />
+      <BookNow house={data?.data} />
       <QuestionModal houseId={data?.data?._id} newFetch={newFetch} />
 
       <ReportModal
