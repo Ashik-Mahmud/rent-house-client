@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { BiMessageAltAdd } from "react-icons/bi";
 import { Link } from "react-router-dom";
+import SendThankEmail from "./SendThankEmail";
 type Props = {
   payment: any;
 };
@@ -103,12 +104,14 @@ const PaymentRow = ({ payment }: Props) => {
 
       <td>
         <div className="flex items-center gap-2 justify-center">
-          <span
+          <label
+            htmlFor="send-thanks-modal"
             className="cursor-pointer text-lg text-success tooltip tooltip-success"
             data-tip="Send Email to Thank him/her"
           >
             <BiMessageAltAdd />
-          </span>
+          </label>
+          <SendThankEmail />
         </div>
       </td>
     </tr>
