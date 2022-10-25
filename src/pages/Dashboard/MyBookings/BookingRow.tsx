@@ -2,6 +2,7 @@ import { useState } from "react";
 import { BiTrashAlt } from "react-icons/bi";
 import { BsEye } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import swal from "sweetalert";
 type Props = {
   payment: any;
 };
@@ -9,12 +10,33 @@ type Props = {
 const BookingRow = ({ payment }: Props) => {
   const [isCopy, setIsCopy] = useState(false);
 
+  /* Handle Copy */
   const copyToClipboard = (e: any) => {
     navigator.clipboard.writeText(e.target.innerText);
     setIsCopy(true);
     setTimeout(() => {
       setIsCopy(false);
     }, 1000);
+  };
+
+  /* Handle Delete Bookings */
+  const handleDelete = async (id: string) => {
+    const isConfirm = await swal({
+      title: "Are you sure? You want to delete this booking? ",
+      text: "Once deleted, you will not be able to recover this payment statement! (Not recommendation)",
+      icon: "warning",
+      buttons: ["cancel", "yes! delete it"],
+      dangerMode: true,
+    });
+
+    if (isConfirm) {
+      swal("Poof! Your payment statement has been deleted!", {
+        icon: "success",
+      });
+      console.log("Delete", id);
+    } else {
+      swal("Your payment statement is safe!");
+    }
   };
 
   return (
@@ -112,7 +134,10 @@ const BookingRow = ({ payment }: Props) => {
           >
             <BsEye />
           </Link>
-          <button className="btn btn-ghost btn-circle btn-sm text-error">
+          <button
+            onClick={() => handleDelete(payment?._id)}
+            className="btn btn-ghost btn-circle btn-sm text-error"
+          >
             <BiTrashAlt />
           </button>
         </div>
