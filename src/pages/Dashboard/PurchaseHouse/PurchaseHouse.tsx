@@ -16,12 +16,16 @@ const PurchaseHouse = (props: Props) => {
   const [filter, setFilter] = useState("-createdAt");
   const [search, setSearch] = useState("");
 
+  /* pagination states */
+  const [currentPage, setCurrentPage] = useState(1);
+  const [limit, setLimit] = useState(1);
+
   /* Send Request to get Booked Houses */
   const { data, isLoading } = useQuery(
-    ["bookedHouses", filter, search],
+    ["bookedHouses", filter, search, currentPage, limit],
     async () => {
       const { data } = await axios.get(
-        `${base_backend_url}/api/v1/payment/booked-houses?filter=${filter}&search=${search}`,
+        `${base_backend_url}/api/v1/payment/booked-houses?filter=${filter}&search=${search}&page=${currentPage}&limit=${limit}`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,
@@ -32,7 +36,13 @@ const PurchaseHouse = (props: Props) => {
     }
   );
 
-  console.log(data, search);
+  /* Handle Pagination */
+  const totalPages = Math.ceil(data?.data?.count / limit);
+  let pages = [];
+  for (let i = 1; i <= totalPages; i++) {
+    pages.push(i);
+  }
+
   return (
     <>
       <div>
@@ -84,13 +94,17 @@ const PurchaseHouse = (props: Props) => {
 
           <div className="pagination py-10">
             <div className="flex items-center justify-center gap-2">
-              <button className="btn btn-ghost rounded-full">1</button>
-              <button className="btn btn-ghost rounded-full">2</button>
-              <button className="btn btn-ghost rounded-full btn-active">
-                3
-              </button>
-              <button className="btn btn-ghost rounded-full">4</button>
-              <button className="btn btn-ghost rounded-full">5</button>
+              {pages?.map((page: number) => (
+                <button
+                  className={`btn btn-ghost rounded-full ${
+                    page === currentPage && "btn-active"
+                  } `}
+                  key={page}
+                  onClick={() => setCurrentPage(page)}
+                >
+                  {page}
+                </button>
+              ))}
             </div>
           </div>
         </div>
