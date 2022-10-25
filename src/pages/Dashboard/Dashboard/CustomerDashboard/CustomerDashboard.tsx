@@ -28,8 +28,6 @@ const CustomerDashboard = (props: Props) => {
     }
   );
 
-  console.log(updatedUser);
-
   if (isLoading) {
     return <GlobalLoader />;
   }
@@ -170,7 +168,7 @@ const CustomerDashboard = (props: Props) => {
       {/* Charts Area */}
 
       <div className="charts gap-6 shadow my-5 grid grid-cols-1 h-60">
-        <StatisticChart />
+        <StatisticChart data={data} />
       </div>
     </div>
   );
