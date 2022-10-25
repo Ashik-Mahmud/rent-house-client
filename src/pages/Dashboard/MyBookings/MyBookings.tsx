@@ -17,7 +17,7 @@ const MyBookings = (props: Props) => {
   const [limit, setLimit] = useState(5);
 
   /* Get Already Booked Statement */
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, refetch } = useQuery(
     ["bookings", currentPage, limit],
     async () => {
       const { data } = await axios.get(
@@ -92,7 +92,11 @@ const MyBookings = (props: Props) => {
                   </thead>
                   <tbody>
                     {data?.data?.payments?.map((payment: any) => (
-                      <BookingRow payment={payment} key={payment?._id} />
+                      <BookingRow
+                        payment={payment}
+                        key={payment?._id}
+                        refetch={refetch}
+                      />
                     ))}
                   </tbody>
                 </table>

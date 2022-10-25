@@ -9,9 +9,10 @@ import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 type Props = {
   payment: any;
+  refetch: () => void;
 };
 
-const BookingRow = ({ payment }: Props) => {
+const BookingRow = ({ payment, refetch }: Props) => {
   const { user } = useAuth<authUserInterface | any>({});
   const [isCopy, setIsCopy] = useState(false);
 
@@ -57,6 +58,7 @@ const BookingRow = ({ payment }: Props) => {
             swal("Poof! Your payment statement has been deleted!", {
               icon: "success",
             });
+            refetch();
           }
         } else {
           swal("Your payment statement is safe!");
