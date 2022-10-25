@@ -105,13 +105,13 @@ const PaymentRow = ({ payment }: Props) => {
       <td>
         <div className="flex items-center gap-2 justify-center">
           <label
-            htmlFor="send-thanks-modal"
+            htmlFor={"send-thanks-modal" + payment?._id}
             className="cursor-pointer text-lg text-success tooltip tooltip-success"
             data-tip="Send Email to Thank him/her"
           >
             <BiMessageAltAdd />
           </label>
-          <SendThankEmail />
+          <SendThankEmail payment={payment} />
         </div>
       </td>
     </tr>
