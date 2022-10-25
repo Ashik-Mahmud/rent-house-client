@@ -14,16 +14,19 @@ const MyBookings = (props: Props) => {
 
   /* Get Already Booked Statement */
   const { data, isLoading } = useQuery("bookings", async () => {
-    const { data } = await axios.get(`${base_backend_url}/api/v1/bookings`, {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
+    const { data } = await axios.get(
+      `${base_backend_url}/api/v1/payment/payment-statement`,
+      {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
     return data;
   });
   if (isLoading) return <GlobalLoader />;
 
-  console.log(data);
+  console.log(data?.data?.payments);
 
   return (
     <div>
@@ -33,29 +36,41 @@ const MyBookings = (props: Props) => {
           <small className="badge badge-success">Customer</small>
         </div>
         <div className="myBookings__content my-5">
-          <div className="overflow-x-auto">
-            <table className="table w-full">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>House Holder</th>
-                  <th>INFO</th>
-                  <th>HOUSES</th>
-                  <th>Bed/Bath rooms</th>
-                  <th>Price</th>
-                  <th>Method</th>
-                  <th>Money</th>
-                  <th>Transaction ID</th>
-                  <th>status</th>
+          {isLoading ? (
+            <GlobalLoader />
+          ) : (
+            <div className="overflow-x-auto">
+              {data?.data?.payments?.length > 0 ? (
+                <table className="table w-full">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>House Holder</th>
+                      <th>INFO</th>
+                      <th>HOUSES</th>
 
-                  <th>permission</th>
-                </tr>
-              </thead>
-              <tbody>
-                <BookingRow />
-              </tbody>
-            </table>
-          </div>
+                      <th>Method</th>
+                      <th>Money</th>
+                      <th>Transaction ID</th>
+                      <th>status</th>
+
+                      <th>permission</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data?.data?.payments?.map((payment: any) => (
+                      <BookingRow payment={payment} key={payment?._id} />
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <div className="text-center">
+                  <h1 className="text-2xl font-bold">No Bookings Found</h1>
+                </div>
+              )}
+            </div>
+          )}
+
           <div className="pagination flex items-center gap-3 justify-end mt-5">
             <a
               href="/"
