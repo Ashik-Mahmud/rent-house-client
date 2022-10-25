@@ -17,17 +17,20 @@ const MyBookings = (props: Props) => {
   const [limit, setLimit] = useState(1);
 
   /* Get Already Booked Statement */
-  const { data, isLoading } = useQuery("bookings", async () => {
-    const { data } = await axios.get(
-      `${base_backend_url}/api/v1/payment/payment-statement`,
-      {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      }
-    );
-    return data;
-  });
+  const { data, isLoading } = useQuery(
+    ["bookings", currentPage, limit],
+    async () => {
+      const { data } = await axios.get(
+        `${base_backend_url}/api/v1/payment/payment-statement?page=${currentPage}&limit=${limit}`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+      return data;
+    }
+  );
 
   /* Handle Pagination */
   const totalPages = Math.ceil(data?.data?.count / limit);
@@ -95,12 +98,12 @@ const MyBookings = (props: Props) => {
 
           {limit < totalPages && (
             <div className="pagination flex items-center gap-3 justify-end mt-5">
-              <a
-                href="/"
-                className="pagination__link w-7 h-7 grid place-items-center btn-ghost rounded-full"
+              <span
+                onClick={handlePrevious}
+                className="pagination__link w-7 h-7 grid place-items-center btn-ghost rounded-full cursor-pointer"
               >
                 <BiChevronLeft />
-              </a>
+              </span>
               {pages.map((page) => (
                 <span
                   key={page}
@@ -113,12 +116,12 @@ const MyBookings = (props: Props) => {
                 </span>
               ))}
 
-              <a
-                href="/"
-                className="pagination__link w-7 h-7 grid place-items-center btn-ghost rounded-full"
+              <span
+                className="pagination__link w-7 h-7 grid place-items-center btn-ghost rounded-full cursor-pointer"
+                onClick={handleNext}
               >
                 <BiChevronRight />
-              </a>
+              </span>
             </div>
           )}
         </div>
