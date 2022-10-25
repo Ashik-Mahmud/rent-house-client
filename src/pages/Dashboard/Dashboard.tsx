@@ -11,6 +11,7 @@ import { AiOutlineUser } from "react-icons/ai";
 import {
   BiGitPullRequest,
   BiHomeAlt,
+  BiHomeCircle,
   BiLogOut,
   BiPlus,
   BiUser,
@@ -90,6 +91,18 @@ const Dashboard = (props: Props) => {
       title: "My Reviews",
       icon: <BsHeart />,
       link: "/dashboard/reviews",
+    },
+    {
+      id: 54,
+      title: "My Bookings",
+      icon: <BsBookFill />,
+      link: "/dashboard/bookings",
+    },
+    {
+      id: 65,
+      title: "Booked Houses",
+      icon: <BiHomeCircle />,
+      link: "/dashboard/purchase/bookings",
     },
     {
       id: 5,
