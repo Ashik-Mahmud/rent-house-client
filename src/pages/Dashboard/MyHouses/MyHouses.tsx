@@ -1,14 +1,16 @@
 import axios from "axios";
+import * as FileSaver from "file-saver";
 import { useState } from "react";
 import { BiExport, BiPlus } from "react-icons/bi";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
+import swal from "sweetalert";
+import * as XLSX from "xlsx";
 import GlobalLoader from "../../../components/GlobalLoader";
 import { base_backend_url } from "../../../configs/config";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import HouseRow from "./HouseRow";
-
 type Props = {};
 
 const MyHouses = (props: Props) => {
@@ -51,6 +53,62 @@ const MyHouses = (props: Props) => {
     }
   };
 
+  /* Code For Export Houses */
+
+  const fileType =
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+  const fileExtension = ".xlsx";
+  /* Handle Exports Payments */
+  const ExportHouses = async (payments: any) => {
+    const filename = await swal({
+      title: "Are you sure?",
+      text: "You want to export this Houses?",
+      content: {
+        element: "input",
+        attributes: {
+          placeholder: "Put the file name here",
+          type: "text",
+        },
+      },
+    });
+    if (!filename) {
+      swal("Cancelled", "Your did't put any name :)", "error");
+      return;
+    }
+    if (filename?.length < 6) {
+      swal("Error", "File name must be at least 5 characters", "error");
+      return;
+    }
+
+    const ws = XLSX.utils.json_to_sheet(payments);
+    XLSX.utils.sheet_add_aoa(
+      ws,
+      [
+        [
+          "Index",
+          "House Name",
+          "House Id",
+          "Charge Amount",
+          "Transaction Id",
+          "Method",
+          "Customer Name",
+          "Customer Email",
+          "Customer Number",
+          "Customer Id",
+          "Date",
+        ],
+      ],
+      {
+        origin: "A1",
+      }
+    );
+    const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const data = new Blob([excelBuffer], { type: fileType });
+    FileSaver.saveAs(data, filename + fileExtension);
+    swal("Success", "Your file has been exported", "success");
+  };
+
   return (
     <div className="p-10 my-5 bg-white rounded shadow">
       <div className="title flex-col sm:flex-row flex items-center justify-between mb-3">
@@ -70,7 +128,10 @@ const MyHouses = (props: Props) => {
         />
       </div>
       <div className="export-btn flex items-center gap-5 justify-end">
-        <button className="btn btn-xs btn-info rounded-none badge-lg flex items-center gap-2 font-poppins">
+        <button
+          onClick={() => ExportHouses(data?.data)}
+          className="btn btn-xs btn-info rounded-none badge-lg flex items-center gap-2 font-poppins"
+        >
           Export Collection <BiExport className="text-md" />
         </button>
         <Link

@@ -170,10 +170,10 @@ const Payments = (props: Props) => {
         </div>
         <div className="export-btn my-5">
           <button
-            className="badge badge-ghost badge-lg flex items-center gap-2 font-poppins"
+            className="flex items-center gap-2 font-poppins rounded-none btn btn-sm btn-info "
             onClick={() => exportPayments(paymentData)}
           >
-            Export Collection <BiExport className="text-xl" />
+            Export Payments <BiExport className="text-xl" />
           </button>
         </div>
         <div className="payments-content mb-7">
