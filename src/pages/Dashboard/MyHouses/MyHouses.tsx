@@ -86,8 +86,8 @@ const MyHouses = (props: Props) => {
       [
         [
           "Index",
-          "House Name",
           "House Id",
+          "House Name",
           "Bedrooms",
           "Bathrooms",
           "Price",

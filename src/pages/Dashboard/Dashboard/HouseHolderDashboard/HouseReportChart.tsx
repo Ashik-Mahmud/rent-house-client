@@ -23,7 +23,7 @@ const HouseReportChart = ({ reports, loading }: Props) => {
     reports?.questions || 0,
     reports?.reviews || 0,
     reports?.reports || 0,
-    6,
+    reports?.payments || 0,
   ];
 
   return (
