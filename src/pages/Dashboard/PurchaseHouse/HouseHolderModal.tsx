@@ -1,8 +1,11 @@
 import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
 
-type Props = {};
+type Props = {
+  owner: any;
+};
 
-const HouseHolderModal = (props: Props) => {
+const HouseHolderModal = ({ owner }: Props) => {
+  console.log(owner);
   return (
     <div>
       <input
@@ -20,37 +23,54 @@ const HouseHolderModal = (props: Props) => {
                 <thead>
                   <tr>
                     <th>Name</th>
-                    <th>Ashik Mahmud</th>
+                    <th>{owner?.name}</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td>Email</td>
                     <td>
-                      <a href="mailto:ashik@gmail.com">ashik@gmail.com</a>
+                      <a href={`mailto:${owner?.email}`}>{owner?.email}</a>
                     </td>
                   </tr>
                   <tr>
                     <td>Phone</td>
                     <td>
-                      <a href="cel:0178454545">01548745452</a>
+                      <a href={`tel:${owner?.phone}`}>{owner?.phone}</a>
                     </td>
                   </tr>
                   <tr>
                     <td>Social Media</td>
                     <td>
                       <div className="flex items-center gap-3">
-                        {" "}
-                        <a href="/">
-                          <BsFacebook />
-                        </a>
-                        <a href="/">
-                          <BsTwitter />
-                        </a>
-                        <a href="/">
-                          <BsInstagram />{" "}
-                        </a>
-                      </div>{" "}
+                        {owner?.facebookLink && (
+                          <a
+                            href={owner?.facebookLink}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            <BsFacebook />
+                          </a>
+                        )}
+                        {owner?.twitterLink && (
+                          <a
+                            href={owner?.twitterLink}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            <BsTwitter />
+                          </a>
+                        )}
+                        {owner?.instagramLink && (
+                          <a
+                            href={owner?.instagramLink}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            <BsInstagram />
+                          </a>
+                        )}
+                      </div>
                     </td>
                   </tr>
                   {/* 

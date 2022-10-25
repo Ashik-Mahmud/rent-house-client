@@ -1,16 +1,17 @@
 import axios from "axios";
 import { BiSearch } from "react-icons/bi";
 import { useQuery } from "react-query";
+import GlobalLoader from "../../../components/GlobalLoader";
+import NoDataComponent from "../../../components/NoDataComponent";
 import { base_backend_url } from "../../../configs/config";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import BookedHouseCard from "./BookedHouseCard";
-import HouseHolderModal from "./HouseHolderModal";
 
 type Props = {};
 
 const PurchaseHouse = (props: Props) => {
-  const { user } = useAuth<authUserInterface | any>({});
+  const { user, updatedUser } = useAuth<authUserInterface | any>({});
   /* Send Request to get Booked Houses */
   const { data, isLoading } = useQuery("bookedHouses", async () => {
     const { data } = await axios.get(
@@ -24,7 +25,9 @@ const PurchaseHouse = (props: Props) => {
     return data;
   });
 
-  console.log(data);
+  if (isLoading) {
+    return <GlobalLoader />;
+  }
 
   return (
     <>
@@ -58,16 +61,18 @@ const PurchaseHouse = (props: Props) => {
               </div>
             </div>
           </div>
-          <div className="booked-houses grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 my-10">
-            <BookedHouseCard />
-            <BookedHouseCard />
-            <BookedHouseCard />
-            <BookedHouseCard />
-            <BookedHouseCard />
-            <BookedHouseCard />
-            <BookedHouseCard />
-            <BookedHouseCard />
-          </div>
+          {data?.data?.bookedHouses?.length > 0 ? (
+            <div className="booked-houses grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 my-10">
+              {data?.data?.bookedHouses?.map((house: any) => (
+                <BookedHouseCard key={house?._id} house={house} />
+              ))}
+            </div>
+          ) : (
+            <div className="flex items-center justify-center">
+              <NoDataComponent />
+            </div>
+          )}
+
           <div className="pagination py-10">
             <div className="flex items-center justify-center gap-2">
               <button className="btn btn-ghost rounded-full">1</button>
@@ -81,7 +86,6 @@ const PurchaseHouse = (props: Props) => {
           </div>
         </div>
       </div>
-      <HouseHolderModal />
     </>
   );
 };
