@@ -1,6 +1,6 @@
 import axios from "axios";
 import * as FileSaver from "file-saver";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiExport, BiPlus } from "react-icons/bi";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
@@ -16,7 +16,7 @@ type Props = {};
 const MyHouses = (props: Props) => {
   const { updatedUser, user } = useAuth<authUserInterface | any>({});
   const [search, setSearch] = useState<string>("");
-
+  const [housesData, setHousesData] = useState<any>([]);
   /* Pagination State */
   const [currentPage, setCurrentPage] = useState(1);
   const [limit, setLimit] = useState(5);
@@ -88,13 +88,17 @@ const MyHouses = (props: Props) => {
           "Index",
           "House Name",
           "House Id",
-          "Charge Amount",
-          "Transaction Id",
-          "Method",
-          "Customer Name",
-          "Customer Email",
-          "Customer Number",
-          "Customer Id",
+          "Bedrooms",
+          "Bathrooms",
+          "Price",
+          "House Type",
+          "House use For",
+          "Owner ID",
+          "Category",
+          "Address",
+          "District",
+          "City",
+          "Likes",
           "Date",
         ],
       ],
@@ -108,6 +112,30 @@ const MyHouses = (props: Props) => {
     FileSaver.saveAs(data, filename + fileExtension);
     swal("Success", "Your file has been exported", "success");
   };
+
+  useEffect(() => {
+    const exportData = data?.data?.map((house: any, ind: any) => {
+      return {
+        Index: ind + 1,
+        "House Id": house?._id,
+        "House Name": house?.name,
+        Bedrooms: house?.bedrooms,
+        Bathrooms: house?.bathrooms,
+        Price: house?.price,
+        "House Type": house?.houseType,
+        "House Use For": house?.houseUseFor,
+        "Owner ID": house?.owner,
+        Category: house?.category,
+        Address: house?.address,
+        District: house?.district,
+        City: house?.city,
+        Likes: house?.likes,
+        Date: house?.createdAt,
+      };
+    });
+
+    setHousesData(exportData);
+  }, [data]);
 
   return (
     <div className="p-10 my-5 bg-white rounded shadow">
@@ -129,7 +157,7 @@ const MyHouses = (props: Props) => {
       </div>
       <div className="export-btn flex items-center gap-5 justify-end">
         <button
-          onClick={() => ExportHouses(data?.data)}
+          onClick={() => ExportHouses(housesData)}
           className="btn btn-xs btn-info rounded-none badge-lg flex items-center gap-2 font-poppins"
         >
           Export Collection <BiExport className="text-md" />
