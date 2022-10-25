@@ -84,7 +84,7 @@ const SendThankEmail = (props: Props) => {
               {/* End */}
             </div>
             <div className="modal-action">
-              <label htmlFor="profile-edit-modal" className="btn btn-warning">
+              <label htmlFor="send-thanks-modal" className="btn btn-warning">
                 Cancel
               </label>
 
