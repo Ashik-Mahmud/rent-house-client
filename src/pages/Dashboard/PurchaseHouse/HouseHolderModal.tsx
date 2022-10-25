@@ -5,17 +5,18 @@ type Props = {
 };
 
 const HouseHolderModal = ({ owner }: Props) => {
-  console.log(owner);
   return (
     <div>
       <input
         type="checkbox"
-        id="owners-details-modal"
+        id={"owners-details-modal" + owner?._id}
         className="modal-toggle"
       />
       <div className="modal modal-middle sm:modal-middle">
         <div className="modal-box w-11/12 max-w-5xl">
-          <h3 className="font-bold text-xl">Owner's Profile Information</h3>
+          <h3 className="font-bold text-xl">
+            House Holder's Profile Information
+          </h3>
 
           <div className="modal-body mt-5">
             <div className="overflow-x-auto">
@@ -28,6 +29,16 @@ const HouseHolderModal = ({ owner }: Props) => {
                 </thead>
                 <tbody>
                   <tr>
+                    <th>Profile</th>
+                    <td>
+                      <img
+                        src={owner?.profileImage}
+                        alt={owner?.name}
+                        className="w-14 h-14 rounded-full object-cover border-4 border-success"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
                     <td>Email</td>
                     <td>
                       <a href={`mailto:${owner?.email}`}>{owner?.email}</a>
@@ -37,6 +48,12 @@ const HouseHolderModal = ({ owner }: Props) => {
                     <td>Phone</td>
                     <td>
                       <a href={`tel:${owner?.phone}`}>{owner?.phone}</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Address</td>
+                    <td>
+                      <span>{owner?.address}</span>
                     </td>
                   </tr>
                   <tr>
@@ -81,7 +98,10 @@ const HouseHolderModal = ({ owner }: Props) => {
             </div>
           </div>
           <div className="modal-action">
-            <label htmlFor="owners-details-modal" className="btn btn-warning">
+            <label
+              htmlFor={"owners-details-modal" + owner?._id}
+              className="btn btn-warning"
+            >
               Cancel
             </label>
           </div>

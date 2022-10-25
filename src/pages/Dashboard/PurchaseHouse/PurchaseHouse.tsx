@@ -11,7 +11,7 @@ import BookedHouseCard from "./BookedHouseCard";
 type Props = {};
 
 const PurchaseHouse = (props: Props) => {
-  const { user, updatedUser } = useAuth<authUserInterface | any>({});
+  const { user } = useAuth<authUserInterface | any>({});
   /* Send Request to get Booked Houses */
   const { data, isLoading } = useQuery("bookedHouses", async () => {
     const { data } = await axios.get(

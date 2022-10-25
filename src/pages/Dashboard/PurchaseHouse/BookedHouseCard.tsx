@@ -41,7 +41,7 @@ const BookedHouseCard = ({ house }: Props) => {
             View
           </Link>
           <label
-            htmlFor="owners-details-modal"
+            htmlFor={"owners-details-modal" + house?.owner?._id}
             className="btn btn-ghost rounded"
           >
             House Holder Details
