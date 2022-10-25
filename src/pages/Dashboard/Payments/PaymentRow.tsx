@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { BiMessageAltAdd } from "react-icons/bi";
-import { MdDangerous } from "react-icons/md";
 import { Link } from "react-router-dom";
 type Props = {
   payment: any;
@@ -103,18 +102,12 @@ const PaymentRow = ({ payment }: Props) => {
       </td>
 
       <td>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 justify-center">
           <span
             className="cursor-pointer text-lg text-success tooltip tooltip-success"
             data-tip="Send Email to Thank him/her"
           >
             <BiMessageAltAdd />
-          </span>
-          <span
-            className="cursor-pointer text-lg text-error tooltip tooltip-error"
-            data-tip="Mute This"
-          >
-            <MdDangerous />
           </span>
         </div>
       </td>
