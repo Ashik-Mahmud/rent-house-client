@@ -1,9 +1,33 @@
+import axios from "axios";
+import { useQuery } from "react-query";
+import { base_backend_url } from "../../../../configs/config";
+import useAuth from "../../../../hooks/useAuth";
+import { authUserInterface } from "../../../../interfaces/UserInterface";
 import RecentBookedHouses from "./RecentBookedHouses";
 import StatisticChart from "./StatisticChart";
 
 type Props = {};
 
 const CustomerDashboard = (props: Props) => {
+  const { user } = useAuth<authUserInterface | any>({});
+  /* Send Request to get All the reports for this Customer */
+  const { data, isLoading, error } = useQuery(
+    ["GET_CUSTOMER_REPORTS"],
+    async () => {
+      const { data } = await axios.get(
+        `${base_backend_url}/api/v1/payment/get-all-reports`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+      return data;
+    }
+  );
+
+  console.log(data);
+
   return (
     <div className="my-5">
       {/* Dashboard Statistic */}
