@@ -39,6 +39,8 @@ const CustomerDashboard = (props: Props) => {
     );
   }
 
+  console.log(data);
+
   return (
     <div className="my-5">
       {/* Dashboard Statistic */}
@@ -162,7 +164,7 @@ const CustomerDashboard = (props: Props) => {
 
       {/* Recent Bookings */}
       <div className="my-5">
-        <RecentBookedHouses />
+        <RecentBookedHouses data={data} />
       </div>
       {/* End */}
       {/* Charts Area */}
