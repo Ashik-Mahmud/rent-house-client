@@ -1,5 +1,7 @@
 import axios from "axios";
+import { MdDangerous } from "react-icons/md";
 import { useQuery } from "react-query";
+import GlobalLoader from "../../../../components/GlobalLoader";
 import { base_backend_url } from "../../../../configs/config";
 import useAuth from "../../../../hooks/useAuth";
 import { authUserInterface } from "../../../../interfaces/UserInterface";
@@ -9,7 +11,7 @@ import StatisticChart from "./StatisticChart";
 type Props = {};
 
 const CustomerDashboard = (props: Props) => {
-  const { user } = useAuth<authUserInterface | any>({});
+  const { user, updatedUser } = useAuth<authUserInterface | any>({});
   /* Send Request to get All the reports for this Customer */
   const { data, isLoading, error } = useQuery(
     ["GET_CUSTOMER_REPORTS"],
@@ -22,11 +24,22 @@ const CustomerDashboard = (props: Props) => {
           },
         }
       );
-      return data;
+      return data?.data;
     }
   );
 
-  console.log(data);
+  console.log(updatedUser);
+
+  if (isLoading) {
+    return <GlobalLoader />;
+  }
+  if (error) {
+    return (
+      <div className="text-center text-danger py-10 text-xl">
+        Something went wrong
+      </div>
+    );
+  }
 
   return (
     <div className="my-5">
@@ -49,7 +62,7 @@ const CustomerDashboard = (props: Props) => {
             </svg>
           </div>
           <div className="stat-title">Booked House</div>
-          <div className="stat-value">31</div>
+          <div className="stat-value">{data?.house || 0}</div>
           <div className="stat-desc">Jan 1st - Feb 1st</div>
         </div>
 
@@ -70,7 +83,7 @@ const CustomerDashboard = (props: Props) => {
             </svg>
           </div>
           <div className="stat-title">Total Reviews</div>
-          <div className="stat-value">40</div>
+          <div className="stat-value">{data?.reviews || 0}</div>
           <div className="stat-desc">↗︎ 400 (22%)</div>
         </div>
         <div className="stat">
@@ -90,8 +103,24 @@ const CustomerDashboard = (props: Props) => {
             </svg>
           </div>
           <div className="stat-title">Blogs</div>
-          <div className="stat-value text-primary">5</div>
-          <div className="stat-desc">21% more than last month</div>
+          {updatedUser?.blogAllowed ? (
+            <>
+              <div className="stat-value text-primary">{data?.blogs || 0}</div>
+              <div className="stat-desc">21% more than last month</div>
+            </>
+          ) : (
+            <>
+              <div
+                className="stat-value text-error tooltip tooltip-error"
+                data-tip="Not Allow to Post Blogs"
+              >
+                <MdDangerous />
+              </div>
+              <div className="stat-desc text-error">
+                You are not allowed to post blogs
+              </div>
+            </>
+          )}
         </div>
 
         <div className="stat">
@@ -111,8 +140,24 @@ const CustomerDashboard = (props: Props) => {
             </svg>
           </div>
           <div className="stat-title">Blog Total Likes</div>
-          <div className="stat-value">1,200</div>
-          <div className="stat-desc">↘︎ 90 (14%)</div>
+          {updatedUser?.blogAllowed ? (
+            <>
+              <div className="stat-value text-primary">{data?.likes || 0}</div>
+              <div className="stat-desc">21% more than last month</div>
+            </>
+          ) : (
+            <>
+              <div
+                className="stat-value text-error tooltip tooltip-error"
+                data-tip="Not Allow to Post Blogs"
+              >
+                <MdDangerous />
+              </div>
+              <div className="stat-desc text-error">
+                You are not allowed to post blogs
+              </div>
+            </>
+          )}
         </div>
       </div>
       {/* End */}
