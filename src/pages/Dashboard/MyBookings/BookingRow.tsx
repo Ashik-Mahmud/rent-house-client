@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { BiTrashAlt } from "react-icons/bi";
 import { BsEye } from "react-icons/bs";
 import { Link } from "react-router-dom";
@@ -6,6 +7,16 @@ type Props = {
 };
 
 const BookingRow = ({ payment }: Props) => {
+  const [isCopy, setIsCopy] = useState(false);
+
+  const copyToClipboard = (e: any) => {
+    navigator.clipboard.writeText(e.target.innerText);
+    setIsCopy(true);
+    setTimeout(() => {
+      setIsCopy(false);
+    }, 1000);
+  };
+
   return (
     <tr>
       <td className="uppercase">P-{payment?._id?.slice(10, 15)}</td>
@@ -47,7 +58,7 @@ const BookingRow = ({ payment }: Props) => {
       </th>
       <td>
         <Link
-          to="/house/634329861a24d7beb5fcd615"
+          to={`/house/${payment?.house?._id}`}
           className="flex items-center space-x-3"
         >
           <div className="avatar">
@@ -81,7 +92,13 @@ const BookingRow = ({ payment }: Props) => {
         </div>
       </td>
       <td>
-        <span className="badge badge-ghost">{payment?.transactionId}</span>
+        <span
+          className="badge badge-ghost tooltip tooltip-success cursor-pointer"
+          data-tip={isCopy ? "Copied to your clipboard" : "Click to copy"}
+          onClick={copyToClipboard}
+        >
+          {payment?.transactionId}
+        </span>
       </td>
       <td>
         <div className="badge badge-success"> booked </div>
@@ -89,7 +106,10 @@ const BookingRow = ({ payment }: Props) => {
 
       <td>
         <div className="flex items-center gap-2">
-          <Link to="" className="btn btn-circle btn-ghost btn-sm">
+          <Link
+            to={`/house/${payment?.house?._id}`}
+            className="btn btn-circle btn-ghost btn-sm"
+          >
             <BsEye />
           </Link>
           <button className="btn btn-ghost btn-circle btn-sm text-error">

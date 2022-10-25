@@ -24,9 +24,6 @@ const MyBookings = (props: Props) => {
     );
     return data;
   });
-  if (isLoading) return <GlobalLoader />;
-
-  console.log(data?.data?.payments);
 
   return (
     <div>
