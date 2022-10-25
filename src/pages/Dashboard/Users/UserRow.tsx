@@ -9,6 +9,7 @@ import {
 } from "react-icons/bs";
 import { GiChessQueen } from "react-icons/gi";
 import { MdVerified } from "react-icons/md";
+import { TbGenderGenderqueer } from "react-icons/tb";
 import { toast } from "react-toastify";
 import swal from "sweetalert";
 import { AxiosUser } from "../../../api/Axios";
@@ -196,6 +197,14 @@ const UserRow = ({ data, ind, refetch }: Props) => {
                 className="block mt-px text-yellow-500"
               >
                 <GiChessQueen />
+              </span>
+            )}
+            {data?.role === "manager" && (
+              <span
+                className="block mt-px text-yellow-500 text-lg"
+                title="Mid Position"
+              >
+                <TbGenderGenderqueer />
               </span>
             )}
           </span>
