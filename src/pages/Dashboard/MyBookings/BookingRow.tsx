@@ -1,13 +1,18 @@
+import axios from "axios";
 import { useState } from "react";
 import { BiTrashAlt } from "react-icons/bi";
 import { BsEye } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
+import { base_backend_url } from "../../../configs/config";
+import useAuth from "../../../hooks/useAuth";
+import { authUserInterface } from "../../../interfaces/UserInterface";
 type Props = {
   payment: any;
 };
 
 const BookingRow = ({ payment }: Props) => {
+  const { user } = useAuth<authUserInterface | any>({});
   const [isCopy, setIsCopy] = useState(false);
 
   /* Handle Copy */
@@ -22,20 +27,45 @@ const BookingRow = ({ payment }: Props) => {
   /* Handle Delete Bookings */
   const handleDelete = async (id: string) => {
     const isConfirm = await swal({
-      title: "Are you sure? You want to delete this booking? ",
+      title: "Are you sure? You want to delete this booking?  ",
       text: "Once deleted, you will not be able to recover this payment statement! (Not recommendation)",
       icon: "warning",
-      buttons: ["cancel", "yes! delete it"],
+      buttons: ["cancel", "yes!"],
       dangerMode: true,
     });
 
     if (isConfirm) {
-      swal("Poof! Your payment statement has been deleted!", {
-        icon: "success",
-      });
-      console.log("Delete", id);
-    } else {
-      swal("Your payment statement is safe!");
+      try {
+        const againConfirm = await swal({
+          title:
+            "Hey look! You will lost your booked house be noticed. It's not recommended. Are you sure?",
+          text: "Once deleted, you will not be able to recover this payment statement and booked house as well! (Not recommendation)",
+          icon: "warning",
+          buttons: ["cancel", "delete it"],
+          dangerMode: true,
+        });
+        if (againConfirm) {
+          const { data } = await axios.delete(
+            `${base_backend_url}/api/v1/payment/delete-statement/${id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${user.token}`,
+              },
+            }
+          );
+          if (data.success) {
+            swal("Poof! Your payment statement has been deleted!", {
+              icon: "success",
+            });
+          }
+        } else {
+          swal("Your payment statement is safe!");
+        }
+      } catch (error) {
+        swal("Oops! Something went wrong!", {
+          icon: "error",
+        });
+      }
     }
   };
 

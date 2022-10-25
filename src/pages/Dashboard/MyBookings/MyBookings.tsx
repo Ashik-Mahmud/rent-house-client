@@ -55,7 +55,7 @@ const MyBookings = (props: Props) => {
 
   return (
     <div>
-      <div className="myBookings p-5 my-7 bg-white">
+      <div className="myBookings p-5 my-7 bg-white font-poppins">
         <div className="flex items-center gap-2">
           <h1 className="text-2xl font-bold">My Bookings</h1>
           <small className="badge badge-success">Customer</small>
