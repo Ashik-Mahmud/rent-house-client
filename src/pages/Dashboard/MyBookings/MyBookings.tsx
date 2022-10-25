@@ -1,9 +1,30 @@
+import axios from "axios";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
+import { useQuery } from "react-query";
+import GlobalLoader from "../../../components/GlobalLoader";
+import { base_backend_url } from "../../../configs/config";
+import useAuth from "../../../hooks/useAuth";
+import { authUserInterface } from "../../../interfaces/UserInterface";
 import BookingRow from "./BookingRow";
 
 type Props = {};
 
 const MyBookings = (props: Props) => {
+  const { user } = useAuth<authUserInterface | any>({});
+
+  /* Get Already Booked Statement */
+  const { data, isLoading } = useQuery("bookings", async () => {
+    const { data } = await axios.get(`${base_backend_url}/api/v1/bookings`, {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+    return data;
+  });
+  if (isLoading) return <GlobalLoader />;
+
+  console.log(data);
+
   return (
     <div>
       <div className="myBookings p-5 my-7 bg-white">
