@@ -1,14 +1,65 @@
+import axios from "axios";
+import { useState } from "react";
 import {
   BiChevronLeft,
   BiChevronRight,
   BiExport,
   BiSearchAlt2,
 } from "react-icons/bi";
+import { useQuery } from "react-query";
+import GlobalLoader from "../../../components/GlobalLoader";
+import { base_backend_url } from "../../../configs/config";
+import useAuth from "../../../hooks/useAuth";
+import { authUserInterface } from "../../../interfaces/UserInterface";
 import PaymentRow from "./PaymentRow";
 
 type Props = {};
 
 const Payments = (props: Props) => {
+  const { user } = useAuth<authUserInterface | any>({});
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [limit, setLimit] = useState(5);
+
+  /* Get Already Booked Statement */
+  const { data, isLoading, refetch } = useQuery(
+    ["bookings", currentPage, limit],
+    async () => {
+      const { data } = await axios.get(
+        `${base_backend_url}/api/v1/payment/holder/payment-statement?page=${currentPage}&limit=${limit}`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+      return data;
+    }
+  );
+
+  /* Handle Pagination */
+  const totalPages = Math.ceil(data?.data?.count / limit);
+  let pages = [];
+  for (let i = 1; i <= totalPages; i++) {
+    pages.push(i);
+  }
+
+  /* Handle Next */
+  const handleNext = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  /* Handle Previous */
+  const handlePrevious = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  console.log(data);
+
   return (
     <div>
       <div className="p-5 my-4 bg-white">
@@ -36,30 +87,41 @@ const Payments = (props: Props) => {
           </button>
         </div>
         <div className="payments-content mb-7">
-          <div className="overflow-x-auto">
-            <table className="table w-full">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>CUSTOMER</th>
-                  <th>INFO</th>
-                  <th>HOUSES</th>
-                  <th>Bed/Bath rooms</th>
-                  <th>Price</th>
-                  <th>Method</th>
-                  <th>Transaction ID</th>
-                  <th>status</th>
+          {isLoading ? (
+            <GlobalLoader />
+          ) : (
+            <div className="overflow-x-auto">
+              {data?.data?.payments?.length > 0 ? (
+                <table className="table w-full">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>CUSTOMER</th>
+                      <th>INFO</th>
+                      <th>HOUSES</th>
+                      <th>Bed/Bath rooms</th>
+                      <th>Price</th>
+                      <th>Method</th>
+                      <th>Transaction ID</th>
+                      <th>status</th>
 
-                  <th>permission</th>
-                </tr>
-              </thead>
-              <tbody>
-                <PaymentRow />
-                <PaymentRow />
-                <PaymentRow />
-              </tbody>
-            </table>
-          </div>
+                      <th>permission</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <PaymentRow />
+                    <PaymentRow />
+                    <PaymentRow />
+                  </tbody>
+                </table>
+              ) : (
+                <div className="text-center">
+                  <h1 className="text-2xl font-bold">No Payments Yet</h1>
+                </div>
+              )}
+            </div>
+          )}
+
           <div className="pagination flex items-center gap-3 justify-end mt-5">
             <a
               href="/"
