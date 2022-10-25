@@ -9,7 +9,7 @@ type Props = {
   payment: any;
 };
 const SendThankEmail = ({ payment }: Props) => {
-  const { register, handleSubmit, reset, setValue } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const { updatedUser, user } = useAuth<authUserInterface | any>({});
 
   /* Handle Send Message */
@@ -50,7 +50,7 @@ const SendThankEmail = ({ payment }: Props) => {
         id={"send-thanks-modal" + payment?._id}
         className="modal-toggle"
       />
-      <div className={`modal  modal-bottom sm:modal-middle `}>
+      <div className={`modal  modal-bottom sm:modal-middle font-poppins `}>
         <div className="modal-box w-11/12 max-w-5xl">
           <h3 className="font-bold text-xl">Say Thanks </h3>
 
@@ -84,7 +84,7 @@ const SendThankEmail = ({ payment }: Props) => {
                   <BiEnvelope />
                 </div>
                 <textarea
-                  className="form-control outline-none pl-4 w-full"
+                  className="form-control outline-none pl-4 w-full text-sm"
                   id=""
                   cols={5}
                   {...register("message")}
