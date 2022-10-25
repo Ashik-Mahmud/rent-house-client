@@ -98,12 +98,15 @@ const MyBookings = (props: Props) => {
 
           {limit < totalPages && (
             <div className="pagination flex items-center gap-3 justify-end mt-5">
-              <span
+              <button
                 onClick={handlePrevious}
-                className="pagination__link w-7 h-7 grid place-items-center btn-ghost rounded-full cursor-pointer"
+                className={`pagination__link w-7 h-7 grid place-items-center btn-ghost rounded-full cursor-pointer ${
+                  currentPage === 1 &&
+                  "pointer-events-none bg-slate-100 text-slate-400 cursor-not-allowed"
+                }`}
               >
                 <BiChevronLeft />
-              </span>
+              </button>
               {pages.map((page) => (
                 <span
                   key={page}
@@ -117,7 +120,10 @@ const MyBookings = (props: Props) => {
               ))}
 
               <span
-                className="pagination__link w-7 h-7 grid place-items-center btn-ghost rounded-full cursor-pointer"
+                className={`pagination__link w-7 h-7 grid place-items-center btn-ghost rounded-full cursor-pointer ${
+                  currentPage === totalPages &&
+                  "pointer-events-none bg-slate-100 text-slate-400 cursor-not-allowed"
+                }`}
                 onClick={handleNext}
               >
                 <BiChevronRight />
