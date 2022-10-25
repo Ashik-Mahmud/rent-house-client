@@ -1,70 +1,105 @@
-import { BiBath, BiBed, BiMessageAltAdd, BiTrashAlt } from "react-icons/bi";
+import { useState } from "react";
+import { BiMessageAltAdd } from "react-icons/bi";
+import { MdDangerous } from "react-icons/md";
 import { Link } from "react-router-dom";
-type Props = {};
+type Props = {
+  payment: any;
+};
 
-const PaymentRow = (props: Props) => {
+const PaymentRow = ({ payment }: Props) => {
+  const [isCopy, setIsCopy] = useState(false);
+  /* Handle Copy */
+  const copyToClipboard = (e: any) => {
+    navigator.clipboard.writeText(e.target.innerText);
+    setIsCopy(true);
+    setTimeout(() => {
+      setIsCopy(false);
+    }, 1000);
+  };
   return (
     <tr>
-      <th>{1}</th>
+      <td className="uppercase">P-{payment?._id?.slice(10, 15)}</td>
       <th>
         <div className="flex items-center space-x-3">
           <div className="avatar online placeholder">
             <div className="bg-neutral-focus text-neutral-content rounded-full w-12">
-              <span className="text-xl">AM</span>
+              <img
+                src={
+                  payment?.user?.profileImage
+                    ? payment?.user?.profileImage
+                    : payment?.user?.avatar
+                }
+                alt={payment?.user?.name}
+              />
             </div>
           </div>
           <div>
-            <div className="font-bold">Ashik Mahmud</div>
-            <div className="text-sm opacity-50">customer</div>
+            <div className="font-bold">{payment?.user?.name}</div>
+            <div className="text-sm opacity-50">{payment?.user?.role}</div>
           </div>
         </div>
       </th>
       <th>
-        <div className="flex items-center space-x-3 text-sm">
+        <div
+          className="flex items-center space-x-3 tooltip "
+          data-tip={payment?.user?.email}
+        >
           <div className="text-sm opacity-50">Email</div>
-          <div className="font-bold">ashik@gmail.com</div>
+          <div className="font-bold">
+            {payment?.user?.email.slice(0, 10) + "..."}
+          </div>
         </div>
-        <div className="flex items-center space-x-3 text-sm">
+        <div className="flex items-center space-x-3">
           <div className="text-sm opacity-50">Phone</div>
-          <div className="font-bold">01700000000</div>
+          <div className="font-bold">{payment?.user?.phone}</div>
         </div>
       </th>
       <td>
         <Link
-          to="/house/634329861a24d7beb5fcd615"
+          to={`/house/${payment?.house?._id}`}
           className="flex items-center space-x-3"
         >
           <div className="avatar">
             <div className="mask mask-squircle w-12 h-12">
-              <img src={"https://placeimg.com/400/225/arch"} alt={""} />
+              <img
+                src={
+                  payment?.house?.image?.img
+                    ? payment?.house?.image?.img
+                    : "https://placeimg.com/400/225/arch"
+                }
+                alt={payment?.house?.name}
+              />
             </div>
           </div>
           <div>
-            <div className="font-bold">Rajpur Villa</div>
-            <div className="text-sm opacity-50">Dhaka/bangladesh</div>
+            <div className="font-bold tooltip" data-tip={payment?.house?.name}>
+              {payment?.house?.name?.slice(0, 10) + "..."}
+            </div>
+            <div className="text-sm opacity-50">{payment?.house?.address}</div>
           </div>
         </Link>
       </td>
+
       <td>
-        <div>
-          <div className="badge badge-ghost">
-            <BiBed /> 4
-          </div>
-          <div className="badge badge-ghost">
-            <BiBath /> 5
-          </div>
+        <div className="flex items-center space-x-3">
+          <div className="text-sm opacity-50">paid In</div>
+          <div className="font-bold">{payment?.money}</div>
         </div>
       </td>
-      <td> 1254545</td>
       <td>
-        {" "}
-        <span className="badge badge-ghost">Card</span>{" "}
+        <span className="badge badge-ghost">{payment?.method}</span>{" "}
       </td>
       <td>
-        <span className="badge badge-ghost">FDSFASD4564</span>
+        <span
+          data-tip={isCopy ? "Copied to your clipboard" : "Click to copy"}
+          onClick={copyToClipboard}
+          className="badge badge-ghost tooltip tooltip-success cursor-pointer"
+        >
+          {payment?.transactionId}
+        </span>
       </td>
       <td>
-        <div className="badge badge-success"> booked </div>
+        <div className="badge badge-success"> {payment?.status} </div>
       </td>
 
       <td>
@@ -75,8 +110,11 @@ const PaymentRow = (props: Props) => {
           >
             <BiMessageAltAdd />
           </span>
-          <span className="cursor-pointer text-lg text-error">
-            <BiTrashAlt />
+          <span
+            className="cursor-pointer text-lg text-error tooltip tooltip-error"
+            data-tip="Mute This"
+          >
+            <MdDangerous />
           </span>
         </div>
       </td>

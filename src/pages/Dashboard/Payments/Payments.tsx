@@ -22,7 +22,7 @@ const Payments = (props: Props) => {
   const [limit, setLimit] = useState(5);
 
   /* Get Already Booked Statement */
-  const { data, isLoading, refetch } = useQuery(
+  const { data, isLoading } = useQuery(
     ["bookings", currentPage, limit],
     async () => {
       const { data } = await axios.get(
@@ -67,6 +67,14 @@ const Payments = (props: Props) => {
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-bold">Payments</h1>
             <small className="badge badge-success">House Holder</small>
+            <select
+              onChange={(e) => setLimit(Number(e.target.value))}
+              className="select select-xs select-bordered"
+            >
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+            </select>
           </div>
           <div className="flex items-center justify-between gap-2 mt-4 sm:mt-0  border p-3 rounded">
             <div className="flex items-center gap-2">
@@ -99,8 +107,7 @@ const Payments = (props: Props) => {
                       <th>CUSTOMER</th>
                       <th>INFO</th>
                       <th>HOUSES</th>
-                      <th>Bed/Bath rooms</th>
-                      <th>Price</th>
+                      <th>AMOUNT</th>
                       <th>Method</th>
                       <th>Transaction ID</th>
                       <th>status</th>
@@ -109,9 +116,9 @@ const Payments = (props: Props) => {
                     </tr>
                   </thead>
                   <tbody>
-                    <PaymentRow />
-                    <PaymentRow />
-                    <PaymentRow />
+                    {data?.data?.payments?.map((payment: any) => (
+                      <PaymentRow key={payment?._id} payment={payment} />
+                    ))}
                   </tbody>
                 </table>
               ) : (
@@ -122,38 +129,40 @@ const Payments = (props: Props) => {
             </div>
           )}
 
-          <div className="pagination flex items-center gap-3 justify-end mt-5">
-            <a
-              href="/"
-              className="pagination__link w-7 h-7 grid place-items-center btn-ghost rounded-full"
-            >
-              <BiChevronLeft />
-            </a>
-            <a
-              href="/"
-              className="pagination__link w-7 h-7 grid place-items-center btn-ghost btn-active rounded-full"
-            >
-              1
-            </a>
-            <a
-              href="/ "
-              className="pagination__link w-7 h-7 grid place-items-center btn-ghost rounded-full"
-            >
-              2
-            </a>
-            <a
-              href="/"
-              className="pagination__link w-7 h-7 grid place-items-center btn-ghost rounded-full"
-            >
-              3
-            </a>
-            <a
-              href="/"
-              className="pagination__link w-7 h-7 grid place-items-center btn-ghost rounded-full"
-            >
-              <BiChevronRight />
-            </a>
-          </div>
+          {limit < totalPages && (
+            <div className="pagination flex items-center gap-3 justify-end mt-5">
+              <button
+                onClick={handlePrevious}
+                className={`pagination__link w-7 h-7 grid place-items-center btn-ghost rounded-full cursor-pointer ${
+                  currentPage === 1 &&
+                  "pointer-events-none bg-slate-100 text-slate-400 cursor-not-allowed"
+                }`}
+              >
+                <BiChevronLeft />
+              </button>
+              {pages.map((page) => (
+                <span
+                  key={page}
+                  className={`pagination__link w-7 h-7 grid place-items-center btn-ghost rounded-full cursor-pointer ${
+                    currentPage === page && "btn-active"
+                  }`}
+                  onClick={() => setCurrentPage(page)}
+                >
+                  {page}
+                </span>
+              ))}
+
+              <span
+                className={`pagination__link w-7 h-7 grid place-items-center btn-ghost rounded-full cursor-pointer ${
+                  currentPage === totalPages &&
+                  "pointer-events-none bg-slate-100 text-slate-400 cursor-not-allowed"
+                }`}
+                onClick={handleNext}
+              >
+                <BiChevronRight />
+              </span>
+            </div>
+          )}
         </div>
       </div>
     </div>
