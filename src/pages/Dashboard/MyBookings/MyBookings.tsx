@@ -16,36 +16,21 @@ const MyBookings = (props: Props) => {
             <table className="table w-full">
               <thead>
                 <tr>
-                  <th className="border-b-2 dark:border-dark-5 whitespace-nowrap">
-                    Name
-                  </th>
-                  <th className="border-b-2 dark:border-dark-5 whitespace-nowrap">
-                    Email
-                  </th>
-                  <th className="border-b-2 dark:border-dark-5 whitespace-nowrap">
-                    Phone
-                  </th>
-                  <th className="border-b-2 dark:border-dark-5 whitespace-nowrap">
-                    House
-                  </th>
-                  <th className="border-b-2 dark:border-dark-5 whitespace-nowrap">
-                    Price
-                  </th>
-                  <th className="border-b-2 dark:border-dark-5 whitespace-nowrap">
-                    Transaction ID
-                  </th>
-                  <th className="border-b-2 dark:border-dark-5 whitespace-nowrap">
-                    Status
-                  </th>
-                  <th className="border-b-2 dark:border-dark-5 whitespace-nowrap">
-                    Action
-                  </th>
+                  <th></th>
+                  <th>House Holder</th>
+                  <th>INFO</th>
+                  <th>HOUSES</th>
+                  <th>Bed/Bath rooms</th>
+                  <th>Price</th>
+                  <th>Method</th>
+                  <th>Money</th>
+                  <th>Transaction ID</th>
+                  <th>status</th>
+
+                  <th>permission</th>
                 </tr>
               </thead>
               <tbody>
-                <BookingRow />
-                <BookingRow />
-                <BookingRow />
                 <BookingRow />
               </tbody>
             </table>
