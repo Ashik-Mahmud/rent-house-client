@@ -17,16 +17,16 @@ type Props = {};
 
 const Payments = (props: Props) => {
   const { user } = useAuth<authUserInterface | any>({});
-
+  const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [limit, setLimit] = useState(5);
 
   /* Get Already Booked Statement */
   const { data, isLoading } = useQuery(
-    ["bookings", currentPage, limit],
+    ["bookings", currentPage, limit, search],
     async () => {
       const { data } = await axios.get(
-        `${base_backend_url}/api/v1/payment/holder/payment-statement?page=${currentPage}&limit=${limit}`,
+        `${base_backend_url}/api/v1/payment/holder/payment-statement?page=${currentPage}&limit=${limit}&search=${search}`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,
@@ -58,8 +58,6 @@ const Payments = (props: Props) => {
     }
   };
 
-  console.log(data);
-
   return (
     <div>
       <div className="p-5 my-4 bg-white">
@@ -76,15 +74,16 @@ const Payments = (props: Props) => {
               <option value="15">15</option>
             </select>
           </div>
-          <div className="flex items-center justify-between gap-2 mt-4 sm:mt-0  border p-3 rounded">
-            <div className="flex items-center gap-2">
+          <div className="flex items-center justify-between gap-2 mt-4 sm:mt-0  border p-3 rounded sm:w-72">
+            <div className="flex items-center gap-2 w-full">
               <div className="icon">
                 <BiSearchAlt2 />
               </div>
               <input
                 type="text"
+                onInput={(e) => setSearch(e.currentTarget.value)}
                 className="form-control outline-none pl-4 w-full"
-                placeholder="Search"
+                placeholder="Search by TRANSACTION ID"
               />
             </div>
           </div>
