@@ -1,12 +1,13 @@
 import axios from "axios";
 import Cookies from "universal-cookie";
+import { base_backend_url } from "../configs/config";
 const cookies = new Cookies();
 
 const cookie = cookies.get("user");
 const token = cookie?.token;
 
 export const AxiosUser = axios.create({
-  baseURL: "${base_backend_url}/api/v1/users",
+  baseURL: `${base_backend_url}/api/v1/users`,
   headers: {
     "Content-Type": "application/json",
     Authorization: `Bearer ${token}`,
@@ -14,7 +15,7 @@ export const AxiosUser = axios.create({
 });
 
 export const AxiosRequest = axios.create({
-  baseURL: "${base_backend_url}/api/v1/request",
+  baseURL: `${base_backend_url}/api/v1/request`,
   headers: {
     "Content-Type": "application/json",
     Authorization: `Bearer ${token}`,

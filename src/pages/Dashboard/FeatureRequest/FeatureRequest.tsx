@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { BiUser } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AxiosUser } from "../../../api/Axios";
 import { useAppSelector } from "../../../app/store";
@@ -17,6 +18,8 @@ const FeatureRequest = (props: Props) => {
   const [isReadonly, setIsReadonly] = useState<boolean>(true);
   const { register, handleSubmit, setValue } = useForm();
   const [requestText, setRequestText] = useState<string>("");
+
+  const navigate = useNavigate();
 
   /* Handle Feature Bugs */
   const handleFeatureBugs = handleSubmit(async (formData) => {
@@ -40,6 +43,7 @@ const FeatureRequest = (props: Props) => {
       if (data?.success) {
         toast.success(data?.message);
         setRequestText("");
+        navigate("/dashboard/profile");
       } else {
         toast.error(data?.message);
       }
