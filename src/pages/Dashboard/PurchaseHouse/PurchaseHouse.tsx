@@ -18,7 +18,7 @@ const PurchaseHouse = (props: Props) => {
 
   /* pagination states */
   const [currentPage, setCurrentPage] = useState(1);
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(4);
 
   /* Send Request to get Booked Houses */
   const { data, isLoading } = useQuery(
@@ -82,9 +82,9 @@ const PurchaseHouse = (props: Props) => {
                   onChange={(e) => setLimit(Number(e.target.value))}
                   className="cursor-pointer font-poppins outline-none p-1 rounded border border-base-300"
                 >
-                  <option value="5">5</option>
-                  <option value="10">10</option>
-                  <option value="15">15</option>
+                  <option value="4">4</option>
+                  <option value="8">8</option>
+                  <option value="12">12</option>
                 </select>
               </div>
             </div>
