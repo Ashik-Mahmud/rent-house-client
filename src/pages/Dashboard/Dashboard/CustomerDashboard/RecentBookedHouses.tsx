@@ -8,7 +8,7 @@ const RecentBookedHouses = ({ data }: Props) => {
     <div className="p-5 bg-white rounded shadow">
       <div className="flex justify-between">
         <h3 className="text-lg font-bold">Recent Booked House</h3>
-        <Link to="/dashboard/admin/houses" className="text-primary">
+        <Link to="/dashboard/purchase/bookings" className="text-primary">
           View All
         </Link>
       </div>

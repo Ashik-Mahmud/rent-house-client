@@ -39,8 +39,6 @@ const CustomerDashboard = (props: Props) => {
     );
   }
 
-  console.log(data);
-
   return (
     <div className="my-5">
       {/* Dashboard Statistic */}
