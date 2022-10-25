@@ -14,7 +14,7 @@ const MyBookings = (props: Props) => {
   const { user } = useAuth<authUserInterface | any>({});
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [limit, setLimit] = useState(1);
+  const [limit, setLimit] = useState(5);
 
   /* Get Already Booked Statement */
   const { data, isLoading } = useQuery(
@@ -59,6 +59,14 @@ const MyBookings = (props: Props) => {
         <div className="flex items-center gap-2">
           <h1 className="text-2xl font-bold">My Bookings</h1>
           <small className="badge badge-success">Customer</small>
+          <select
+            onChange={(e) => setLimit(Number(e.target.value))}
+            className="select select-xs select-bordered"
+          >
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+          </select>
         </div>
         <div className="myBookings__content my-5">
           {isLoading ? (
