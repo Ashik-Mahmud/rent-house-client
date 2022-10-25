@@ -6,11 +6,12 @@ import GlobalLoader from "../../../../components/GlobalLoader";
 import { base_backend_url } from "../../../../configs/config";
 import useAuth from "../../../../hooks/useAuth";
 import { authUserInterface } from "../../../../interfaces/UserInterface";
+import { useGetBlogsByUidQuery } from "../../../../services/BlogApi";
 import BarCharts from "./BarCharts";
 import RecentHouseRequest from "./RecentHouseRequest";
 type Props = {};
 const ManagerDashboard = (props: Props) => {
-  const { user } = useAuth<authUserInterface | any>({});
+  const { user, updatedUser } = useAuth<authUserInterface | any>({});
   /* Get All the houses count for admin */
   const { data: houses, isLoading: houseLoading } = useQuery(
     "houses",
@@ -27,7 +28,12 @@ const ManagerDashboard = (props: Props) => {
     }
   );
 
-  if (houseLoading) {
+  /* Get Blogs by Managers */
+  const { data, isLoading } = useGetBlogsByUidQuery({
+    uid: updatedUser?._id,
+  });
+
+  if (houseLoading || isLoading) {
     return <GlobalLoader />;
   }
 
@@ -66,7 +72,7 @@ const ManagerDashboard = (props: Props) => {
             <BsBook className="text-3xl text-primary" />
           </div>
           <div className="stat-title">Total Blogs</div>
-          <div className="stat-value text-primary">{10}</div>
+          <div className="stat-value text-primary">{data?.data?.count}</div>
           <div className="stat-desc">21% more than last month</div>
         </div>
 
@@ -86,7 +92,7 @@ const ManagerDashboard = (props: Props) => {
       </div>
       {/* End */}
       <div className="charts gap-6 shadow my-5 grid grid-cols-1 md:grid-cols-1 ">
-        <BarCharts houses={houses} />
+        <BarCharts houses={houses} blogs={data?.data?.count} />
       </div>
     </div>
   );
