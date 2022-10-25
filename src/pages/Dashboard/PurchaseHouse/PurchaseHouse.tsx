@@ -18,7 +18,7 @@ const PurchaseHouse = (props: Props) => {
 
   /* pagination states */
   const [currentPage, setCurrentPage] = useState(1);
-  const [limit, setLimit] = useState(1);
+  const [limit, setLimit] = useState(5);
 
   /* Send Request to get Booked Houses */
   const { data, isLoading } = useQuery(
@@ -75,6 +75,18 @@ const PurchaseHouse = (props: Props) => {
                   <option value="createdAt">Oldest</option>
                 </select>
               </div>
+              <div className="limit">
+                <select
+                  name=""
+                  id=""
+                  onChange={(e) => setLimit(Number(e.target.value))}
+                  className="cursor-pointer font-poppins outline-none p-1 rounded border border-base-300"
+                >
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="15">15</option>
+                </select>
+              </div>
             </div>
           </div>
 
@@ -92,21 +104,23 @@ const PurchaseHouse = (props: Props) => {
             </div>
           )}
 
-          <div className="pagination py-10">
-            <div className="flex items-center justify-center gap-2">
-              {pages?.map((page: number) => (
-                <button
-                  className={`btn btn-ghost rounded-full ${
-                    page === currentPage && "btn-active"
-                  } `}
-                  key={page}
-                  onClick={() => setCurrentPage(page)}
-                >
-                  {page}
-                </button>
-              ))}
+          {limit < totalPages && (
+            <div className="pagination py-10">
+              <div className="flex items-center justify-center gap-2">
+                {pages?.map((page: number) => (
+                  <button
+                    className={`btn btn-ghost rounded-full ${
+                      page === currentPage && "btn-active"
+                    } `}
+                    key={page}
+                    onClick={() => setCurrentPage(page)}
+                  >
+                    {page}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </>
