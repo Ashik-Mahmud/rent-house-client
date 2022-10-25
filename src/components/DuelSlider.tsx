@@ -49,7 +49,7 @@ const DuelSlider = ({ priceFilter }: Props) => {
           setMaxPrice(max);
         }}
         min={lowestPrice}
-        max={15000 || highestPrice}
+        max={highestPrice + 1500 || 0}
       />
     </div>
   );
