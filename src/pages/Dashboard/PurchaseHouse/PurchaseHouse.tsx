@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import { useQuery } from "react-query";
 import GlobalLoader from "../../../components/GlobalLoader";
@@ -12,23 +13,26 @@ type Props = {};
 
 const PurchaseHouse = (props: Props) => {
   const { user } = useAuth<authUserInterface | any>({});
+  const [filter, setFilter] = useState("-createdAt");
+  const [search, setSearch] = useState("");
+
   /* Send Request to get Booked Houses */
-  const { data, isLoading } = useQuery("bookedHouses", async () => {
-    const { data } = await axios.get(
-      `${base_backend_url}/api/v1/payment/booked-houses`,
-      {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      }
-    );
-    return data;
-  });
+  const { data, isLoading } = useQuery(
+    ["bookedHouses", filter, search],
+    async () => {
+      const { data } = await axios.get(
+        `${base_backend_url}/api/v1/payment/booked-houses?filter=${filter}&search=${search}`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+      return data;
+    }
+  );
 
-  if (isLoading) {
-    return <GlobalLoader />;
-  }
-
+  console.log(data, search);
   return (
     <>
       <div>
@@ -42,8 +46,9 @@ const PurchaseHouse = (props: Props) => {
               <div className="search flex items-center">
                 <input
                   type="text"
-                  placeholder="Search by House Name"
+                  placeholder="Search by TransactionID"
                   className="input-sm rounded-none outline-none"
+                  onInput={(e) => setSearch(e.currentTarget.value)}
                 />
                 <button className="btn btn-ghost rounded-full">
                   <BiSearch />
@@ -53,15 +58,19 @@ const PurchaseHouse = (props: Props) => {
                 <select
                   name=""
                   id=""
+                  onChange={(e) => setFilter(e.target.value)}
                   className="cursor-pointer font-poppins outline-none p-1 rounded border border-base-300"
                 >
-                  <option value="">Recent</option>
-                  <option value="">Oldest</option>
+                  <option value="-createdAt">Recent</option>
+                  <option value="createdAt">Oldest</option>
                 </select>
               </div>
             </div>
           </div>
-          {data?.data?.bookedHouses?.length > 0 ? (
+
+          {isLoading ? (
+            <GlobalLoader />
+          ) : data?.data?.bookedHouses?.length > 0 ? (
             <div className="booked-houses grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 my-10">
               {data?.data?.bookedHouses?.map((house: any) => (
                 <BookedHouseCard key={house?._id} house={house} />
