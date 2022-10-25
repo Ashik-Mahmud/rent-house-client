@@ -1,10 +1,31 @@
+import axios from "axios";
 import { BiSearch } from "react-icons/bi";
+import { useQuery } from "react-query";
+import { base_backend_url } from "../../../configs/config";
+import useAuth from "../../../hooks/useAuth";
+import { authUserInterface } from "../../../interfaces/UserInterface";
 import BookedHouseCard from "./BookedHouseCard";
 import HouseHolderModal from "./HouseHolderModal";
 
 type Props = {};
 
 const PurchaseHouse = (props: Props) => {
+  const { user } = useAuth<authUserInterface | any>({});
+  /* Send Request to get Booked Houses */
+  const { data, isLoading } = useQuery("bookedHouses", async () => {
+    const { data } = await axios.get(
+      `${base_backend_url}/api/v1/payment/booked-houses`,
+      {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
+    return data;
+  });
+
+  console.log(data);
+
   return (
     <>
       <div>
