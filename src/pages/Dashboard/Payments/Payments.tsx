@@ -1,5 +1,6 @@
 import axios from "axios";
-import { useState } from "react";
+import * as FileSaver from "file-saver";
+import { useEffect, useState } from "react";
 import {
   BiChevronLeft,
   BiChevronRight,
@@ -7,12 +8,13 @@ import {
   BiSearchAlt2,
 } from "react-icons/bi";
 import { useQuery } from "react-query";
+import swal from "sweetalert";
+import * as XLSX from "xlsx";
 import GlobalLoader from "../../../components/GlobalLoader";
 import { base_backend_url } from "../../../configs/config";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import PaymentRow from "./PaymentRow";
-
 type Props = {};
 
 const Payments = (props: Props) => {
@@ -20,6 +22,8 @@ const Payments = (props: Props) => {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [limit, setLimit] = useState(5);
+
+  const [paymentData, setPaymentData] = useState<any>([]);
 
   /* Get Already Booked Statement */
   const { data, isLoading } = useQuery(
@@ -58,6 +62,82 @@ const Payments = (props: Props) => {
     }
   };
 
+  const fileType =
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+  const fileExtension = ".xlsx";
+  /* Handle Exports Payments */
+  const exportPayments = async (payments: any) => {
+    const filename = await swal({
+      title: "Are you sure?",
+      text: "You want to export this payments?",
+      content: {
+        element: "input",
+        attributes: {
+          placeholder: "Put the file name here",
+          type: "text",
+        },
+      },
+    });
+    if (!filename) {
+      swal("Cancelled", "Your did't put any name :)", "error");
+      return;
+    }
+    if (filename?.length < 6) {
+      swal("Error", "File name must be at least 5 characters", "error");
+      return;
+    }
+
+    const ws = XLSX.utils.json_to_sheet(payments);
+    XLSX.utils.sheet_add_aoa(
+      ws,
+      [
+        [
+          "Index",
+          "House Name",
+          "House Id",
+          "Charge Amount",
+          "Transaction Id",
+          "Method",
+          "Customer Name",
+          "Customer Email",
+          "Customer Number",
+          "Customer Id",
+          "Date",
+        ],
+      ],
+      {
+        origin: "A1",
+      }
+    );
+    const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const data = new Blob([excelBuffer], { type: fileType });
+    FileSaver.saveAs(data, filename + fileExtension);
+    swal("Success", "Your file has been exported", "success");
+  };
+
+  useEffect(() => {
+    const exportData = data?.data?.payments.map(
+      (payment: any, index: number) => {
+        return {
+          Index: index + 1,
+          "House Name": payment?.house?.name,
+          "House Id": payment?.house?._id,
+          Amount: payment?.money,
+          "Transaction Id": payment?.transactionId,
+          Method: payment?.method,
+          "Customer Name": payment?.user?.name,
+          "Customer Email": payment?.user?.email,
+          "Customer Number": payment?.user?.phone,
+          "Customer Id": payment?.user?._id,
+          Date: payment?.createdAt,
+        };
+      }
+    );
+
+    setPaymentData(exportData);
+  }, [data]);
+
   return (
     <div>
       <div className="p-5 my-4 bg-white">
@@ -89,7 +169,10 @@ const Payments = (props: Props) => {
           </div>
         </div>
         <div className="export-btn my-5">
-          <button className="badge badge-ghost badge-lg flex items-center gap-2 font-poppins">
+          <button
+            className="badge badge-ghost badge-lg flex items-center gap-2 font-poppins"
+            onClick={() => exportPayments(paymentData)}
+          >
             Export Collection <BiExport className="text-xl" />
           </button>
         </div>
