@@ -5,7 +5,7 @@ type Props = {};
 
 const BlogsDetails = (props: Props) => {
   return (
-    <BlogsDetailsContainer className="p-10 sm:p-12 sm:px-96 font-poppins">
+    <BlogsDetailsContainer className="p-10 sm:p-12 sm:px-96 font-poppins rounded">
       <div className="container mx-auto bg-white p-5">
         <div className="image">
           <img
@@ -31,16 +31,16 @@ const BlogsDetails = (props: Props) => {
             </div>
             <div className="social-share">
               <ul className=" flex items-center gap-3">
-                <li>
+                <li className="cursor-pointer" title="Share on facebook">
                   <BsFacebook />
                 </li>
-                <li>
+                <li className="cursor-pointer" title="Share on twitter">
                   <BsTwitter />
                 </li>
-                <li>
+                <li className="cursor-pointer" title="Share on linkedIn">
                   <BsLinkedin />
                 </li>
-                <li>
+                <li className="cursor-pointer" title="Copy link">
                   <BsLink />
                 </li>
               </ul>
