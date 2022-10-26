@@ -93,12 +93,28 @@ const AddBlog = (props: Props) => {
               <div className="icon">
                 <BiBook />
               </div>
-              <input
-                type="text"
+              <select
                 className="form-control outline-none pl-4 w-full"
                 placeholder="Category"
                 {...register("category")}
-              />
+              >
+                <option value="">select category</option>
+                <option value="General">General</option>
+                <option value="Programming">Programming</option>
+                <option value="Development">Development</option>
+                <option value="Tech">Tech</option>
+                <option value="Comic">Comic</option>
+                <option value="Funny">Funny</option>
+                <option value="Lifestyle">Lifestyle</option>
+                <option value="Science">Science</option>
+                <option value="Novel">Novel</option>
+                <option value="Fiction">Fiction</option>
+                <option value="Knowledge">Knowledge</option>
+                <option value="Random">Random</option>
+                <option value="History">History</option>
+                <option value="Story">Story</option>
+                <option value="Others">Others</option>
+              </select>
             </div>
           </div>
           {/* End */}

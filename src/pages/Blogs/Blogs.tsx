@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { useQuery } from "react-query";
 import GlobalLoader from "../../components/GlobalLoader";
@@ -9,12 +10,21 @@ import BlogCard from "./BlogCard";
 type Props = {};
 
 const Blogs = (props: Props) => {
+  const [categories, setCategories] = useState([]);
   /* Get All the active blogs */
   const { data, isLoading } = useQuery("blogs", async () => {
     const { data } = await axios.get(`${base_backend_url}/api/v1/blogs/all`);
 
     return data;
   });
+
+  useEffect(() => {
+    const categories = data?.data?.map((blog: any) => blog?.category);
+
+    console.log(categories);
+
+    setCategories([]);
+  }, [data]);
 
   console.log(data);
 
