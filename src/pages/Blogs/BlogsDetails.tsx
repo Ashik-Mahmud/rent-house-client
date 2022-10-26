@@ -1,19 +1,45 @@
+import axios from "axios";
+import cogoToast from "cogo-toast";
 import { format } from "date-fns";
+import { useEffect, useState } from "react";
+import { BiArrowBack } from "react-icons/bi";
 import { BsFacebook, BsLink, BsLinkedin, BsTwitter } from "react-icons/bs";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import GlobalLoader from "../../components/GlobalLoader";
+import { base_backend_url } from "../../configs/config";
 import { useGetBlogByIdQuery } from "../../services/BlogApi";
 
 type Props = {};
 
 const BlogsDetails = (props: Props) => {
   const { blogId } = useParams();
+  const navigate = useNavigate();
+  const [clicked, setClicked] = useState(false);
+  const { data, isLoading, refetch } = useGetBlogByIdQuery(blogId);
 
-  const { data, isLoading } = useGetBlogByIdQuery(blogId);
+  /* Handle Favorite */
+  const handleFavorite = async () => {
+    localStorage.setItem("favorite" + blogId, JSON.stringify(!clicked));
+    setClicked(() => {
+      return localStorage.getItem("favorite" + blogId) === "true"
+        ? true
+        : false;
+    });
+    const { data } = await axios.patch(
+      `${base_backend_url}/api/v1/blogs/like/${blogId}?like=${clicked}`
+    );
+    cogoToast.success(data.message);
+    refetch();
+  };
+
+  useEffect(() => {
+    const favoriteValue: any = localStorage.getItem("favorite" + blogId);
+    const parsedValue = JSON.parse(favoriteValue);
+    setClicked(parsedValue || false);
+  }, [clicked, blogId]);
 
   if (isLoading) return <GlobalLoader />;
-  console.log(data?.data);
   return (
     <BlogsDetailsContainer className="p-10 sm:p-12 sm:px-96 font-poppins rounded">
       <div className="container mx-auto bg-white p-5">
@@ -30,7 +56,15 @@ const BlogsDetails = (props: Props) => {
         </div>
         <div className="meta-title m-10">
           <div>
-            <h2 className="text-3xl font-bold">{data?.data?.title}</h2>
+            <div className="flex items-center gap-4">
+              <span
+                className="text-4xl cursor-pointer "
+                onClick={() => navigate(-1)}
+              >
+                <BiArrowBack />
+              </span>
+              <h2 className="text-3xl font-bold">{data?.data?.title}</h2>
+            </div>
             <div className="mt-4 ">
               Category/
               <span className="font-bold">{data?.data?.category}</span>
@@ -38,7 +72,9 @@ const BlogsDetails = (props: Props) => {
           </div>
           <div className="meta flex items-center justify-between mt-10">
             <div className="author">
-              <h3 className="text-xl font-bold">Ashik Mahmud</h3>
+              <h3 className="text-xl font-bold">
+                {data?.data?.author?.name || "loading...."}
+              </h3>
               <span>{format(new Date(data?.data?.createdAt), "PPPPp")}</span>
             </div>
             <div className="social-share">
@@ -69,10 +105,17 @@ const BlogsDetails = (props: Props) => {
         <div className="text-center flex items-center justify-between  bg-gray-50 rounded-lg">
           <div className="flex items-center gap-0">
             <div
-              className={`loves-to-the-blog loved-blog`}
+              onClick={handleFavorite}
+              className={`loves-to-the-blog ${clicked ? "loved-blog" : ""} `}
               title={"Dislike Like"}
             ></div>
-            <span className="font-bold text-xl text-red-500">1.5k Likes</span>
+            <span
+              className={`font-bold font-open text-xl ${
+                clicked ? "text-red-500" : ""
+              }`}
+            >
+              {data?.data?.likes} Likes
+            </span>
           </div>
           <div>
             <form
