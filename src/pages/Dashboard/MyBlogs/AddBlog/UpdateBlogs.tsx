@@ -16,7 +16,7 @@ const UpdateBlogs = (props: Props) => {
   const { id } = useParams();
   const [seeBlogContent, setSeeBlogContent] = useState<boolean>(false);
   const [blogText, setBlogText] = useState<string>("");
-  const { data, isLoading, error } = useGetBlogByIdQuery(id);
+  const { data, isLoading, error, refetch } = useGetBlogByIdQuery(id);
   const [isYes, setIsYes] = useState<boolean>(false);
   const updateData = data?.data;
   const { register, handleSubmit, setValue } = useForm();
@@ -36,6 +36,7 @@ const UpdateBlogs = (props: Props) => {
     }
 
     await updateBlog({ ...editedContent, _id: id }).unwrap();
+    refetch();
   });
 
   useEffect(() => {

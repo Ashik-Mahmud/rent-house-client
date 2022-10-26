@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { BiBook, BiLink } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import { PulseLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import useAuth from "../../../../hooks/useAuth";
 import { authUserInterface } from "../../../../interfaces/UserInterface";
@@ -15,7 +16,8 @@ const AddBlog = (props: Props) => {
   const { register, handleSubmit } = useForm();
 
   const navigate = useNavigate();
-  const [createBlog, { data, isSuccess, error }] = useCreateBlogMutation();
+  const [createBlog, { data, isSuccess, error, isLoading }] =
+    useCreateBlogMutation();
 
   const handleAddBlog = handleSubmit(async (formData) => {
     if (
@@ -108,6 +110,7 @@ const AddBlog = (props: Props) => {
                 <option value="Lifestyle">Lifestyle</option>
                 <option value="Science">Science</option>
                 <option value="Novel">Novel</option>
+                <option value="Technic">Technic</option>
                 <option value="Fiction">Fiction</option>
                 <option value="Knowledge">Knowledge</option>
                 <option value="Random">Random</option>
@@ -184,7 +187,13 @@ const AddBlog = (props: Props) => {
           </div>
           {/* End */}
           <div className="flex justify-end mt-5">
-            <button className="btn btn-primary rounded-none">Add Blog</button>
+            {isLoading ? (
+              <button className="btn btn-primary rounded-none" type="button">
+                <PulseLoader size={8} color="#fff" />
+              </button>
+            ) : (
+              <button className="btn btn-primary rounded-none">Add Blog</button>
+            )}
           </div>
         </div>
       </form>
