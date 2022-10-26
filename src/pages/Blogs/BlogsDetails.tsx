@@ -1,10 +1,11 @@
 import { BsFacebook, BsLink, BsLinkedin, BsTwitter } from "react-icons/bs";
+import styled from "styled-components";
 
 type Props = {};
 
 const BlogsDetails = (props: Props) => {
   return (
-    <div className="p-10 sm:p-12 sm:px-96 font-poppins">
+    <BlogsDetailsContainer className="p-10 sm:p-12 sm:px-96 font-poppins">
       <div className="container mx-auto bg-white p-5">
         <div className="image">
           <img
@@ -99,9 +100,40 @@ const BlogsDetails = (props: Props) => {
           omnis non eligendi beatae. Quos quo quas reiciendis modi voluptatem
           asperiores, impedit aspernatur ex.
         </div>
+
+        <div className="text-center flex items-center justify-between  bg-gray-50 rounded-lg">
+          <div className="flex items-center gap-0">
+            <div
+              className={`loves-to-the-blog loved-blog`}
+              title={"Dislike Like"}
+            ></div>
+            <span className="font-bold text-xl text-red-500">1.5k Likes</span>
+          </div>
+          <div>
+            <form action="">
+              <input type="email" placeholder="Get Update for blogs" />
+              <button>Subscribe</button>
+            </form>
+          </div>
+        </div>
       </div>
-    </div>
+    </BlogsDetailsContainer>
   );
 };
 
+const BlogsDetailsContainer = styled.div`
+  .loves-to-the-blog {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    background: url(https://abs.twimg.com/a/1446542199/img/t1/web_heart_animation.png)
+      no-repeat;
+    cursor: pointer;
+    display: inline-block;
+  }
+  .loved-blog {
+    background-position: -2799px 0px;
+    transition: background 1s steps(28);
+  }
+`;
 export default BlogsDetails;
