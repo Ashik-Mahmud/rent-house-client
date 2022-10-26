@@ -1,16 +1,40 @@
-import SectionTitle from "../../components/SectionTItle";
+import { BsSearch } from "react-icons/bs";
 import BlogCard from "./BlogCard";
 
 type Props = {};
 
 const Blogs = (props: Props) => {
   return (
-    <section>
+    <section className="font-poppins">
       <div className="container mx-auto py-10">
-        <SectionTitle
-          title="Welcome to Blogs"
-          desc="Read blogs and makes your mind fresh then you want to make yourself creative."
-        />
+        <div className="blogs-header text-center mb-10">
+          <h3 className="text-2xl font-bold">Reading Blog</h3>
+          {/* Search */}
+          <div className="search-area justify-center flex items-center my-10 bg-white sm:w-1/2 mx-auto px-6 py-3 rounded-full shadow">
+            <div className="icon">
+              <BsSearch />
+            </div>
+            <input
+              type="search"
+              placeholder="Search Blogs By Name or Category"
+              className="w-full p-2 pl-4 outline-none"
+            />
+          </div>
+
+          {/* Tabs */}
+          <ul className="flex items-center gap-6 justify-center flex-wrap">
+            <li className="p-4 shadow rounded-md cursor-pointer bg-success">
+              Programming <span className="badge badge-ghost">5</span>
+            </li>
+            <li className="p-4 bg-white shadow rounded-md cursor-pointer">
+              Cinema <span className="badge">5</span>
+            </li>
+            <li className="p-4 bg-white shadow rounded-md cursor-pointer">
+              Comic <span className="badge">5</span>
+            </li>
+          </ul>
+        </div>
+
         <div className="text-gray-600 body-font">
           <div className="container px-5 py-8 mx-auto">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 -m-4">
