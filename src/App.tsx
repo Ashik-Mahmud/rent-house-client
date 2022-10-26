@@ -14,6 +14,7 @@ import RequireUser from "./auth/RequireUser";
 import { base_backend_url } from "./configs/config";
 import { setAppOptions } from "./features/AppSlice";
 import About from "./pages/About";
+import Reviews from "./pages/AppReviews/Reviews";
 import Login from "./pages/Authentication/Login";
 import RegisterAuth from "./pages/Authentication/Register";
 import ResetPassword from "./pages/Authentication/ResetPassword";
@@ -54,7 +55,6 @@ import ForHouseHolderRequest from "./pages/Dashboard/RequestFromUsers/ForHouseHo
 import RequestFromUsers from "./pages/Dashboard/RequestFromUsers/RequestFromUsers";
 import Settings from "./pages/Dashboard/Settings/Settings";
 import Users from "./pages/Dashboard/Users/Users";
-import Reviews from "./pages/Home/AppReviews/Reviews";
 import Home from "./pages/Home/Home";
 import HouseDetails from "./pages/Houses/HouseDetails/HouseDetails";
 import Houses from "./pages/Houses/Houses";

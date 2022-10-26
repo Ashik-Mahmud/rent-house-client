@@ -1,8 +1,17 @@
+import { ScrollToTop } from "react-simple-scroll-up";
 type Props = {};
 
 const About = (props: Props) => {
   return (
     <div>
+      <ScrollToTop
+        size={60}
+        className="z-50"
+        strokeFillColor="#36D399"
+        bgColor="#fff"
+        symbolSize={30}
+        symbolColor="#36D399"
+      />
       <div className="container mx-auto py-10 text-center">
         <h3 className="text-2xl font-bold py-6">About</h3>
       </div>

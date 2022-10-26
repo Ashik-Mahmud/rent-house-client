@@ -1,10 +1,19 @@
 import AppReviewCard from "./AppReviewCard";
 
+import { ScrollToTop } from "react-simple-scroll-up";
 type Props = {};
 
 const Reviews = (props: Props) => {
   return (
     <section>
+      <ScrollToTop
+        size={60}
+        className="z-50"
+        strokeFillColor="#36D399"
+        bgColor="#fff"
+        symbolSize={30}
+        symbolColor="#36D399"
+      />
       <div className="container mx-auto py-10 text-center font-poppins mb-10">
         <div className=" my-10 flex items-center justify-between">
           <div className="title text-left">
