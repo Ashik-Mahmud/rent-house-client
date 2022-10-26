@@ -1,30 +1,178 @@
-import { BiShow } from "react-icons/bi";
+import axios from "axios";
+import { useState } from "react";
+import { BiTrashAlt } from "react-icons/bi";
+import { BsEye } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import swal from "sweetalert";
+import { base_backend_url } from "../../../configs/config";
+import useAuth from "../../../hooks/useAuth";
+import { authUserInterface } from "../../../interfaces/UserInterface";
+type Props = {
+  payment: any;
+  refetch: () => void;
+};
 
-type Props = {};
+const BookingRow = ({ payment, refetch }: Props) => {
+  const { user } = useAuth<authUserInterface | any>({});
+  const [isCopy, setIsCopy] = useState(false);
 
-const BookingRow = (props: Props) => {
+  /* Handle Copy */
+  const copyToClipboard = (e: any) => {
+    navigator.clipboard.writeText(e.target.innerText);
+    setIsCopy(true);
+    setTimeout(() => {
+      setIsCopy(false);
+    }, 1000);
+  };
+
+  /* Handle Delete Bookings */
+  const handleDelete = async (id: string) => {
+    const isConfirm = await swal({
+      title: "Are you sure? You want to delete this booking?  ",
+      text: "Once deleted, you will not be able to recover this payment statement! (Not recommendation)",
+      icon: "warning",
+      buttons: ["cancel", "yes!"],
+      dangerMode: true,
+    });
+
+    if (isConfirm) {
+      try {
+        const againConfirm = await swal({
+          title:
+            "Hey look! You will lost your booked house be noticed. It's not recommended. Are you sure?",
+          text: "Once deleted, you will not be able to recover this payment statement and booked house as well! (Not recommendation)",
+          icon: "warning",
+          buttons: ["cancel", "delete it"],
+          dangerMode: true,
+        });
+        if (againConfirm) {
+          const { data } = await axios.delete(
+            `${base_backend_url}/api/v1/payment/delete-statement/${id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${user.token}`,
+              },
+            }
+          );
+          if (data.success) {
+            swal("Poof! Your payment statement has been deleted!", {
+              icon: "success",
+            });
+            refetch();
+          }
+        } else {
+          swal("Your payment statement is safe!");
+        }
+      } catch (error) {
+        swal("Oops! Something went wrong!", {
+          icon: "error",
+        });
+      }
+    }
+  };
+
   return (
     <tr>
-      <td className="border-b dark:border-dark-5">John</td>
-      <td className="border-b dark:border-dark-5">
-        <div className="flex items-center text-theme-9">
-          <a href="mailto:ashik@gmail.com">ashik@gmail.com</a>
+      <td className="uppercase">P-{payment?._id?.slice(10, 15)}</td>
+      <th>
+        <div className="flex items-center space-x-3">
+          <div className="avatar online placeholder">
+            <div className="bg-neutral-focus text-neutral-content rounded-full w-12">
+              <img
+                src={
+                  payment?.author?.profileImage
+                    ? payment?.author?.profileImage
+                    : payment?.author?.avatar
+                }
+                alt={payment?.author?.name}
+                className="rounded-full w-12"
+              />
+            </div>
+          </div>
+          <div>
+            <div className="font-bold">{payment?.author?.name}</div>
+            <div className="text-sm opacity-50">{payment?.author?.address}</div>
+          </div>
+        </div>
+      </th>
+      <th>
+        <div
+          className="flex items-center space-x-3 tooltip "
+          data-tip={payment?.author?.email}
+        >
+          <div className="text-sm opacity-50">Email</div>
+          <div className="font-bold">
+            {payment?.author?.email.slice(0, 10) + "..."}
+          </div>
+        </div>
+        <div className="flex items-center space-x-3">
+          <div className="text-sm opacity-50">Phone</div>
+          <div className="font-bold">{payment?.author?.phone}</div>
+        </div>
+      </th>
+      <td>
+        <Link
+          to={`/house/${payment?.house?._id}`}
+          className="flex items-center space-x-3"
+        >
+          <div className="avatar">
+            <div className="mask mask-squircle w-12 h-12">
+              <img
+                src={
+                  payment?.house?.image?.img
+                    ? payment?.house?.image?.img
+                    : "https://placeimg.com/400/225/arch"
+                }
+                alt={payment?.house?.name}
+              />
+            </div>
+          </div>
+          <div>
+            <div className="font-bold tooltip" data-tip={payment?.house?.name}>
+              {payment?.house?.name?.slice(0, 10) + "..."}
+            </div>
+            <div className="text-sm opacity-50">{payment?.house?.address}</div>
+          </div>
+        </Link>
+      </td>
+
+      <td>
+        <span className="badge badge-ghost">{payment?.method}</span>
+      </td>
+      <td>
+        <div className="flex items-center space-x-3">
+          <div className="text-sm opacity-50">Paid</div>
+          <div className="font-bold">{payment?.money}</div>
         </div>
       </td>
-      <td className="border-b dark:border-dark-5">+880 123456789</td>
-      <td className="border-b dark:border-dark-5">House 1</td>
-      <td className="border-b dark:border-dark-5">1000</td>
-      <td className="border-b dark:border-dark-5">
-        <span className="badge badge-warning">asdf4343423</span>
+      <td>
+        <span
+          className="badge badge-ghost tooltip tooltip-success cursor-pointer"
+          data-tip={isCopy ? "Copied to your clipboard" : "Click to copy"}
+          onClick={copyToClipboard}
+        >
+          {payment?.transactionId}
+        </span>
       </td>
-      <td className="border-b dark:border-dark-5">
-        <span className="badge badge-success">Booked</span>
+      <td>
+        <div className="badge badge-success"> booked </div>
       </td>
-      <td className="border-b dark:border-dark-5">
-        <Link to="" className="tooltip" data-tip="Show House Details For User">
-          <BiShow />
-        </Link>
+
+      <td>
+        <div className="flex items-center gap-2">
+          <Link
+            to={`/house/${payment?.house?._id}`}
+            className="btn btn-circle btn-ghost btn-sm"
+          >
+            <BsEye />
+          </Link>
+          <button
+            onClick={() => handleDelete(payment?._id)}
+            className="btn btn-ghost btn-circle btn-sm text-error"
+          >
+            <BiTrashAlt />
+          </button>
+        </div>
       </td>
     </tr>
   );

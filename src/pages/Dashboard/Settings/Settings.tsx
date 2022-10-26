@@ -52,7 +52,6 @@ const Settings = ({ appChangeRefetch }: Props) => {
         repeatNewPassword: undefined,
         email: updatedUser?.email,
       });
-      reset();
     } catch (error) {
       throw new Error((error as any)?.message);
     }
@@ -68,8 +67,9 @@ const Settings = ({ appChangeRefetch }: Props) => {
       setUser(null);
       dispatch(logout());
       navigate("/login");
+      reset();
     }
-  }, [isSuccess, data, error, dispatch, setUser, navigate]);
+  }, [isSuccess, data, error, dispatch, setUser, navigate, reset]);
 
   /* Handle Change App Name */
   const handleChangeAppName = handleSubmit(async (formData) => {

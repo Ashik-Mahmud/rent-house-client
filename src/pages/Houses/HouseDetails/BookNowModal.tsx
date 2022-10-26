@@ -1,9 +1,12 @@
+import axios from "axios";
 import cogoToast from "cogo-toast";
 import { useEffect, useState } from "react";
 import { BiEnvelope, BiKey, BiPhoneIncoming, BiUser } from "react-icons/bi";
 import { Link, useNavigate } from "react-router-dom";
 import { PulseLoader } from "react-spinners";
+import swal from "sweetalert";
 import StripeCheckout from "../../../components/StripeCheckout";
+import { base_backend_url } from "../../../configs/config";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import { useRegisterAuthMutation } from "../../../services/AuthApi";
@@ -13,7 +16,7 @@ type Props = {
 };
 
 const BookNow = ({ house }: Props) => {
-  const { updatedUser } = useAuth<authUserInterface | any>({});
+  const { updatedUser, user } = useAuth<authUserInterface | any>({});
   /* Payment state */
   const [isStripe, setIsStripe] = useState(false);
   const [registerAuth, { isLoading, error, isSuccess, data }] =
@@ -65,6 +68,41 @@ const BookNow = ({ house }: Props) => {
       password,
       role: "customer",
     });
+  };
+
+  /* Handle SSL Payment Method */
+  const handleSSLPaymentMethod = async (event: any) => {
+    event.preventDefault();
+    if (!user) {
+      return cogoToast.error("Please login first");
+    }
+
+    if (!updatedUser?.isVerified) {
+      return swal({
+        title: "Please verify your account first",
+        text: "Please verify your account first",
+        icon: "warning",
+        dangerMode: true,
+      });
+    }
+
+    const { data } = await axios.get(
+      `${base_backend_url}/api/v1/payment/sslcommerz/create-session`,
+      {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+        params: {
+          user: updatedUser?._id,
+          author: house?.owner?._id,
+          house: house?._id,
+          amount: 100,
+        },
+      }
+    );
+    if (data?.url) {
+      window.location.href = data?.url;
+    }
   };
 
   useEffect(() => {
@@ -216,21 +254,23 @@ const BookNow = ({ house }: Props) => {
                 </div>
                 {isStripe && (
                   <>
-                    <div className="my-3 flex items-center gap-2 font-poppins mt-8">
-                      <input
-                        type="checkbox"
-                        name="permission"
-                        className="checkbox"
-                        id="permission"
-                        required
-                      />
-                      <label htmlFor="permission">
-                        Accept all the Condition & Policy
-                      </label>
-                    </div>
-                    <button className="btn bg-[#295CAB] w-full">
-                      Pay 100 tk With SSLCOMMERZ
-                    </button>
+                    <form action="" onSubmit={handleSSLPaymentMethod}>
+                      <div className="my-3 flex items-center gap-2 font-poppins mt-8">
+                        <input
+                          type="checkbox"
+                          name="permission"
+                          className="checkbox"
+                          id="permission"
+                          required
+                        />
+                        <label htmlFor="permission">
+                          Accept all the Condition & Policy
+                        </label>
+                      </div>
+                      <button className="btn bg-[#295CAB] w-full" type="submit">
+                        Pay 100 tk With SSLCOMMERZ
+                      </button>
+                    </form>
                   </>
                 )}
               </>

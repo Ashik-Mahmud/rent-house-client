@@ -109,11 +109,21 @@ const HouseHolderDashboard = (props: Props) => {
             <div className="stat-desc">↗︎ 400 (22%)</div>
           </div>
           <div className="stat border">
+            <div className="stat-figure text-info">
+              <BsHouse className="text-2xl" />
+            </div>
+            <div className="stat-title">Booked Houses</div>
+            <div className="stat-value text-info">
+              {reports?.bookedHouse || 0}
+            </div>
+            <div className="stat-desc">↗︎ 400 (22%)</div>
+          </div>
+          <div className="stat border">
             <div className="stat-figure text-primary">
               <BsCoin className="text-2xl" />
             </div>
             <div className="stat-title">Payments/Bookings</div>
-            <div className="stat-value text-primary">20</div>
+            <div className="stat-value text-primary">{reports?.payments}</div>
             <div className="stat-desc">21% more than last month</div>
           </div>
           <div className="stat border">
