@@ -13,17 +13,37 @@ const Blogs = (props: Props) => {
   const [categories, setCategories] = useState([]);
   const [search, setSearch] = useState("");
   const [currentCategory, setCurrentCategory] = useState("All");
+  /* Pagination */
+  const [currentPage, setCurrentPage] = useState(1);
+  const [limit, setLimit] = useState(8);
+
   /* Get All the active blogs */
   const { data, isLoading } = useQuery(
-    ["blogs", currentCategory, search],
+    ["blogs", currentCategory, search, currentPage, limit],
     async () => {
       const { data } = await axios.get(
-        `${base_backend_url}/api/v1/blogs/all?category=${currentCategory}&q=${search}`
+        `${base_backend_url}/api/v1/blogs/all?category=${currentCategory}&q=${search}&page=${currentPage}&limit=${limit}`
       );
 
       return data;
     }
   );
+
+  /* Handle Pagination */
+
+  /* Handle Pagination */
+  const totalPage = Math.ceil(data?.count / limit);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPage) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
   useEffect(() => {
     const categories = data?.allData
@@ -104,6 +124,48 @@ const Blogs = (props: Props) => {
                     <NoDataComponent />
                   </div>
                 )}
+              </div>
+            )}
+
+            {limit < data?.count && (
+              <div className="pagination flex items-center justify-between mt-20">
+                <div className="flex items-center gap-2 text-sm">
+                  Show{" "}
+                  <select
+                    name=""
+                    id=""
+                    className="select select-sm select-bordered rounded-none tooltip tooltip-info"
+                    title="Limit for showing"
+                    onChange={(event) => setLimit(Number(event.target.value))}
+                  >
+                    <option value="8">8</option>
+                    <option value="16">16</option>
+                    <option value="24">24</option>
+                  </select>
+                  entries
+                </div>
+                <div className="flex items-center gap-6">
+                  <div>
+                    <button
+                      className="btn btn-sm btn-ghost"
+                      onClick={handlePrevPage}
+                      disabled={currentPage === 1}
+                    >
+                      Previous
+                    </button>
+
+                    <button
+                      className="btn btn-sm btn-ghost "
+                      disabled={currentPage === totalPage}
+                      onClick={handleNextPage}
+                    >
+                      Next
+                    </button>
+                  </div>
+                  <span>
+                    Page <b>{currentPage} </b> of <b>{totalPage}</b>
+                  </span>
+                </div>
               </div>
             )}
 
