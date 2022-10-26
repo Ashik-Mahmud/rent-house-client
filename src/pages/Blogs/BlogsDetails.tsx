@@ -64,7 +64,7 @@ const BlogsDetails = (props: Props) => {
 
   if (isLoading) return <GlobalLoader />;
   return (
-    <BlogsDetailsContainer className="p-10 sm:p-12 sm:px-96 font-poppins rounded">
+    <BlogsDetailsContainer className="p-10 sm:p-12 sm:px-96 font-bangla rounded">
       <div className="container mx-auto bg-white p-5">
         <div className="image">
           <img
@@ -156,7 +156,7 @@ const BlogsDetails = (props: Props) => {
 
         {/* details */}
         <div
-          className="details m-10 leading-8 font-poppins "
+          className="details m-10 leading-8 font-bangla text-lg "
           dangerouslySetInnerHTML={{ __html: data?.data?.description }}
         ></div>
 

@@ -28,11 +28,11 @@ const UpdateBlogs = (props: Props) => {
 
   /* Handle Update Blog */
   const handleUpdateBlog = handleSubmit(async (formData) => {
-    const editedContent = { ...formData, blogContent: "" };
+    const editedContent = { ...formData };
     if (blogText) {
-      editedContent.blogContent = blogText;
+      editedContent.description = blogText;
     } else {
-      editedContent.blogContent = updateData?.description;
+      editedContent.description = updateData?.description;
     }
 
     await updateBlog({ ...editedContent, _id: id }).unwrap();
