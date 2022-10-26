@@ -11,22 +11,32 @@ type Props = {};
 
 const Blogs = (props: Props) => {
   const [categories, setCategories] = useState([]);
+  const [currentCategory, setCurrentCategory] = useState("All");
   /* Get All the active blogs */
-  const { data, isLoading } = useQuery("blogs", async () => {
-    const { data } = await axios.get(`${base_backend_url}/api/v1/blogs/all`);
+  const { data, isLoading } = useQuery(["blogs", currentCategory], async () => {
+    const { data } = await axios.get(
+      `${base_backend_url}/api/v1/blogs/all?category=${currentCategory}`
+    );
 
     return data;
   });
 
   useEffect(() => {
-    const categories = data?.data?.map((blog: any) => blog?.category);
+    const categories = data?.allData
+      ?.map((blog: any) => blog?.category)
+      .filter((v: string, i: number, a: string[]) => a.indexOf(v) === i);
 
-    console.log(categories);
+    /* Find Count blogs for particular category */
+    const categoryCount = categories?.map((category: string) => {
+      return {
+        category,
+        count: data?.allData?.filter((blog: any) => blog?.category === category)
+          .length,
+      };
+    });
 
-    setCategories([]);
+    setCategories(categoryCount);
   }, [data]);
-
-  console.log(data);
 
   return (
     <section className="font-poppins">
@@ -47,15 +57,28 @@ const Blogs = (props: Props) => {
 
           {/* Tabs */}
           <ul className="flex items-center gap-6 justify-center flex-wrap">
-            <li className="p-4 shadow rounded-md cursor-pointer bg-success">
-              Programming <span className="badge badge-ghost">5</span>
+            <li
+              className={`p-4 shadow rounded-md cursor-pointer ${
+                currentCategory === "All" ? "bg-success" : "text-gray-500"
+              } cursor-pointer`}
+              onClick={() => setCurrentCategory("All")}
+            >
+              All <span className="badge badge-ghost">{data?.count}</span>
             </li>
-            <li className="p-4 bg-white shadow rounded-md cursor-pointer">
-              Cinema <span className="badge">5</span>
-            </li>
-            <li className="p-4 bg-white shadow rounded-md cursor-pointer">
-              Comic <span className="badge">5</span>
-            </li>
+
+            {categories?.map((category: any) => (
+              <li
+                key={category?.category}
+                className={`p-4 shadow rounded-md cursor-pointer ${
+                  currentCategory === category?.category && "bg-success"
+                }`}
+                onClick={() => setCurrentCategory(category?.category)}
+              >
+                {category?.category}
+
+                <span className="badge badge-ghost">{category?.count}</span>
+              </li>
+            ))}
           </ul>
         </div>
 
