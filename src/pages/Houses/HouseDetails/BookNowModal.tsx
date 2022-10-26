@@ -72,11 +72,10 @@ const BookNow = ({ house }: Props) => {
   /* Handle SSL Payment Method */
   const handleSSLPaymentMethod = async (event: any) => {
     event.preventDefault();
-
     if (!user) {
       return cogoToast.error("Please login first");
     }
-    const response = await axios.get(
+    const { data } = await axios.get(
       `${base_backend_url}/api/v1/payment/sslcommerz/create-session`,
       {
         headers: {
@@ -84,14 +83,15 @@ const BookNow = ({ house }: Props) => {
         },
         params: {
           user: updatedUser?._id,
-          author: house?.author?._id,
-          house: house?.id,
+          author: house?.owner?._id,
+          house: house?._id,
           amount: 100,
         },
       }
     );
-
-    console.log(response);
+    if (data?.url) {
+      window.location.href = data?.url;
+    }
   };
 
   useEffect(() => {
