@@ -29,7 +29,7 @@ const RecentBookings = (props: Props) => {
   }
 
   return (
-    <div className="p-5 bg-white rounded shadow">
+    <div className="p-5 bg-white rounded shadow font-poppins">
       <div className="flex justify-between">
         <h3 className="text-lg font-bold">Recent Bookings</h3>
         <Link to="/dashboard/payments" className="text-primary">
