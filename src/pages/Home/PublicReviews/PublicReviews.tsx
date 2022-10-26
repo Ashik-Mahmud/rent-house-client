@@ -11,12 +11,11 @@ import slickSettings from "../../../configs/slickConfig";
 import ReviewCard from "./ReviewCard";
 type Props = {};
 const PublicReviews = (props: Props) => {
-  const { data, isLoading } = useQuery("revies", async () => {
+  const { data, isLoading } = useQuery("reviews", async () => {
     const { data } = await axios.get(`${base_backend_url}/api/v1/reviews/all`);
     return data;
   });
 
-  console.log(data);
   if (isLoading) return <GlobalLoader />;
 
   if (data?.data?.length === 0) {
