@@ -18,7 +18,12 @@ const AddBlog = (props: Props) => {
   const [createBlog, { data, isSuccess, error }] = useCreateBlogMutation();
 
   const handleAddBlog = handleSubmit(async (formData) => {
-    if (!formData?.blogTitle || !formData?.category || !formData?.imageUrl) {
+    if (
+      !formData?.blogTitle ||
+      !formData?.category ||
+      !formData?.imageUrl ||
+      !formData?.excerpt
+    ) {
       return toast.error(`All fields is required.`);
     }
     if (!blogText) return toast(`Blog Content is Required.`);
@@ -29,6 +34,7 @@ const AddBlog = (props: Props) => {
     try {
       await createBlog({
         title: formData.blogTitle,
+        excerpt: formData?.excerpt,
         description: blogText,
         category: formData.category,
         imageUrl: formData.imageUrl,
@@ -111,6 +117,25 @@ const AddBlog = (props: Props) => {
                 placeholder="Image URL"
                 {...register("imageUrl")}
               />
+            </div>
+          </div>
+          {/* End */}
+          {/* excerpt */}
+          <div className="name border  rounded p-3 relative mt-10 flex-1">
+            <div className="name-title absolute -top-4 bg-white border rounded p-1">
+              <h3 className="text-xs font-poppins">Excerpt</h3>
+            </div>
+            <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
+              <div className="icon">
+                <BiBook />
+              </div>
+              <textarea
+                {...register("excerpt")}
+                cols={5}
+                rows={3}
+                className="textarea textarea-bordered w-full"
+                placeholder="Put Excerpt in 200 chars."
+              ></textarea>
             </div>
           </div>
           {/* End */}

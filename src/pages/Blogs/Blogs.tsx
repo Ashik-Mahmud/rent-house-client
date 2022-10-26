@@ -1,9 +1,23 @@
+import axios from "axios";
 import { BsSearch } from "react-icons/bs";
+import { useQuery } from "react-query";
+import GlobalLoader from "../../components/GlobalLoader";
+import NoDataComponent from "../../components/NoDataComponent";
+import { base_backend_url } from "../../configs/config";
 import BlogCard from "./BlogCard";
 
 type Props = {};
 
 const Blogs = (props: Props) => {
+  /* Get All the active blogs */
+  const { data, isLoading } = useQuery("blogs", async () => {
+    const { data } = await axios.get(`${base_backend_url}/api/v1/blogs/all`);
+
+    return data;
+  });
+
+  console.log(data);
+
   return (
     <section className="font-poppins">
       <div className="container mx-auto py-10">
@@ -37,12 +51,24 @@ const Blogs = (props: Props) => {
 
         <div className="text-gray-600 body-font">
           <div className="container px-5 py-8 mx-auto">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 -m-4">
-              <BlogCard />
-              <BlogCard />
-              <BlogCard />
-              <BlogCard />
-            </div>
+            {isLoading ? (
+              <GlobalLoader />
+            ) : (
+              <div>
+                {data?.data?.length > 0 ? (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 -m-4">
+                    {data?.data?.map((blog: any, ind: number) => (
+                      <BlogCard key={blog?._id} blog={blog} />
+                    ))}
+                  </div>
+                ) : (
+                  <div>
+                    <NoDataComponent />
+                  </div>
+                )}
+              </div>
+            )}
+
             {/* FAQ Question */}
             <section className="text-gray-600 body-font">
               <div className="container px-5 py-24 mx-auto">
