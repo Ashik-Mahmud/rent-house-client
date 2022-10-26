@@ -24,7 +24,7 @@ const AdminDashboard = (props: Props) => {
         `${base_backend_url}/api/v1/users/admin`,
         {
           headers: {
-            Authorization: `Bearer ${user.token}`,
+            Authorization: `Bearer ${user?.token}`,
           },
         }
       );
@@ -40,7 +40,7 @@ const AdminDashboard = (props: Props) => {
         `${base_backend_url}/api/v1/admin/get-houses-count`,
         {
           headers: {
-            Authorization: `Bearer ${user.token}`,
+            Authorization: `Bearer ${user?.token}`,
           },
         }
       );

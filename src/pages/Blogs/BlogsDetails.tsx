@@ -3,8 +3,20 @@ import cogoToast from "cogo-toast";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import { BiArrowBack } from "react-icons/bi";
-import { BsFacebook, BsLink, BsLinkedin, BsTwitter } from "react-icons/bs";
+import {
+  BsFacebook,
+  BsLink,
+  BsLinkedin,
+  BsTwitter,
+  BsWhatsapp,
+} from "react-icons/bs";
 import { useNavigate, useParams } from "react-router-dom";
+import {
+  FacebookShareButton,
+  LinkedinShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+} from "react-share";
 import styled from "styled-components";
 import GlobalLoader from "../../components/GlobalLoader";
 import { base_backend_url } from "../../configs/config";
@@ -17,7 +29,7 @@ const BlogsDetails = (props: Props) => {
   const navigate = useNavigate();
   const [clicked, setClicked] = useState(false);
   const { data, isLoading, refetch } = useGetBlogByIdQuery(blogId);
-
+  const [isCopyLink, setIsCopyLink] = useState(false);
   /* Handle Favorite */
   const handleFavorite = async () => {
     localStorage.setItem("favorite" + blogId, JSON.stringify(!clicked));
@@ -31,6 +43,17 @@ const BlogsDetails = (props: Props) => {
     );
     cogoToast.success(data.message);
     refetch();
+  };
+
+  /* Handle Copy Link to the Houses */
+  const handleCopyLink = (id: string) => {
+    const location = window.location.origin;
+    const link = `${location}/blogs/${id}`;
+    navigator.clipboard.writeText(link);
+    setIsCopyLink(true);
+    setTimeout(() => {
+      setIsCopyLink(false);
+    }, 2000);
   };
 
   useEffect(() => {
@@ -78,17 +101,52 @@ const BlogsDetails = (props: Props) => {
               <span>{format(new Date(data?.data?.createdAt), "PPPPp")}</span>
             </div>
             <div className="social-share">
-              <ul className=" flex items-center gap-3">
-                <li className="cursor-pointer" title="Share on facebook">
-                  <BsFacebook />
+              <ul className=" flex items-center gap-5">
+                <li
+                  className="cursor-pointer tooltip"
+                  data-tip="Share on facebook"
+                >
+                  <FacebookShareButton
+                    url={window.location.origin + "/blogs/" + data?.data?._id}
+                  >
+                    <BsFacebook />
+                  </FacebookShareButton>
                 </li>
-                <li className="cursor-pointer" title="Share on twitter">
-                  <BsTwitter />
+                <li
+                  className="cursor-pointer tooltip"
+                  data-tip="Share on WhatsApp"
+                >
+                  <WhatsappShareButton
+                    url={window.location.origin + "/blogs/" + data?.data?._id}
+                  >
+                    <BsWhatsapp />
+                  </WhatsappShareButton>
                 </li>
-                <li className="cursor-pointer" title="Share on linkedIn">
-                  <BsLinkedin />
+                <li
+                  className="cursor-pointer tooltip"
+                  data-tip="Share on linkedIn"
+                >
+                  <TwitterShareButton
+                    url={window.location.origin + "/blogs/" + data?.data?._id}
+                  >
+                    <BsTwitter />
+                  </TwitterShareButton>
+                </li>{" "}
+                <li
+                  className="cursor-pointer tooltip"
+                  data-tip="Share on linkedIn"
+                >
+                  <LinkedinShareButton
+                    url={window.location.origin + "/blogs/" + data?.data?._id}
+                  >
+                    <BsLinkedin />
+                  </LinkedinShareButton>
                 </li>
-                <li className="cursor-pointer" title="Copy link">
+                <li
+                  onClick={() => handleCopyLink(data?.data?._id)}
+                  className="cursor-pointer tooltip"
+                  data-tip={isCopyLink ? "Copied" : "Copy Link"}
+                >
                   <BsLink />
                 </li>
               </ul>

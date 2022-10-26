@@ -28,7 +28,7 @@ const ReportedHouses = (props: Props) => {
       `${base_backend_url}/api/v1/reports/reports-by-house/${houseId}`,
       {
         headers: {
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${user?.token}`,
         },
       }
     );

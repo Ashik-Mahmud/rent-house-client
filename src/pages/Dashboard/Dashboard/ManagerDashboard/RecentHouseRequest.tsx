@@ -24,7 +24,7 @@ const RecentBookings = (props: Props) => {
       `${base_backend_url}/api/v1/admin/houses/unapproved?filter=-createdAt`,
       {
         headers: {
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${user?.token}`,
         },
       }
     );

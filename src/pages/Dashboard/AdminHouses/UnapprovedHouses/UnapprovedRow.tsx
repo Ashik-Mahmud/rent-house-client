@@ -32,7 +32,7 @@ const UnapprovedRow = ({ ind, house, refetch }: Props) => {
         {},
         {
           headers: {
-            Authorization: `Bearer ${user.token}`,
+            Authorization: `Bearer ${user?.token}`,
           },
         }
       );
@@ -57,7 +57,7 @@ const UnapprovedRow = ({ ind, house, refetch }: Props) => {
         `${base_backend_url}/api/v1/admin/house/delete/${id}`,
         {
           headers: {
-            Authorization: `Bearer ${user.token}`,
+            Authorization: `Bearer ${user?.token}`,
           },
         }
       );

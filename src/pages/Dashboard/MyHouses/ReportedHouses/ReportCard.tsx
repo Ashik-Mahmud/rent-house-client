@@ -26,7 +26,7 @@ const ReportCard = ({ report, refetch }: Props) => {
         `${base_backend_url}/api/v1/reports/delete/${report._id}?houseId=${report?.house}`,
         {
           headers: {
-            Authorization: `Bearer ${user.token}`,
+            Authorization: `Bearer ${user?.token}`,
           },
         }
       );

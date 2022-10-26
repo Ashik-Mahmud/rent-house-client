@@ -50,7 +50,7 @@ const BookingRow = ({ payment, refetch }: Props) => {
             `${base_backend_url}/api/v1/payment/delete-statement/${id}`,
             {
               headers: {
-                Authorization: `Bearer ${user.token}`,
+                Authorization: `Bearer ${user?.token}`,
               },
             }
           );

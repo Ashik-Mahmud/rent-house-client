@@ -33,7 +33,7 @@ const Payments = (props: Props) => {
         `${base_backend_url}/api/v1/payment/holder/payment-statement?page=${currentPage}&limit=${limit}&search=${search}`,
         {
           headers: {
-            Authorization: `Bearer ${user.token}`,
+            Authorization: `Bearer ${user?.token}`,
           },
         }
       );

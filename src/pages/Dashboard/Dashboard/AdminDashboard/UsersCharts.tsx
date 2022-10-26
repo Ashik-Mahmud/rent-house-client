@@ -13,7 +13,7 @@ const UsersCharts = (props: Props) => {
   const getAllUserForAdmin = async () => {
     const { data } = await axios.get(`${base_backend_url}/api/v1/users/admin`, {
       headers: {
-        Authorization: `Bearer ${user.token}`,
+        Authorization: `Bearer ${user?.token}`,
       },
     });
     return data;
