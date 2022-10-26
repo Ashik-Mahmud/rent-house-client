@@ -84,7 +84,7 @@ const UsersBlogs = (props: Props) => {
           </div>
         </div>
         {/* Blogs Table */}
-        <div className="overflow-x-auto my-5 font-poppins">
+        <div className="overflow-x-auto my-5 font-bangla">
           {isLoading ? (
             <GlobalLoader />
           ) : data?.data?.blogs.length > 0 ? (

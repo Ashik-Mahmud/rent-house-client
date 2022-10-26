@@ -74,7 +74,10 @@ const UpdateBlogs = (props: Props) => {
 
   return (
     <div>
-      <form onSubmit={handleUpdateBlog} className="p-4 my-4 bg-white">
+      <form
+        onSubmit={handleUpdateBlog}
+        className="p-4 my-4 bg-white font-bangla"
+      >
         <h1 className="text-3xl font-bold">Update Blog</h1>
         <div className="mt-5">
           {/* Name */}
