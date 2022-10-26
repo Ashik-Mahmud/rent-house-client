@@ -54,11 +54,11 @@ import ForHouseHolderRequest from "./pages/Dashboard/RequestFromUsers/ForHouseHo
 import RequestFromUsers from "./pages/Dashboard/RequestFromUsers/RequestFromUsers";
 import Settings from "./pages/Dashboard/Settings/Settings";
 import Users from "./pages/Dashboard/Users/Users";
+import Reviews from "./pages/Home/AppReviews/Reviews";
 import Home from "./pages/Home/Home";
 import HouseDetails from "./pages/Houses/HouseDetails/HouseDetails";
 import Houses from "./pages/Houses/Houses";
 import Pricing from "./pages/Pricing";
-import Reviews from "./pages/Reviews";
 import Footer from "./shared/Footer";
 import Header from "./shared/Header";
 import NotFoundPage from "./shared/NotFoundPage";
