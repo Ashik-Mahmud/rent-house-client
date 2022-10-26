@@ -5,6 +5,7 @@ import { BiLogIn } from "react-icons/bi";
 import { Link, useNavigate } from "react-router-dom";
 import { PulseLoader } from "react-spinners";
 import { toast } from "react-toastify";
+import swal from "sweetalert";
 import { useAppDispatch } from "../../app/store";
 import { setAuthInformation } from "../../features/AuthSlice";
 import { useLoginAuthMutation } from "../../services/AuthApi";
@@ -41,6 +42,12 @@ const Login = (props: Props) => {
     if (error) {
       toast.error((error as any).data.message);
       toast.error((error as any)?.data);
+      swal({
+        title: (error as any)?.data?.message,
+        icon: "error",
+        dangerMode: true,
+        buttons: ["cancel", "okay"],
+      });
     }
     /* If Success */
     if (isSuccess) {

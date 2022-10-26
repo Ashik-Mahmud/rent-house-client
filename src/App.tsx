@@ -14,11 +14,13 @@ import RequireUser from "./auth/RequireUser";
 import { base_backend_url } from "./configs/config";
 import { setAppOptions } from "./features/AppSlice";
 import About from "./pages/About";
+import Reviews from "./pages/AppReviews/Reviews";
 import Login from "./pages/Authentication/Login";
 import RegisterAuth from "./pages/Authentication/Register";
 import ResetPassword from "./pages/Authentication/ResetPassword";
 import ResetPasswordField from "./pages/Authentication/ResetPasswordField";
 import Blogs from "./pages/Blogs/Blogs";
+import BlogsDetails from "./pages/Blogs/BlogsDetails";
 import Contact from "./pages/Contact";
 import AddHouse from "./pages/Dashboard/AddHouse/AddHouse";
 import AdminHouses from "./pages/Dashboard/AdminHouses/AdminHouses";
@@ -57,7 +59,6 @@ import Home from "./pages/Home/Home";
 import HouseDetails from "./pages/Houses/HouseDetails/HouseDetails";
 import Houses from "./pages/Houses/Houses";
 import Pricing from "./pages/Pricing";
-import Reviews from "./pages/Reviews";
 import Footer from "./shared/Footer";
 import Header from "./shared/Header";
 import NotFoundPage from "./shared/NotFoundPage";
@@ -144,6 +145,7 @@ const App = (props: Props) => {
         />
         <Route path="/reviews" element={<Reviews />} />
         <Route path="/blogs" element={<Blogs />} />
+        <Route path="/blogs/:blogId" element={<BlogsDetails />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/pricing" element={<Pricing />} />

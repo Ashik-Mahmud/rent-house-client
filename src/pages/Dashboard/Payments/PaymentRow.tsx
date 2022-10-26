@@ -34,8 +34,12 @@ const PaymentRow = ({ payment }: Props) => {
             </div>
           </div>
           <div>
-            <div className="font-bold">{payment?.user?.name}</div>
-            <div className="text-sm opacity-50">{payment?.user?.role}</div>
+            <div>{payment?.user?.name}</div>
+            <div className="text-sm opacity-50">
+              {payment?.user?.role === "user"
+                ? "House Holder"
+                : payment?.user?.role}
+            </div>
           </div>
         </div>
       </th>
@@ -45,13 +49,11 @@ const PaymentRow = ({ payment }: Props) => {
           data-tip={payment?.user?.email}
         >
           <div className="text-sm opacity-50">Email</div>
-          <div className="font-bold">
-            {payment?.user?.email.slice(0, 10) + "..."}
-          </div>
+          <div className="">{payment?.user?.email.slice(0, 10) + "..."}</div>
         </div>
         <div className="flex items-center space-x-3">
           <div className="text-sm opacity-50">Phone</div>
-          <div className="font-bold">{payment?.user?.phone}</div>
+          <div className="">{payment?.user?.phone}</div>
         </div>
       </th>
       <td>
