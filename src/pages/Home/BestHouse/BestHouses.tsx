@@ -16,8 +16,6 @@ const BestHouses = (props: Props) => {
     return data?.data;
   });
 
-  console.log(data);
-
   if (isLoading) {
     return <GlobalLoader />;
   }
