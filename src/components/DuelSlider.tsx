@@ -1,30 +1,37 @@
+import axios from "axios";
 import { useEffect } from "react";
+import { useQuery } from "react-query";
 import ReactSlider from "react-slider";
+import { base_backend_url } from "../configs/config";
 type Props = {
   priceFilter: any;
 };
 
 const DuelSlider = ({ priceFilter }: Props) => {
-  const {
-    minPrice,
-    maxPrice,
-    setMinPrice,
-    lowestPrice,
-    setMaxPrice,
-    highestPrice,
-  } = priceFilter;
+  const { minPrice, maxPrice, setMinPrice, setMaxPrice } = priceFilter;
 
   useEffect(() => {
     setMinPrice(minPrice);
     setMaxPrice(maxPrice);
   }, [setMaxPrice, setMinPrice, maxPrice, minPrice]);
 
+  const { data, isLoading } = useQuery("GET_HOUSES", async () => {
+    const { data } = await axios.get(
+      `${base_backend_url}/api/v1/houses/house-prices`
+    );
+    return data?.data;
+  });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="w-full p-2">
       <ReactSlider
         className="horizontal-slider"
         thumbClassName="thumb "
-        defaultValue={[minPrice, 150000000000000]}
+        defaultValue={[data?.lowestPrice, data?.highestPrice]}
         renderThumb={(props, state) => (
           <div
             {...props}
@@ -48,8 +55,8 @@ const DuelSlider = ({ priceFilter }: Props) => {
           setMinPrice(min);
           setMaxPrice(max);
         }}
-        min={lowestPrice}
-        max={15000 || highestPrice}
+        min={data?.lowestPrice || 0}
+        max={data?.highestPrice || 0}
       />
     </div>
   );

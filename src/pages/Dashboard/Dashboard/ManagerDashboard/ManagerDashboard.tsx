@@ -1,12 +1,42 @@
+import axios from "axios";
 import { BiUserCheck } from "react-icons/bi";
 import { BsBook, BsHouse, BsHouseDoor, BsHouseDoorFill } from "react-icons/bs";
-import { useAppSelector } from "../../../../app/store";
+import { useQuery } from "react-query";
+import GlobalLoader from "../../../../components/GlobalLoader";
+import { base_backend_url } from "../../../../configs/config";
+import useAuth from "../../../../hooks/useAuth";
+import { authUserInterface } from "../../../../interfaces/UserInterface";
+import { useGetBlogsByUidQuery } from "../../../../services/BlogApi";
 import BarCharts from "./BarCharts";
 import RecentHouseRequest from "./RecentHouseRequest";
 type Props = {};
 const ManagerDashboard = (props: Props) => {
-  const { approvedHouseCount, rejectedHouseCount, pendingHouseCount } =
-    useAppSelector((state) => state.housesReqCount);
+  const { user, updatedUser } = useAuth<authUserInterface | any>({});
+  /* Get All the houses count for admin */
+  const { data: houses, isLoading: houseLoading } = useQuery(
+    "houses",
+    async () => {
+      const { data } = await axios.get(
+        `${base_backend_url}/api/v1/admin/get-houses-count`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+      return data;
+    }
+  );
+
+  /* Get Blogs by Managers */
+  const { data, isLoading } = useGetBlogsByUidQuery({
+    uid: updatedUser?._id,
+  });
+
+  if (houseLoading || isLoading) {
+    return <GlobalLoader />;
+  }
+
   return (
     <div className="py-5">
       {" "}
@@ -17,7 +47,7 @@ const ManagerDashboard = (props: Props) => {
             <BsHouse className="text-3xl text-success" />
           </div>
           <div className="stat-title">Approved Houses</div>
-          <div className="stat-value text-success">{approvedHouseCount}</div>
+          <div className="stat-value text-success">{houses?.approved}</div>
           <div className="stat-desc">Jan 1st - Feb 1st</div>
         </div>
         <div className="stat ">
@@ -25,7 +55,7 @@ const ManagerDashboard = (props: Props) => {
             <BsHouseDoorFill className="text-3xl text-info" />
           </div>
           <div className="stat-title">Unapproved Houses</div>
-          <div className="stat-value text-info">{pendingHouseCount}</div>
+          <div className="stat-value text-info">{houses?.unapproved}</div>
           <div className="stat-desc">Jan 1st - Feb 1st</div>
         </div>
 
@@ -34,7 +64,7 @@ const ManagerDashboard = (props: Props) => {
             <BsHouseDoor className="text-3xl text-error" />
           </div>
           <div className="stat-title">Total Rejected Houses</div>
-          <div className="stat-value text-error">{rejectedHouseCount}</div>
+          <div className="stat-value text-error">{houses?.rejected}</div>
           <div className="stat-desc">↗︎ 400 (22%)</div>
         </div>
         <div className="stat">
@@ -42,7 +72,7 @@ const ManagerDashboard = (props: Props) => {
             <BsBook className="text-3xl text-primary" />
           </div>
           <div className="stat-title">Total Blogs</div>
-          <div className="stat-value text-primary">{10}</div>
+          <div className="stat-value text-primary">{data?.data?.count}</div>
           <div className="stat-desc">21% more than last month</div>
         </div>
 
@@ -62,7 +92,7 @@ const ManagerDashboard = (props: Props) => {
       </div>
       {/* End */}
       <div className="charts gap-6 shadow my-5 grid grid-cols-1 md:grid-cols-1 ">
-        <BarCharts />
+        <BarCharts houses={houses} blogs={data?.data?.count} />
       </div>
     </div>
   );

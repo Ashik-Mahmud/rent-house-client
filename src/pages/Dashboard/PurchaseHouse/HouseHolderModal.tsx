@@ -1,18 +1,22 @@
 import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
 
-type Props = {};
+type Props = {
+  owner: any;
+};
 
-const HouseHolderModal = (props: Props) => {
+const HouseHolderModal = ({ owner }: Props) => {
   return (
     <div>
       <input
         type="checkbox"
-        id="owners-details-modal"
+        id={"owners-details-modal" + owner?._id}
         className="modal-toggle"
       />
       <div className="modal modal-middle sm:modal-middle">
         <div className="modal-box w-11/12 max-w-5xl">
-          <h3 className="font-bold text-xl">Owner's Profile Information</h3>
+          <h3 className="font-bold text-xl">
+            House Holder's Profile Information
+          </h3>
 
           <div className="modal-body mt-5">
             <div className="overflow-x-auto">
@@ -20,37 +24,70 @@ const HouseHolderModal = (props: Props) => {
                 <thead>
                   <tr>
                     <th>Name</th>
-                    <th>Ashik Mahmud</th>
+                    <th>{owner?.name}</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
+                    <th>Profile</th>
+                    <td>
+                      <img
+                        src={owner?.profileImage}
+                        alt={owner?.name}
+                        className="w-14 h-14 rounded-full object-cover border-4 border-success"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
                     <td>Email</td>
                     <td>
-                      <a href="mailto:ashik@gmail.com">ashik@gmail.com</a>
+                      <a href={`mailto:${owner?.email}`}>{owner?.email}</a>
                     </td>
                   </tr>
                   <tr>
                     <td>Phone</td>
                     <td>
-                      <a href="cel:0178454545">01548745452</a>
+                      <a href={`tel:${owner?.phone}`}>{owner?.phone}</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Address</td>
+                    <td>
+                      <span>{owner?.address}</span>
                     </td>
                   </tr>
                   <tr>
                     <td>Social Media</td>
                     <td>
                       <div className="flex items-center gap-3">
-                        {" "}
-                        <a href="/">
-                          <BsFacebook />
-                        </a>
-                        <a href="/">
-                          <BsTwitter />
-                        </a>
-                        <a href="/">
-                          <BsInstagram />{" "}
-                        </a>
-                      </div>{" "}
+                        {owner?.facebookLink && (
+                          <a
+                            href={owner?.facebookLink}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            <BsFacebook />
+                          </a>
+                        )}
+                        {owner?.twitterLink && (
+                          <a
+                            href={owner?.twitterLink}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            <BsTwitter />
+                          </a>
+                        )}
+                        {owner?.instagramLink && (
+                          <a
+                            href={owner?.instagramLink}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            <BsInstagram />
+                          </a>
+                        )}
+                      </div>
                     </td>
                   </tr>
                   {/* 
@@ -61,7 +98,10 @@ const HouseHolderModal = (props: Props) => {
             </div>
           </div>
           <div className="modal-action">
-            <label htmlFor="owners-details-modal" className="btn btn-warning">
+            <label
+              htmlFor={"owners-details-modal" + owner?._id}
+              className="btn btn-warning"
+            >
               Cancel
             </label>
           </div>

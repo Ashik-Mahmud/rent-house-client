@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { BsImage } from "react-icons/bs";
+import { PulseLoader } from "react-spinners";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import { useChangeProfilePictureMutation } from "../../../services/AuthApi";
@@ -12,7 +13,7 @@ type Props = {
 
 const ImageChangeModal = ({ refetch }: Props) => {
   const { updatedUser } = useAuth<authUserInterface | any>({});
-  const [changeProfilePicture, { data, isSuccess, error }] =
+  const [changeProfilePicture, { data, isSuccess, error, isLoading }] =
     useChangeProfilePictureMutation();
   const { register, handleSubmit, watch, reset } = useForm();
   const [imageName, setImageName] = useState<string>("");
@@ -25,7 +26,6 @@ const ImageChangeModal = ({ refetch }: Props) => {
     formData.append("email", updatedUser?.email || "");
     await changeProfilePicture(formData);
     reset();
-    refetch();
   });
 
   watch((data, { name, type }) => {
@@ -41,11 +41,12 @@ const ImageChangeModal = ({ refetch }: Props) => {
   useEffect(() => {
     if (isSuccess) {
       toast.success(data?.message);
+      refetch();
     }
     if (error) {
       toast.error((error as any)?.message || data?.message);
     }
-  }, [data, isSuccess, error]);
+  }, [data, isSuccess, error, refetch]);
 
   return (
     <form
@@ -119,7 +120,13 @@ const ImageChangeModal = ({ refetch }: Props) => {
             >
               Cancel
             </label>
-            <button className="btn btn-success">Save Image</button>
+            {isLoading ? (
+              <button className="btn btn-primary" disabled>
+                <PulseLoader color="#fff" size={6} />
+              </button>
+            ) : (
+              <button className="btn btn-success">Save Image</button>
+            )}
           </div>
         </div>
       </div>

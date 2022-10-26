@@ -11,10 +11,12 @@ import "./index.css";
 import "./utilities/modal-video.min.css";
 
 import "./utilities/App.css";
+
 const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
 root.render(
   <>
     <Toaster />
@@ -38,4 +40,8 @@ root.render(
       </QueryClientProvider>
     </BrowserRouter>
   </>
+);
+console.log(
+  '%cStop! This is a browser feature intended for developers. If someone told you to copy and paste something here to enable a feature or "hack" someone\'s account, it is a scam and will give them access to your account. If you are a developer, you can use this console to debug your code. If you are not a developer, close this window and go about your day. ',
+  "color:red;font-family:system-ui;font-size:2.5rem;-webkit-text-stroke: 1px black;font-weight:bold"
 );

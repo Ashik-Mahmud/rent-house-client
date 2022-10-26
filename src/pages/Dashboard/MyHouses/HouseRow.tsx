@@ -1,7 +1,7 @@
 import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
-import { useAppSelector } from "../../../app/store";
+import ScreenLoader from "../../../components/ScreenLoader";
 import { useDeleteHouseByIdMutation } from "../../../services/HouseApi";
 
 type Props = {
@@ -12,10 +12,6 @@ type Props = {
 };
 
 const HouseRow = ({ approved, house, index, refetch }: Props) => {
-  const { questionsCount, reportsCount, reviewsCount } = useAppSelector(
-    (state) => state.houseAction
-  );
-
   const [deleteHouseById, { isLoading }] = useDeleteHouseByIdMutation();
   /* Handle Delete House by Owner */
   const handleDeleteHouses = async (id: string) => {
@@ -37,8 +33,12 @@ const HouseRow = ({ approved, house, index, refetch }: Props) => {
     }
   };
 
+  if (isLoading) {
+    return <ScreenLoader />;
+  }
+
   return (
-    <tr className="border-b border-gray-200">
+    <tr className={`border-b border-gray-200 ${isLoading && "bg-red-400"}`}>
       <td className="py-3">
         H-{house._id.slice(0, 5)}
         {index}
@@ -52,8 +52,10 @@ const HouseRow = ({ approved, house, index, refetch }: Props) => {
 
       <td className="py-3">{house?.bedrooms}</td>
       <td className="py-3">{house?.bathrooms}</td>
-      <td className="py-3">{house?.price}</td>
-      <td className="py-3">{house?.bathrooms}</td>
+      <td className="py-3">
+        {house?.price} {house?.houseType === "Sale" ? " tk" : "/month"}
+      </td>
+      <td className="py-3">{house?.houseType}</td>
       <td className="py-3">
         {house?.status === "approved" && (
           <div
@@ -89,7 +91,7 @@ const HouseRow = ({ approved, house, index, refetch }: Props) => {
           to={`/dashboard/houses/reviews/${house._id}`}
           className="btn btn-xs btn-circle btn-info flex items-center gap-2 text-xs tooltip"
         >
-          {reviewsCount}
+          {house?.totalReviews}
         </Link>
       </td>
       <td className="py-3 ">
@@ -98,7 +100,7 @@ const HouseRow = ({ approved, house, index, refetch }: Props) => {
           to={`/dashboard/houses/questions/${house._id}`}
           className="btn btn-xs btn-circle btn-accent flex items-center gap-2 text-xs tooltip"
         >
-          {questionsCount}
+          {house?.totalQuestions}
         </Link>
       </td>
       <td className="py-3 ">
@@ -107,7 +109,7 @@ const HouseRow = ({ approved, house, index, refetch }: Props) => {
           to={`/dashboard/houses/reports/${house._id}`}
           className="btn btn-xs btn-circle btn-warning flex items-center gap-2 text-xs tooltip"
         >
-          {reportsCount}
+          {house?.totalReports}
         </Link>
       </td>
       <td className="py-3 ">

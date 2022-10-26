@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
-import { base_backend_url } from "../../../configs/config";
 type Props = {
   gallery: any;
 }; // This only needs to be imported once in your app
@@ -10,9 +9,7 @@ const Gallery = ({ gallery }: Props) => {
   const [photoIndex, setPhotoIndex] = useState<any>(0);
   const [isOpen, setIsOpen] = useState(false);
 
-  const images: any = gallery.map(
-    (image: string) => `${base_backend_url}/gallery/${image}`
-  );
+  const images: any = gallery.map((image: string) => (image as any)?.image);
 
   return (
     <>

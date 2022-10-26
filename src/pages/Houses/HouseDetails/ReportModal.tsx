@@ -6,9 +6,11 @@ import { useEffect, useState } from "react";
 import { base_backend_url } from "../../../configs/config";
 type Props = {
   title: string;
+  houseId: any;
+  userId: string;
 };
 
-const ReportModal = ({ title }: Props) => {
+const ReportModal = ({ title, houseId, userId }: Props) => {
   const { handleSubmit, register, reset, watch } = useForm();
   const [isOther, setIsOther] = useState(false);
 
@@ -34,15 +36,17 @@ const ReportModal = ({ title }: Props) => {
     if (data.reportType === "Other") {
       data.reportType = data.otherReportType;
     }
+
     const reportData = {
       ...data,
       houseUrl,
       house: houseUrl.split("/")[4],
+      houseHolder: userId,
     };
 
     try {
       const { data } = await axios.post(
-        `${base_backend_url}/api/v1/reports/create`,
+        `${base_backend_url}/api/v1/reports/create?houseId=${houseId}`,
         reportData
       );
       if (data) {
@@ -52,6 +56,7 @@ const ReportModal = ({ title }: Props) => {
       }
     } catch (error) {
       cogoToast.error("Something went wrong");
+      console.log(error);
     }
   });
 

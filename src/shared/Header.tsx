@@ -2,7 +2,6 @@ import { BrowserView } from "react-device-detect";
 import toast from "react-hot-toast";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../app/store";
-import { base_backend_url } from "../configs/config";
 import { logout } from "../features/AuthSlice";
 import useAuth from "../hooks/useAuth";
 import { authUserInterface } from "../interfaces/UserInterface";
@@ -125,7 +124,7 @@ const Header = (props: Props) => {
                   <img
                     src={
                       data?.profileImage
-                        ? `${base_backend_url}/profiles/` + data?.profileImage
+                        ? data?.profileImage
                         : user?.user?.avatar
                     }
                     alt={data?.name}

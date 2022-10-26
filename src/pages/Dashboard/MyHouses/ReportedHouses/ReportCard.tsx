@@ -14,7 +14,6 @@ const ReportCard = ({ report, refetch }: Props) => {
 
   /* Handle Report Delete */
   const handleReportDelete = async () => {
-    console.log("Delete Report");
     const isConfirm = await swal({
       title: "Are you sure?",
       text: "Once deleted, you will not be able to recover this imaginary file!",
@@ -23,9 +22,8 @@ const ReportCard = ({ report, refetch }: Props) => {
       dangerMode: true,
     });
     if (isConfirm) {
-      console.log("Delete Report");
       const { data } = await axios.delete(
-        `${base_backend_url}/api/v1/reports/delete/${report._id}`,
+        `${base_backend_url}/api/v1/reports/delete/${report._id}?houseId=${report?.house}`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,

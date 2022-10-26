@@ -12,9 +12,10 @@ type Props = {
   question: any;
   ind: number;
   refetch: () => void;
+  houseId: any;
 };
 
-const AnsweredQuestionRow = ({ question, ind, refetch }: Props) => {
+const AnsweredQuestionRow = ({ question, ind, refetch, houseId }: Props) => {
   const { user } = useAuth<authUserInterface | any>({});
   /* Handle Delete Question by ID */
   const handleDeleteQuestion = async (questionId: string) => {
@@ -27,7 +28,7 @@ const AnsweredQuestionRow = ({ question, ind, refetch }: Props) => {
 
     if (isConfirm) {
       const { data } = await axios.delete(
-        `${base_backend_url}/api/v1/questions/delete-question/${questionId}`,
+        `${base_backend_url}/api/v1/questions/delete-question/${questionId}?houseId=${houseId}`,
         {
           headers: {
             Authorization: `Bearer ${user?.token}`,
@@ -52,8 +53,12 @@ const AnsweredQuestionRow = ({ question, ind, refetch }: Props) => {
           <div className="flex items-center gap-2">
             <div className="w-12 h-12">
               <img
-                src={`${base_backend_url}/profiles/${question?.author?.profileImage}`}
-                alt=""
+                src={
+                  question?.author?.profileImage
+                    ? question?.author?.profileImage
+                    : "https://placeimg.com/400/225/arch"
+                }
+                alt={question?.author?.name || "loading..."}
                 className="w-full h-full rounded-full object-cover"
               />
             </div>

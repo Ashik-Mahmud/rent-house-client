@@ -11,9 +11,10 @@ import { authUserInterface } from "../../../../interfaces/UserInterface";
 type Props = {
   review: any;
   refetch: () => void;
+  house: any;
 };
 
-const HouseReviewCard = ({ review, refetch }: Props) => {
+const HouseReviewCard = ({ review, refetch, house }: Props) => {
   const { user } = useAuth<authUserInterface | any>({});
   const [isShow, setIsShow] = useState(false);
   /* stars */
@@ -38,7 +39,7 @@ const HouseReviewCard = ({ review, refetch }: Props) => {
     if (isConfirm) {
       try {
         const { data: deleteData } = await axios.delete(
-          `${base_backend_url}/api/v1/reviews/delete-review/${review?._id}?houseReview=true`,
+          `${base_backend_url}/api/v1/reviews/delete-review/${review?._id}?houseId=${house}`,
           {
             headers: {
               Authorization: `Bearer ${user?.token}`,
@@ -66,7 +67,7 @@ const HouseReviewCard = ({ review, refetch }: Props) => {
     if (isConfirm) {
       try {
         const { data: acceptData } = await axios.patch(
-          `${base_backend_url}/api/v1/reviews/accept-review/${review?._id}`,
+          `${base_backend_url}/api/v1/reviews/accept-review/${review?._id}?houseReview=true&houseId=${house}`,
           {},
           {
             headers: {
@@ -80,6 +81,7 @@ const HouseReviewCard = ({ review, refetch }: Props) => {
         }
       } catch (error) {
         cogoToast.error("Something went wrong");
+        console.log(error);
       }
     }
   };

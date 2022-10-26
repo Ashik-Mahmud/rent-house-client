@@ -50,8 +50,7 @@ const Houses = (props: Props) => {
   const [isBachelor, setIsBachelor] = useState(false);
 
   /* by search */
-  const [highestPrice, setHighestPrice] = useState(0);
-  const [lowestPrice, setLowestPrice] = useState(0);
+
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
   const priceFilter = {
@@ -59,8 +58,6 @@ const Houses = (props: Props) => {
     maxPrice,
     setMinPrice,
     setMaxPrice,
-    highestPrice,
-    lowestPrice,
   };
 
   /* Get All the Approved houses With Advanced Filter */
@@ -73,10 +70,13 @@ const Houses = (props: Props) => {
       filterByDistrict,
       searchKey,
       category,
+
       maxPrice,
       minPrice,
       houseType,
+
       searchAddress,
+
       bathrooms,
       bedrooms,
       isBachelor,
@@ -128,12 +128,6 @@ const Houses = (props: Props) => {
     setGetAllCity(() => {
       return data?.allHouse.map((house: any) => house.city);
     });
-
-    if (!isLoading) {
-      const priceArr = data?.allHouse?.map((house: any) => house?.price);
-      setHighestPrice(Math.max(...priceArr));
-      setLowestPrice(Math.min(...priceArr));
-    }
 
     return () => {
       setGetAllDistrict([]);

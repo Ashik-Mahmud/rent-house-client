@@ -8,6 +8,8 @@ import {
   BsTwitter,
 } from "react-icons/bs";
 import { GiChessQueen } from "react-icons/gi";
+import { MdVerified } from "react-icons/md";
+import { TbGenderGenderqueer } from "react-icons/tb";
 import { toast } from "react-toastify";
 import swal from "sweetalert";
 import { AxiosUser } from "../../../api/Axios";
@@ -91,18 +93,30 @@ const UserRow = ({ data, ind, refetch }: Props) => {
   return (
     <tr>
       <td className="text-left">
-        {data?.name || "not available"}{" "}
-        {data?._id === updatedUser?._id && (
-          <span
-            className="text-green-400 text-xl cursor-pointer tooltip tooltip-success"
-            data-tip="Active User"
-          >
-            *
-          </span>
-        )}
+        <div className="flex items-center gap-2">
+          {data?.name || "not available"}{" "}
+          {data?.isVerified && (
+            <span
+              className="text-info tooltip tooltip-info cursor-pointer"
+              data-tip="verified"
+            >
+              <MdVerified />
+            </span>
+          )}
+        </div>
       </td>
       <td className="text-left">
-        <span className="text-gray-500">{data?.email || "not available"}</span>
+        <span className="text-gray-500">
+          {data?.email || "not available"}
+          {data?._id === updatedUser?._id && (
+            <span
+              className="text-green-400 text-xl cursor-pointer tooltip tooltip-success"
+              data-tip="Active User"
+            >
+              *
+            </span>
+          )}
+        </span>
       </td>
       <td className="text-left">
         <span className="text-gray-500">{data?.phone || "not available"}</span>
@@ -183,6 +197,14 @@ const UserRow = ({ data, ind, refetch }: Props) => {
                 className="block mt-px text-yellow-500"
               >
                 <GiChessQueen />
+              </span>
+            )}
+            {data?.role === "manager" && (
+              <span
+                className="block mt-px text-yellow-500 text-lg"
+                title="Mid Position"
+              >
+                <TbGenderGenderqueer />
               </span>
             )}
           </span>

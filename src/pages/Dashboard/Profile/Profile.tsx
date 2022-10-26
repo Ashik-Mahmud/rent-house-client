@@ -1,3 +1,4 @@
+import axios from "axios";
 import { format } from "date-fns";
 import formatDistance from "date-fns/formatDistance";
 import {
@@ -8,6 +9,7 @@ import {
 } from "react-device-detect";
 import { BiCamera, BiEdit } from "react-icons/bi";
 import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
+import swal from "sweetalert";
 import { base_backend_url } from "../../../configs/config";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
@@ -31,6 +33,32 @@ const Profile = (props: Props) => {
     }
   );
 
+  /* Handle Verification Email */
+  /* Handle Verification Email */
+  const handleVerificationEmail = async () => {
+    const isConfirm = await swal({
+      title: `Please Confirm `,
+      text: `We will sent you again send you verification email please check email to ${data?.email}`,
+      buttons: ["cancel", "Confirm"],
+    });
+    if (isConfirm) {
+      const { data: result } = await axios.get(
+        `${base_backend_url}/api/v1/users/send-verification-email/${data?._id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${user?.token}`,
+          },
+        }
+      );
+      await swal({
+        title: `${result?.message}`,
+        text: "Please check we will sent you again verification mail",
+        icon: "success",
+        buttons: ["cancel", "okay"],
+      });
+    }
+  };
+
   /* Last Login  */
   const result = format(new Date(user?.user?.updatedAt), "PPPP BBBB ppp");
 
@@ -51,11 +79,7 @@ const Profile = (props: Props) => {
             <div className="flex items-center justify-between">
               <div className="profile-image rounded-full  w-32 h-32 relative  ">
                 <img
-                  src={
-                    data?.profileImage
-                      ? `${base_backend_url}/profiles/` + data?.profileImage
-                      : data?.avatar
-                  }
+                  src={data?.profileImage ? data?.profileImage : data?.avatar}
                   alt={data?.name}
                   className="w-32 h-32 rounded-full border-4 border-success object-cover shadow-lg"
                 />
@@ -124,11 +148,15 @@ const Profile = (props: Props) => {
                   ) : (
                     <>
                       <div className="flex items-center gap-3">
-                        <span className="badge badge-warning">
-                          Not Verified
-                        </span>
-                        <span className="text-sm block text-error">
+                        <span className="text-sm block badge badge-warning">
                           Please Check your Email to get verified.
+                        </span>
+                        <span>or</span>
+                        <span
+                          className="badge badge-success cursor-pointer capitalize"
+                          onClick={handleVerificationEmail}
+                        >
+                          get verify
                         </span>
                       </div>
                     </>
@@ -144,7 +172,7 @@ const Profile = (props: Props) => {
               <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
                 <span className="profile-details-item-label">Email</span>
                 <span
-                  className="profile-details-item-value font-bold  tooltip tooltip-info hover:tooltip-fade"
+                  className="profile-details-item-value font-bold  tooltip tooltip-warning hover:tooltip-fade cursor-not-allowed select-none"
                   data-tip="You can't change Email"
                 >
                   {data?.email || "No Available"}

@@ -2,7 +2,7 @@ import axios from "axios";
 import cogoToast from "cogo-toast";
 import { useEffect, useState } from "react";
 import { BiMap } from "react-icons/bi";
-import { BsArrowLeft, BsHeart, BsHeartFill } from "react-icons/bs";
+import { BsArrowLeft } from "react-icons/bs";
 import { FiMaximize2 } from "react-icons/fi";
 import { GoHome } from "react-icons/go";
 import { MdReportGmailerrorred } from "react-icons/md";
@@ -51,9 +51,11 @@ const HouseDetails = (Props: Props) => {
 
   /* Handle Favorite */
   const handleFavorite = async () => {
-    localStorage.setItem("favorite", JSON.stringify(!clicked));
+    localStorage.setItem("favorite" + houseId, JSON.stringify(!clicked));
     setClicked(() => {
-      return localStorage.getItem("favorite") === "true" ? true : false;
+      return localStorage.getItem("favorite" + houseId) === "true"
+        ? true
+        : false;
     });
     const { data } = await axios.patch(
       `${base_backend_url}/api/v1/houses/like-count/${houseId}?like=${clicked}`
@@ -63,33 +65,32 @@ const HouseDetails = (Props: Props) => {
   };
 
   useEffect(() => {
-    const favoriteValue: any = localStorage.getItem("favorite");
+    const favoriteValue: any = localStorage.getItem("favorite" + houseId);
     const parsedValue = JSON.parse(favoriteValue);
     setClicked(parsedValue || false);
-  }, [clicked]);
+  }, [clicked, houseId]);
 
   /* get question by user id */
   const {
     data: questions,
     isLoading: loading,
     refetch: newFetch,
-  } = useQuery("question", () => getQuestionsByAuthor());
+  } = useQuery(["question"], () => updatedUser?._id && getQuestionsByAuthor());
 
   const getQuestionsByAuthor = async () => {
-    if (updatedUser?._id) {
-      const { data } = await axios.get(
-        `${base_backend_url}/api/v1/questions/questions-by-author/${user?.user?._id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${user?.token}`,
-          },
-        }
-      );
-      return data;
-    }
+    const { data } = await axios.get(
+      `${base_backend_url}/api/v1/questions/questions-by-author/${user?.user?._id}?houseId=${houseId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${user?.token}`,
+        },
+      }
+    );
+
+    return data;
   };
 
-  if (isLoading) return <GlobalLoader />;
+  if (isLoading || loading) return <GlobalLoader />;
   if (error) {
     console.log(error);
     return (
@@ -104,7 +105,7 @@ const HouseDetails = (Props: Props) => {
       <section>
         <div className="container mx-auto py-10 ">
           <div className="cards">
-            <div className="card-header flex-col sm:flex-row flex items-center justify-between my-5 bg-white p-4 ">
+            <div className="card-header flex-col sm:flex-row flex items-center justify-between my-5 bg-white p-5">
               <div className="left flex items-center gap-4">
                 <div
                   className="back text-3xl cursor-pointer tooltip"
@@ -124,16 +125,17 @@ const HouseDetails = (Props: Props) => {
                   <MdReportGmailerrorred /> Report
                 </label>
                 <div
-                  className="heart tooltip flex items-center gap-2 btn btn-ghost"
-                  data-tip={clicked ? "Dislike" : "Like"}
+                  className="heart flex items-center gap-2 relative w-16"
                   onClick={() => handleFavorite()}
                 >
-                  {clicked ? (
-                    <BsHeartFill className="text-red-500" />
-                  ) : (
-                    <BsHeart />
-                  )}{" "}
-                  {data?.data?.likes}
+                  <div
+                    className={`loved  ${clicked ? "loved-done" : ""}`}
+                    title={clicked ? "Dislike" : "Like"}
+                  >
+                    {/* <span className="absolute top-9 right-4 btn btn-xs btn-circle btn-ghost">
+                      {data?.data?.likes}
+                    </span> */}
+                  </div>
                 </div>
                 <div className="flex items-center gap-2">
                   <BiMap /> {data?.data?.address}
@@ -155,8 +157,8 @@ const HouseDetails = (Props: Props) => {
                 </div>
                 <img
                   src={
-                    data?.data?.image
-                      ? `${base_backend_url}/previews/` + data?.data?.image
+                    data?.data?.image?.img
+                      ? data?.data?.image?.img
                       : "https://placeimg.com/400/225/arch"
                   }
                   alt={data?.data?.name}
@@ -182,7 +184,10 @@ const HouseDetails = (Props: Props) => {
                           </td>
                           <th>
                             <span className="badge badge-ghost">
-                              {data?.data?.price}/taka
+                              {data?.data?.price}/
+                              {data?.data?.houseType === "Sale"
+                                ? "taka"
+                                : "month"}
                             </span>
                           </th>
                           <td className="flex items-center gap-2">
@@ -243,38 +248,52 @@ const HouseDetails = (Props: Props) => {
               </div>
 
               <Address data={data?.data} />
-              <Owner owner={data?.data?.owner} />
-              <Others />
+              <Owner owner={data?.data?.owner} data={data?.data} />
+              <Others others={data?.data} />
               <Gallery gallery={data?.data?.gallery} />
-              <Question
-                data={data?.data}
-                questions={questions}
-                loading={loading}
-                newFetch={newFetch}
-              />
-              <Reviews data={data?.data} />
+
+              {data?.data?.allowQuestion === "Yes" && (
+                <Question
+                  data={data?.data}
+                  questions={questions}
+                  loading={loading}
+                  newFetch={newFetch}
+                />
+              )}
+              {data?.data?.allowReview === "Yes" && (
+                <Reviews data={data?.data} />
+              )}
             </div>
           </div>
         </div>
         <div className="book-now text-center mb-8">
           {data?.data?.owner?._id !== updatedUser?._id &&
             updatedUser?.role !== "admin" &&
-            updatedUser?.role !== "manager" && (
+            updatedUser?.role !== "manager" &&
+            (updatedUser?.bookedHouses.includes(houseId) ? (
+              <button className="btn btn-lg btn-warning modal-button">
+                Already booked
+              </button>
+            ) : (
               <label
                 htmlFor="book-now-modal"
                 className="btn btn-lg btn-success modal-button"
               >
                 Book Now
               </label>
-            )}
+            ))}
         </div>
       </section>
 
       {/* Modals */}
-      <BookNow />
+      <BookNow house={data?.data} />
       <QuestionModal houseId={data?.data?._id} newFetch={newFetch} />
 
-      <ReportModal title={data?.data?.name} />
+      <ReportModal
+        title={data?.data?.name}
+        houseId={data?.data?.name}
+        userId={data?.data?.owner?._id}
+      />
     </>
   );
 };

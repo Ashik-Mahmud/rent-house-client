@@ -1,10 +1,12 @@
 import Chart from "react-apexcharts";
-type Props = {};
-const StatisticChart = (props: Props) => {
+type Props = {
+  data: any;
+};
+const StatisticChart = ({ data }: Props) => {
   const series = [
     {
       name: "series-1",
-      data: [30, 40, 45, 50],
+      data: [data?.blogs, data?.house, data?.reviews, data?.likes],
     },
   ];
   const options = {
@@ -23,7 +25,7 @@ const StatisticChart = (props: Props) => {
 
   return (
     <div className="bg-white">
-      <h2 className="text-2xl font-bold p-5">Houses insights</h2>
+      <h2 className="text-2xl font-bold p-5">Activities insights</h2>
       <Chart
         options={options}
         series={series}

@@ -1,12 +1,18 @@
 import { useEffect, useState } from "react";
 import { BiBook } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../app/store";
 
 type Props = {};
 
 const Hero = (props: Props) => {
   const { name } = useAppSelector((state) => state.appOption);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [category, setCategory] = useState<string>("");
+  const [type, setType] = useState<string>("");
+  const [address, setAddress] = useState<string>("");
   /* Create Image Slider */
   let images = [
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWw_fKQ6H8mfIq0v-fvyUiJL0osaQODoC2og&usqp=CAU",
@@ -24,6 +30,17 @@ const Hero = (props: Props) => {
     return () => clearInterval(interval);
   }, [current, length]);
 
+  /* Handle Navigate  */
+  const handleNavigate = async () => {
+    navigate("/houses", {
+      state: {
+        from: location,
+        address,
+        type,
+        category,
+      },
+    });
+  };
   return (
     <section
       className="hero  min-h-[85vh] sm:min-h-[73vh]"
@@ -55,7 +72,11 @@ const Hero = (props: Props) => {
                 <div className="icon">
                   <BiBook />
                 </div>
-                <select className="outline-none  w-full pl-4 cursor-pointer text-sm text-black">
+                <select
+                  className="outline-none  w-full pl-4 cursor-pointer text-sm text-black"
+                  onChange={(event) => setCategory(event.target.value)}
+                >
+                  <option value="">select category</option>
                   <option value="General">General</option>
                   <option value="Bungalow">Bungalow</option>
                   <option value="Duplex">Duplex</option>
@@ -74,7 +95,11 @@ const Hero = (props: Props) => {
                 <div className="icon">
                   <BiBook />
                 </div>
-                <select className="form-control outline-none pl-4 w-full text-black">
+                <select
+                  className="form-control outline-none pl-4 w-full text-black"
+                  onChange={(event) => setType(event.target.value)}
+                >
+                  <option value="">select type</option>
                   <option value="Rent">Rent</option>
                   <option value="Sale">Sale</option>
                 </select>
@@ -90,6 +115,7 @@ const Hero = (props: Props) => {
                 </div>
                 <input
                   type="text"
+                  onInput={(event) => setAddress(event.currentTarget.value)}
                   className="form-control outline-none pl-4 w-full text-black"
                   placeholder="Address"
                 />
@@ -97,12 +123,12 @@ const Hero = (props: Props) => {
             </div>
 
             <div className="flex items-start flex-col mt-10">
-              <Link
-                to="/houses"
+              <button
                 className="btn btn-primary mr-7  h-[94px] rounded-l-none"
+                onClick={handleNavigate}
               >
                 Find Houses
-              </Link>
+              </button>
             </div>
           </div>
         </div>

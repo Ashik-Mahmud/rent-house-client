@@ -15,7 +15,7 @@ const RequireCustomer = ({ children }: Props) => {
     return <div>Loading...</div>;
   }
 
-  if (updatedUser?.role !== "customer") {
+  if (updatedUser?.role !== "customer" && updatedUser?.role !== "user") {
     toast.error("Access Denied");
     return <Navigate to="/dashboard" replace state={{ from: location }} />;
   }

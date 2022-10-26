@@ -78,8 +78,8 @@ const RejectedRow = ({ ind, house, refetch }: Props) => {
             <div className="mask mask-squircle w-12 h-12">
               <img
                 src={
-                  house?.image
-                    ? `${base_backend_url}/previews/` + house?.image
+                  house?.image?.img
+                    ? house?.image?.img
                     : "https://placeimg.com/400/225/arch"
                 }
                 alt={house?.name}

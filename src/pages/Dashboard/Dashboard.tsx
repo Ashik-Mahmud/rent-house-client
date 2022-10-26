@@ -11,11 +11,14 @@ import { AiOutlineUser } from "react-icons/ai";
 import {
   BiGitPullRequest,
   BiHomeAlt,
+  BiHomeCircle,
   BiLogOut,
   BiPlus,
   BiUser,
 } from "react-icons/bi";
 import {
+  BsBell,
+  BsBellSlash,
   BsBookFill,
   BsCardChecklist,
   BsGear,
@@ -28,6 +31,7 @@ import {
 import { useQuery } from "react-query";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/store";
+import GlobalLoader from "../../components/GlobalLoader";
 import { base_backend_url } from "../../configs/config";
 import { logout } from "../../features/AuthSlice";
 import {
@@ -46,6 +50,7 @@ const Dashboard = (props: Props) => {
   const dispatch = useAppDispatch();
 
   const [isPhone, setIsPhone] = useState<boolean>(true);
+  const [notificationCount, setNotificationCount] = useState(0);
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const {
@@ -86,6 +91,18 @@ const Dashboard = (props: Props) => {
       title: "My Reviews",
       icon: <BsHeart />,
       link: "/dashboard/reviews",
+    },
+    {
+      id: 54,
+      title: "My Bookings",
+      icon: <BsBookFill />,
+      link: "/dashboard/bookings",
+    },
+    {
+      id: 65,
+      title: "Booked Houses",
+      icon: <BiHomeCircle />,
+      link: "/dashboard/purchase/bookings",
     },
     {
       id: 5,
@@ -129,7 +146,7 @@ const Dashboard = (props: Props) => {
       },
       {
         id: 6,
-        title: "Bookings",
+        title: "Booked Houses",
         icon: <BsBookFill />,
         link: "/dashboard/purchase/bookings",
       },
@@ -334,6 +351,39 @@ const Dashboard = (props: Props) => {
     title = "House/Blog Requests";
   }
 
+  /* Send Request to get Notification */
+  const { data: notifications, isLoading: loading } = useQuery(
+    "notification",
+    () => getAllNotification()
+  );
+
+  const getAllNotification = async () => {
+    if (data?.role === "user") {
+      const { data } = await axios.get(
+        `${base_backend_url}/api/v1/request/notifications`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+      return data?.data;
+    }
+  };
+
+  let reports = notifications?.reports;
+  let questions = notifications?.questions;
+  let reviews = notifications?.reviews;
+
+  let AllNotificationCount =
+    reports?.length + questions?.length + reviews?.length;
+
+  useEffect(() => {
+    setNotificationCount(AllNotificationCount);
+  }, [AllNotificationCount]);
+
+  if (loading) return <GlobalLoader />;
+
   return (
     <>
       <div className="grid place-items-center ">
@@ -378,6 +428,151 @@ const Dashboard = (props: Props) => {
                   <div className="h-2 w-2 bg-green-500 rounded-full"></div>
                   {data?.role === "user" ? "House Holder" : data?.role}
                 </div>
+                {/* Notification Area */}
+                <div className="notification relative dropdown dropdown-end">
+                  {/* Notification Button */}
+                  {data?.role === "user" && (
+                    <label
+                      tabIndex={0}
+                      className="flex items-center gap-2 cursor-pointer"
+                    >
+                      <span className="text-xl">
+                        <BsBell />
+                      </span>
+                      {notificationCount > 0 && (
+                        <span className="text-xs text-white bg-success rounded-full px-1 absolute -right-1 -top-2">
+                          {notificationCount > 9
+                            ? "+9"
+                            : notificationCount || 0}
+                        </span>
+                      )}
+                    </label>
+                  )}
+
+                  {/* Notifications Dropdown */}
+                  <div
+                    tabIndex={0}
+                    className=" dropdown-content notification-dropdown absolute top-10 right-0 w-[20rem] bg-white shadow-lg rounded-md p-5"
+                  >
+                    <div className="notification-list flex flex-col gap-2">
+                      {notificationCount > 0 ? (
+                        <>
+                          {reports?.length > 0 && (
+                            <>
+                              <div>
+                                <small className="my-2 block">Reports</small>
+                                {reports?.slice(0, 2).map((report: any) => (
+                                  <div
+                                    key={report?._id}
+                                    className="notification-item flex items-center mb-2 gap-2 bg-gray-100 p-2 rounded"
+                                  >
+                                    <span className="text-sm">
+                                      <BsBell />
+                                    </span>
+                                    <span className="text-sm text-slate-400 flex  gap-2">
+                                      Someone has report your house{" "}
+                                      <Link
+                                        to={`/dashboard/houses/reports/${report?.house}`}
+                                        className="text-success underline"
+                                      >
+                                        view
+                                      </Link>
+                                    </span>
+                                  </div>
+                                ))}
+                                {reports?.length > 2 && (
+                                  <span className="text-xs text-success">
+                                    2+ more reports
+                                  </span>
+                                )}
+                              </div>
+                            </>
+                          )}
+                          {questions?.length > 0 && (
+                            <>
+                              <div>
+                                <small className="my-2 block">Questions</small>
+                                {questions?.slice(0, 2).map((question: any) => (
+                                  <div
+                                    key={question?._id}
+                                    className="notification-item flex mb-2 items-center gap-2 bg-gray-100 p-2 rounded"
+                                  >
+                                    <span className="text-sm">
+                                      <BsBell />
+                                    </span>
+                                    <span className="text-sm text-slate-400 flex  gap-2">
+                                      Someone has asked question for house{" "}
+                                      <Link
+                                        to={`/dashboard/houses/questions/${question?.house}`}
+                                        className="text-success underline"
+                                      >
+                                        view
+                                      </Link>
+                                    </span>
+                                  </div>
+                                ))}{" "}
+                                {questions?.length > 2 && (
+                                  <span className="text-xs text-success">
+                                    2+ more questions
+                                  </span>
+                                )}
+                              </div>
+                            </>
+                          )}
+                          {reviews?.length > 0 && (
+                            <>
+                              <div>
+                                <small className="my-2 text-gray-600 block">
+                                  Reviews notifications
+                                </small>
+                                {reviews?.slice(0, 2).map((review: any) => (
+                                  <div
+                                    key={review?._id}
+                                    className="notification-item flex items-center gap-2 mb-2 bg-gray-100 p-2 rounded"
+                                  >
+                                    <span className="text-sm">
+                                      <BsBell />
+                                    </span>
+                                    <span className="text-sm text-slate-400 flex  gap-2">
+                                      Someone has reviewed for house{" "}
+                                      <Link
+                                        to={`/dashboard/houses/reviews/${review?.house}`}
+                                        className="text-success underline"
+                                      >
+                                        view
+                                      </Link>
+                                    </span>
+                                  </div>
+                                ))}{" "}
+                                {reviews?.length > 2 && (
+                                  <span className="text-xs text-success">
+                                    2+ more reviews
+                                  </span>
+                                )}
+                              </div>
+                            </>
+                          )}
+
+                          <span
+                            onClick={() => setNotificationCount(0)}
+                            className="text-error mt-3 block font-poppins text-xs underline cursor-pointer"
+                          >
+                            clear notification
+                          </span>
+                        </>
+                      ) : (
+                        <div className="py-5 grid place-items-center text-center">
+                          <div className="text-center flex flex-col items-center gap-4">
+                            <BsBellSlash className="text-2xl" />
+                            <h4 className="text-xl font-poppins text-gray-500">
+                              No Notifications
+                            </h4>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
                 {!pathname.includes("/dashboard/houses/add") && (
                   <>
                     {role !== "customer" &&
@@ -411,10 +606,7 @@ const Dashboard = (props: Props) => {
                     <div className="w-10 rounded-full">
                       <img
                         src={
-                          data?.profileImage
-                            ? `${base_backend_url}/profiles/` +
-                              data?.profileImage
-                            : user?.user?.avatar
+                          data?.profileImage ? data?.profileImage : data?.avatar
                         }
                         alt={data?.name}
                       />
@@ -459,9 +651,7 @@ const Dashboard = (props: Props) => {
                   <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                     <img
                       src={
-                        data?.profileImage
-                          ? `${base_backend_url}/profiles/` + data?.profileImage
-                          : user?.user?.avatar
+                        data?.profileImage ? data?.profileImage : data?.avatar
                       }
                       alt={data?.name}
                     />

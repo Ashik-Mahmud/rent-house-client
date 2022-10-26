@@ -1,6 +1,7 @@
 import Chart from "react-apexcharts";
-type Props = {};
-const HouseReportChart = (props: Props) => {
+import GlobalLoader from "../../../../components/GlobalLoader";
+type Props = { reports: any; loading: boolean };
+const HouseReportChart = ({ reports, loading }: Props) => {
   const options = {
     chart: {
       id: "basic-bar",
@@ -17,7 +18,13 @@ const HouseReportChart = (props: Props) => {
     },
   ]; */
 
-  const series = [44, 55, 41, 6];
+  if (loading) return <GlobalLoader />;
+  const series = [
+    reports?.questions || 0,
+    reports?.reviews || 0,
+    reports?.reports || 0,
+    reports?.payments || 0,
+  ];
 
   return (
     <div className="bg-white">

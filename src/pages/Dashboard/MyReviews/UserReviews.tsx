@@ -1,4 +1,4 @@
-import { BiEditAlt, BiTrash } from "react-icons/bi";
+import { BiTrash } from "react-icons/bi";
 import { BsStarFill } from "react-icons/bs";
 import { toast } from "react-toastify";
 import swal from "sweetalert";
@@ -87,9 +87,6 @@ const UserReviews = (props: Props) => {
                       : review?.content}
                   </td>
                   <td>
-                    <button className="text-success">
-                      <BiEditAlt />
-                    </button>
                     <button
                       className="text-error ml-3"
                       onClick={() => handleDeleteReview(review?._id)}

@@ -10,6 +10,23 @@
 svg.star-svg {
   display: inline;
 }
+
+.loved {
+  width: 100px;
+  height: 80px;
+  background: url(https://abs.twimg.com/a/1446542199/img/t1/web_heart_animation.png)
+    no-repeat;
+  cursor: pointer;
+  display: inline-block;
+  position: absolute;
+  left: -36%;
+  margin-bottom: 16px;
+}
+.loved-done {
+  background-position: -2799px 0px;
+  transition: background 1s steps(28);
+}
+
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;800&family=Poppins:wght@400;700&display=swap");
 @tailwind base;
 @tailwind components;
