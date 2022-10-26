@@ -77,10 +77,16 @@ const BookNow = ({ house }: Props) => {
       return cogoToast.error("Please login first");
     }
     const response = await axios.get(
-      `${base_backend_url}/api/v1/payment/sslcommerz`,
+      `${base_backend_url}/api/v1/payment/sslcommerz/create-session`,
       {
         headers: {
-          Authorization: `Bearer ${user?.token}`,
+          Authorization: `Bearer ${user.token}`,
+        },
+        params: {
+          user: updatedUser?._id,
+          author: house?.author?._id,
+          house: house?.id,
+          amount: 100,
         },
       }
     );
