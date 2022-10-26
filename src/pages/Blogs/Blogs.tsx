@@ -11,15 +11,19 @@ type Props = {};
 
 const Blogs = (props: Props) => {
   const [categories, setCategories] = useState([]);
+  const [search, setSearch] = useState("");
   const [currentCategory, setCurrentCategory] = useState("All");
   /* Get All the active blogs */
-  const { data, isLoading } = useQuery(["blogs", currentCategory], async () => {
-    const { data } = await axios.get(
-      `${base_backend_url}/api/v1/blogs/all?category=${currentCategory}`
-    );
+  const { data, isLoading } = useQuery(
+    ["blogs", currentCategory, search],
+    async () => {
+      const { data } = await axios.get(
+        `${base_backend_url}/api/v1/blogs/all?category=${currentCategory}&q=${search}`
+      );
 
-    return data;
-  });
+      return data;
+    }
+  );
 
   useEffect(() => {
     const categories = data?.allData
@@ -52,6 +56,7 @@ const Blogs = (props: Props) => {
               type="search"
               placeholder="Search Blogs By Name or Category"
               className="w-full p-2 pl-4 outline-none"
+              onInput={(e) => setSearch(e.currentTarget.value)}
             />
           </div>
 
