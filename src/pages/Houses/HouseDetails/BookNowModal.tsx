@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { BiEnvelope, BiKey, BiPhoneIncoming, BiUser } from "react-icons/bi";
 import { Link, useNavigate } from "react-router-dom";
 import { PulseLoader } from "react-spinners";
+import swal from "sweetalert";
 import StripeCheckout from "../../../components/StripeCheckout";
 import { base_backend_url } from "../../../configs/config";
 import useAuth from "../../../hooks/useAuth";
@@ -75,6 +76,16 @@ const BookNow = ({ house }: Props) => {
     if (!user) {
       return cogoToast.error("Please login first");
     }
+
+    if (!updatedUser?.isVerified) {
+      return swal({
+        title: "Please verify your account first",
+        text: "Please verify your account first",
+        icon: "warning",
+        dangerMode: true,
+      });
+    }
+
     const { data } = await axios.get(
       `${base_backend_url}/api/v1/payment/sslcommerz/create-session`,
       {
