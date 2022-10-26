@@ -1,8 +1,10 @@
+import { Link } from "react-router-dom";
+
 type Props = {};
 
 const BlogCard = (props: Props) => {
   return (
-    <div className="p-4 ">
+    <div className="p-4 transition-all hover:scale-x-105 cursor-pointer hover:-translate-y-3">
       <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
         <img
           className="lg:h-48 md:h-36 w-full object-cover object-center"
@@ -21,9 +23,9 @@ const BlogCard = (props: Props) => {
             microdosing tousled waistcoat.
           </p>
           <div className="flex items-center flex-wrap ">
-            <a
+            <Link
+              to={`/blogs/32434334`}
               className="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0"
-              href="/"
             >
               Learn More
               <svg
@@ -38,7 +40,7 @@ const BlogCard = (props: Props) => {
                 <path d="M5 12h14"></path>
                 <path d="M12 5l7 7-7 7"></path>
               </svg>
-            </a>
+            </Link>
             <span className="text-gray-400 mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-200">
               <svg
                 className="w-4 h-4 mr-1"

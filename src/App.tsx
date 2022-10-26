@@ -19,6 +19,7 @@ import RegisterAuth from "./pages/Authentication/Register";
 import ResetPassword from "./pages/Authentication/ResetPassword";
 import ResetPasswordField from "./pages/Authentication/ResetPasswordField";
 import Blogs from "./pages/Blogs/Blogs";
+import BlogsDetails from "./pages/Blogs/BlogsDetails";
 import Contact from "./pages/Contact";
 import AddHouse from "./pages/Dashboard/AddHouse/AddHouse";
 import AdminHouses from "./pages/Dashboard/AdminHouses/AdminHouses";
@@ -144,6 +145,7 @@ const App = (props: Props) => {
         />
         <Route path="/reviews" element={<Reviews />} />
         <Route path="/blogs" element={<Blogs />} />
+        <Route path="/blogs/:blogId" element={<BlogsDetails />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/pricing" element={<Pricing />} />
