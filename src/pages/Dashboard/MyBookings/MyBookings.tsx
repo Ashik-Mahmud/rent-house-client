@@ -1,7 +1,9 @@
 import axios from "axios";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import { useQuery } from "react-query";
+import { useLocation } from "react-router-dom";
+import swal from "sweetalert";
 import GlobalLoader from "../../../components/GlobalLoader";
 import { base_backend_url } from "../../../configs/config";
 import useAuth from "../../../hooks/useAuth";
@@ -12,6 +14,19 @@ type Props = {};
 
 const MyBookings = (props: Props) => {
   const { user } = useAuth<authUserInterface | any>({});
+
+  const { search } = useLocation();
+  const result = useMemo(() => new URLSearchParams(search), [search]);
+  const successString = result.get("q");
+
+  if (successString === "success") {
+    swal({
+      title: "Success",
+      text: "Booking has been created successfully",
+      icon: "success",
+      buttons: ["Ok"],
+    });
+  }
 
   const [currentPage, setCurrentPage] = useState(1);
   const [limit, setLimit] = useState(5);
