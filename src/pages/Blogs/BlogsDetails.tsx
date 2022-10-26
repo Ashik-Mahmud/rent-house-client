@@ -110,9 +110,18 @@ const BlogsDetails = (props: Props) => {
             <span className="font-bold text-xl text-red-500">1.5k Likes</span>
           </div>
           <div>
-            <form action="">
-              <input type="email" placeholder="Get Update for blogs" />
-              <button>Subscribe</button>
+            <form
+              action=""
+              className="input-group rounded-full overflow-hidden shadow"
+            >
+              <input
+                type="email"
+                placeholder="Get Update for blogs"
+                className="input sm:w-72 rounded-full px-7 font-sm"
+              />
+              <button className="btn btn-success rounded-full">
+                Subscribe
+              </button>
             </form>
           </div>
         </div>
