@@ -2,7 +2,7 @@ import axios from "axios";
 import { useMemo, useState } from "react";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import { useQuery } from "react-query";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import swal from "sweetalert";
 import GlobalLoader from "../../../components/GlobalLoader";
 import { base_backend_url } from "../../../configs/config";
@@ -118,6 +118,10 @@ const MyBookings = (props: Props) => {
               ) : (
                 <div className="text-center">
                   <h1 className="text-2xl font-bold">No Bookings Found</h1>
+                  <Link to="/houses" className="btn btn-primary mt-5">
+                    {" "}
+                    Book Now{" "}
+                  </Link>
                 </div>
               )}
             </div>

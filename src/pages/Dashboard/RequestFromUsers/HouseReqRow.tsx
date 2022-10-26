@@ -93,7 +93,7 @@ const HouseReqRow = ({ ind, data, refetch }: Props) => {
 
       <td>
         {data?.notes.length > 100
-          ? data?.notes.slice(0, 100) + "..."
+          ? data?.notes.slice(0, 80) + "..."
           : data?.notes}
       </td>
       <td>
