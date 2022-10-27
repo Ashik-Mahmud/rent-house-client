@@ -121,13 +121,24 @@ const Houses = (props: Props) => {
   };
 
   useEffect(() => {
-    setGetAllDistrict(() => {
-      return data?.allHouse.map((house: any) => house.district);
-    });
+    // get unique district
+    const uniqueDistrict = data?.houses?.reduce((acc: any, cur: any) => {
+      if (!acc.includes(cur.district)) {
+        acc.push(cur.district);
+      }
+      return acc;
+    }, []);
 
-    setGetAllCity(() => {
-      return data?.allHouse.map((house: any) => house.city);
-    });
+    //get unique city
+    const uniqueCity = data?.houses?.reduce((acc: any, cur: any) => {
+      if (!acc.includes(cur.city)) {
+        acc.push(cur.city);
+      }
+      return acc;
+    }, []);
+
+    setGetAllDistrict(uniqueDistrict);
+    setGetAllCity(uniqueCity);
 
     return () => {
       setGetAllDistrict([]);
