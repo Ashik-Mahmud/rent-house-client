@@ -5,11 +5,13 @@ import { useQuery } from "react-query";
 import GlobalLoader from "../../components/GlobalLoader";
 import NoDataComponent from "../../components/NoDataComponent";
 import { base_backend_url } from "../../configs/config";
+import useTitle from "../../hooks/useTitle";
 import BlogCard from "./BlogCard";
 
 type Props = {};
 const Fade = require("react-reveal/Fade");
 const Blogs = (props: Props) => {
+  useTitle("Blogs");
   const [categories, setCategories] = useState([]);
   const [search, setSearch] = useState("");
   const [currentCategory, setCurrentCategory] = useState("All");

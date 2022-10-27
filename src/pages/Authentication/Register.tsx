@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import PulseLoader from "react-spinners/PulseLoader";
+import useTitle from "../../hooks/useTitle";
 import { useRegisterAuthMutation } from "../../services/AuthApi";
 
 type Props = {};
@@ -10,6 +11,7 @@ type Props = {};
 const Fade = require("react-reveal/Fade");
 
 const RegisterAuth = (props: Props) => {
+  useTitle("Register");
   const [userRole, setUserRole] = useState(false);
   const [registerAuth, { isLoading, error, isSuccess, data }] =
     useRegisterAuthMutation();

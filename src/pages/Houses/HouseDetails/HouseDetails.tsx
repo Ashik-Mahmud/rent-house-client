@@ -12,6 +12,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import GlobalLoader from "../../../components/GlobalLoader";
 import { base_backend_url } from "../../../configs/config";
 import useAuth from "../../../hooks/useAuth";
+import useTitle from "../../../hooks/useTitle";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import Address from "./Address";
 import BookNow from "./BookNowModal";
@@ -44,6 +45,9 @@ const HouseDetails = (Props: Props) => {
     );
     return data;
   };
+
+  /* Dynamic Title */
+  useTitle(data?.data?.name || "House Details");
 
   const [clicked, setClicked] = useState(false);
 

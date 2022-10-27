@@ -5,11 +5,13 @@ import { useQuery } from "react-query";
 import HouseSkeletonLoading from "../../components/HouseSkeletonLoading";
 import NoDataComponent from "../../components/NoDataComponent";
 import { base_backend_url } from "../../configs/config";
+import useTitle from "../../hooks/useTitle";
 import FilterSidebar from "./FilterSidebar";
 import HouseCard from "./HouseCard";
 type Props = {};
 
 const Houses = (props: Props) => {
+  useTitle("Houses");
   const [gridView, setGridView] = useState(true);
 
   /* Handle Grid View With LocalStorage Database*/

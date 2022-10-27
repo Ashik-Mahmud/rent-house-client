@@ -11,7 +11,7 @@ import WhyUs from "./WhyUs/WhyUs";
 type Props = {};
 
 const Home = (props: Props) => {
-  useTitle("Home | House Rent");
+  useTitle("Home");
   return (
     <section>
       <Hero />

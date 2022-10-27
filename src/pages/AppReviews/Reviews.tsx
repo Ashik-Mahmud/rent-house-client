@@ -7,11 +7,13 @@ import { ScrollToTop } from "react-simple-scroll-up";
 import GlobalLoader from "../../components/GlobalLoader";
 import NoDataComponent from "../../components/NoDataComponent";
 import { base_backend_url } from "../../configs/config";
+import useTitle from "../../hooks/useTitle";
 type Props = {};
 
 const Fade = require("react-reveal/Fade");
 
 const Reviews = (props: Props) => {
+  useTitle("Reviews");
   const [search, setSearch] = useState("");
   const [searchedData, setSearchedData] = useState([]);
 

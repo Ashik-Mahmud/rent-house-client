@@ -1,7 +1,9 @@
 import { ScrollToTop } from "react-simple-scroll-up";
+import useTitle from "../hooks/useTitle";
 type Props = {};
 
 const About = (props: Props) => {
+  useTitle("About");
   return (
     <div>
       <ScrollToTop

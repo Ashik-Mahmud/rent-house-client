@@ -1,6 +1,9 @@
+import useTitle from "../hooks/useTitle";
+
 type Props = {};
 
 const Pricing = (props: Props) => {
+  useTitle("Pricing");
   return (
     <div>
       <section className="text-gray-600 body-font overflow-hidden">

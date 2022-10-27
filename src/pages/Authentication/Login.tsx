@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import swal from "sweetalert";
 import { useAppDispatch } from "../../app/store";
 import { setAuthInformation } from "../../features/AuthSlice";
+import useTitle from "../../hooks/useTitle";
 import { useLoginAuthMutation } from "../../services/AuthApi";
 
 const Fade = require("react-reveal/Fade");
@@ -15,7 +16,7 @@ const Fade = require("react-reveal/Fade");
 type Props = {};
 
 const Login = (props: Props) => {
-  //   const { refetch } = useAuth<authUserInterface | any>({});
+  useTitle("Login");
   /* From AuthAPI */
   const [loginAuth, { data, isLoading, isSuccess, error }] =
     useLoginAuthMutation();
