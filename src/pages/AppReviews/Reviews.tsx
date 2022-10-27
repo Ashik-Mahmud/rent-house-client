@@ -15,7 +15,7 @@ const Reviews = (props: Props) => {
 
   /* pagination states */
   const [currentPage, setCurrentPage] = useState(1);
-  const [limit] = useState(1);
+  const [limit] = useState(8);
 
   /* Get All the Public review from Here */
   const { data, isLoading } = useQuery(
@@ -90,63 +90,65 @@ const Reviews = (props: Props) => {
         ) : (
           <NoDataComponent />
         )}
-        <div className="pagination flex items-center justify-center mt-10">
-          {pageNumbers?.map((number) => (
+        {limit < data?.count && (
+          <div className="pagination flex items-center justify-center mt-10">
+            {pageNumbers?.map((number) => (
+              <button
+                key={number}
+                onClick={() => setCurrentPage(number)}
+                className={`${
+                  currentPage === number
+                    ? "bg-success text-white"
+                    : "bg-gray-200 text-gray-500"
+                } mx-1 px-3 py-1 rounded-full`}
+              >
+                {number}
+              </button>
+            ))}
+
             <button
-              key={number}
-              onClick={() => setCurrentPage(number)}
+              onClick={handleNext}
               className={`${
-                currentPage === number
-                  ? "bg-success text-white"
-                  : "bg-gray-200 text-gray-500"
+                currentPage === totalPage
+                  ? "bg-gray-200 text-gray-500 pointer-events-none"
+                  : "bg-success text-white pointer-events-auto"
               } mx-1 px-3 py-1 rounded-full`}
             >
-              {number}
+              Next
             </button>
-          ))}
+            <button
+              onClick={() => setCurrentPage(1)}
+              className={`${
+                currentPage === 1
+                  ? "bg-gray-200 text-gray-500 pointer-events-none"
+                  : "bg-success text-white pointer-events-auto"
+              } mx-1 px-3 py-1 rounded-full`}
+            >
+              First
+            </button>
+            <button
+              onClick={() => setCurrentPage(totalPage)}
+              className={`${
+                currentPage === totalPage
+                  ? " bg-gray-200  text-gray-500  pointer-events-none"
+                  : " bg-success  text-white pointer-events-auto"
+              } mx-1 px-3 py-1 rounded-full`}
+            >
+              Last
+            </button>
 
-          <button
-            onClick={handleNext}
-            className={`${
-              currentPage === totalPage
-                ? "bg-gray-200 text-gray-500 pointer-events-none"
-                : "bg-success text-white pointer-events-auto"
-            } mx-1 px-3 py-1 rounded-full`}
-          >
-            Next
-          </button>
-          <button
-            onClick={() => setCurrentPage(1)}
-            className={`${
-              currentPage === 1
-                ? "bg-gray-200 text-gray-500 pointer-events-none"
-                : "bg-success text-white pointer-events-auto"
-            } mx-1 px-3 py-1 rounded-full`}
-          >
-            First
-          </button>
-          <button
-            onClick={() => setCurrentPage(totalPage)}
-            className={`${
-              currentPage === totalPage
-                ? " bg-gray-200  text-gray-500  pointer-events-none"
-                : " bg-success  text-white pointer-events-auto"
-            } mx-1 px-3 py-1 rounded-full`}
-          >
-            Last
-          </button>
-
-          <button
-            onClick={handlePrevious}
-            className={`${
-              currentPage === 1
-                ? "bg-gray-200 text-gray-500 pointer-events-none"
-                : "bg-success text-white pointer-events-auto"
-            } mx-1 px-3 py-1 rounded-full`}
-          >
-            Prev
-          </button>
-        </div>
+            <button
+              onClick={handlePrevious}
+              className={`${
+                currentPage === 1
+                  ? "bg-gray-200 text-gray-500 pointer-events-none"
+                  : "bg-success text-white pointer-events-auto"
+              } mx-1 px-3 py-1 rounded-full`}
+            >
+              Prev
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
