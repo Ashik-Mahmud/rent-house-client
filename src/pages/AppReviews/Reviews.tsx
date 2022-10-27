@@ -1,6 +1,7 @@
 import AppReviewCard from "./AppReviewCard";
 
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { ScrollToTop } from "react-simple-scroll-up";
 import GlobalLoader from "../../components/GlobalLoader";
@@ -9,19 +10,52 @@ import { base_backend_url } from "../../configs/config";
 type Props = {};
 
 const Reviews = (props: Props) => {
+  const [search, setSearch] = useState("");
+  const [searchedData, setSearchedData] = useState([]);
+
+  /* pagination states */
+  const [currentPage, setCurrentPage] = useState(1);
+  const [limit] = useState(1);
+
   /* Get All the Public review from Here */
-  const { data, isLoading } = useQuery("reviews", async () => {
-    const { data } = await axios.get(`${base_backend_url}/api/v1/reviews/all`);
-    return data;
-  });
+  const { data, isLoading } = useQuery(
+    ["reviews", limit, currentPage],
+    async () => {
+      const { data } = await axios.get(
+        `${base_backend_url}/api/v1/reviews/all?limit=${limit}&page=${currentPage}`
+      );
+      return data;
+    }
+  );
 
-  if (isLoading) return <GlobalLoader />;
-
-  if (data?.data?.length === 0) {
-    return <NoDataComponent />;
+  /* Handle Pagination */
+  const totalPage = Math.ceil(data?.count / limit);
+  let pageNumbers = [];
+  for (let i = 1; i <= totalPage; i++) {
+    pageNumbers.push(i);
   }
 
-  console.log(data);
+  /* Handle Next button */
+  const handleNext = () => {
+    if (currentPage < totalPage) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  /* Handle Previous button */
+  const handlePrevious = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  useEffect(() => {
+    const searchedData = data?.data?.filter((item: any) => {
+      return item?.author?.name?.toLowerCase()?.includes(search?.toLowerCase());
+    });
+    setSearchedData(searchedData);
+  }, [search, data]);
+
   return (
     <section>
       <ScrollToTop
@@ -42,12 +76,76 @@ const Reviews = (props: Props) => {
             type="search"
             placeholder="Search by your name"
             className="input input-ghost input-bordered"
+            onInput={(e) => setSearch(e.currentTarget.value)}
           />
         </div>
-        <div className="review-content grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-          {data?.data?.map((review: any, ind: number) => (
-            <AppReviewCard key={review?._id} review={review} />
+        {isLoading ? (
+          <GlobalLoader />
+        ) : searchedData?.length > 0 ? (
+          <div className="review-content grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+            {searchedData?.map((review: any, ind: number) => (
+              <AppReviewCard key={review?._id} review={review} />
+            ))}
+          </div>
+        ) : (
+          <NoDataComponent />
+        )}
+        <div className="pagination flex items-center justify-center mt-10">
+          {pageNumbers?.map((number) => (
+            <button
+              key={number}
+              onClick={() => setCurrentPage(number)}
+              className={`${
+                currentPage === number
+                  ? "bg-success text-white"
+                  : "bg-gray-200 text-gray-500"
+              } mx-1 px-3 py-1 rounded-full`}
+            >
+              {number}
+            </button>
           ))}
+
+          <button
+            onClick={handleNext}
+            className={`${
+              currentPage === totalPage
+                ? "bg-gray-200 text-gray-500 pointer-events-none"
+                : "bg-success text-white pointer-events-auto"
+            } mx-1 px-3 py-1 rounded-full`}
+          >
+            Next
+          </button>
+          <button
+            onClick={() => setCurrentPage(1)}
+            className={`${
+              currentPage === 1
+                ? "bg-gray-200 text-gray-500 pointer-events-none"
+                : "bg-success text-white pointer-events-auto"
+            } mx-1 px-3 py-1 rounded-full`}
+          >
+            First
+          </button>
+          <button
+            onClick={() => setCurrentPage(totalPage)}
+            className={`${
+              currentPage === totalPage
+                ? " bg-gray-200  text-gray-500  pointer-events-none"
+                : " bg-success  text-white pointer-events-auto"
+            } mx-1 px-3 py-1 rounded-full`}
+          >
+            Last
+          </button>
+
+          <button
+            onClick={handlePrevious}
+            className={`${
+              currentPage === 1
+                ? "bg-gray-200 text-gray-500 pointer-events-none"
+                : "bg-success text-white pointer-events-auto"
+            } mx-1 px-3 py-1 rounded-full`}
+          >
+            Prev
+          </button>
         </div>
       </div>
     </section>
