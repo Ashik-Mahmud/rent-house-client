@@ -32,7 +32,7 @@ const PublicReviews = (props: Props) => {
         {/* Reviews Content */}
         <div className="reviews-content grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7"></div>
         <Slider {...slickSettings}>
-          {data?.data?.map((review: any, ind: number) => (
+          {data?.data?.slice(0, 10)?.map((review: any, ind: number) => (
             <ReviewCard key={review?._id} review={review} />
           ))}
         </Slider>
