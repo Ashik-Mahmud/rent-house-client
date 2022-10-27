@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { BsGrid1X2, BsGrid3X2 } from "react-icons/bs";
 import { useQuery } from "react-query";
-import GlobalLoader from "../../components/GlobalLoader";
+import HouseSkeletonLoading from "../../components/HouseSkeletonLoading";
 import NoDataComponent from "../../components/NoDataComponent";
 import { base_backend_url } from "../../configs/config";
 import FilterSidebar from "./FilterSidebar";
@@ -223,13 +223,19 @@ const Houses = (props: Props) => {
                   </div>
                 </div>
               </div>
-
               {/* Houses Main Content */}
               {isLoading ? (
-                <GlobalLoader />
+                Array(8)
+                  .fill(0)
+                  .map((_, ind) => (
+                    <HouseSkeletonLoading
+                      key={ind + Date.now()}
+                      cards={8}
+                      gridView={gridView}
+                    />
+                  ))
               ) : data?.houses?.length > 0 ? (
                 <>
-                  {" "}
                   <div
                     className={`house-main-content p-6 grid  gap-6 ${
                       gridView

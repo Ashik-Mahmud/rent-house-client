@@ -117,7 +117,7 @@ const HouseCard = ({ gridView, house }: Props) => {
         </div>
       )}
       <span className="text-sm absolute top-3 left-3 z-20 badge badge-ghost category transition-all">
-        {house?.category || "loading..."}
+        {house?.category}
       </span>
       <figure
         className={`rounded overflow-hidden relative shadow ${
