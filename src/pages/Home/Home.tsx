@@ -1,4 +1,5 @@
 import { ScrollToTop } from "react-simple-scroll-up";
+import useTitle from "../../hooks/useTitle";
 import AboutApp from "./AboutApp";
 import BestHouses from "./BestHouse/BestHouses";
 import CallToAction from "./CallToAction";
@@ -10,6 +11,7 @@ import WhyUs from "./WhyUs/WhyUs";
 type Props = {};
 
 const Home = (props: Props) => {
+  useTitle("Home | House Rent");
   return (
     <section>
       <Hero />
