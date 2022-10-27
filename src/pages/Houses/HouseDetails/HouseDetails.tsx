@@ -6,6 +6,7 @@ import { BsArrowLeft } from "react-icons/bs";
 import { FiMaximize2 } from "react-icons/fi";
 import { GoHome } from "react-icons/go";
 import { MdReportGmailerrorred } from "react-icons/md";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import GlobalLoader from "../../../components/GlobalLoader";
@@ -103,7 +104,7 @@ const HouseDetails = (Props: Props) => {
   return (
     <>
       <section>
-        <div className="container mx-auto py-10 ">
+        <div className="container mx-auto py-10 font-poppins">
           <div className="cards">
             <div className="card-header flex-col sm:flex-row flex items-center justify-between my-5 bg-white p-5">
               <div className="left flex items-center gap-4">
@@ -155,8 +156,7 @@ const HouseDetails = (Props: Props) => {
                 >
                   <FiMaximize2 />
                 </div>
-                <img
-                  loading="lazy"
+                <LazyLoadImage
                   src={
                     data?.data?.image?.img
                       ? data?.data?.image?.img
@@ -166,12 +166,16 @@ const HouseDetails = (Props: Props) => {
                   className={`w-full  object-cover ${
                     isBigImage ? "h-full" : "h-96"
                   }`}
+                  width="100%"
+                  height={isBigImage ? "100%" : "100%"}
+                  effect="black-and-white"
+                  loading="lazy"
                 />
               </div>
               {/* House Details */}
               <div className="house-details my-5 bg-white p-10">
                 {/* Details */}
-                <div className="details ">
+                <div className="details font-bangla">
                   <div className="title mb-6">
                     <h3 className="text-2xl font-bold mt-3">Details</h3>
                     <span className="w-10 h-1 bg-success block"></span>

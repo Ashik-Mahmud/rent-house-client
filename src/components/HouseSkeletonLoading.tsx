@@ -1,11 +1,8 @@
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
-type Props = {
-  cards: number;
-  gridView: Boolean;
-};
+type Props = {};
 
-const HouseSkeletonLoading = ({ cards, gridView }: Props) => {
+const HouseSkeletonLoading = (Props: Props) => {
   return (
     <div className={"flex gap-8 py-4"}>
       <SkeletonTheme baseColor="#eaf0f5">

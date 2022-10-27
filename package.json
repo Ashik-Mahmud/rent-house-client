@@ -90,6 +90,7 @@
   "devDependencies": {
     "@types/file-saver": "^2.0.5",
     "@types/quill": "^2.0.9",
+    "@types/react-lazy-load-image-component": "^1.5.2",
     "@types/react-stars": "^2.2.1",
     "@types/styled-components": "^5.1.26",
     "autoprefixer": "^10.4.12",

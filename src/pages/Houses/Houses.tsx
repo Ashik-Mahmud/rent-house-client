@@ -228,11 +228,7 @@ const Houses = (props: Props) => {
                 Array(8)
                   .fill(0)
                   .map((_, ind) => (
-                    <HouseSkeletonLoading
-                      key={ind + Date.now()}
-                      cards={8}
-                      gridView={gridView}
-                    />
+                    <HouseSkeletonLoading key={ind + Date.now()} />
                   ))
               ) : data?.houses?.length > 0 ? (
                 <>
