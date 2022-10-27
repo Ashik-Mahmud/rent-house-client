@@ -1,9 +1,67 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { BsSearch } from "react-icons/bs";
+import { useQuery } from "react-query";
+import GlobalLoader from "../../components/GlobalLoader";
+import NoDataComponent from "../../components/NoDataComponent";
+import { base_backend_url } from "../../configs/config";
 import BlogCard from "./BlogCard";
 
 type Props = {};
 
 const Blogs = (props: Props) => {
+  const [categories, setCategories] = useState([]);
+  const [search, setSearch] = useState("");
+  const [currentCategory, setCurrentCategory] = useState("All");
+  /* Pagination */
+  const [currentPage, setCurrentPage] = useState(1);
+  const [limit, setLimit] = useState(8);
+
+  /* Get All the active blogs */
+  const { data, isLoading } = useQuery(
+    ["blogs", currentCategory, search, currentPage, limit],
+    async () => {
+      const { data } = await axios.get(
+        `${base_backend_url}/api/v1/blogs/all?category=${currentCategory}&q=${search}&page=${currentPage}&limit=${limit}`
+      );
+
+      return data;
+    }
+  );
+
+  /* Handle Pagination */
+
+  /* Handle Pagination */
+  const totalPage = Math.ceil(data?.count / limit);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPage) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  useEffect(() => {
+    const categories = data?.allData
+      ?.map((blog: any) => blog?.category)
+      .filter((v: string, i: number, a: string[]) => a.indexOf(v) === i);
+
+    /* Find Count blogs for particular category */
+    const categoryCount = categories?.map((category: string) => {
+      return {
+        category,
+        count: data?.allData?.filter((blog: any) => blog?.category === category)
+          .length,
+      };
+    });
+
+    setCategories(categoryCount);
+  }, [data]);
+
   return (
     <section className="font-poppins">
       <div className="container mx-auto py-10">
@@ -18,31 +76,99 @@ const Blogs = (props: Props) => {
               type="search"
               placeholder="Search Blogs By Name or Category"
               className="w-full p-2 pl-4 outline-none"
+              onInput={(e) => setSearch(e.currentTarget.value)}
             />
           </div>
 
           {/* Tabs */}
           <ul className="flex items-center gap-6 justify-center flex-wrap">
-            <li className="p-4 shadow rounded-md cursor-pointer bg-success">
-              Programming <span className="badge badge-ghost">5</span>
+            <li
+              className={`p-4 shadow rounded-md cursor-pointer ${
+                currentCategory === "All" ? "bg-success" : "text-gray-500"
+              } cursor-pointer`}
+              onClick={() => setCurrentCategory("All")}
+            >
+              All <span className="badge badge-ghost">{data?.count}</span>
             </li>
-            <li className="p-4 bg-white shadow rounded-md cursor-pointer">
-              Cinema <span className="badge">5</span>
-            </li>
-            <li className="p-4 bg-white shadow rounded-md cursor-pointer">
-              Comic <span className="badge">5</span>
-            </li>
+
+            {categories?.map((category: any) => (
+              <li
+                key={category?.category}
+                className={`p-4 shadow rounded-md cursor-pointer ${
+                  currentCategory === category?.category && "bg-success"
+                }`}
+                onClick={() => setCurrentCategory(category?.category)}
+              >
+                {category?.category}
+
+                <span className="badge badge-ghost">{category?.count}</span>
+              </li>
+            ))}
           </ul>
         </div>
 
         <div className="text-gray-600 body-font">
           <div className="container px-5 py-8 mx-auto">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 -m-4">
-              <BlogCard />
-              <BlogCard />
-              <BlogCard />
-              <BlogCard />
-            </div>
+            {isLoading ? (
+              <GlobalLoader />
+            ) : (
+              <div>
+                {data?.data?.length > 0 ? (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 -m-4">
+                    {data?.data?.map((blog: any, ind: number) => (
+                      <BlogCard key={blog?._id} blog={blog} />
+                    ))}
+                  </div>
+                ) : (
+                  <div>
+                    <NoDataComponent />
+                  </div>
+                )}
+              </div>
+            )}
+
+            {limit < data?.count && (
+              <div className="pagination flex items-center justify-between mt-20">
+                <div className="flex items-center gap-2 text-sm">
+                  Show{" "}
+                  <select
+                    name=""
+                    id=""
+                    className="select select-sm select-bordered rounded-none tooltip tooltip-info"
+                    title="Limit for showing"
+                    onChange={(event) => setLimit(Number(event.target.value))}
+                  >
+                    <option value="8">8</option>
+                    <option value="16">16</option>
+                    <option value="24">24</option>
+                  </select>
+                  entries
+                </div>
+                <div className="flex items-center gap-6">
+                  <div>
+                    <button
+                      className="btn btn-sm btn-ghost"
+                      onClick={handlePrevPage}
+                      disabled={currentPage === 1}
+                    >
+                      Previous
+                    </button>
+
+                    <button
+                      className="btn btn-sm btn-ghost "
+                      disabled={currentPage === totalPage}
+                      onClick={handleNextPage}
+                    >
+                      Next
+                    </button>
+                  </div>
+                  <span>
+                    Page <b>{currentPage} </b> of <b>{totalPage}</b>
+                  </span>
+                </div>
+              </div>
+            )}
+
             {/* FAQ Question */}
             <section className="text-gray-600 body-font">
               <div className="container px-5 py-24 mx-auto">

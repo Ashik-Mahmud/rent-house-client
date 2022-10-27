@@ -16,7 +16,7 @@ const UpdateBlogs = (props: Props) => {
   const { id } = useParams();
   const [seeBlogContent, setSeeBlogContent] = useState<boolean>(false);
   const [blogText, setBlogText] = useState<string>("");
-  const { data, isLoading, error } = useGetBlogByIdQuery(id);
+  const { data, isLoading, error, refetch } = useGetBlogByIdQuery(id);
   const [isYes, setIsYes] = useState<boolean>(false);
   const updateData = data?.data;
   const { register, handleSubmit, setValue } = useForm();
@@ -28,19 +28,21 @@ const UpdateBlogs = (props: Props) => {
 
   /* Handle Update Blog */
   const handleUpdateBlog = handleSubmit(async (formData) => {
-    const editedContent = { ...formData, blogContent: "" };
+    const editedContent = { ...formData };
     if (blogText) {
-      editedContent.blogContent = blogText;
+      editedContent.description = blogText;
     } else {
-      editedContent.blogContent = updateData?.description;
+      editedContent.description = updateData?.description;
     }
 
     await updateBlog({ ...editedContent, _id: id }).unwrap();
+    refetch();
   });
 
   useEffect(() => {
     setIsYes(true);
     /* Set Default value for Blog */
+    setValue("excerpt", updateData?.excerpt);
     setValue("title", updateData?.title);
     setValue("category", updateData?.category);
     setValue("imageUrl", updateData?.imageUrl);
@@ -72,7 +74,10 @@ const UpdateBlogs = (props: Props) => {
 
   return (
     <div>
-      <form onSubmit={handleUpdateBlog} className="p-4 my-4 bg-white">
+      <form
+        onSubmit={handleUpdateBlog}
+        className="p-4 my-4 bg-white font-bangla"
+      >
         <h1 className="text-3xl font-bold">Update Blog</h1>
         <div className="mt-5">
           {/* Name */}
@@ -126,6 +131,25 @@ const UpdateBlogs = (props: Props) => {
                 placeholder="Image URL"
                 {...register("imageUrl")}
               />
+            </div>
+          </div>
+          {/* End */}
+          {/* excerpt */}
+          <div className="name border  rounded p-3 relative mt-10 flex-1">
+            <div className="name-title absolute -top-4 bg-white border rounded p-1">
+              <h3 className="text-xs font-poppins">Excerpt</h3>
+            </div>
+            <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
+              <div className="icon">
+                <BiBook />
+              </div>
+              <textarea
+                {...register("excerpt")}
+                cols={5}
+                rows={3}
+                className="textarea textarea-bordered w-full"
+                placeholder="Put Excerpt in 200 chars."
+              ></textarea>
             </div>
           </div>
           {/* End */}

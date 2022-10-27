@@ -27,7 +27,7 @@ const HouseReviews = (props: Props) => {
     const { data } = await axios.get(
       `${base_backend_url}/api/v1/reviews/get-reviews-by-house-id/${houseId}`,
       {
-        headers: { Authorization: `Bearer ${user.token}` },
+        headers: { Authorization: `Bearer ${user?.token}` },
       }
     );
     return data;

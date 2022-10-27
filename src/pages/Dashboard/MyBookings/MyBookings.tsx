@@ -39,7 +39,7 @@ const MyBookings = (props: Props) => {
         `${base_backend_url}/api/v1/payment/payment-statement?page=${currentPage}&limit=${limit}`,
         {
           headers: {
-            Authorization: `Bearer ${user.token}`,
+            Authorization: `Bearer ${user?.token}`,
           },
         }
       );

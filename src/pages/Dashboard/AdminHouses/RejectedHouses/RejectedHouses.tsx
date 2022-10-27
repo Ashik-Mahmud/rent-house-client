@@ -35,7 +35,7 @@ const RejectedHouses = (props: Props) => {
       `${base_backend_url}/api/v1/admin/houses/rejected?page=${currentPage}&limit=${limit}&filter=${filter}`,
       {
         headers: {
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${user?.token}`,
         },
       }
     );

@@ -20,7 +20,7 @@ const CustomerDashboard = (props: Props) => {
         `${base_backend_url}/api/v1/payment/get-all-reports`,
         {
           headers: {
-            Authorization: `Bearer ${user.token}`,
+            Authorization: `Bearer ${user?.token}`,
           },
         }
       );

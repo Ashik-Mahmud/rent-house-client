@@ -30,7 +30,7 @@ const StripeCheckoutForm = ({ userInfo }: Props) => {
       {},
       {
         headers: {
-          authorization: `Bearer ${user.token}`,
+          authorization: `Bearer ${user?.token}`,
         },
       }
     );

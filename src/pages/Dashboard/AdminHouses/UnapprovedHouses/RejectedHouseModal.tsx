@@ -32,7 +32,7 @@ const RejectedHouseModal = ({ houseId, refetch }: Props) => {
         rejectContent,
         {
           headers: {
-            Authorization: `Bearer ${user.token}`,
+            Authorization: `Bearer ${user?.token}`,
           },
         }
       );

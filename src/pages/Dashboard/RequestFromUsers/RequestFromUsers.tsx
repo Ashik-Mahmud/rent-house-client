@@ -88,7 +88,7 @@ export const RequestFromUserRow = ({ data, ind, refetch }: rowType) => {
           {},
           {
             headers: {
-              Authorization: `Bearer ${user.token}`,
+              Authorization: `Bearer ${user?.token}`,
             },
           }
         );
@@ -116,7 +116,7 @@ export const RequestFromUserRow = ({ data, ind, refetch }: rowType) => {
           `${base_backend_url}/api/v1/request/cancel-request/${data._id}?authorId=${data?.author?._id}&role=blog`,
           {
             headers: {
-              Authorization: `Bearer ${user.token}`,
+              Authorization: `Bearer ${user?.token}`,
             },
           }
         );

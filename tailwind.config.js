@@ -10,6 +10,7 @@ module.exports ={
       fontFamily: {
         open: ['Open Sans', 'sans-serif'],
         poppins: ['poppins', 'sans-serif'],
+        bangla: ['Hind Siliguri', 'sans-serif']
       },
     },
     plugins: [require("daisyui")], 

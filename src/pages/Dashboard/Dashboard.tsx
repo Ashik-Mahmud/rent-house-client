@@ -363,7 +363,7 @@ const Dashboard = (props: Props) => {
         `${base_backend_url}/api/v1/request/notifications`,
         {
           headers: {
-            Authorization: `Bearer ${user.token}`,
+            Authorization: `Bearer ${user?.token}`,
           },
         }
       );

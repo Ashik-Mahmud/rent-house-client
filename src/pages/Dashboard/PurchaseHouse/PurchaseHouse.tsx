@@ -28,7 +28,7 @@ const PurchaseHouse = (props: Props) => {
         `${base_backend_url}/api/v1/payment/booked-houses?filter=${filter}&search=${search}&page=${currentPage}&limit=${limit}`,
         {
           headers: {
-            Authorization: `Bearer ${user.token}`,
+            Authorization: `Bearer ${user?.token}`,
           },
         }
       );

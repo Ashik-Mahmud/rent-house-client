@@ -90,7 +90,7 @@ const BookNow = ({ house }: Props) => {
       `${base_backend_url}/api/v1/payment/sslcommerz/create-session`,
       {
         headers: {
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${user?.token}`,
         },
         params: {
           user: updatedUser?._id,

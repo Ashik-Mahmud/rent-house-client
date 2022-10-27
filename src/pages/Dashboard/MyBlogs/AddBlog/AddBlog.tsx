@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { BiBook, BiLink } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import { PulseLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import useAuth from "../../../../hooks/useAuth";
 import { authUserInterface } from "../../../../interfaces/UserInterface";
@@ -15,10 +16,16 @@ const AddBlog = (props: Props) => {
   const { register, handleSubmit } = useForm();
 
   const navigate = useNavigate();
-  const [createBlog, { data, isSuccess, error }] = useCreateBlogMutation();
+  const [createBlog, { data, isSuccess, error, isLoading }] =
+    useCreateBlogMutation();
 
   const handleAddBlog = handleSubmit(async (formData) => {
-    if (!formData?.blogTitle || !formData?.category || !formData?.imageUrl) {
+    if (
+      !formData?.blogTitle ||
+      !formData?.category ||
+      !formData?.imageUrl ||
+      !formData?.excerpt
+    ) {
       return toast.error(`All fields is required.`);
     }
     if (!blogText) return toast(`Blog Content is Required.`);
@@ -29,6 +36,7 @@ const AddBlog = (props: Props) => {
     try {
       await createBlog({
         title: formData.blogTitle,
+        excerpt: formData?.excerpt,
         description: blogText,
         category: formData.category,
         imageUrl: formData.imageUrl,
@@ -87,12 +95,29 @@ const AddBlog = (props: Props) => {
               <div className="icon">
                 <BiBook />
               </div>
-              <input
-                type="text"
+              <select
                 className="form-control outline-none pl-4 w-full"
                 placeholder="Category"
                 {...register("category")}
-              />
+              >
+                <option value="">select category</option>
+                <option value="General">General</option>
+                <option value="Programming">Programming</option>
+                <option value="Development">Development</option>
+                <option value="Tech">Tech</option>
+                <option value="Comic">Comic</option>
+                <option value="Funny">Funny</option>
+                <option value="Lifestyle">Lifestyle</option>
+                <option value="Science">Science</option>
+                <option value="Novel">Novel</option>
+                <option value="Technic">Technic</option>
+                <option value="Fiction">Fiction</option>
+                <option value="Knowledge">Knowledge</option>
+                <option value="Random">Random</option>
+                <option value="History">History</option>
+                <option value="Story">Story</option>
+                <option value="Others">Others</option>
+              </select>
             </div>
           </div>
           {/* End */}
@@ -111,6 +136,25 @@ const AddBlog = (props: Props) => {
                 placeholder="Image URL"
                 {...register("imageUrl")}
               />
+            </div>
+          </div>
+          {/* End */}
+          {/* excerpt */}
+          <div className="name border  rounded p-3 relative mt-10 flex-1">
+            <div className="name-title absolute -top-4 bg-white border rounded p-1">
+              <h3 className="text-xs font-poppins">Excerpt</h3>
+            </div>
+            <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
+              <div className="icon">
+                <BiBook />
+              </div>
+              <textarea
+                {...register("excerpt")}
+                cols={5}
+                rows={3}
+                className="textarea textarea-bordered w-full"
+                placeholder="Put Excerpt in 200 chars."
+              ></textarea>
             </div>
           </div>
           {/* End */}
@@ -143,7 +187,13 @@ const AddBlog = (props: Props) => {
           </div>
           {/* End */}
           <div className="flex justify-end mt-5">
-            <button className="btn btn-primary rounded-none">Add Blog</button>
+            {isLoading ? (
+              <button className="btn btn-primary rounded-none" type="button">
+                <PulseLoader size={8} color="#fff" />
+              </button>
+            ) : (
+              <button className="btn btn-primary rounded-none">Add Blog</button>
+            )}
           </div>
         </div>
       </form>

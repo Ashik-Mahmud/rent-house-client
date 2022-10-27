@@ -24,7 +24,7 @@ const Users = (props: Props) => {
       `${base_backend_url}/api/v1/users/admin?page=${currentPage}&limit=${limitPerPage}&role=${filterRole}`,
       {
         headers: {
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${user?.token}`,
         },
       }
     );

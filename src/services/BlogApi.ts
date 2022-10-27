@@ -10,7 +10,7 @@ export const BlogApi = createApi({
     baseUrl: `${base_backend_url}/api/v1/blogs`,
     prepareHeaders: (headers, api) => {
       const cookie = cookies.get("user");
-      const token = cookie.token;
+      const token = cookie?.token;
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
       }

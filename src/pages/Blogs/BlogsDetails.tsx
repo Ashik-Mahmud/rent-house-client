@@ -1,46 +1,152 @@
-import { BsFacebook, BsLink, BsLinkedin, BsTwitter } from "react-icons/bs";
+import axios from "axios";
+import cogoToast from "cogo-toast";
+import { format } from "date-fns";
+import { useEffect, useState } from "react";
+import { BiArrowBack } from "react-icons/bi";
+import {
+  BsFacebook,
+  BsLink,
+  BsLinkedin,
+  BsTwitter,
+  BsWhatsapp,
+} from "react-icons/bs";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  FacebookShareButton,
+  LinkedinShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+} from "react-share";
 import styled from "styled-components";
+import GlobalLoader from "../../components/GlobalLoader";
+import { base_backend_url } from "../../configs/config";
+import { useGetBlogByIdQuery } from "../../services/BlogApi";
 
 type Props = {};
 
 const BlogsDetails = (props: Props) => {
+  const { blogId } = useParams();
+  const navigate = useNavigate();
+  const [clicked, setClicked] = useState(false);
+  const { data, isLoading, refetch } = useGetBlogByIdQuery(blogId);
+  const [isCopyLink, setIsCopyLink] = useState(false);
+  /* Handle Favorite */
+  const handleFavorite = async () => {
+    localStorage.setItem("favorite" + blogId, JSON.stringify(!clicked));
+    setClicked(() => {
+      return localStorage.getItem("favorite" + blogId) === "true"
+        ? true
+        : false;
+    });
+    const { data } = await axios.patch(
+      `${base_backend_url}/api/v1/blogs/like/${blogId}?like=${clicked}`
+    );
+    cogoToast.success(data.message);
+    refetch();
+  };
+
+  /* Handle Copy Link to the Houses */
+  const handleCopyLink = (id: string) => {
+    const location = window.location.origin;
+    const link = `${location}/blogs/${id}`;
+    navigator.clipboard.writeText(link);
+    setIsCopyLink(true);
+    setTimeout(() => {
+      setIsCopyLink(false);
+    }, 2000);
+  };
+
+  useEffect(() => {
+    const favoriteValue: any = localStorage.getItem("favorite" + blogId);
+    const parsedValue = JSON.parse(favoriteValue);
+    setClicked(parsedValue || false);
+  }, [clicked, blogId]);
+
+  if (isLoading) return <GlobalLoader />;
   return (
-    <BlogsDetailsContainer className="p-10 sm:p-12 sm:px-96 font-poppins rounded">
+    <BlogsDetailsContainer className="p-10 sm:p-12 sm:px-96 font-bangla rounded">
       <div className="container mx-auto bg-white p-5">
         <div className="image">
           <img
-            src="https://phero-web.nyc3.cdn.digitaloceanspaces.com/blog-images-prod/public/files/1666736516847.png"
+            src={
+              data?.data?.imageUrl
+                ? data?.data?.imageUrl
+                : "https://phero-web.nyc3.cdn.digitaloceanspaces.com/blog-images-prod/public/files/1666736516847.png"
+            }
             className="w-full h-96 object-cover rounded-md"
-            alt="previewImage"
+            alt={data?.data?.title}
           />
         </div>
         <div className="meta-title m-10">
           <div>
-            <h2 className="text-3xl font-bold">
-              ওয়েব ডেভলপমেন্ট – কম্পিলিট গাইড লাইন
-            </h2>
+            <div className="flex items-center gap-4">
+              <span
+                className="text-4xl cursor-pointer "
+                onClick={() => navigate(-1)}
+              >
+                <BiArrowBack />
+              </span>
+              <h2 className="text-3xl font-bold">{data?.data?.title}</h2>
+            </div>
             <div className="mt-4 ">
               Category/
-              <span className="font-bold">Programming</span>
+              <span className="font-bold">{data?.data?.category}</span>
             </div>
           </div>
           <div className="meta flex items-center justify-between mt-10">
             <div className="author">
-              <h3 className="text-xl font-bold">Ashik Mahmud</h3>
-              <span>27 Oct, 2022 at 10:30 AM</span>
+              <h3 className="text-xl font-bold">
+                {data?.data?.author?.name || "loading...."}
+              </h3>
+              <span>{format(new Date(data?.data?.createdAt), "PPPPp")}</span>
             </div>
             <div className="social-share">
-              <ul className=" flex items-center gap-3">
-                <li className="cursor-pointer" title="Share on facebook">
-                  <BsFacebook />
+              <ul className=" flex items-center gap-5">
+                <li
+                  className="cursor-pointer tooltip"
+                  data-tip="Share on facebook"
+                >
+                  <FacebookShareButton
+                    url={window.location.origin + "/blogs/" + data?.data?._id}
+                  >
+                    <BsFacebook />
+                  </FacebookShareButton>
                 </li>
-                <li className="cursor-pointer" title="Share on twitter">
-                  <BsTwitter />
+                <li
+                  className="cursor-pointer tooltip"
+                  data-tip="Share on WhatsApp"
+                >
+                  <WhatsappShareButton
+                    url={window.location.origin + "/blogs/" + data?.data?._id}
+                  >
+                    <BsWhatsapp />
+                  </WhatsappShareButton>
                 </li>
-                <li className="cursor-pointer" title="Share on linkedIn">
-                  <BsLinkedin />
+                <li
+                  className="cursor-pointer tooltip"
+                  data-tip="Share on linkedIn"
+                >
+                  <TwitterShareButton
+                    url={window.location.origin + "/blogs/" + data?.data?._id}
+                  >
+                    <BsTwitter />
+                  </TwitterShareButton>
+                </li>{" "}
+                <li
+                  className="cursor-pointer tooltip"
+                  data-tip="Share on linkedIn"
+                >
+                  <LinkedinShareButton
+                    url={window.location.origin + "/blogs/" + data?.data?._id}
+                  >
+                    <BsLinkedin />
+                  </LinkedinShareButton>
                 </li>
-                <li className="cursor-pointer" title="Copy link">
+                <li
+                  onClick={() => handleCopyLink(data?.data?._id)}
+                  className="cursor-pointer tooltip"
+                  data-tip={isCopyLink ? "Copied" : "Copy Link"}
+                >
                   <BsLink />
                 </li>
               </ul>
@@ -49,65 +155,25 @@ const BlogsDetails = (props: Props) => {
         </div>
 
         {/* details */}
-        <div className="details m-10 leading-7">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eius
-          corrupti aut commodi asperiores suscipit tenetur officiis earum
-          perspiciatis repellat alias deleniti, itaque doloribus nisi mollitia
-          quidem! Non praesentium, explicabo laudantium consequatur vel mollitia
-          commodi neque? Velit deleniti recusandae possimus nostrum quam aut
-          sunt exercitationem nemo blanditiis? Similique, voluptatem natus?
-          Tempore veniam natus sunt eveniet distinctio at iure dignissimos fuga
-          vero, reprehenderit vitae earum cum maxime tempora architecto, magnam
-          debitis voluptates ratione tenetur. Iure placeat nostrum quasi dolor
-          neque eligendi consequatur! Sint recusandae quod nisi explicabo
-          cumque, maxime tempore libero in iste provident vero harum, voluptate
-          tenetur veritatis illum. Dolore corrupti ipsam dignissimos eius, autem
-          veniam corporis consequatur obcaecati officia nemo explicabo!
-          Distinctio odio voluptatem ratione tempora recusandae, voluptas <br />
-          <br />
-          asperiores, iste veritatis atque tempore, eaque iure possimus.
-          Accusantium consequatur ipsa fugit incidunt aut, esse earum, maiores
-          nihil enim commodi natus nostrum blanditiis. Dicta necessitatibus,
-          porro voluptatum est fugit rem illum, blanditiis aut perferendis
-          accusamus unde neque nam expedita voluptatem doloribus deleniti in!
-          Architecto, veritatis aliquam laudantium culpa voluptatibus
-          perspiciatis cumque sunt consequuntur iste maiores autem alias ipsum
-          expedita sint reprehenderit et temporibus odio suscipit facilis, quo
-          ratione at veniam ea voluptate? Sunt quaerat culpa unde, tempore fuga
-          nobis, maiores a quam quidem doloribus accusamus quo ipsam explicabo
-          temporibus blanditiis in vitae, magnam repellat nesciunt. Praesentium
-          deserunt laboriosam maxime voluptate accusamus quidem placeat eius
-          cupiditate veniam in mollitia, amet vel commodi ad voluptas rem
-          reprehenderit minima possimus labore obcaecati velit provident aliquid{" "}
-          <br />
-          <br />
-          quae ea. Inventore atque repudiandae ut quasi consequatur dolores
-          eveniet dolore voluptas ipsa fuga, sunt maxime, error illum rerum id
-          quae explicabo nesciunt. Consequuntur repudiandae quasi ratione animi
-          nulla hic deleniti officia cum similique? Sit numquam expedita velit
-          facere ut? Voluptate natus, quod assumenda temporibus cumque molestias
-          magnam optio illo corporis fugit consequatur praesentium eius non sunt
-          ex recusandae dolorum nemo. Rem hic dignissimos quos beatae neque
-          placeat, reiciendis laborum ipsam consectetur aperiam laudantium illum
-          numquam debitis similique distinctio magnam assumenda quisquam
-          voluptatem consequuntur fugiat quaerat quam cum pariatur deserunt.
-          Animi sunt harum rerum nulla. Sed ducimus non expedita consequuntur,
-          vel ipsum. Reprehenderit soluta molestias minima labore vitae vero vel
-          cupiditate recusandae? Placeat obcaecati quibusdam, numquam nulla
-          voluptatem at, neque ipsum vitae minima commodi voluptas velit rem
-          accusantium. Quisquam ratione reiciendis, ea, cum sunt minus molestiae
-          temporibus earum dolore hic, ipsam distinctio iste? Nesciunt alias
-          omnis non eligendi beatae. Quos quo quas reiciendis modi voluptatem
-          asperiores, impedit aspernatur ex.
-        </div>
+        <div
+          className="details m-10 leading-8 font-bangla text-lg "
+          dangerouslySetInnerHTML={{ __html: data?.data?.description }}
+        ></div>
 
         <div className="text-center flex items-center justify-between  bg-gray-50 rounded-lg">
           <div className="flex items-center gap-0">
             <div
-              className={`loves-to-the-blog loved-blog`}
+              onClick={handleFavorite}
+              className={`loves-to-the-blog ${clicked ? "loved-blog" : ""} `}
               title={"Dislike Like"}
             ></div>
-            <span className="font-bold text-xl text-red-500">1.5k Likes</span>
+            <span
+              className={`font-bold font-open text-xl ${
+                clicked ? "text-red-500" : ""
+              }`}
+            >
+              {data?.data?.likes} Likes
+            </span>
           </div>
           <div>
             <form

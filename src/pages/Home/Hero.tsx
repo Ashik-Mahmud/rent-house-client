@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { BiBook } from "react-icons/bi";
 import { useLocation, useNavigate } from "react-router-dom";
+import ReactTyped from "react-typed";
 import { useAppSelector } from "../../app/store";
 
 type Props = {};
@@ -61,6 +62,26 @@ const Hero = (props: Props) => {
             Bangladesh. We have a huge collection of houses and apartments for
             sale and rent. You can choose your dream house from our huge
             collection of houses and apartments.
+          </p>
+          <p className="font-poppins uppercase font-bold">
+            <ReactTyped
+              strings={[
+                "Here you can find your",
+                "Dream house",
+                "Best Houses",
+                "Best Apartments",
+                "Best Locations",
+                "Best Price",
+                "Best Deal",
+                "Best Service",
+                "Best Platform",
+                "Best Place",
+                "Best Place to find your dream house",
+                "Best Place to find your dream apartment",
+              ]}
+              typeSpeed={40}
+              loop
+            />
           </p>
           <div className="filter-search flex items-center font-poppins justify-center w-full">
             {/* address */}
