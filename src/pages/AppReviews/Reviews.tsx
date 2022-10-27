@@ -1,9 +1,27 @@
 import AppReviewCard from "./AppReviewCard";
 
+import axios from "axios";
+import { useQuery } from "react-query";
 import { ScrollToTop } from "react-simple-scroll-up";
+import GlobalLoader from "../../components/GlobalLoader";
+import NoDataComponent from "../../components/NoDataComponent";
+import { base_backend_url } from "../../configs/config";
 type Props = {};
 
 const Reviews = (props: Props) => {
+  /* Get All the Public review from Here */
+  const { data, isLoading } = useQuery("reviews", async () => {
+    const { data } = await axios.get(`${base_backend_url}/api/v1/reviews/all`);
+    return data;
+  });
+
+  if (isLoading) return <GlobalLoader />;
+
+  if (data?.data?.length === 0) {
+    return <NoDataComponent />;
+  }
+
+  console.log(data);
   return (
     <section>
       <ScrollToTop
@@ -27,18 +45,9 @@ const Reviews = (props: Props) => {
           />
         </div>
         <div className="review-content grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-          <AppReviewCard />
-          <AppReviewCard />
-          <AppReviewCard />
-          <AppReviewCard />
-          <AppReviewCard />
-          <AppReviewCard />
-          <AppReviewCard />
-          <AppReviewCard />
-          <AppReviewCard />
-          <AppReviewCard />
-          <AppReviewCard />
-          <AppReviewCard />
+          {data?.data?.map((review: any, ind: number) => (
+            <AppReviewCard key={review?._id} review={review} />
+          ))}
         </div>
       </div>
     </section>
