@@ -35,6 +35,7 @@ const AppReviewCard = ({ review }: Props) => {
         <div className="avatar online">
           <div className="w-12 border-4 border-gray-300 rounded-full">
             <img
+              loading="lazy"
               src={
                 review?.author?.profileImage
                   ? review?.author?.profileImage

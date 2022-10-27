@@ -125,6 +125,7 @@ const HouseCard = ({ gridView, house }: Props) => {
         }`}
       >
         <img
+          loading="lazy"
           src={
             house?.image.img
               ? house?.image.img

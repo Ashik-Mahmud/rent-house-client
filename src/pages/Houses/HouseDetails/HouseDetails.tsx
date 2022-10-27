@@ -156,6 +156,7 @@ const HouseDetails = (Props: Props) => {
                   <FiMaximize2 />
                 </div>
                 <img
+                  loading="lazy"
                   src={
                     data?.data?.image?.img
                       ? data?.data?.image?.img

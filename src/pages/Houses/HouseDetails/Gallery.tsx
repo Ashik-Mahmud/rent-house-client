@@ -38,6 +38,7 @@ const Gallery = ({ gallery }: Props) => {
             {images?.map((item: any, index: number) => (
               <li className="cursor-pointer" key={index}>
                 <img
+                  loading="lazy"
                   src={item ? item : "https://placeimg.com/400/225/arch"}
                   className="h-60"
                   alt=""

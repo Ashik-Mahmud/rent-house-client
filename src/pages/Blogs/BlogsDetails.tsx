@@ -68,6 +68,7 @@ const BlogsDetails = (props: Props) => {
       <div className="container mx-auto bg-white p-5">
         <div className="image">
           <img
+            loading="lazy"
             src={
               data?.data?.imageUrl
                 ? data?.data?.imageUrl
