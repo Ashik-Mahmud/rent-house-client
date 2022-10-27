@@ -13,7 +13,7 @@ const BlogCard = ({ blog }: Props) => {
   });
 
   return (
-    <div className="p-4 transition-all hover:scale-x-105 cursor-pointer hover:-translate-y-3 bg-white">
+    <div className="p-4 transition-all font-bangla hover:scale-x-105 cursor-pointer hover:-translate-y-3 bg-white">
       <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
         <img
           className=" md:h-36 w-full lg:h-56 object-cover  object-center"
