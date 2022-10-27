@@ -9,6 +9,8 @@ import NoDataComponent from "../../components/NoDataComponent";
 import { base_backend_url } from "../../configs/config";
 type Props = {};
 
+const Fade = require("react-reveal/Fade");
+
 const Reviews = (props: Props) => {
   const [search, setSearch] = useState("");
   const [searchedData, setSearchedData] = useState([]);
@@ -67,26 +69,30 @@ const Reviews = (props: Props) => {
         symbolColor="#36D399"
       />
       <div className="container mx-auto py-10 text-center font-poppins mb-10">
-        <div className=" my-10 flex items-center justify-between">
-          <div className="title text-left">
-            <h3 className="text-3xl font-bold">Public Reviews About Us</h3>
-            <div className="w-32 h-1 mt-3 bg-success"></div>
+        <Fade top distance="20px">
+          <div className=" my-10 flex items-center justify-between">
+            <div className="title text-left">
+              <h3 className="text-3xl font-bold">Public Reviews About Us</h3>
+              <div className="w-32 h-1 mt-3 bg-success"></div>
+            </div>
+            <input
+              type="search"
+              placeholder="Search by your name"
+              className="input input-ghost input-bordered"
+              onInput={(e) => setSearch(e.currentTarget.value)}
+            />
           </div>
-          <input
-            type="search"
-            placeholder="Search by your name"
-            className="input input-ghost input-bordered"
-            onInput={(e) => setSearch(e.currentTarget.value)}
-          />
-        </div>
+        </Fade>
         {isLoading ? (
           <GlobalLoader />
         ) : searchedData?.length > 0 ? (
-          <div className="review-content grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-            {searchedData?.map((review: any, ind: number) => (
-              <AppReviewCard key={review?._id} review={review} />
-            ))}
-          </div>
+          <Fade top distance="20px">
+            <div className="review-content grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+              {searchedData?.map((review: any, ind: number) => (
+                <AppReviewCard key={review?._id} review={review} />
+              ))}
+            </div>
+          </Fade>
         ) : (
           <NoDataComponent />
         )}

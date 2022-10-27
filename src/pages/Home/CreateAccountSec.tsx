@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
 type Props = {};
 
+const Fade = require("react-reveal/Fade");
+
 const CreateAccountSec = (props: Props) => {
   return (
     <div
@@ -11,16 +13,18 @@ const CreateAccountSec = (props: Props) => {
       }}
     >
       <div className="hero-overlay bg-opacity-60"></div>
-      <div className="container mx-auto">
-        <div className="flex flex-col items-center justify-center py-20 px-3">
-          <h1 className="text-4xl font-bold text-center my-4 text-white">
-            Do you have a houses for sale or rent?
-          </h1>
-          <Link to="/register" className="btn btn-success mr-7">
-            Create Account to List here
-          </Link>
+      <Fade top distance="20px">
+        <div className="container mx-auto">
+          <div className="flex flex-col items-center justify-center py-20 px-3">
+            <h1 className="text-4xl font-bold text-center my-4 text-white">
+              Do you have a houses for sale or rent?
+            </h1>
+            <Link to="/register" className="btn btn-success mr-7">
+              Create Account to List here
+            </Link>
+          </div>
         </div>
-      </div>
+      </Fade>
       <ReactTooltip />
     </div>
   );

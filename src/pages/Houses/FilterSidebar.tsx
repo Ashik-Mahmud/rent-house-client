@@ -20,6 +20,8 @@ type Props = {
   getAllCity: any;
 };
 
+const Fade = require("react-reveal/Fade");
+
 const FilterSidebar = ({
   getAllDistrict,
   setFilterByDistrict,
@@ -258,147 +260,149 @@ const FilterSidebar = ({
       </div>
 
       {/* Sidebar */}
-      <form className="house-content-left sm:sticky  top-10  border p-6 bg-white shadow rounded-md w-full sm:w-auto">
-        <div className="house-content-left-title flex items-center justify-between">
-          <h2 className="text-xl font-bold">Filters Houses</h2>
-          <label
-            htmlFor="advanced-filter-modal"
-            className="modal-button advance-filters cursor-pointer tooltip"
-            data-tip="Advanced Filters"
-          >
-            <RiEqualizerLine />
-          </label>
-        </div>
-        <div className="filters ">
-          {/* Filter by District */}
-          <div className="filter-by-name border  rounded p-3 relative mt-10">
-            <div className="filter-by-name-title absolute -top-4 bg-white border rounded p-1">
-              <h3 className="text-xs font-poppins">Filter by District</h3>
-            </div>
-            <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
-              <div className="icon">
-                <BsSearch />
+      <Fade top distance="20px">
+        <form className="house-content-left sm:sticky  top-10  border p-6 bg-white shadow rounded-md w-full sm:w-auto">
+          <div className="house-content-left-title flex items-center justify-between">
+            <h2 className="text-xl font-bold">Filters Houses</h2>
+            <label
+              htmlFor="advanced-filter-modal"
+              className="modal-button advance-filters cursor-pointer tooltip"
+              data-tip="Advanced Filters"
+            >
+              <RiEqualizerLine />
+            </label>
+          </div>
+          <div className="filters ">
+            {/* Filter by District */}
+            <div className="filter-by-name border  rounded p-3 relative mt-10">
+              <div className="filter-by-name-title absolute -top-4 bg-white border rounded p-1">
+                <h3 className="text-xs font-poppins">Filter by District</h3>
               </div>
-              <select
-                name=""
-                className="outline-none  w-full pl-4 cursor-pointer text-sm"
-                id=""
-                onChange={(e) => setFilterByDistrict(e.target.value)}
-              >
-                <option value="">Select District</option>
-                {getAllDistrict?.map((district: string, ind: number) => (
-                  <option key={district + ind} value={district}>
-                    {district}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-          {/* End */}
-          {/* Filter by Name */}
-          <div className="filter-by-name border  rounded p-3 relative mt-10">
-            <div className="filter-by-name-title absolute -top-4 bg-white border rounded p-1">
-              <h3 className="text-xs font-poppins">Filter by Name</h3>
-            </div>
-            <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
-              <div className="icon">
-                <BsSearch />
+              <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
+                <div className="icon">
+                  <BsSearch />
+                </div>
+                <select
+                  name=""
+                  className="outline-none  w-full pl-4 cursor-pointer text-sm"
+                  id=""
+                  onChange={(e) => setFilterByDistrict(e.target.value)}
+                >
+                  <option value="">Select District</option>
+                  {getAllDistrict?.map((district: string, ind: number) => (
+                    <option key={district + ind} value={district}>
+                      {district}
+                    </option>
+                  ))}
+                </select>
               </div>
-              <input
-                type="text"
-                className="form-control outline-none pl-4"
-                placeholder="Search by name"
-                onInput={(e) => setSearchKey(e.currentTarget.value)}
-              />
             </div>
-          </div>
-          {/* End */}
-          {/* Filter by Category */}
-          <div className="filter-by-name border  rounded p-3 relative mt-10">
-            <div className="filter-by-name-title absolute -top-4 bg-white border rounded p-1">
-              <h3 className="text-xs font-poppins">Filter by Category</h3>
-            </div>
-            <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
-              <div className="icon">
-                <BsSearch />
+            {/* End */}
+            {/* Filter by Name */}
+            <div className="filter-by-name border  rounded p-3 relative mt-10">
+              <div className="filter-by-name-title absolute -top-4 bg-white border rounded p-1">
+                <h3 className="text-xs font-poppins">Filter by Name</h3>
               </div>
-              <select
-                name=""
-                className="outline-none w-full pl-4 cursor-pointer text-sm"
-                id=""
-                onChange={(event) => setCategory(event.target.value)}
-              >
-                <option value="">Select Category</option>
-                <option value="General">General</option>
-                <option value="Bungalow">Bungalow</option>
-                <option value="Duplex">Duplex</option>
-                <option value="Flat">Flat</option>
-                <option value="Terrace">Terrace</option>
-              </select>
+              <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
+                <div className="icon">
+                  <BsSearch />
+                </div>
+                <input
+                  type="text"
+                  className="form-control outline-none pl-4"
+                  placeholder="Search by name"
+                  onInput={(e) => setSearchKey(e.currentTarget.value)}
+                />
+              </div>
             </div>
-          </div>
-          {/* End */}
-          {/* Filter by Price */}
-          <div className="filter-by-name border  rounded p-3 relative mt-10">
-            <div className="filter-by-name-title absolute -top-4 bg-white border rounded p-1">
-              <h3 className="text-xs font-poppins">Filter by Price Range</h3>
+            {/* End */}
+            {/* Filter by Category */}
+            <div className="filter-by-name border  rounded p-3 relative mt-10">
+              <div className="filter-by-name-title absolute -top-4 bg-white border rounded p-1">
+                <h3 className="text-xs font-poppins">Filter by Category</h3>
+              </div>
+              <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
+                <div className="icon">
+                  <BsSearch />
+                </div>
+                <select
+                  name=""
+                  className="outline-none w-full pl-4 cursor-pointer text-sm"
+                  id=""
+                  onChange={(event) => setCategory(event.target.value)}
+                >
+                  <option value="">Select Category</option>
+                  <option value="General">General</option>
+                  <option value="Bungalow">Bungalow</option>
+                  <option value="Duplex">Duplex</option>
+                  <option value="Flat">Flat</option>
+                  <option value="Terrace">Terrace</option>
+                </select>
+              </div>
             </div>
-            <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
-              <DuelSlider priceFilter={priceFilter} />
+            {/* End */}
+            {/* Filter by Price */}
+            <div className="filter-by-name border  rounded p-3 relative mt-10">
+              <div className="filter-by-name-title absolute -top-4 bg-white border rounded p-1">
+                <h3 className="text-xs font-poppins">Filter by Price Range</h3>
+              </div>
+              <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
+                <DuelSlider priceFilter={priceFilter} />
+              </div>
             </div>
-          </div>
-          {/* End */}
+            {/* End */}
 
-          {/* Filter by House Type */}
-          <div className="filter-by-name border  rounded p-3 relative mt-10">
-            <div className="filter-by-name-title absolute -top-4 bg-white border rounded p-1">
-              <h3 className="text-xs font-poppins">Filter by Type</h3>
+            {/* Filter by House Type */}
+            <div className="filter-by-name border  rounded p-3 relative mt-10">
+              <div className="filter-by-name-title absolute -top-4 bg-white border rounded p-1">
+                <h3 className="text-xs font-poppins">Filter by Type</h3>
+              </div>
+              <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2 select-none">
+                <ul>
+                  <li className="flex items-center gap-4  mb-1">
+                    <input
+                      type="checkbox"
+                      className="toggle toggle-sm  rounded-full"
+                      id="rent"
+                      onClick={(e: any) =>
+                        setHouseType((state: any) => {
+                          return { ...state, rent: e.target.checked };
+                        })
+                      }
+                    />{" "}
+                    <label htmlFor="rent" className="cursor-pointer">
+                      Rent
+                    </label>
+                  </li>
+                  <li className="flex items-center gap-4 ">
+                    <input
+                      type="checkbox"
+                      onClick={(e: any) =>
+                        setHouseType((state: any) => {
+                          return { ...state, sale: e.target.checked };
+                        })
+                      }
+                      className="toggle toggle-sm  rounded-full"
+                      id="sale"
+                    />{" "}
+                    <label htmlFor="sale" className="cursor-pointer">
+                      Sale
+                    </label>
+                  </li>
+                </ul>
+              </div>
             </div>
-            <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2 select-none">
-              <ul>
-                <li className="flex items-center gap-4  mb-1">
-                  <input
-                    type="checkbox"
-                    className="toggle toggle-sm  rounded-full"
-                    id="rent"
-                    onClick={(e: any) =>
-                      setHouseType((state: any) => {
-                        return { ...state, rent: e.target.checked };
-                      })
-                    }
-                  />{" "}
-                  <label htmlFor="rent" className="cursor-pointer">
-                    Rent
-                  </label>
-                </li>
-                <li className="flex items-center gap-4 ">
-                  <input
-                    type="checkbox"
-                    onClick={(e: any) =>
-                      setHouseType((state: any) => {
-                        return { ...state, sale: e.target.checked };
-                      })
-                    }
-                    className="toggle toggle-sm  rounded-full"
-                    id="sale"
-                  />{" "}
-                  <label htmlFor="sale" className="cursor-pointer">
-                    Sale
-                  </label>
-                </li>
-              </ul>
-            </div>
+            {/* End */}
+            <button
+              type="reset"
+              className="font-poppins text-sm mt-4 text-error underline"
+              onClick={handleResetFilter}
+            >
+              Clear All
+            </button>
           </div>
-          {/* End */}
-          <button
-            type="reset"
-            className="font-poppins text-sm mt-4 text-error underline"
-            onClick={handleResetFilter}
-          >
-            Clear All
-          </button>
-        </div>
-      </form>
+        </form>
+      </Fade>
     </>
   );
 };
