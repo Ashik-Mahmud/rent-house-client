@@ -162,9 +162,12 @@ const BlogRow = ({ blog, ind }: Props) => {
         </div>
       </td>
       <td>
-        <div className="badge badge-ghost cursor-pointer">
+        <Link
+          to={`/blogs/${blog?._id}`}
+          className="badge badge-ghost cursor-pointer"
+        >
           <BsEye />
-        </div>
+        </Link>
       </td>
       <td>
         <div className="flex items-center gap-6">

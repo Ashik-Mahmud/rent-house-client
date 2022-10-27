@@ -138,7 +138,9 @@ export const RequestFromUserRow = ({ data, ind, refetch }: rowType) => {
       <td>
         <a href="tel:+880123456789">+{data?.author?.phone}</a>
       </td>
-      <td>Customer</td>
+      <td>
+        {data?.author?.role === "user" ? "House Holder" : data?.author?.role}
+      </td>
       <td>
         {data?.author?.isVerified ? (
           <span className="badge badge-success">verified</span>

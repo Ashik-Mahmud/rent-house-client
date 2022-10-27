@@ -124,7 +124,7 @@ const BlogsDetails = (props: Props) => {
                 </li>
                 <li
                   className="cursor-pointer tooltip"
-                  data-tip="Share on linkedIn"
+                  data-tip="Share on Twitter"
                 >
                   <TwitterShareButton
                     url={window.location.origin + "/blogs/" + data?.data?._id}
