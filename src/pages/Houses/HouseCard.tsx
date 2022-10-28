@@ -211,7 +211,7 @@ const HouseCard = ({ gridView, house }: Props) => {
             )}
           </ul>
           {!gridView && (
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-gray-500 font-bangla">
               {house?.description.length > 250
                 ? house?.description?.slice(0, 250) + "..."
                 : house?.description || "loading..."}
