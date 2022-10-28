@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { useAppSelector } from "../../../app/store";
 import SendVerifyEmail from "../../../components/SendVerifyEmail";
 import useAuth from "../../../hooks/useAuth";
+import useTitle from "../../../hooks/useTitle";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import {
   AddReviewType,
@@ -15,6 +16,7 @@ import {
 type Props = {};
 
 const AddReview = (props: Props) => {
+  useTitle("Add Review");
   const { name } = useAppSelector((state) => state.appOption);
   const { updatedUser } = useAuth<authUserInterface | any>({});
   const isVerify = updatedUser?.isVerified;

@@ -4,12 +4,14 @@ import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { useQuery } from "react-query";
 import { base_backend_url } from "../../../configs/config";
 import useAuth from "../../../hooks/useAuth";
+import useTitle from "../../../hooks/useTitle";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import UserRow from "./UserRow";
 type Props = {};
 
 const Users = (props: Props) => {
   const { user } = useAuth<authUserInterface | any>({});
+  useTitle("Users");
   const [filterRole, setFilterRole] = useState<string>("All");
   const [limitPerPage, setLimitPerPage] = useState<number>(5);
   const [currentPage, setCurrentPage] = useState<number>(1);

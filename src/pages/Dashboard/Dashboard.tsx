@@ -41,12 +41,14 @@ import {
 } from "../../features/HouseSlice";
 import { setPendingCount } from "../../features/RequestSlice";
 import useAuth from "../../hooks/useAuth";
+import useTitle from "../../hooks/useTitle";
 
 import { authUserInterface } from "../../interfaces/UserInterface";
 
 type Props = {};
 
 const Dashboard = (props: Props) => {
+  useTitle("Dashboard");
   const dispatch = useAppDispatch();
 
   const [isPhone, setIsPhone] = useState<boolean>(true);

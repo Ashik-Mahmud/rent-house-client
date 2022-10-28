@@ -7,12 +7,14 @@ import swal from "sweetalert";
 import GlobalLoader from "../../../components/GlobalLoader";
 import { base_backend_url } from "../../../configs/config";
 import useAuth from "../../../hooks/useAuth";
+import useTitle from "../../../hooks/useTitle";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import BookingRow from "./BookingRow";
 
 type Props = {};
 
 const MyBookings = (props: Props) => {
+  useTitle("My Bookings");
   const { user } = useAuth<authUserInterface | any>({});
 
   const { search } = useLocation();

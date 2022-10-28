@@ -1,8 +1,10 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
+import useTitle from "../../../hooks/useTitle";
 
 type Props = {};
 
 const MyReviews = (props: Props) => {
+  useTitle("My Reviews");
   const { pathname } = useLocation();
   return (
     <div>

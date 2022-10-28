@@ -5,12 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { PulseLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import useAuth from "../../../../hooks/useAuth";
+import useTitle from "../../../../hooks/useTitle";
 import { authUserInterface } from "../../../../interfaces/UserInterface";
 import { useCreateBlogMutation } from "../../../../services/BlogApi";
 import BlogEditor from "./BlogEditor";
 type Props = {};
 
 const AddBlog = (props: Props) => {
+  useTitle("Add Blog");
   const { updatedUser } = useAuth<authUserInterface | any>({});
   const [blogText, setBlogText] = useState<string>("");
   const { register, handleSubmit } = useForm();

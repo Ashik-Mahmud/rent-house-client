@@ -8,12 +8,14 @@ import NoDataComponent from "../../../../components/NoDataComponent";
 import { base_backend_url } from "../../../../configs/config";
 import { setRejectedHouseCount } from "../../../../features/HouseSlice";
 import useAuth from "../../../../hooks/useAuth";
+import useTitle from "../../../../hooks/useTitle";
 import { authUserInterface } from "../../../../interfaces/UserInterface";
 import RejectedRow from "./RejectedRow";
 
 type Props = {};
 
 const RejectedHouses = (props: Props) => {
+  useTitle("Rejected Houses");
   const { user } = useAuth<authUserInterface | any>({});
   /*  for pagination  */
   const [currentPage, setCurrentPage] = useState<number>(1);

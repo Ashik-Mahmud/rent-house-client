@@ -13,11 +13,13 @@ import * as XLSX from "xlsx";
 import GlobalLoader from "../../../components/GlobalLoader";
 import { base_backend_url } from "../../../configs/config";
 import useAuth from "../../../hooks/useAuth";
+import useTitle from "../../../hooks/useTitle";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import PaymentRow from "./PaymentRow";
 type Props = {};
 
 const Payments = (props: Props) => {
+  useTitle("Payments");
   const { user } = useAuth<authUserInterface | any>({});
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);

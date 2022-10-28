@@ -6,12 +6,14 @@ import GlobalLoader from "../../../components/GlobalLoader";
 import NoDataComponent from "../../../components/NoDataComponent";
 import { base_backend_url } from "../../../configs/config";
 import useAuth from "../../../hooks/useAuth";
+import useTitle from "../../../hooks/useTitle";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import BookedHouseCard from "./BookedHouseCard";
 
 type Props = {};
 
 const PurchaseHouse = (props: Props) => {
+  useTitle("Purchase House");
   const { user } = useAuth<authUserInterface | any>({});
   const [filter, setFilter] = useState("-createdAt");
   const [search, setSearch] = useState("");

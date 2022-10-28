@@ -5,12 +5,14 @@ import { useQuery } from "react-query";
 import GlobalLoader from "../../../../components/GlobalLoader";
 import { base_backend_url } from "../../../../configs/config";
 import useAuth from "../../../../hooks/useAuth";
+import useTitle from "../../../../hooks/useTitle";
 import { authUserInterface } from "../../../../interfaces/UserInterface";
 import { useGetBlogsByUidQuery } from "../../../../services/BlogApi";
 import BarCharts from "./BarCharts";
 import RecentHouseRequest from "./RecentHouseRequest";
 type Props = {};
 const ManagerDashboard = (props: Props) => {
+  useTitle("Manager Dashboard");
   const { user, updatedUser } = useAuth<authUserInterface | any>({});
   /* Get All the houses count for admin */
   const { data: houses, isLoading: houseLoading } = useQuery(

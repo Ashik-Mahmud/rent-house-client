@@ -10,12 +10,14 @@ import {
   setRequestBlogCount,
 } from "../../../features/RequestSlice";
 import useAuth from "../../../hooks/useAuth";
+import useTitle from "../../../hooks/useTitle";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import { RequestFromUserRow } from "./RequestFromUsers";
 
 type Props = {};
 
 const ForBlogsRequest = (props: Props) => {
+  useTitle("Request For Blogs");
   const { user } = useAuth<authUserInterface | any>({});
   /* Pagination code */
   const [currentPage, setCurrentPage] = useState(1);

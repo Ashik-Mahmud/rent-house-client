@@ -2,6 +2,7 @@ import { BiCommentAdd } from "react-icons/bi";
 import { BsArrowLeft, BsEye } from "react-icons/bs";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import GlobalLoader from "../../../../components/GlobalLoader";
+import useTitle from "../../../../hooks/useTitle";
 import { useGetHouseByHouseIdQuery } from "../../../../services/HouseApi";
 import AnsweredQuestions from "./AnsweredQuestions";
 
@@ -12,6 +13,8 @@ const HouseQuestions = (props: Props) => {
 
   const { data, isLoading } = useGetHouseByHouseIdQuery(houseId);
   const navigate = useNavigate();
+
+  useTitle("House Questions");
 
   if (isLoading) {
     return <GlobalLoader />;

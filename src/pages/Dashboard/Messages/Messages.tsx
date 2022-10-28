@@ -9,13 +9,14 @@ import Select from "react-select";
 import swal from "sweetalert";
 import { base_backend_url } from "../../../configs/config";
 import useAuth from "../../../hooks/useAuth";
+import useTitle from "../../../hooks/useTitle";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import MessageBoxEditor from "./MessageBoxEditor";
 
 type Props = {};
 
 const Messages = (props: Props) => {
-  //   const { data } = useGetAllUsersQuery({} as any);
+  useTitle("Messages");
   const { user } = useAuth<authUserInterface | any>({});
   const { data } = useQuery(
     "users-with-profiles",

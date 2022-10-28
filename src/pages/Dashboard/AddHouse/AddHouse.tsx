@@ -10,6 +10,7 @@ import swal from "sweetalert";
 import ScreenLoader from "../../../components/ScreenLoader";
 import SendVerifyEmail from "../../../components/SendVerifyEmail";
 import useAuth from "../../../hooks/useAuth";
+import useTitle from "../../../hooks/useTitle";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import { useCreateHouseMutation } from "../../../services/HouseApi";
 import {
@@ -20,6 +21,7 @@ import HouseInput from "./HouseInput";
 type Props = {};
 
 const AddHouse = (props: Props) => {
+  useTitle("Add House");
   /* Showing All The District & City */
   const [city, setCity] = useState<string[]>([]);
   const [selectCity, setSelectCity] = useState<any | null>(null);
