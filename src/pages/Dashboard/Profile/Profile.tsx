@@ -9,6 +9,7 @@ import {
 } from "react-device-detect";
 import { BiCamera, BiEdit } from "react-icons/bi";
 import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 import swal from "sweetalert";
 import { base_backend_url } from "../../../configs/config";
 import useAuth from "../../../hooks/useAuth";
@@ -26,7 +27,7 @@ const Profile = (props: Props) => {
     refetch,
   } = useAuth<authUserInterface | any>({});
 
-  useTitle(user?.name + " Profile");
+  useTitle(data?.name + " Profile");
 
   const dateDistance = formatDistance(
     new Date(),
@@ -81,11 +82,13 @@ const Profile = (props: Props) => {
           <div className="profile-content py-10">
             <div className="flex items-center justify-between">
               <div className="profile-image rounded-full  w-32 h-32 relative  ">
-                <img
+                <LazyLoadImage
                   src={data?.profileImage ? data?.profileImage : data?.avatar}
                   alt={data?.name}
+                  effect="black-and-white"
                   className="w-32 h-32 rounded-full border-4 border-success object-cover shadow-lg"
                 />
+
                 <label
                   htmlFor="profile-image-edit-modal"
                   className="profile-image-edit absolute right-0 bottom-5 text-lg cursor-pointer w-8 h-8 rounded-full grid place-items-center shadow bg-success text-white "
