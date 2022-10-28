@@ -43,6 +43,7 @@ const ProfileModal = ({ refetch }: Props) => {
     setValue("facebookLink", updatedUser?.facebookLink);
     setValue("twitterLink", updatedUser?.twitterLink);
     setValue("instagramLink", updatedUser?.instagramLink);
+
     if (isSuccess) {
       toast.success((data as any).message);
     }
