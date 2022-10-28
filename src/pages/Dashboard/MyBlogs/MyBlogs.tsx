@@ -1,8 +1,10 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
+import useTitle from "../../../hooks/useTitle";
 
 type Props = {};
 
 const MyBlogs = (props: Props) => {
+  useTitle("My Blogs");
   const location = useLocation();
 
   return (

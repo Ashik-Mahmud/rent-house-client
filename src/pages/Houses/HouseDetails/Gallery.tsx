@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 type Props = {
   gallery: any;
 }; // This only needs to be imported once in your app
@@ -37,11 +38,12 @@ const Gallery = ({ gallery }: Props) => {
           <ul className="flex-col sm:flex-row flex gap-1 items-center">
             {images?.map((item: any, index: number) => (
               <li className="cursor-pointer" key={index}>
-                <img
+                <LazyLoadImage
                   src={item ? item : "https://placeimg.com/400/225/arch"}
-                  className="h-60"
-                  alt=""
+                  alt="image"
                   onClick={() => setIsOpen(true)}
+                  effect="opacity"
+                  className="h-60"
                 />
               </li>
             ))}

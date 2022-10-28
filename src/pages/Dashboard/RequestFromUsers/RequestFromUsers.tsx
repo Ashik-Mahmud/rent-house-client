@@ -7,11 +7,13 @@ import swal from "sweetalert";
 import { useAppSelector } from "../../../app/store";
 import { base_backend_url } from "../../../configs/config";
 import useAuth from "../../../hooks/useAuth";
+import useTitle from "../../../hooks/useTitle";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 
 type Props = {};
 
 const RequestFromUsers = (props: Props) => {
+  useTitle("Request From Users");
   const { pathname } = useLocation();
   const { requestBlogCount, requestHouseCount } = useAppSelector(
     (state) => state.request
@@ -138,7 +140,9 @@ export const RequestFromUserRow = ({ data, ind, refetch }: rowType) => {
       <td>
         <a href="tel:+880123456789">+{data?.author?.phone}</a>
       </td>
-      <td>Customer</td>
+      <td>
+        {data?.author?.role === "user" ? "House Holder" : data?.author?.role}
+      </td>
       <td>
         {data?.author?.isVerified ? (
           <span className="badge badge-success">verified</span>

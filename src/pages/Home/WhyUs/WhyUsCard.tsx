@@ -2,7 +2,7 @@ import { AiOutlineRadarChart } from "react-icons/ai";
 type Props = {};
 const WhyUsCard = (props: Props) => {
   return (
-    <div className="bg-base-200 m-3 p-6 rounded ">
+    <div className="bg-base-100 shadow m-3 p-6 rounded ">
       <div className="icon text-5xl w-20 h-20  grid place-items-center -mt-16 mb-5 rounded bg-success text-white">
         <AiOutlineRadarChart />
       </div>

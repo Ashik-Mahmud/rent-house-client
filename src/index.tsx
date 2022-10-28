@@ -1,5 +1,6 @@
 import ReactDOM from "react-dom/client";
 import { Toaster } from "react-hot-toast";
+import "react-loading-skeleton/dist/skeleton.css";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
@@ -8,9 +9,8 @@ import "react-toastify/dist/ReactToastify.css";
 import App from "./App";
 import store from "./app/store";
 import "./index.css";
-import "./utilities/modal-video.min.css";
-
 import "./utilities/App.css";
+import "./utilities/modal-video.min.css";
 
 const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(

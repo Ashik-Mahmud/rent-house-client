@@ -7,12 +7,14 @@ import { AxiosUser } from "../../../api/Axios";
 import { useAppSelector } from "../../../app/store";
 import SendVerifyEmail from "../../../components/SendVerifyEmail";
 import useAuth from "../../../hooks/useAuth";
+import useTitle from "../../../hooks/useTitle";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import FeatureRequestEditor from "./FeatureRequestEditor";
 
 type Props = {};
 
 const FeatureRequest = (props: Props) => {
+  useTitle("Feature Request");
   const { name } = useAppSelector((state) => state.appOption);
   const { updatedUser } = useAuth<authUserInterface | any>({});
   const [isReadonly, setIsReadonly] = useState<boolean>(true);

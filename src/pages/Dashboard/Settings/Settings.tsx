@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "../../../app/store";
 import { base_backend_url } from "../../../configs/config";
 import { logout } from "../../../features/AuthSlice";
 import useAuth from "../../../hooks/useAuth";
+import useTitle from "../../../hooks/useTitle";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import { useChangePasswordMutation } from "../../../services/AuthApi";
 import { stateOptions, themeOptions } from "../../../utilities/data";
@@ -22,6 +23,7 @@ type Props = {
 
 const Settings = ({ appChangeRefetch }: Props) => {
   const { updatedUser, setUser, user } = useAuth<authUserInterface | any>({});
+  useTitle(user?.role === "user" ? "House Holder" : user?.role + " Settings");
   const { name } = useAppSelector((state) => state.appOption);
   const role = updatedUser?.role;
   const isVerify = updatedUser?.isVerified;

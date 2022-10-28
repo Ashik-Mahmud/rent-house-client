@@ -5,7 +5,7 @@ type Props = {
 const ReviewCard = ({ review }: Props) => {
   return (
     <div className="reviewCard rounded  p-4">
-      <div className="review-content  text-gray-700 my-3 font-poppins text-[15px] text-center leading-6 bg-base-200 p-4 rounded-md mb-6">
+      <div className="review-content  text-gray-700 my-3 font-poppins text-[15px] text-center leading-6 bg-base-100 shadow p-4 rounded-md mb-6">
         <div className="quote text-2xl  m-4">
           <BsFillChatRightQuoteFill />
         </div>

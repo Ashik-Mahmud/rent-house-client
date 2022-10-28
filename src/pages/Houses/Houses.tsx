@@ -2,14 +2,16 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { BsGrid1X2, BsGrid3X2 } from "react-icons/bs";
 import { useQuery } from "react-query";
-import GlobalLoader from "../../components/GlobalLoader";
+import HouseSkeletonLoading from "../../components/HouseSkeletonLoading";
 import NoDataComponent from "../../components/NoDataComponent";
 import { base_backend_url } from "../../configs/config";
+import useTitle from "../../hooks/useTitle";
 import FilterSidebar from "./FilterSidebar";
 import HouseCard from "./HouseCard";
 type Props = {};
 
 const Houses = (props: Props) => {
+  useTitle("Houses");
   const [gridView, setGridView] = useState(true);
 
   /* Handle Grid View With LocalStorage Database*/
@@ -121,13 +123,24 @@ const Houses = (props: Props) => {
   };
 
   useEffect(() => {
-    setGetAllDistrict(() => {
-      return data?.allHouse.map((house: any) => house.district);
-    });
+    // get unique district
+    const uniqueDistrict = data?.allHouse?.reduce((acc: any, cur: any) => {
+      if (!acc.includes(cur.district)) {
+        acc.push(cur.district);
+      }
+      return acc;
+    }, []);
 
-    setGetAllCity(() => {
-      return data?.allHouse.map((house: any) => house.city);
-    });
+    //get unique city
+    const uniqueCity = data?.allHouse?.reduce((acc: any, cur: any) => {
+      if (!acc.includes(cur.city)) {
+        acc.push(cur.city);
+      }
+      return acc;
+    }, []);
+
+    setGetAllDistrict(uniqueDistrict);
+    setGetAllCity(uniqueCity);
 
     return () => {
       setGetAllDistrict([]);
@@ -212,13 +225,15 @@ const Houses = (props: Props) => {
                   </div>
                 </div>
               </div>
-
               {/* Houses Main Content */}
               {isLoading ? (
-                <GlobalLoader />
+                Array(8)
+                  .fill(0)
+                  .map((_, ind) => (
+                    <HouseSkeletonLoading key={ind + Date.now()} />
+                  ))
               ) : data?.houses?.length > 0 ? (
                 <>
-                  {" "}
                   <div
                     className={`house-main-content p-6 grid  gap-6 ${
                       gridView

@@ -4,6 +4,7 @@ import { useQuery } from "react-query";
 import GlobalLoader from "../../../../components/GlobalLoader";
 import { base_backend_url } from "../../../../configs/config";
 import useAuth from "../../../../hooks/useAuth";
+import useTitle from "../../../../hooks/useTitle";
 import { authUserInterface } from "../../../../interfaces/UserInterface";
 import RecentBookedHouses from "./RecentBookedHouses";
 import StatisticChart from "./StatisticChart";
@@ -11,6 +12,7 @@ import StatisticChart from "./StatisticChart";
 type Props = {};
 
 const CustomerDashboard = (props: Props) => {
+  useTitle("Customer Dashboard");
   const { user, updatedUser } = useAuth<authUserInterface | any>({});
   /* Send Request to get All the reports for this Customer */
   const { data, isLoading, error } = useQuery(

@@ -19,6 +19,7 @@ const ApprovedRow = ({ ind, house, refetch }: Props) => {
           <div className="avatar">
             <div className="mask mask-squircle w-12 h-12">
               <img
+                loading="lazy"
                 src={
                   house?.image?.img
                     ? house?.image?.img

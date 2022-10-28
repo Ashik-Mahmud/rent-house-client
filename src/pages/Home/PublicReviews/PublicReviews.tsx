@@ -10,6 +10,8 @@ import { base_backend_url } from "../../../configs/config";
 import slickSettings from "../../../configs/slickConfig";
 import ReviewCard from "./ReviewCard";
 type Props = {};
+
+const Fade = require("react-reveal/Fade");
 const PublicReviews = (props: Props) => {
   const { data, isLoading } = useQuery("reviews", async () => {
     const { data } = await axios.get(`${base_backend_url}/api/v1/reviews/all`);
@@ -30,12 +32,14 @@ const PublicReviews = (props: Props) => {
           desc="There are many feedbacks we take from publics and make us more development and our 90% customers are satisfied with my services"
         />
         {/* Reviews Content */}
-        <div className="reviews-content grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7"></div>
-        <Slider {...slickSettings}>
-          {data?.data?.map((review: any, ind: number) => (
-            <ReviewCard key={review?._id} review={review} />
-          ))}
-        </Slider>
+        <Fade top distance="20px">
+          <div className="reviews-content grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7"></div>
+          <Slider {...slickSettings}>
+            {data?.data?.slice(0, 10)?.map((review: any, ind: number) => (
+              <ReviewCard key={review?._id} review={review} />
+            ))}
+          </Slider>
+        </Fade>
       </div>
     </div>
   );

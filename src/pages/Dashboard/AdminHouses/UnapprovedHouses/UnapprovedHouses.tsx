@@ -8,12 +8,14 @@ import NoDataComponent from "../../../../components/NoDataComponent";
 import { base_backend_url } from "../../../../configs/config";
 import { setUnapprovedHouseCount } from "../../../../features/HouseSlice";
 import useAuth from "../../../../hooks/useAuth";
+import useTitle from "../../../../hooks/useTitle";
 import { authUserInterface } from "../../../../interfaces/UserInterface";
 import UnapprovedRow from "./UnapprovedRow";
 
 type Props = {};
 
 const UnapprovedHouses = (props: Props) => {
+  useTitle("Unapproved Houses");
   const { user } = useAuth<authUserInterface | any>({});
 
   /*  for pagination  */

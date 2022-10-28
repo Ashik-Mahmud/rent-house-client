@@ -1,6 +1,9 @@
+import useTitle from "../hooks/useTitle";
+
 type Props = {};
 
 const Contact = (props: Props) => {
+  useTitle("Contact");
   return (
     <section>
       <div className="container mx-auto py-10 text-center">

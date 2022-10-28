@@ -5,6 +5,7 @@ import { useQuery } from "react-query";
 import GlobalLoader from "../../../../components/GlobalLoader";
 import { base_backend_url } from "../../../../configs/config";
 import useAuth from "../../../../hooks/useAuth";
+import useTitle from "../../../../hooks/useTitle";
 import { authUserInterface } from "../../../../interfaces/UserInterface";
 import { useGetAllBlogsQuery } from "../../../../services/BlogApi";
 import BarCharts from "./BarCharts";
@@ -14,6 +15,7 @@ import UsersCharts from "./UsersCharts";
 type Props = {};
 
 const AdminDashboard = (props: Props) => {
+  useTitle("Admin Dashboard");
   const { data: blogs, isLoading: loading2 } = useGetAllBlogsQuery({} as any);
 
   const { user, updatedUser } = useAuth<authUserInterface | any>({});

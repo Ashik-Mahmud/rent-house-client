@@ -12,6 +12,7 @@ import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
 import swal from "sweetalert";
 import { base_backend_url } from "../../../configs/config";
 import useAuth from "../../../hooks/useAuth";
+import useTitle from "../../../hooks/useTitle";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import DeleteVerificationModal from "./DeleteVerificationModal";
 import ImageChangeModal from "./ImageChangeModal";
@@ -24,6 +25,8 @@ const Profile = (props: Props) => {
     updatedUser: data,
     refetch,
   } = useAuth<authUserInterface | any>({});
+
+  useTitle(user?.name + " Profile");
 
   const dateDistance = formatDistance(
     new Date(),

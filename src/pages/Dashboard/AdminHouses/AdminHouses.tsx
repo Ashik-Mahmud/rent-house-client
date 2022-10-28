@@ -1,9 +1,11 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { useAppSelector } from "../../../app/store";
+import useTitle from "../../../hooks/useTitle";
 
 type Props = {};
 
 const AdminHouses = (props: Props) => {
+  useTitle("Admin Houses");
   const { pathname } = useLocation();
   const { approvedHouseCount, rejectedHouseCount, unapprovedHouseCount } =
     useAppSelector((state) => state.housesReqCount);

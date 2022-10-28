@@ -20,6 +20,7 @@ import {
 import styled from "styled-components";
 import GlobalLoader from "../../components/GlobalLoader";
 import { base_backend_url } from "../../configs/config";
+import useTitle from "../../hooks/useTitle";
 import { useGetBlogByIdQuery } from "../../services/BlogApi";
 
 type Props = {};
@@ -30,6 +31,7 @@ const BlogsDetails = (props: Props) => {
   const [clicked, setClicked] = useState(false);
   const { data, isLoading, refetch } = useGetBlogByIdQuery(blogId);
   const [isCopyLink, setIsCopyLink] = useState(false);
+  useTitle(data?.data?.title || "Blog Details");
   /* Handle Favorite */
   const handleFavorite = async () => {
     localStorage.setItem("favorite" + blogId, JSON.stringify(!clicked));
@@ -68,6 +70,7 @@ const BlogsDetails = (props: Props) => {
       <div className="container mx-auto bg-white p-5">
         <div className="image">
           <img
+            loading="lazy"
             src={
               data?.data?.imageUrl
                 ? data?.data?.imageUrl
@@ -124,7 +127,7 @@ const BlogsDetails = (props: Props) => {
                 </li>
                 <li
                   className="cursor-pointer tooltip"
-                  data-tip="Share on linkedIn"
+                  data-tip="Share on Twitter"
                 >
                   <TwitterShareButton
                     url={window.location.origin + "/blogs/" + data?.data?._id}

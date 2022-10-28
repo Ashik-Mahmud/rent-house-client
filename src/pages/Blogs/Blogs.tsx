@@ -5,11 +5,13 @@ import { useQuery } from "react-query";
 import GlobalLoader from "../../components/GlobalLoader";
 import NoDataComponent from "../../components/NoDataComponent";
 import { base_backend_url } from "../../configs/config";
+import useTitle from "../../hooks/useTitle";
 import BlogCard from "./BlogCard";
 
 type Props = {};
-
+const Fade = require("react-reveal/Fade");
 const Blogs = (props: Props) => {
+  useTitle("Blogs");
   const [categories, setCategories] = useState([]);
   const [search, setSearch] = useState("");
   const [currentCategory, setCurrentCategory] = useState("All");
@@ -66,45 +68,48 @@ const Blogs = (props: Props) => {
     <section className="font-poppins">
       <div className="container mx-auto py-10">
         <div className="blogs-header text-center mb-10">
-          <h3 className="text-2xl font-bold">Reading Blog</h3>
-          {/* Search */}
-          <div className="search-area justify-center flex items-center my-10 bg-white sm:w-1/2 mx-auto px-6 py-3 rounded-full shadow">
-            <div className="icon">
-              <BsSearch />
+          <Fade top distance="20px">
+            <h3 className="text-2xl font-bold">Reading Blog</h3>
+            {/* Search */}
+            <div className="search-area justify-center flex items-center my-10 bg-white sm:w-1/2 mx-auto px-6 py-3 rounded-full shadow">
+              <div className="icon">
+                <BsSearch />
+              </div>
+              <input
+                type="search"
+                placeholder="Search Blogs By Name or Category"
+                className="w-full p-2 pl-4 outline-none"
+                onInput={(e) => setSearch(e.currentTarget.value)}
+              />
             </div>
-            <input
-              type="search"
-              placeholder="Search Blogs By Name or Category"
-              className="w-full p-2 pl-4 outline-none"
-              onInput={(e) => setSearch(e.currentTarget.value)}
-            />
-          </div>
-
+          </Fade>
           {/* Tabs */}
-          <ul className="flex items-center gap-6 justify-center flex-wrap">
-            <li
-              className={`p-4 shadow rounded-md cursor-pointer ${
-                currentCategory === "All" ? "bg-success" : "text-gray-500"
-              } cursor-pointer`}
-              onClick={() => setCurrentCategory("All")}
-            >
-              All <span className="badge badge-ghost">{data?.count}</span>
-            </li>
-
-            {categories?.map((category: any) => (
+          <Fade top distance="20px">
+            <ul className="flex items-center gap-6 justify-center flex-wrap">
               <li
-                key={category?.category}
                 className={`p-4 shadow rounded-md cursor-pointer ${
-                  currentCategory === category?.category && "bg-success"
-                }`}
-                onClick={() => setCurrentCategory(category?.category)}
+                  currentCategory === "All" ? "bg-success" : "text-gray-500"
+                } cursor-pointer`}
+                onClick={() => setCurrentCategory("All")}
               >
-                {category?.category}
-
-                <span className="badge badge-ghost">{category?.count}</span>
+                All <span className="badge badge-ghost">{data?.count}</span>
               </li>
-            ))}
-          </ul>
+
+              {categories?.map((category: any) => (
+                <li
+                  key={category?.category}
+                  className={`p-4 shadow rounded-md cursor-pointer ${
+                    currentCategory === category?.category && "bg-success"
+                  }`}
+                  onClick={() => setCurrentCategory(category?.category)}
+                >
+                  {category?.category}
+
+                  <span className="badge badge-ghost">{category?.count}</span>
+                </li>
+              ))}
+            </ul>
+          </Fade>
         </div>
 
         <div className="text-gray-600 body-font">
@@ -114,11 +119,13 @@ const Blogs = (props: Props) => {
             ) : (
               <div>
                 {data?.data?.length > 0 ? (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 -m-4">
-                    {data?.data?.map((blog: any, ind: number) => (
-                      <BlogCard key={blog?._id} blog={blog} />
-                    ))}
-                  </div>
+                  <Fade top distance="20px" duration={1000}>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 -m-4">
+                      {data?.data?.map((blog: any, ind: number) => (
+                        <BlogCard key={blog?._id} blog={blog} />
+                      ))}
+                    </div>
+                  </Fade>
                 ) : (
                   <div>
                     <NoDataComponent />

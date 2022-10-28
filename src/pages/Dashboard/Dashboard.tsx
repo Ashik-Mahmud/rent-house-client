@@ -41,12 +41,14 @@ import {
 } from "../../features/HouseSlice";
 import { setPendingCount } from "../../features/RequestSlice";
 import useAuth from "../../hooks/useAuth";
+import useTitle from "../../hooks/useTitle";
 
 import { authUserInterface } from "../../interfaces/UserInterface";
 
 type Props = {};
 
 const Dashboard = (props: Props) => {
+  useTitle("Dashboard");
   const dispatch = useAppDispatch();
 
   const [isPhone, setIsPhone] = useState<boolean>(true);
@@ -605,6 +607,7 @@ const Dashboard = (props: Props) => {
                   >
                     <div className="w-10 rounded-full">
                       <img
+                        loading="lazy"
                         src={
                           data?.profileImage ? data?.profileImage : data?.avatar
                         }
@@ -650,6 +653,7 @@ const Dashboard = (props: Props) => {
                 <Link to="/dashboard/profile" className="avatar mb-2">
                   <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                     <img
+                      loading="lazy"
                       src={
                         data?.profileImage ? data?.profileImage : data?.avatar
                       }

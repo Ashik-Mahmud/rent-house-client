@@ -9,11 +9,13 @@ import * as XLSX from "xlsx";
 import GlobalLoader from "../../../components/GlobalLoader";
 import { base_backend_url } from "../../../configs/config";
 import useAuth from "../../../hooks/useAuth";
+import useTitle from "../../../hooks/useTitle";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import HouseRow from "./HouseRow";
 type Props = {};
 
 const MyHouses = (props: Props) => {
+  useTitle("My Houses");
   const { updatedUser, user } = useAuth<authUserInterface | any>({});
   const [search, setSearch] = useState<string>("");
   const [housesData, setHousesData] = useState<any>([]);

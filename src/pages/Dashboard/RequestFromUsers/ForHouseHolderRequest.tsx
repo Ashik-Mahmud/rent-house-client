@@ -10,11 +10,13 @@ import {
   setRequestHouseCount,
 } from "../../../features/RequestSlice";
 import useAuth from "../../../hooks/useAuth";
+import useTitle from "../../../hooks/useTitle";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import HouseReqRow from "./HouseReqRow";
 type Props = {};
 
 const ForHouseHolderRequest = (props: Props) => {
+  useTitle("Request For House Holder");
   const { user } = useAuth<authUserInterface | any>({});
   /* Pagination code */
   const [currentPage, setCurrentPage] = useState(1);

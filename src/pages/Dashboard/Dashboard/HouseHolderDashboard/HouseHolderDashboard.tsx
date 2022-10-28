@@ -5,6 +5,7 @@ import { useQuery } from "react-query";
 import GlobalLoader from "../../../../components/GlobalLoader";
 import { base_backend_url } from "../../../../configs/config";
 import useAuth from "../../../../hooks/useAuth";
+import useTitle from "../../../../hooks/useTitle";
 import { authUserInterface } from "../../../../interfaces/UserInterface";
 import { useGetReviewsByUserQuery } from "../../../../services/ReviewApi";
 import HouseReportChart from "./HouseReportChart";
@@ -13,6 +14,7 @@ import RecentBookings from "./RecentBookings";
 type Props = {};
 
 const HouseHolderDashboard = (props: Props) => {
+  useTitle("House Holder Dashboard");
   const { updatedUser, user } = useAuth<authUserInterface | any>({});
 
   /* Get The reviews */

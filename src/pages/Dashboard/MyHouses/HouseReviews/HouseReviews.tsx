@@ -7,12 +7,14 @@ import GlobalLoader from "../../../../components/GlobalLoader";
 import NoDataComponent from "../../../../components/NoDataComponent";
 import { base_backend_url } from "../../../../configs/config";
 import useAuth from "../../../../hooks/useAuth";
+import useTitle from "../../../../hooks/useTitle";
 import { authUserInterface } from "../../../../interfaces/UserInterface";
 import { useGetHouseByHouseIdQuery } from "../../../../services/HouseApi";
 import HouseReviewCard from "./HouseReviewCard";
 type Props = {};
 
 const HouseReviews = (props: Props) => {
+  useTitle("Houses Reviews");
   const { user } = useAuth<authUserInterface | any>({});
   const { houseId } = useParams<{ houseId: string }>();
   const { data, isLoading } = useGetHouseByHouseIdQuery(houseId);
