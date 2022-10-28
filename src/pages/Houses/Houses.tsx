@@ -227,7 +227,7 @@ const Houses = (props: Props) => {
               </div>
               {/* Houses Main Content */}
               {isLoading ? (
-                Array(8)
+                Array(perPage)
                   .fill(0)
                   .map((_, ind) => (
                     <HouseSkeletonLoading key={ind + Date.now()} />
