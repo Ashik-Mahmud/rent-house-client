@@ -124,7 +124,7 @@ const Houses = (props: Props) => {
 
   useEffect(() => {
     // get unique district
-    const uniqueDistrict = data?.houses?.reduce((acc: any, cur: any) => {
+    const uniqueDistrict = data?.allHouse?.reduce((acc: any, cur: any) => {
       if (!acc.includes(cur.district)) {
         acc.push(cur.district);
       }
@@ -132,7 +132,7 @@ const Houses = (props: Props) => {
     }, []);
 
     //get unique city
-    const uniqueCity = data?.houses?.reduce((acc: any, cur: any) => {
+    const uniqueCity = data?.allHouse?.reduce((acc: any, cur: any) => {
       if (!acc.includes(cur.city)) {
         acc.push(cur.city);
       }
