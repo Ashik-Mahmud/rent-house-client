@@ -27,6 +27,24 @@ const MyBookings = (props: Props) => {
       buttons: ["Ok"],
     });
   }
+  if (successString === "cancel") {
+    swal({
+      title: "Success",
+      text: "Booking has been cancelled successfully",
+      icon: "success",
+      buttons: ["Ok"],
+    });
+  }
+
+  /* fail */
+  if (successString === "fail") {
+    swal({
+      title: "Error",
+      text: "Booking has been cancelled successfully",
+      icon: "error",
+      buttons: ["Ok"],
+    });
+  }
 
   const [currentPage, setCurrentPage] = useState(1);
   const [limit, setLimit] = useState(5);
