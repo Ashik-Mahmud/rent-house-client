@@ -23,7 +23,13 @@ type Props = {
 
 const Settings = ({ appChangeRefetch }: Props) => {
   const { updatedUser, setUser, user } = useAuth<authUserInterface | any>({});
-  useTitle(user?.role === "user" ? "House Holder" : user?.role + " Settings");
+
+  useTitle(
+    updatedUser?.role === "user"
+      ? "House Holder Settings"
+      : updatedUser?.role + " Settings"
+  );
+
   const { name } = useAppSelector((state) => state.appOption);
   const role = updatedUser?.role;
   const isVerify = updatedUser?.isVerified;
