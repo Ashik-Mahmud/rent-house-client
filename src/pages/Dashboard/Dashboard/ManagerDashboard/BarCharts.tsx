@@ -3,10 +3,9 @@ import GlobalLoader from "../../../../components/GlobalLoader";
 import { useGetAllReviewsQuery } from "../../../../services/ReviewApi";
 type Props = {
   houses: any;
-  blogs: any;
 };
 
-const BarCharts = ({ houses, blogs }: Props) => {
+const BarCharts = ({ houses }: Props) => {
   const { data: reviews, isLoading: loading1 } = useGetAllReviewsQuery(
     {} as any
   );
@@ -35,7 +34,7 @@ const BarCharts = ({ houses, blogs }: Props) => {
         houses?.approved,
         houses?.rejected,
         reviews?.data?.length,
-        blogs,
+        houses?.blogs,
       ],
     },
   ];
