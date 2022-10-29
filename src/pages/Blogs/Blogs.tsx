@@ -2,11 +2,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { useQuery } from "react-query";
-import GlobalLoader from "../../components/GlobalLoader";
 import NoDataComponent from "../../components/NoDataComponent";
 import { base_backend_url } from "../../configs/config";
 import useTitle from "../../hooks/useTitle";
 import BlogCard from "./BlogCard";
+import BlogSkeletonLoader from "./BlogSkeletonLoader";
 
 type Props = {};
 const Fade = require("react-reveal/Fade");
@@ -115,7 +115,13 @@ const Blogs = (props: Props) => {
         <div className="text-gray-600 body-font">
           <div className="container px-5 py-8 mx-auto">
             {isLoading ? (
-              <GlobalLoader />
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 -m-4">
+                {Array(limit)
+                  .fill(0)
+                  .map((_, index) => (
+                    <BlogSkeletonLoader key={index} />
+                  ))}
+              </div>
             ) : (
               <div>
                 {data?.data?.length > 0 ? (
