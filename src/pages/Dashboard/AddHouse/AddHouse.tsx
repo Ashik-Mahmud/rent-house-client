@@ -53,7 +53,7 @@ const AddHouse = (props: Props) => {
       return swal({
         title: "Your profile is uncompleted",
         icon: "warning",
-        buttons: ["cancel"],
+        buttons: ["cancel", "okay"],
       });
     }
     /* Validation */
