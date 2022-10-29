@@ -55,8 +55,8 @@ const UsersBlogs = (props: Props) => {
   return (
     <div>
       <div className="p-3 sm:p-5 my-5 bg-white">
-        <div className="flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="flex flex-col sm:flex-row items-center gap-3">
             <h1 className="text-3xl font-bold">My Blogs</h1>
             <div>
               <span className="badge badge-ghost">
@@ -74,7 +74,7 @@ const UsersBlogs = (props: Props) => {
               </span>
             </div>
           </div>
-          <div className="search sm:w-72">
+          <div className="search w-full sm:w-72">
             <input
               type="search"
               placeholder="Search by Name or Category"
