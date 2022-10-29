@@ -5,7 +5,7 @@ const Footer = (props: Props) => {
   return (
     <Fade top distance="20px">
       <footer
-        className=" text-base-content font-open font-medium bg-base-100 relative p-10 sm:p-20 sm:pt-32 overflow-x-hidden"
+        className=" text-base-content font-open font-medium bg-base-100 relative p-10 pt-40 sm:p-20 sm:pt-32 overflow-x-hidden"
         style={{ clipPath: `ellipse(75% 100% at 59.75% 100%)` }}
       >
         <div className="footer p-10  mx-auto container">

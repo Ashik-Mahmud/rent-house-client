@@ -14,10 +14,10 @@ const AboutApp = (props: Props) => {
         videoId="8LUuLRwCjWg"
         onClose={() => setIsModal(false)}
       />
-      <div className="container mx-auto">
-        <div className="flex items-center justify-evenly py-10">
+      <div className="container mx-auto px-10 sm:px-0">
+        <div className="sm:flex items-center justify-evenly py-10">
           <Fade left distance="20px">
-            <div className="max-w-2xl">
+            <div className="sm:max-w-2xl">
               <h3 className="text-xl">Yah! That's all</h3>
               <h2 className="text-4xl font-bold my-3">About Us</h2>
               <p>
@@ -35,7 +35,7 @@ const AboutApp = (props: Props) => {
             </div>
           </Fade>
           <Fade right distance="20px">
-            <div className="py-10 grid place-items-center max-w-2xl">
+            <div className="py-10 grid place-items-center sm:max-w-2xl">
               <img
                 src="https://cdn.pixabay.com/photo/2019/12/16/23/06/search-4700433_960_720.jpg"
                 alt=""
