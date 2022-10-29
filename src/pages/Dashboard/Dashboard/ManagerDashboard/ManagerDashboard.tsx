@@ -2,11 +2,11 @@ import axios from "axios";
 import { BiUserCheck } from "react-icons/bi";
 import { BsBook, BsHouse, BsHouseDoor, BsHouseDoorFill } from "react-icons/bs";
 import { useQuery } from "react-query";
-import GlobalLoader from "../../../../components/GlobalLoader";
 import { base_backend_url } from "../../../../configs/config";
 import useAuth from "../../../../hooks/useAuth";
 import useTitle from "../../../../hooks/useTitle";
 import { authUserInterface } from "../../../../interfaces/UserInterface";
+import DashboardSkeletonLoader from "../DashboardSkeletonLoader";
 import BarCharts from "./BarCharts";
 import RecentHouseRequest from "./RecentHouseRequest";
 type Props = {};
@@ -30,7 +30,7 @@ const ManagerDashboard = (props: Props) => {
   );
 
   if (houseLoading) {
-    return <GlobalLoader />;
+    return <DashboardSkeletonLoader />;
   }
 
   return (

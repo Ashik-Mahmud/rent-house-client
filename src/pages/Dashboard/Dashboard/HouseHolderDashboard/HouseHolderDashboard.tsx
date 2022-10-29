@@ -2,20 +2,22 @@ import axios from "axios";
 import { BiBookAlt, BiCommentAdd } from "react-icons/bi";
 import { BsCoin, BsGraphUp, BsHouse } from "react-icons/bs";
 import { useQuery } from "react-query";
-import GlobalLoader from "../../../../components/GlobalLoader";
 import { base_backend_url } from "../../../../configs/config";
 import useAuth from "../../../../hooks/useAuth";
 import useTitle from "../../../../hooks/useTitle";
 import { authUserInterface } from "../../../../interfaces/UserInterface";
 import { useGetReviewsByUserQuery } from "../../../../services/ReviewApi";
+import DashboardSkeletonLoader from "../DashboardSkeletonLoader";
 import HouseReportChart from "./HouseReportChart";
 import MostLovesHouse from "./MostLovesHouse";
 import RecentBookings from "./RecentBookings";
+
 type Props = {};
 
 const HouseHolderDashboard = (props: Props) => {
-  useTitle("House Holder Dashboard");
   const { updatedUser, user } = useAuth<authUserInterface | any>({});
+
+  useTitle("House Holder Dashboard");
 
   /* Get The reviews */
   const { data: AppReviews, isLoading: reviewLoading } =
@@ -38,7 +40,7 @@ const HouseHolderDashboard = (props: Props) => {
     }
   );
 
-  if (reviewLoading || reportLoading) return <GlobalLoader />;
+  if (reviewLoading || reportLoading) return <DashboardSkeletonLoader />;
 
   return (
     <div className="my-5">

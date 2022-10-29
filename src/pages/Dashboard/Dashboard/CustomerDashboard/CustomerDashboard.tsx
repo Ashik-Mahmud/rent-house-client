@@ -1,11 +1,11 @@
 import axios from "axios";
 import { MdDangerous } from "react-icons/md";
 import { useQuery } from "react-query";
-import GlobalLoader from "../../../../components/GlobalLoader";
 import { base_backend_url } from "../../../../configs/config";
 import useAuth from "../../../../hooks/useAuth";
 import useTitle from "../../../../hooks/useTitle";
 import { authUserInterface } from "../../../../interfaces/UserInterface";
+import DashboardSkeletonLoader from "../DashboardSkeletonLoader";
 import RecentBookedHouses from "./RecentBookedHouses";
 import StatisticChart from "./StatisticChart";
 
@@ -31,7 +31,7 @@ const CustomerDashboard = (props: Props) => {
   );
 
   if (isLoading) {
-    return <GlobalLoader />;
+    return <DashboardSkeletonLoader />;
   }
   if (error) {
     return (

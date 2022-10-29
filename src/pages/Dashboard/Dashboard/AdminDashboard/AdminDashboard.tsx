@@ -2,11 +2,11 @@ import axios from "axios";
 import { BiUserCheck } from "react-icons/bi";
 import { BsBook, BsHouse, BsHouseDoor, BsHouseDoorFill } from "react-icons/bs";
 import { useQuery } from "react-query";
-import GlobalLoader from "../../../../components/GlobalLoader";
 import { base_backend_url } from "../../../../configs/config";
 import useAuth from "../../../../hooks/useAuth";
 import useTitle from "../../../../hooks/useTitle";
 import { authUserInterface } from "../../../../interfaces/UserInterface";
+import DashboardSkeletonLoader from "../DashboardSkeletonLoader";
 import BarCharts from "./BarCharts";
 import RecentHouseRequest from "./RecentHouseRequest";
 import UsersCharts from "./UsersCharts";
@@ -48,7 +48,7 @@ const AdminDashboard = (props: Props) => {
     }
   );
 
-  if (isLoading || houseLoading) return <GlobalLoader />;
+  if (isLoading || houseLoading) return <DashboardSkeletonLoader />;
 
   return (
     <div className="my-5">
@@ -98,14 +98,12 @@ const AdminDashboard = (props: Props) => {
         </div>
       </div>
       {/* End */}
-
       {/* Recent Bookings */}
       <div className="my-5">
         <RecentHouseRequest />
       </div>
       {/* End */}
       {/* Charts Area */}
-
       <div className="charts gap-6 shadow my-5 grid grid-cols-1 md:grid-cols-2 ">
         <UsersCharts />
         <BarCharts houses={houses} />
