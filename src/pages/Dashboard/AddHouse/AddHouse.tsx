@@ -53,7 +53,7 @@ const AddHouse = (props: Props) => {
       return swal({
         title: "Your profile is uncompleted",
         icon: "warning",
-        buttons: ["cancel"],
+        buttons: ["cancel", "okay"],
       });
     }
     /* Validation */
@@ -168,12 +168,14 @@ const AddHouse = (props: Props) => {
   useEffect(() => {
     setDistrictLoading(true);
     const cities = getAllTheCity();
+
     cities.then((res) => {
       setCity(() => {
-        return res?.data?.map((city: any) => {
+        return res?.divisions?.map((city: any) => {
           return {
-            value: city?.division,
-            label: city?.division,
+            id: city?.id,
+            value: city?.name,
+            label: city?.name,
           };
         });
       });
@@ -184,10 +186,14 @@ const AddHouse = (props: Props) => {
     );
     districtByDivision.then((res) => {
       setDistrict(() => {
-        return res?.data?.map((district: any) => {
+        const districtsByDivisionId = res?.districts?.filter(
+          (district: any) => district?.division_id === selectCity?.id
+        );
+
+        return districtsByDivisionId?.map((district: any) => {
           return {
-            value: district?.district,
-            label: district?.district,
+            value: district?.name,
+            label: district?.name,
           };
         });
       });
@@ -306,7 +312,6 @@ const AddHouse = (props: Props) => {
                 <Select
                   className="basic-single w-full pl-3"
                   classNamePrefix="select"
-                  defaultValue={city[0]}
                   name="color"
                   options={city}
                   onChange={(e) => setSelectCity(e)}

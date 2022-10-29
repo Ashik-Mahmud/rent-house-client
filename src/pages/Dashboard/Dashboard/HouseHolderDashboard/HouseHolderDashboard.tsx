@@ -48,7 +48,7 @@ const HouseHolderDashboard = (props: Props) => {
         <h3 className="text-xl my-2 font-poppins flex items-center gap-3">
           <BsGraphUp /> Houses Statistics
         </h3>
-        <div className="gap-4 flex justify-between">
+        <div className="gap-4 flex flex-col sm:flex-row justify-between">
           <div className="stat  border">
             <div className="stat-figure text-success">
               <BsHouse className="text-2xl" />
@@ -101,7 +101,7 @@ const HouseHolderDashboard = (props: Props) => {
         <h3 className="text-xl my-2 font-poppins flex items-center gap-3">
           <BsGraphUp /> Others Statistics
         </h3>
-        <div className="gap-4 flex justify-between">
+        <div className="gap-4 flex flex-col sm:flex-row justify-between">
           <div className="stat border">
             <div className="stat-figure text-secondary">
               <BiCommentAdd className="text-2xl" />

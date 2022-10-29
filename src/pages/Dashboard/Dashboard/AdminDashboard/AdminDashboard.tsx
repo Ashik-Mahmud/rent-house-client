@@ -7,7 +7,6 @@ import { base_backend_url } from "../../../../configs/config";
 import useAuth from "../../../../hooks/useAuth";
 import useTitle from "../../../../hooks/useTitle";
 import { authUserInterface } from "../../../../interfaces/UserInterface";
-import { useGetAllBlogsQuery } from "../../../../services/BlogApi";
 import BarCharts from "./BarCharts";
 import RecentHouseRequest from "./RecentHouseRequest";
 import UsersCharts from "./UsersCharts";
@@ -16,7 +15,6 @@ type Props = {};
 
 const AdminDashboard = (props: Props) => {
   useTitle("Admin Dashboard");
-  const { data: blogs, isLoading: loading2 } = useGetAllBlogsQuery({} as any);
 
   const { user, updatedUser } = useAuth<authUserInterface | any>({});
   const { data, isLoading } = useQuery(["users"], () => getAllUserForAdmin());
@@ -50,7 +48,7 @@ const AdminDashboard = (props: Props) => {
     }
   );
 
-  if (loading2 || isLoading || houseLoading) return <GlobalLoader />;
+  if (isLoading || houseLoading) return <GlobalLoader />;
 
   return (
     <div className="my-5">
@@ -86,7 +84,7 @@ const AdminDashboard = (props: Props) => {
             <BsBook className="text-3xl text-primary" />
           </div>
           <div className="stat-title">Total Blogs</div>
-          <div className="stat-value text-primary">{blogs?.count}</div>
+          <div className="stat-value text-primary">{houses?.blogs}</div>
           <div className="stat-desc">21% more than last month</div>
         </div>
 

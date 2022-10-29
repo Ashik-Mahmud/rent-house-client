@@ -177,7 +177,7 @@ const Settings = ({ appChangeRefetch }: Props) => {
               </>
             )}
             {role === "admin" && (
-              <div className="flex items-center justify-between py-6 rounded my-4 bg-gray-50 px-5">
+              <div className="flex flex-col sm:flex-row items-center justify-between py-6 rounded my-4 bg-gray-50 px-5">
                 <h2 className="text-xl font-bold">Change App Name</h2>
                 <form
                   onSubmit={handleChangeAppName}
@@ -222,16 +222,19 @@ const Settings = ({ appChangeRefetch }: Props) => {
               </div>
             )}
 
-            <div className="flex items-center justify-between py-6 rounded my-4 bg-gray-50 px-5">
-              <h2 className="text-xl font-bold">Change Language</h2>
+            <div className="flex  items-center justify-between py-6 rounded my-4 bg-gray-50 px-5">
+              <h2 className="text-lg sm:text-xl font-bold">Change Language</h2>
               <div className="flex items-center gap-3">
-                <Select options={stateOptions} className="w-60" />
+                <Select options={stateOptions} className="sm:w-60" />
               </div>
             </div>
-            <div className="flex items-center justify-between py-6 rounded my-4 bg-gray-50 px-5">
-              <h2 className="text-xl font-bold">Change Theme</h2>
+            <div className="flex items-center flex-col sm:flex-row justify-between py-6 rounded my-4 bg-gray-50 px-5">
+              <h2 className="text-lg sm:text-xl font-bold">Change Theme</h2>
               <div className="flex items-start gap-3 flex-col">
-                <Select options={themeOptions} className="w-60" />
+                <Select
+                  options={themeOptions}
+                  className="w-full mt-4 sm:mt-0 sm:w-60"
+                />
                 <span>
                   Active Theme - <span>emerald</span>
                 </span>

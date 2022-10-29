@@ -28,7 +28,6 @@ import {
   BsMessenger,
   BsReceipt,
 } from "react-icons/bs";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useQuery } from "react-query";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/store";
@@ -607,12 +606,11 @@ const Dashboard = (props: Props) => {
                     className="btn btn-ghost btn-circle avatar"
                   >
                     <div className="w-10 rounded-full">
-                      <LazyLoadImage
+                      <img
                         src={
                           data?.profileImage ? data?.profileImage : data?.avatar
                         }
                         alt={data?.name}
-                        effect="black-and-white"
                       />
                     </div>
                   </label>

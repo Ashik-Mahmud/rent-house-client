@@ -73,7 +73,7 @@ const RegisterAuth = (props: Props) => {
     >
       <div>
         <div className="hero-content p-0 overflow-hidden w-full flex-col lg:flex-row items-stretch shadow-lg border ">
-          <div className="h-100vh font-poppins bg-[#3fa7674f] sm:w-[30rem] grid place-items-center">
+          <div className="h-100vh font-poppins bg-[#3fa7674f] sm:w-[30rem] grid place-items-center py-20 sm:py-0">
             <div className="text-center px-8">
               <Fade top distance="20px" cascade>
                 <h3 className="text-3xl font-bold">Welcome Back</h3>

@@ -9,6 +9,7 @@ import {
   BiUser,
 } from "react-icons/bi";
 import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
+import { PulseLoader } from "react-spinners";
 import SendVerifyEmail from "../../../components/SendVerifyEmail";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
@@ -21,7 +22,8 @@ type Props = {
 const ProfileModal = ({ refetch }: Props) => {
   const { updatedUser } = useAuth<authUserInterface | any>({});
   const isVerify = updatedUser?.isVerified;
-  const [updateProfile, { data, isSuccess }] = useUpdateProfileMutation();
+  const [updateProfile, { data, isSuccess, isLoading }] =
+    useUpdateProfileMutation();
 
   const { register, handleSubmit, reset, setValue } = useForm();
 
@@ -195,9 +197,16 @@ const ProfileModal = ({ refetch }: Props) => {
             <label htmlFor="profile-edit-modal" className="btn btn-warning">
               Cancel
             </label>
-            {isVerify && (
-              <button className="btn btn-success">Save Profile</button>
-            )}
+            {isVerify &&
+              (isLoading ? (
+                <button className="btn btn-success" type="button">
+                  <PulseLoader size={8} color="#fff" />
+                </button>
+              ) : (
+                <button className="btn btn-success" type="submit">
+                  Save Profile
+                </button>
+              ))}
           </div>
         </div>
       </div>

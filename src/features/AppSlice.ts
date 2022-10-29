@@ -15,9 +15,7 @@ const AppSlice = createSlice({
   initialState,
   reducers: {
     setAppOptions: (state, action) => {
-      state.name = action.payload.name;
-      state.logo = action.payload.logo;
-      state.favicon = action.payload.favicon;
+      state.name = action.payload?.name;
     },
   },
 });

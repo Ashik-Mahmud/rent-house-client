@@ -221,12 +221,14 @@ const Question = ({ data, questions, loading: isLoading, newFetch }: Props) => {
                       <h3 className="text-xl font-bold font-poppins my-4">
                         No Question Found
                       </h3>
-                      <label
-                        htmlFor="question-modal"
-                        className="btn btn-success btn-xs "
-                      >
-                        Ask
-                      </label>
+                      {updatedUser?._id !== data?.owner?._id && (
+                        <label
+                          htmlFor="question-modal"
+                          className="btn btn-success btn-xs "
+                        >
+                          Ask
+                        </label>
+                      )}
                     </div>
                   )}
                 </>

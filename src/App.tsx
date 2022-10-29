@@ -76,6 +76,7 @@ const App = (props: Props) => {
     const res = await axios.get(`${base_backend_url}/api/v1/admin/app-options`);
     return res?.data;
   });
+
   const { data: newData } = useQuery(["userInit", user], async () => {
     if (user) {
       const res = await axios.get(

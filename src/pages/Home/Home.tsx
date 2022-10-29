@@ -13,7 +13,7 @@ type Props = {};
 const Home = (props: Props) => {
   useTitle("Home");
   return (
-    <section>
+    <section className="overflow-x-hidden sm:overflow-x-auto">
       <Hero />
       <Statistic />
       <BestHouses />

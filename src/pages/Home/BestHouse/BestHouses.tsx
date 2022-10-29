@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 import GlobalLoader from "../../../components/GlobalLoader";
 import SectionTitle from "../../../components/SectionTItle";
 import { base_backend_url } from "../../../configs/config";
+const Fade = require("react-reveal/Fade");
 
 type Props = {};
-const Fade = require("react-reveal/Fade");
 const BestHouses = (props: Props) => {
   const { data, isLoading } = useQuery("bestHouse", async () => {
     const { data } = await axios.get(
@@ -34,12 +34,12 @@ const BestHouses = (props: Props) => {
         />
       </div>
       <div className="container mx-auto">
-        <div
-          className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 ${
-            data?.length === 4 ? "xl:grid-cols-4" : "xl:grid-cols-3"
-          }`}
-        >
-          <Fade top distance="20px">
+        <Fade top distance="20px">
+          <div
+            className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 ${
+              data?.length === 4 ? "xl:grid-cols-4" : "xl:grid-cols-3"
+            }`}
+          >
             {data?.map((house: any, ind: number) => (
               <div
                 className="shadow p-5 rounded cursor-pointer"
@@ -88,8 +88,8 @@ const BestHouses = (props: Props) => {
                 </div>
               </div>
             ))}
-          </Fade>
-        </div>
+          </div>
+        </Fade>
       </div>
     </div>
   );

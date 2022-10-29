@@ -7,13 +7,12 @@ import { base_backend_url } from "../../../../configs/config";
 import useAuth from "../../../../hooks/useAuth";
 import useTitle from "../../../../hooks/useTitle";
 import { authUserInterface } from "../../../../interfaces/UserInterface";
-import { useGetBlogsByUidQuery } from "../../../../services/BlogApi";
 import BarCharts from "./BarCharts";
 import RecentHouseRequest from "./RecentHouseRequest";
 type Props = {};
 const ManagerDashboard = (props: Props) => {
   useTitle("Manager Dashboard");
-  const { user, updatedUser } = useAuth<authUserInterface | any>({});
+  const { user } = useAuth<authUserInterface | any>({});
   /* Get All the houses count for admin */
   const { data: houses, isLoading: houseLoading } = useQuery(
     "houses",
@@ -30,12 +29,7 @@ const ManagerDashboard = (props: Props) => {
     }
   );
 
-  /* Get Blogs by Managers */
-  const { data, isLoading } = useGetBlogsByUidQuery({
-    uid: updatedUser?._id,
-  });
-
-  if (houseLoading || isLoading) {
+  if (houseLoading) {
     return <GlobalLoader />;
   }
 
@@ -74,7 +68,7 @@ const ManagerDashboard = (props: Props) => {
             <BsBook className="text-3xl text-primary" />
           </div>
           <div className="stat-title">Total Blogs</div>
-          <div className="stat-value text-primary">{data?.data?.count}</div>
+          <div className="stat-value text-primary">{houses?.blogs}</div>
           <div className="stat-desc">21% more than last month</div>
         </div>
 
@@ -82,8 +76,8 @@ const ManagerDashboard = (props: Props) => {
           <div className="stat-figure text-secondary">
             <BiUserCheck className="text-3xl text-primary" />
           </div>
-          <div className="stat-title">Total Blogs Likes</div>
-          <div className="stat-value">{155}</div>
+          <div className="stat-title">Total Register Users</div>
+          <div className="stat-value">{houses?.users}</div>
           <div className="stat-desc">↘︎ 90 (14%)</div>
         </div>
       </div>
@@ -94,7 +88,7 @@ const ManagerDashboard = (props: Props) => {
       </div>
       {/* End */}
       <div className="charts gap-6 shadow my-5 grid grid-cols-1 md:grid-cols-1 ">
-        <BarCharts houses={houses} blogs={data?.data?.count} />
+        <BarCharts houses={houses} />
       </div>
     </div>
   );

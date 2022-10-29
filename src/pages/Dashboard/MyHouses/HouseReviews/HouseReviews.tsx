@@ -123,10 +123,12 @@ const HouseReviews = (props: Props) => {
           <NoDataComponent />
         )}
 
-        <div className="pagination flex justify-center py-4">
-          <button className="btn btn-ghost">Previous</button>
-          <button className="btn btn-ghost">Next</button>
-        </div>
+        {reviews?.internal?.data?.length > 0 && (
+          <div className="pagination flex justify-center py-4">
+            <button className="btn btn-ghost">Previous</button>
+            <button className="btn btn-ghost">Next</button>
+          </div>
+        )}
       </div>
     </div>
   );

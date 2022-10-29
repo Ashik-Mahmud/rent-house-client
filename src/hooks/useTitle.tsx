@@ -6,7 +6,7 @@ const useTitle = (props: string) => {
 
   const [title, setTitle] = useState("");
   useEffect(() => {
-    document.title = title + " | " + name;
+    document.title = title + " | " + (name || " Rent House");
     setTitle(props);
   }, [title, props, name]);
 

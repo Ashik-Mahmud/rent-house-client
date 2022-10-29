@@ -173,14 +173,17 @@ const AddBlog = (props: Props) => {
             <div className="my-1 rounded-md mt-6">
               <BlogEditor setBlogText={setBlogText} />
             </div>
-            <div className="mt-16 flex items-center gap-3">
+            <div className="mt-32 sm:mt-16 flex  items-center gap-3">
               <input
                 type="checkbox"
                 className="checkbox-primary rounded-none checkbox"
                 id="checked"
                 {...register("checked")}
               />{" "}
-              <label htmlFor="checked" className="text-md font-poppins block">
+              <label
+                htmlFor="checked"
+                className="text-xs sm:text-md font-poppins block"
+              >
                 TERMS: After Adding blog you can't edit Blogs Content. If you
                 want to update something in the blog content You should replace
                 whole blogs content
@@ -188,7 +191,7 @@ const AddBlog = (props: Props) => {
             </div>
           </div>
           {/* End */}
-          <div className="flex justify-end mt-5">
+          <div className="flex justify-end mt-32 sm:mt-5 ">
             {isLoading ? (
               <button className="btn btn-primary rounded-none" type="button">
                 <PulseLoader size={8} color="#fff" />

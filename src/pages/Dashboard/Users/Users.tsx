@@ -62,9 +62,13 @@ const Users = (props: Props) => {
     <div>
       <div className="users-area p-5 my-4 bg-white">
         <div className="title flex-col items-start sm:items-center sm:flex-row flex  justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold">Users Management</h1>
-            <small className="badge badge-success">Admin</small>
+          <div className="flex flex-col sm:flex-row items-center gap-2">
+            <div className="flex items-center gap-2">
+              <h1 className="text-lg sm:text-2xl font-bold">
+                Users Management
+              </h1>
+              <small className="badge badge-success">Admin</small>
+            </div>
             <div className="flex items-center gap-2 font-poppins badge badge-ghost">
               Limit Per Page
               <select
