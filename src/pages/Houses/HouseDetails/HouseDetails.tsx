@@ -9,13 +9,13 @@ import { MdReportGmailerrorred } from "react-icons/md";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
-import GlobalLoader from "../../../components/GlobalLoader";
 import { base_backend_url } from "../../../configs/config";
 import useAuth from "../../../hooks/useAuth";
 import useTitle from "../../../hooks/useTitle";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import Address from "./Address";
 import BookNow from "./BookNowModal";
+import DetailsSkeletonLoader from "./DetailsSkeletonLoader";
 import Gallery from "./Gallery";
 import Others from "./Others";
 import Owner from "./Owner";
@@ -95,9 +95,8 @@ const HouseDetails = (Props: Props) => {
     return data;
   };
 
-  if (isLoading || loading) return <GlobalLoader />;
+  if (isLoading || loading) return <DetailsSkeletonLoader />;
   if (error) {
-    console.log(error);
     return (
       <h1 className="p-10 text-center text-3xl py-20">
         Oh nooo!!! Something went wrong. Please try again.
