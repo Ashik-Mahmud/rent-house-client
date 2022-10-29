@@ -2,6 +2,7 @@ import cogoToast from "cogo-toast";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { BiLink, BiPen } from "react-icons/bi";
+import { PulseLoader } from "react-spinners";
 import useAuth from "../../../hooks/useAuth";
 import { authUserInterface } from "../../../interfaces/UserInterface";
 import { useSendForBlogRequestMutation } from "../../../services/RequestApi";
@@ -11,7 +12,7 @@ type Props = {};
 const VerifyBlogModal = (props: Props) => {
   const { updatedUser, refetch } = useAuth<authUserInterface | any>({});
   const { handleSubmit, register, reset } = useForm();
-  const [sendRequestForBlog, { data, isSuccess, error }] =
+  const [sendRequestForBlog, { data, isSuccess, error, isLoading }] =
     useSendForBlogRequestMutation();
   /* Handle Verify Blog Modal */
   const handleVerifyBlogModal = handleSubmit(async (data) => {
@@ -110,7 +111,14 @@ const VerifyBlogModal = (props: Props) => {
             </div>
             {/* End */}
             <div className="my-5 ">
-              <button className="btn btn-success mr-3">Send Request</button>
+              {isLoading ? (
+                <button className="btn btn-primary" disabled type="button">
+                  <PulseLoader size={8} color="#fff" />
+                  Sending...
+                </button>
+              ) : (
+                <button className="btn btn-success mr-3">Send Request</button>
+              )}
             </div>
           </div>
         </div>
