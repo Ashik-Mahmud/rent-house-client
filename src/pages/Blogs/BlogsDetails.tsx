@@ -66,7 +66,7 @@ const BlogsDetails = (props: Props) => {
 
   if (isLoading) return <GlobalLoader />;
   return (
-    <BlogsDetailsContainer className="p-10 sm:p-12 sm:px-96 font-bangla rounded">
+    <BlogsDetailsContainer className="p-5 sm:p-12 sm:px-96 font-bangla rounded">
       <div className="container mx-auto bg-white p-5">
         <div className="image">
           <img
@@ -80,24 +80,26 @@ const BlogsDetails = (props: Props) => {
             alt={data?.data?.title}
           />
         </div>
-        <div className="meta-title m-10">
+        <div className="meta-title m-5 sm:m-10">
           <div>
             <div className="flex items-center gap-4">
               <span
-                className="text-4xl cursor-pointer "
+                className="text-lg sm:text-4xl cursor-pointer "
                 onClick={() => navigate(-1)}
               >
                 <BiArrowBack />
               </span>
-              <h2 className="text-3xl font-bold">{data?.data?.title}</h2>
+              <h2 className="text-lg sm:text-3xl  font-bold">
+                {data?.data?.title}
+              </h2>
             </div>
             <div className="mt-4 ">
               Category/
               <span className="font-bold">{data?.data?.category}</span>
             </div>
           </div>
-          <div className="meta flex items-center justify-between mt-10">
-            <div className="author">
+          <div className="meta sm:flex  items-center justify-between mt-10">
+            <div className="author mb-5 sm:mb-0">
               <h3 className="text-xl font-bold">
                 {data?.data?.author?.name || "loading...."}
               </h3>
@@ -159,11 +161,11 @@ const BlogsDetails = (props: Props) => {
 
         {/* details */}
         <div
-          className="details m-10 leading-8 font-bangla text-lg "
+          className="details sm:m-10 leading-8 font-bangla text-sm sm:text-lg "
           dangerouslySetInnerHTML={{ __html: data?.data?.description }}
         ></div>
 
-        <div className="text-center flex items-center justify-between  bg-gray-50 rounded-lg">
+        <div className="text-center sm:flex items-center justify-between  bg-gray-50 rounded-lg p-5">
           <div className="flex items-center gap-0">
             <div
               onClick={handleFavorite}
@@ -181,12 +183,12 @@ const BlogsDetails = (props: Props) => {
           <div>
             <form
               action=""
-              className="input-group rounded-full overflow-hidden shadow"
+              className="sm:input-group rounded-full overflow-hidden shadow p-4 sm:p-0"
             >
               <input
                 type="email"
                 placeholder="Get Update for blogs"
-                className="input sm:w-72 rounded-full px-7 font-sm"
+                className="input sm:w-72 rounded-full px-7 font-sm mb-4 sm:mb-0"
               />
               <button className="btn btn-success rounded-full">
                 Subscribe

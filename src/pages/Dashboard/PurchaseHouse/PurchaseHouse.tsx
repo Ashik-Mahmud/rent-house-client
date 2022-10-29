@@ -54,7 +54,7 @@ const PurchaseHouse = (props: Props) => {
               <h3 className="text-2xl font-bold">Booked House</h3>
               <small className="badge badge-success">customer</small>
             </div>
-            <div className="flex items-center gap-3 mt-4 sm:mt-0">
+            <div className="flex  flex-col sm:flex-row items-center gap-3 mt-4 sm:mt-0">
               <div className="search flex items-center">
                 <input
                   type="text"

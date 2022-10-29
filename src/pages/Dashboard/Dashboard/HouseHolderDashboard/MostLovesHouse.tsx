@@ -49,7 +49,7 @@ const MostLovesHouse = (props: Props) => {
 
 const LovesHouseCard = ({ house }: any) => {
   return (
-    <div className="card card-side  bg-base-100 shadow border px-5 rounded mb-5">
+    <div className="card sm:card-side  bg-base-100 shadow border px-5 rounded mb-5">
       <figure>
         <img
           src={

@@ -70,9 +70,9 @@ const Reviews = (props: Props) => {
         symbolSize={30}
         symbolColor="#36D399"
       />
-      <div className="container mx-auto py-10 text-center font-poppins mb-10">
+      <div className="container mx-auto py-10 text-center font-poppins mb-10 px-10 sm:px-0">
         <Fade top distance="20px">
-          <div className=" my-10 flex items-center justify-between">
+          <div className=" my-10 sm:flex items-center justify-between">
             <div className="title text-left">
               <h3 className="text-3xl font-bold">Public Reviews About Us</h3>
               <div className="w-32 h-1 mt-3 bg-success"></div>
@@ -80,7 +80,7 @@ const Reviews = (props: Props) => {
             <input
               type="search"
               placeholder="Search by your name"
-              className="input input-ghost input-bordered"
+              className="input input-ghost input-bordered w-full sm:w-auto mt-5 sm:mt-0"
               onInput={(e) => setSearch(e.currentTarget.value)}
             />
           </div>
