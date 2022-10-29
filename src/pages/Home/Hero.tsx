@@ -51,10 +51,9 @@ const Hero = (props: Props) => {
       }}
     >
       <div className="hero-overlay bg-opacity-90"></div>
-      <div className="hero-content text-center text-neutral-content">
+      <div className="hero-content text-center text-neutral-content pb-44 pt-20 sm:pb-0">
         <div className="sm:px-40">
           <Fade top distance="20px">
-            {" "}
             <h1 className="mb-5 text-4xl sm:text-5xl font-bold">
               Welcome To the <span className="text-success"> {name}</span>
             </h1>
@@ -87,7 +86,7 @@ const Hero = (props: Props) => {
             </p>
           </Fade>
           <Fade top distance="20px">
-            <div className="filter-search flex items-center font-poppins justify-center w-full">
+            <div className="filter-search sm:flex items-center font-poppins justify-center w-full">
               {/* address */}
               <div className="name border  rounded rounded-r-none p-3 relative mt-10 flex-1 bg-white">
                 <div className="name-title absolute -top-4 bg-white text-black border rounded p-1">
@@ -147,9 +146,9 @@ const Hero = (props: Props) => {
                 </div>
               </div>
 
-              <div className="flex items-start flex-col mt-10">
+              <div className="sm:flex items-start flex-col mt-10">
                 <button
-                  className="btn btn-primary mr-7  h-[94px] rounded-l-none"
+                  className="btn btn-primary mr-7 w-full sm:w-auto  h-[94px] rounded-l-none"
                   onClick={handleNavigate}
                 >
                   Find Houses
