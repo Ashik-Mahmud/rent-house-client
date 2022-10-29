@@ -86,7 +86,7 @@ const Pricing = (props: Props) => {
                   Mixtape chillwave tumeric
                 </p>
                 <button className="flex items-center mt-auto text-white bg-gray-400 border-0 py-2 px-4 w-full focus:outline-none hover:bg-gray-500 rounded">
-                  Button
+                  Get started
                   <svg
                     fill="none"
                     stroke="currentColor"
@@ -183,7 +183,7 @@ const Pricing = (props: Props) => {
                   Mixtape chillwave tumeric
                 </p>
                 <button className="flex items-center mt-auto text-white bg-indigo-500 border-0 py-2 px-4 w-full focus:outline-none hover:bg-indigo-600 rounded">
-                  Button
+                  Purchase
                   <svg
                     fill="none"
                     stroke="currentColor"
@@ -293,7 +293,7 @@ const Pricing = (props: Props) => {
                   Mixtape chillwave tumeric
                 </p>
                 <button className="flex items-center mt-auto text-white bg-gray-400 border-0 py-2 px-4 w-full focus:outline-none hover:bg-gray-500 rounded">
-                  Button
+                  Purchase
                   <svg
                     fill="none"
                     stroke="currentColor"
@@ -403,7 +403,7 @@ const Pricing = (props: Props) => {
                   Mixtape chillwave tumeric
                 </p>
                 <button className="flex items-center mt-auto text-white bg-gray-400 border-0 py-2 px-4 w-full focus:outline-none hover:bg-gray-500 rounded">
-                  Button
+                  Purchase
                   <svg
                     fill="none"
                     stroke="currentColor"

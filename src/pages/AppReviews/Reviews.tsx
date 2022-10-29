@@ -4,10 +4,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { ScrollToTop } from "react-simple-scroll-up";
-import GlobalLoader from "../../components/GlobalLoader";
 import NoDataComponent from "../../components/NoDataComponent";
 import { base_backend_url } from "../../configs/config";
 import useTitle from "../../hooks/useTitle";
+import ReviewSkeletonLoading from "./ReviewSkeletonLoading";
 type Props = {};
 
 const Fade = require("react-reveal/Fade");
@@ -85,8 +85,15 @@ const Reviews = (props: Props) => {
             />
           </div>
         </Fade>
+
         {isLoading ? (
-          <GlobalLoader />
+          <div className="review-content grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+            {Array(searchedData?.length)
+              .fill(0)
+              .map((_, ind) => (
+                <ReviewSkeletonLoading key={ind} />
+              ))}
+          </div>
         ) : searchedData?.length > 0 ? (
           <Fade top distance="20px">
             <div className="review-content grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
