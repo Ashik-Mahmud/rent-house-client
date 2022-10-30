@@ -454,7 +454,7 @@ const Dashboard = (props: Props) => {
                   {/* Notifications Dropdown */}
                   <div
                     tabIndex={0}
-                    className=" dropdown-content notification-dropdown absolute top-10 -left-32 sm:left-0 sm:right-0 w-[20rem] bg-white shadow-lg rounded-md p-5"
+                    className=" dropdown-content notification-dropdown absolute top-10 -left-40  sm:right-0 w-[20rem] bg-white shadow-lg rounded-md p-5"
                   >
                     <div className="notification-list flex flex-col gap-2">
                       {notificationCount > 0 ? (
