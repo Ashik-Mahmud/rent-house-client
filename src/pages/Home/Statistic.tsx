@@ -1,13 +1,14 @@
 import axios from "axios";
 import CountUp from "react-countup";
 import { useQuery } from "react-query";
+import { base_backend_url } from "../../configs/config";
 type Props = {};
 const Fade = require("react-reveal/Fade");
 
 const Statistic = (props: Props) => {
   const { data, isLoading } = useQuery("statistic", async () => {
     const { data } = await axios.get(
-      "http://localhost:5000/api/v1/request/reports-for-homepage"
+      `${base_backend_url}/api/v1/request/reports-for-homepage`
     );
     return data?.data;
   });
