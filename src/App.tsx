@@ -15,7 +15,6 @@ import GlobalLoader from "./components/GlobalLoader";
 import { base_backend_url } from "./configs/config";
 import { setAppOptions } from "./features/AppSlice";
 import About from "./pages/About";
-import Reviews from "./pages/AppReviews/Reviews";
 import Login from "./pages/Authentication/Login";
 import RegisterAuth from "./pages/Authentication/Register";
 import ResetPassword from "./pages/Authentication/ResetPassword";
@@ -54,18 +53,18 @@ import ForHouseHolderRequest from "./pages/Dashboard/RequestFromUsers/ForHouseHo
 import RequestFromUsers from "./pages/Dashboard/RequestFromUsers/RequestFromUsers";
 import Settings from "./pages/Dashboard/Settings/Settings";
 import Users from "./pages/Dashboard/Users/Users";
-import Home from "./pages/Home/Home";
 import HouseDetails from "./pages/Houses/HouseDetails/HouseDetails";
 import Pricing from "./pages/Pricing";
 import Footer from "./shared/Footer";
 import Header from "./shared/Header";
 import NotFoundPage from "./shared/NotFoundPage";
-
 const Dashboard = lazy(() => import("./pages/Dashboard/Dashboard"));
 const AdminDashboard = lazy(
   () => import("./pages/Dashboard/Dashboard/AdminDashboard/AdminDashboard")
 );
 const Houses = lazy(() => import("./pages/Houses/Houses"));
+const Reviews = lazy(() => import("./pages/AppReviews/Reviews"));
+const Home = lazy(() => import("./pages/Home/Home"));
 
 type Props = {};
 const App = (props: Props) => {
