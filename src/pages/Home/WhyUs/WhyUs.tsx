@@ -1,8 +1,32 @@
+import { BiFilter, BiHome, BiMoney, BiUserCheck } from "react-icons/bi";
 import SectionTitle from "../../../components/SectionTItle";
 import WhyUsCard from "./WhyUsCard";
 
 type Props = {};
 const Fade = require("react-reveal/Fade");
+
+const whyUseJson = [
+  {
+    title: "Authentic Houses",
+    icon: <BiHome />,
+    desc: "We will provide all the authenticate houses with advanced filtering and comment system for verify users and also you can report any houses without login",
+  },
+  {
+    title: "Advanced Filtering",
+    icon: <BiFilter />,
+    desc: "We will provide all the authenticate houses with advanced filtering and comment system for verify users and also you can report any houses without login",
+  },
+  {
+    title: "SSLCOMMERZ & Stripe Payment Method",
+    icon: <BiMoney />,
+    desc: "We will provide all the authenticate houses with advanced filtering and comment system for verify users and also you can report any houses without login",
+  },
+  {
+    title: "Advanced Users Verification ",
+    icon: <BiUserCheck />,
+    desc: "We will provide all the authenticate houses with advanced filtering and comment system for verify users and also you can report any houses without login",
+  },
+];
 
 const WhyUs = (props: Props) => {
   return (
@@ -14,10 +38,14 @@ const WhyUs = (props: Props) => {
         />
         <Fade top distance="20px">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ">
-            <WhyUsCard />
-            <WhyUsCard />
-            <WhyUsCard />
-            <WhyUsCard />
+            {whyUseJson?.map((data: any, ind: number) => (
+              <WhyUsCard
+                key={ind}
+                desc={data?.desc}
+                icon={data?.icon}
+                title={data?.title}
+              />
+            ))}
           </div>
         </Fade>
       </div>
