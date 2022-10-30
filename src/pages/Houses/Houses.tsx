@@ -142,6 +142,13 @@ const Houses = (props: Props) => {
     setGetAllDistrict(uniqueDistrict);
     setGetAllCity(uniqueCity);
 
+    window.onresize = () => {
+      if (window.innerWidth < 768) {
+        setGridView(true);
+        localStorage.setItem("gridView", JSON.stringify(true));
+      }
+    };
+
     return () => {
       setGetAllDistrict([]);
     };
@@ -217,7 +224,7 @@ const Houses = (props: Props) => {
                   <h2 className="text-2xl font-bold">Most Popular</h2>
                   <div className="grid-view">
                     <span
-                      className="text-xl cursor-pointer bg-white p-2 block rounded"
+                      className="hidden sm:block text-xl cursor-pointer bg-white p-2  rounded"
                       onClick={handleGridView}
                     >
                       {gridView ? <BsGrid1X2 /> : <BsGrid3X2 />}
@@ -235,7 +242,7 @@ const Houses = (props: Props) => {
               ) : data?.houses?.length > 0 ? (
                 <>
                   <div
-                    className={`house-main-content p-6 grid  gap-6 ${
+                    className={`house-main-content py-8 sm:p-6 grid  gap-6 ${
                       gridView
                         ? "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3"
                         : "grid-cols-1 "

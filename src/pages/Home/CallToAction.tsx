@@ -1,5 +1,7 @@
 import { BsEnvelopeOpen, BsTelephoneOutbound } from "react-icons/bs";
 import { RiFeedbackLine } from "react-icons/ri";
+import { Link } from "react-router-dom";
+import swal from "sweetalert";
 type Props = {};
 const Fade = require("react-reveal/Fade");
 const CallToAction = (props: Props) => {
@@ -27,12 +29,12 @@ const CallToAction = (props: Props) => {
                 <h3 className="call-to-action-card__title">
                   Get Contact Support
                 </h3>
-                <a
-                  href="/"
+                <Link
+                  to="/contact"
                   className="btn btn-success btn-lg capitalize text-sm mt-4"
                 >
                   Contact Support
-                </a>
+                </Link>
               </div>
             </div>
             <div className="call-to-action-card shadow-lg bg-gray-50 p-10 text-center rounded-lg flex-1">
@@ -41,12 +43,26 @@ const CallToAction = (props: Props) => {
               </div>
               <div className="call-to-action-card__content">
                 <h3 className="call-to-action-card__title">Leave a Feedback</h3>
-                <a
-                  href="/"
+                <span
+                  onClick={() => {
+                    swal({
+                      title: "Leave a Feedback",
+                      text: "Please leave your feedback",
+                      content: {
+                        element: "input",
+                        attributes: {
+                          placeholder: "Type your feedback here...",
+                          type: "text",
+                        },
+                      },
+                    }).then((value) => {
+                      swal(`You typed: ${value}`);
+                    });
+                  }}
                   className="btn btn-success btn-lg capitalize text-sm mt-4"
                 >
                   Send Feedback
-                </a>
+                </span>
               </div>
             </div>
           </div>

@@ -169,13 +169,13 @@ const Profile = (props: Props) => {
                   )}
                 </span>
               </div>
-              <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
+              <div className="profile-details-item flex sm:items-center flex-col sm:flex-row  justify-between text-lg mb-2 border-b pb-2">
                 <span className="profile-details-item-label">Name</span>
                 <span className="profile-details-item-value font-bold">
                   {data?.name || "No Available"}
                 </span>
               </div>
-              <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
+              <div className="profile-details-item flex sm:items-center flex-col sm:flex-row justify-between text-lg mb-2 border-b pb-2">
                 <span className="profile-details-item-label">Email</span>
                 <span
                   className="profile-details-item-value font-bold  tooltip tooltip-warning hover:tooltip-fade cursor-not-allowed select-none"
@@ -184,25 +184,25 @@ const Profile = (props: Props) => {
                   {data?.email || "No Available"}
                 </span>
               </div>
-              <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
+              <div className="profile-details-item flex sm:items-center flex-col sm:flex-row justify-between text-lg mb-2 border-b pb-2">
                 <span className="profile-details-item-label">Phone</span>
                 <span className="profile-details-item-value font-bold">
                   {data?.phone || "No Available"}
                 </span>
               </div>
-              <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
+              <div className="profile-details-item flex sm:items-center flex-col sm:flex-row justify-between text-lg mb-2 border-b pb-2">
                 <span className="profile-details-item-label">Address</span>
                 <span className="profile-details-item-value font-bold">
                   {data?.address || "No Available"}
                 </span>
               </div>
-              <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
+              <div className="profile-details-item flex sm:items-center flex-col sm:flex-row justify-between text-lg mb-2 border-b pb-2">
                 <span className="profile-details-item-label">Joined Date</span>
                 <span className="profile-details-item-value font-bold">
                   {dateDistance}
                 </span>
               </div>
-              <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
+              <div className="profile-details-item flex sm:items-center flex-col sm:flex-row justify-between text-lg mb-2 border-b pb-2">
                 <span className="profile-details-item-label">Role</span>
                 <span className="profile-details-item-value font-bold">
                   <span className="badge badge-outline">
@@ -212,19 +212,21 @@ const Profile = (props: Props) => {
                   </span>
                 </span>
               </div>
-              <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
+              <div className="profile-details-item flex sm:items-center flex-col sm:flex-row justify-between text-lg mb-2 border-b pb-2">
                 <span className="profile-details-item-label">Status</span>
                 <span className="profile-details-item-value font-bold">
                   <span className="badge badge-info">Active</span>
                 </span>
               </div>
-              <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
+              <div className="profile-details-item flex sm:items-center flex-col sm:flex-row justify-between text-lg mb-2 border-b pb-2">
                 <span className="profile-details-item-label">Last Login</span>
                 <span className="profile-details-item-value font-bold">
-                  <span className="badge badge-ghost">{result}</span>
+                  <span className="badge badge-ghost whitespace-pre-wrap">
+                    {result}
+                  </span>
                 </span>
               </div>
-              <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
+              <div className="profile-details-item flex sm:items-center flex-col sm:flex-row justify-between text-lg mb-2 border-b pb-2">
                 <span className="profile-details-item-label">Used Browser</span>
                 <span className="profile-details-item-value font-bold">
                   <span className="badge badge-secondary">
@@ -233,7 +235,7 @@ const Profile = (props: Props) => {
                   </span>
                 </span>
               </div>
-              <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
+              <div className="profile-details-item flex sm:items-center flex-col sm:flex-row justify-between text-lg mb-2 border-b pb-2">
                 <span className="profile-details-item-label">Used Device</span>
                 <span className="profile-details-item-value font-bold">
                   <span className="badge badge-success">
@@ -241,7 +243,7 @@ const Profile = (props: Props) => {
                   </span>
                 </span>
               </div>
-              <div className="profile-details-item flex items-center justify-between text-lg mb-2 border-b pb-2">
+              <div className="profile-details-item flex sm:items-center flex-col sm:flex-row justify-between text-lg mb-2 border-b pb-2">
                 <span className="profile-details-item-label">Action</span>
                 <span className="profile-details-item-value font-bold">
                   <label

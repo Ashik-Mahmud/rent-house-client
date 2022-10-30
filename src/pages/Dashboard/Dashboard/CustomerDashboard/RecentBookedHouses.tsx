@@ -13,7 +13,7 @@ const RecentBookedHouses = ({ data }: Props) => {
         </Link>
       </div>
       {data?.bookedHouse?.length > 0 ? (
-        <div className="my-0 overflow-x-auto grid grid-cols-3 p-5 gap-5">
+        <div className="my-0 overflow-x-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 p-5 gap-5">
           {data?.bookedHouse?.map((house: any) => (
             <RecentBookedHouseRow key={house?._id} house={house} />
           ))}
@@ -31,8 +31,8 @@ export default RecentBookedHouses;
 
 const RecentBookedHouseRow = ({ house }: any) => {
   return (
-    <div className="card card-side  bg-base-100 shadow border px-3 rounded">
-      <figure className="w-2/6">
+    <div className="card sm:card-side  bg-base-100 shadow border px-3 pt-3 sm:pt-0 rounded">
+      <figure className="sm:w-2/6">
         <img
           src={
             house?.house?.image?.img
@@ -43,7 +43,7 @@ const RecentBookedHouseRow = ({ house }: any) => {
           alt={house?.house?.name}
         />
       </figure>
-      <div className="card-body p-0 px-6 py-4 w-2/3">
+      <div className="card-body p-0 px-6 py-4 sm:w-2/3">
         <h2 className="card-title">{house?.house?.name}</h2>
         <small>{house?.house?.address}</small>
         <ul className="flex items-center flex-wrap gap-3 font-poppins text-sm">

@@ -19,18 +19,30 @@ const AboutApp = (props: Props) => {
           <Fade left distance="20px">
             <div className="sm:max-w-2xl">
               <h3 className="text-xl">Yah! That's all</h3>
-              <h2 className="text-4xl font-bold my-3">About Us</h2>
+              <h2 className="text-4xl font-bold my-3">
+                Download Our Android App
+              </h2>
               <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sint
-                alias odit cum, quidem molestiae saepe culpa nam quae labore et
-                molestias consequuntur fugiat, modi dolorem amet minima ea, quo
-                est.
+                This is our official app for android. You can download it from
+                the below link. We are working on the iOS version. It will be
+                available soon.
               </p>
               <div className="my-4 flex items-center gap-5">
-                <button className="btn btn-md btn-info btn-outline">
-                  See More
+                <button
+                  className="btn btn-success rounded-none"
+                  onClick={() => setIsModal(true)}
+                >
+                  <BsPlay className="mr-2" />
+                  Watch Video
                 </button>
-                <button className="btn btn-md btn-info">Contact Us</button>
+                <a
+                  href="https://www.webintoapp.com/store/79592"
+                  target={"_blank"}
+                  className="btn btn-success rounded-none btn-outline"
+                  rel="noreferrer"
+                >
+                  Download
+                </a>
               </div>
             </div>
           </Fade>
