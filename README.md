@@ -1,4 +1,10 @@
-# House Rent Application In Redux Toolkit With TypeScript support
+# House Rent/Sale App In Redux Toolkit With TypeScript support
+
+# Created By: [Ashik Mahmud](https://ashikmahmud.me)
+
+### Live URL : [https://houselagbe.vercel.app/](https://houselagbe.vercel.app/)
+
+#### Backend Repo : [Backend Repo](https://github.com/Ashik-Mahmud/rent-house-server)
 
 ### Introduction
 
@@ -148,14 +154,6 @@ After login in this application as House Holder You will see:
 - I have faced challenge when we work with rkt query and try to replace our rtk query with react query because of the real time window focus fetching data and also try to use the react query with the rtk query.
 - I have faced challenge when we work with the stripe payment gateway and try to implement the stripe payment gateway with the react and also try to implement the stripe payment gateway.
 - Facing problem when Implementing SSLCOMMERZ bangladeshi popular payment gateway. when we redirect to the sslcommerz official link to checkout it did'nt redirect and get me the error called cors policy.
-
-### Live Site
-
-[House Rent Application](https://houselagbe.vercel.app/)
-
-### Server Site Code
-
-[Server Site Code](https://github.com/Ashik-Mahmud/rent-house-server)
 
 ## Preview Screenshot
 
