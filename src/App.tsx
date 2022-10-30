@@ -19,7 +19,6 @@ import Login from "./pages/Authentication/Login";
 import RegisterAuth from "./pages/Authentication/Register";
 import ResetPassword from "./pages/Authentication/ResetPassword";
 import ResetPasswordField from "./pages/Authentication/ResetPasswordField";
-import Blogs from "./pages/Blogs/Blogs";
 import BlogsDetails from "./pages/Blogs/BlogsDetails";
 import Contact from "./pages/Contact";
 import AddHouse from "./pages/Dashboard/AddHouse/AddHouse";
@@ -65,6 +64,7 @@ const AdminDashboard = lazy(
 const Houses = lazy(() => import("./pages/Houses/Houses"));
 const Reviews = lazy(() => import("./pages/AppReviews/Reviews"));
 const Home = lazy(() => import("./pages/Home/Home"));
+const Blogs = lazy(() => import("./pages/Blogs/Blogs"));
 
 type Props = {};
 const App = (props: Props) => {
