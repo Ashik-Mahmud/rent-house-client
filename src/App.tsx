@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { useQuery } from "react-query";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Cookies from "universal-cookie";
@@ -11,6 +11,7 @@ import RequireBlog from "./auth/RequireBlog";
 import RequireCustomer from "./auth/RequireCustomer";
 import RequireSupAdmin from "./auth/RequireSupAdmin";
 import RequireUser from "./auth/RequireUser";
+import GlobalLoader from "./components/GlobalLoader";
 import { base_backend_url } from "./configs/config";
 import { setAppOptions } from "./features/AppSlice";
 import About from "./pages/About";
@@ -27,8 +28,6 @@ import AdminHouses from "./pages/Dashboard/AdminHouses/AdminHouses";
 import ApprovedHouses from "./pages/Dashboard/AdminHouses/ApprovedHouses/ApprovedHouses";
 import RejectedHouses from "./pages/Dashboard/AdminHouses/RejectedHouses/RejectedHouses";
 import UnapprovedHouses from "./pages/Dashboard/AdminHouses/UnapprovedHouses/UnapprovedHouses";
-import Dashboard from "./pages/Dashboard/Dashboard";
-import AdminDashboard from "./pages/Dashboard/Dashboard/AdminDashboard/AdminDashboard";
 import CustomerDashboard from "./pages/Dashboard/Dashboard/CustomerDashboard/CustomerDashboard";
 import HouseHolderDashboard from "./pages/Dashboard/Dashboard/HouseHolderDashboard/HouseHolderDashboard";
 import ManagerDashboard from "./pages/Dashboard/Dashboard/ManagerDashboard/ManagerDashboard";
@@ -57,11 +56,16 @@ import Settings from "./pages/Dashboard/Settings/Settings";
 import Users from "./pages/Dashboard/Users/Users";
 import Home from "./pages/Home/Home";
 import HouseDetails from "./pages/Houses/HouseDetails/HouseDetails";
-import Houses from "./pages/Houses/Houses";
 import Pricing from "./pages/Pricing";
 import Footer from "./shared/Footer";
 import Header from "./shared/Header";
 import NotFoundPage from "./shared/NotFoundPage";
+
+const Dashboard = lazy(() => import("./pages/Dashboard/Dashboard"));
+const AdminDashboard = lazy(
+  () => import("./pages/Dashboard/Dashboard/AdminDashboard/AdminDashboard")
+);
+const Houses = lazy(() => import("./pages/Houses/Houses"));
 
 type Props = {};
 const App = (props: Props) => {
@@ -115,219 +119,221 @@ const App = (props: Props) => {
   return (
     <div className="App font-open font-medium bg-cover bg-center bg-slate-50">
       {!location.pathname.includes("dashboard") && <Header />}
-      <Routes>
-        {/* Pages Routes */}
-        <Route path="/" element={<Home />} />
-        <Route path="/home" element={<Home />} />
-        MyBlogs
-        <Route path="/houses" element={<Houses />} />
-        {/* Single House Route */}
-        <Route path="/house/:houseId" element={<HouseDetails />} />
-        <Route
-          path="/login"
-          element={
-            <AuthChangeRoute>
-              <Login />
-            </AuthChangeRoute>
-          }
-        />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        <Route
-          path="/new-password/:verified"
-          element={<ResetPasswordField />}
-        />
-        <Route
-          path="/register"
-          element={
-            <AuthChangeRoute>
-              <RegisterAuth />
-            </AuthChangeRoute>
-          }
-        />
-        <Route path="/reviews" element={<Reviews />} />
-        <Route path="/blogs" element={<Blogs />} />
-        <Route path="/blogs/:blogId" element={<BlogsDetails />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/pricing" element={<Pricing />} />
-        {/* 
+      <Suspense fallback={<GlobalLoader />}>
+        <Routes>
+          {/* Pages Routes */}
+          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
+          MyBlogs
+          <Route path="/houses" element={<Houses />} />
+          {/* Single House Route */}
+          <Route path="/house/:houseId" element={<HouseDetails />} />
+          <Route
+            path="/login"
+            element={
+              <AuthChangeRoute>
+                <Login />
+              </AuthChangeRoute>
+            }
+          />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route
+            path="/new-password/:verified"
+            element={<ResetPasswordField />}
+          />
+          <Route
+            path="/register"
+            element={
+              <AuthChangeRoute>
+                <RegisterAuth />
+              </AuthChangeRoute>
+            }
+          />
+          <Route path="/reviews" element={<Reviews />} />
+          <Route path="/blogs" element={<Blogs />} />
+          <Route path="/blogs/:blogId" element={<BlogsDetails />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/pricing" element={<Pricing />} />
+          {/* 
            Dashboard Routes 
         */}
-        <Route
-          path="/dashboard"
-          element={
-            <RequireAuth>
-              <Dashboard />
-            </RequireAuth>
-          }
-        >
-          <Route index element={sendDashboardForParticularRole()} />
-
-          {/* Users Routes */}
           <Route
-            path="houses"
+            path="/dashboard"
             element={
-              <RequireUser>
-                <MyHouses />
-              </RequireUser>
-            }
-          />
-          <Route
-            path="houses/add"
-            element={
-              <RequireUser>
-                <AddHouse />
-              </RequireUser>
-            }
-          />
-
-          <Route
-            path="houses/edit/:houseId"
-            element={
-              <RequireUser>
-                <UpdateHouse />
-              </RequireUser>
-            }
-          />
-          <Route
-            path="houses/reviews/:houseId"
-            element={
-              <RequireUser>
-                <HouseReviews />
-              </RequireUser>
-            }
-          />
-          <Route
-            path="houses/questions/:houseId"
-            element={
-              <RequireUser>
-                <HouseQuestions />
-              </RequireUser>
-            }
-          />
-          <Route
-            path="houses/reports/:houseId"
-            element={
-              <RequireUser>
-                <ReportedHouses />
-              </RequireUser>
-            }
-          />
-          <Route
-            path="payments"
-            element={
-              <RequireUser>
-                <Payments />
-              </RequireUser>
-            }
-          />
-
-          {/* Common Routes */}
-          <Route path="reviews" element={<MyReviews />}>
-            <Route path="add-review" element={<AddReview />} />
-            <Route path="my-reviews" element={<UserReviews />} />
-            <Route index element={<UserReviews />} />
-          </Route>
-          <Route
-            path="/dashboard/feature-request"
-            element={<FeatureRequest />}
-          />
-          <Route path="profile" element={<Profile />} />
-          <Route
-            path="settings"
-            element={<Settings appChangeRefetch={refetch} />}
-          />
-
-          {/* Customers Routes */}
-          <Route
-            path="purchase/bookings"
-            element={
-              <RequireCustomer>
-                <PurchaseHouse />
-              </RequireCustomer>
-            }
-          />
-          <Route
-            path="bookings"
-            element={
-              <RequireCustomer>
-                <MyBookings />
-              </RequireCustomer>
-            }
-          />
-
-          {/* Admin Routes */}
-          <Route
-            path="messages"
-            element={
-              <RequireAdmin>
-                <Messages />
-              </RequireAdmin>
-            }
-          />
-          <Route
-            path="users"
-            element={
-              <RequireSupAdmin>
-                <Users />
-              </RequireSupAdmin>
-            }
-          />
-          <Route
-            path="blogs"
-            element={
-              <RequireBlog>
-                <MyBlogs />
-              </RequireBlog>
+              <RequireAuth>
+                <Dashboard />
+              </RequireAuth>
             }
           >
-            <Route index element={<UsersBlogs />} />
-            <Route path="users-blogs" element={<UsersBlogs />} />
-            <Route path="update/:id" element={<UpdateBlogs />} />
-            <Route path="add" element={<AddBlog />} />
-          </Route>
-          <Route
-            path="request-from-users"
-            element={
-              <RequireAdmin>
-                <RequestFromUsers />
-              </RequireAdmin>
-            }
-          >
+            <Route index element={sendDashboardForParticularRole()} />
+
+            {/* Users Routes */}
             <Route
-              path="for-house-holder"
-              element={<ForHouseHolderRequest />}
+              path="houses"
+              element={
+                <RequireUser>
+                  <MyHouses />
+                </RequireUser>
+              }
             />
-            <Route path="for-blogs" element={<ForBlogsRequest />} />
-            <Route index element={<ForBlogsRequest />} />
-          </Route>
+            <Route
+              path="houses/add"
+              element={
+                <RequireUser>
+                  <AddHouse />
+                </RequireUser>
+              }
+            />
 
-          <Route
-            path="request-from-users/for-house-holder"
-            element={
-              <RequireAdmin>
-                <ForHouseHolderRequest />
-              </RequireAdmin>
-            }
-          />
+            <Route
+              path="houses/edit/:houseId"
+              element={
+                <RequireUser>
+                  <UpdateHouse />
+                </RequireUser>
+              }
+            />
+            <Route
+              path="houses/reviews/:houseId"
+              element={
+                <RequireUser>
+                  <HouseReviews />
+                </RequireUser>
+              }
+            />
+            <Route
+              path="houses/questions/:houseId"
+              element={
+                <RequireUser>
+                  <HouseQuestions />
+                </RequireUser>
+              }
+            />
+            <Route
+              path="houses/reports/:houseId"
+              element={
+                <RequireUser>
+                  <ReportedHouses />
+                </RequireUser>
+              }
+            />
+            <Route
+              path="payments"
+              element={
+                <RequireUser>
+                  <Payments />
+                </RequireUser>
+              }
+            />
 
-          <Route
-            path="admin/houses"
-            element={
-              <RequireAdmin>
-                <AdminHouses />
-              </RequireAdmin>
-            }
-          >
-            <Route index element={<UnapprovedHouses />} />
-            <Route path="approved" element={<ApprovedHouses />} />
-            <Route path="unapproved" element={<UnapprovedHouses />} />
-            <Route path="rejected" element={<RejectedHouses />} />
+            {/* Common Routes */}
+            <Route path="reviews" element={<MyReviews />}>
+              <Route path="add-review" element={<AddReview />} />
+              <Route path="my-reviews" element={<UserReviews />} />
+              <Route index element={<UserReviews />} />
+            </Route>
+            <Route
+              path="/dashboard/feature-request"
+              element={<FeatureRequest />}
+            />
+            <Route path="profile" element={<Profile />} />
+            <Route
+              path="settings"
+              element={<Settings appChangeRefetch={refetch} />}
+            />
+
+            {/* Customers Routes */}
+            <Route
+              path="purchase/bookings"
+              element={
+                <RequireCustomer>
+                  <PurchaseHouse />
+                </RequireCustomer>
+              }
+            />
+            <Route
+              path="bookings"
+              element={
+                <RequireCustomer>
+                  <MyBookings />
+                </RequireCustomer>
+              }
+            />
+
+            {/* Admin Routes */}
+            <Route
+              path="messages"
+              element={
+                <RequireAdmin>
+                  <Messages />
+                </RequireAdmin>
+              }
+            />
+            <Route
+              path="users"
+              element={
+                <RequireSupAdmin>
+                  <Users />
+                </RequireSupAdmin>
+              }
+            />
+            <Route
+              path="blogs"
+              element={
+                <RequireBlog>
+                  <MyBlogs />
+                </RequireBlog>
+              }
+            >
+              <Route index element={<UsersBlogs />} />
+              <Route path="users-blogs" element={<UsersBlogs />} />
+              <Route path="update/:id" element={<UpdateBlogs />} />
+              <Route path="add" element={<AddBlog />} />
+            </Route>
+            <Route
+              path="request-from-users"
+              element={
+                <RequireAdmin>
+                  <RequestFromUsers />
+                </RequireAdmin>
+              }
+            >
+              <Route
+                path="for-house-holder"
+                element={<ForHouseHolderRequest />}
+              />
+              <Route path="for-blogs" element={<ForBlogsRequest />} />
+              <Route index element={<ForBlogsRequest />} />
+            </Route>
+
+            <Route
+              path="request-from-users/for-house-holder"
+              element={
+                <RequireAdmin>
+                  <ForHouseHolderRequest />
+                </RequireAdmin>
+              }
+            />
+
+            <Route
+              path="admin/houses"
+              element={
+                <RequireAdmin>
+                  <AdminHouses />
+                </RequireAdmin>
+              }
+            >
+              <Route index element={<UnapprovedHouses />} />
+              <Route path="approved" element={<ApprovedHouses />} />
+              <Route path="unapproved" element={<UnapprovedHouses />} />
+              <Route path="rejected" element={<RejectedHouses />} />
+            </Route>
           </Route>
-        </Route>
-        {/* Validation Route */}
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
+          {/* Validation Route */}
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Suspense>
 
       {!location.pathname.includes("dashboard") && <Footer />}
     </div>
