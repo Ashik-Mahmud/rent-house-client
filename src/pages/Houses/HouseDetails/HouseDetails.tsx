@@ -65,7 +65,9 @@ const HouseDetails = (Props: Props) => {
     const { data } = await axios.patch(
       `${base_backend_url}/api/v1/houses/like-count/${houseId}?like=${clicked}`
     );
-    cogoToast.success(data.message);
+    cogoToast.success(data.message, {
+      position: "bottom-right",
+    });
     refetch();
   };
 
