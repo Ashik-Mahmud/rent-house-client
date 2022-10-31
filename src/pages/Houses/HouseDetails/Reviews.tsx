@@ -30,7 +30,7 @@ const Reviews = ({ data }: Props) => {
     <>
       {/* Review Area */}
       <div className="review-area font-poppins bg-white p-10 my-4">
-        <div className="title mb-6 flex items-center justify-between">
+        <div className="title mb-6 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-0 justify-between">
           <div>
             <h3 className="text-2xl font-bold mt-3">House Reviews</h3>
             <span className="w-10 h-1 bg-success block"></span>

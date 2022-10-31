@@ -67,20 +67,22 @@ const Question = ({ data, questions, loading: isLoading, newFetch }: Props) => {
   return (
     <div>
       {/* Question Area */}
-      <div className="question-area font-poppins bg-white sm:p-10 my-4">
-        <div className="title mb-6 flex flex-col sm:flex-row items-center justify-between">
+      <div className="question-area font-poppins bg-white px-4 sm:p-10 my-4">
+        <div className="title mb-6 flex flex-col sm:flex-row sm:items-center justify-between">
           <div>
-            <h3 className="text-2xl font-bold mt-3">Question & Answer</h3>
+            <h3 className="text-lg sm:text-2xl font-bold mt-3">
+              Question & Answer
+            </h3>
             <span className="w-10 h-1 bg-success block"></span>
           </div>
 
           {data?.allowQuestion === "Yes" &&
             data?.owner?._id !== updatedUser?._id && (
-              <div className="flex items-center gap-3 mt-5 sm:mt-0">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3 mt-5 sm:mt-0">
                 {updatedUser?._id && (
                   <button
                     onClick={() => setOpenQuestions((state) => !state)}
-                    className=" modal-button btn btn-ghost rounded-full btn-sm flex items-center gap-2"
+                    className=" modal-button btn btn-ghost sm:rounded-full btn-sm flex items-center gap-2"
                   >
                     {openQuestions ? ` View Answer ` : `Your Questions `}
                     <BiCommentDetail />
