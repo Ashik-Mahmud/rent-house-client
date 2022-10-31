@@ -13,7 +13,7 @@ const Users = (props: Props) => {
   const { user } = useAuth<authUserInterface | any>({});
   useTitle("Users");
   const [filterRole, setFilterRole] = useState<string>("All");
-  const [limitPerPage, setLimitPerPage] = useState<number>(5);
+  const [limitPerPage, setLimitPerPage] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const { data, refetch, isLoading, error } = useQuery(
@@ -77,9 +77,9 @@ const Users = (props: Props) => {
                 className="btn btn-ghost btn-circle outline-none"
                 onChange={(e) => setLimitPerPage(Number(e.target.value))}
               >
-                <option value="5">5</option>
                 <option value="10">10</option>
-                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
               </select>
             </div>
           </div>

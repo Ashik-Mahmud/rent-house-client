@@ -67,8 +67,8 @@ const Question = ({ data, questions, loading: isLoading, newFetch }: Props) => {
   return (
     <div>
       {/* Question Area */}
-      <div className="question-area font-poppins bg-white p-10 my-4">
-        <div className="title mb-6 flex items-center justify-between">
+      <div className="question-area font-poppins bg-white sm:p-10 my-4">
+        <div className="title mb-6 flex flex-col sm:flex-row items-center justify-between">
           <div>
             <h3 className="text-2xl font-bold mt-3">Question & Answer</h3>
             <span className="w-10 h-1 bg-success block"></span>
@@ -76,7 +76,7 @@ const Question = ({ data, questions, loading: isLoading, newFetch }: Props) => {
 
           {data?.allowQuestion === "Yes" &&
             data?.owner?._id !== updatedUser?._id && (
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 mt-5 sm:mt-0">
                 {updatedUser?._id && (
                   <button
                     onClick={() => setOpenQuestions((state) => !state)}
@@ -96,10 +96,10 @@ const Question = ({ data, questions, loading: isLoading, newFetch }: Props) => {
               </div>
             )}
         </div>
-        <div className="question-answer">
+        <div className="question-answer px-4 sm:px-1">
           {openQuestions ? (
             <div data-theme="winter">
-              <h3 className="text-xl font-bold font-poppins my-4">
+              <h3 className="text-lg font-bold font-poppins my-4">
                 Your Asked Questions
               </h3>
               <div className="overflow-x-auto">
@@ -178,7 +178,7 @@ const Question = ({ data, questions, loading: isLoading, newFetch }: Props) => {
               ) : (
                 <>
                   {approvedQuestions?.data?.length > 0 ? (
-                    <ul className="flex gap-1 items-center flex-col">
+                    <ul className="flex gap-1 items-center flex-col py-4">
                       {approvedQuestions?.data?.map(
                         (question: any, ind: number) => (
                           <li
