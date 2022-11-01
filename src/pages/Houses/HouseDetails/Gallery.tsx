@@ -41,7 +41,10 @@ const Gallery = ({ gallery }: Props) => {
                 <LazyLoadImage
                   src={item ? item : "https://placeimg.com/400/225/arch"}
                   alt="image"
-                  onClick={() => setIsOpen(true)}
+                  onClick={() => {
+                    setIsOpen(true);
+                    setPhotoIndex(index);
+                  }}
                   effect="opacity"
                   className="h-60"
                 />
