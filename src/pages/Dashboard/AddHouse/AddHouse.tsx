@@ -207,7 +207,8 @@ const AddHouse = (props: Props) => {
         </h3>
         <p>
           Without complete your profile you can't create house, because it's
-          pretty much needs for create that
+          pretty much needs for create that, at least{" "}
+          <b>Profile Image, Address, Phone, Facebook Link</b>
         </p>
         <Link to="dashboard/profile" className="btn btn-sm my-2 btn-primary">
           GO TO PROFILE
