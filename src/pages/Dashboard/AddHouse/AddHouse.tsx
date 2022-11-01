@@ -3,10 +3,9 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { BiBath, BiBed, BiMoney } from "react-icons/bi";
 import { BsAlignEnd, BsHouse, BsLink, BsPen } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Select from "react-select";
 import { PulseLoader } from "react-spinners";
-import swal from "sweetalert";
 import ScreenLoader from "../../../components/ScreenLoader";
 import SendVerifyEmail from "../../../components/SendVerifyEmail";
 import useAuth from "../../../hooks/useAuth";
@@ -45,17 +44,6 @@ const AddHouse = (props: Props) => {
   const galleryImage = watch("galleryImage");
 
   const handleAddHouseFormSubmit = handleSubmit(async (data) => {
-    if (
-      !updatedUser?.phone ||
-      !updatedUser?.address ||
-      !updatedUser?.facebookLink
-    ) {
-      return swal({
-        title: "Your profile is uncompleted",
-        icon: "warning",
-        buttons: ["cancel", "okay"],
-      });
-    }
     /* Validation */
     if (!data.name) return toast.error(`Name is required`);
     if (!data.price) return toast.error(`Price is required`);
@@ -205,6 +193,28 @@ const AddHouse = (props: Props) => {
       setDistrict([]);
     };
   }, [selectCity]);
+
+  if (
+    !updatedUser?.address.length ||
+    !updatedUser?.phone?.length ||
+    !updatedUser?.facebookLink?.length
+  ) {
+    return (
+      <div className="flex items-center justify-center py-10 flex-col font-poppins sm:w-[30rem] text-center mx-auto gap-3">
+        <PulseLoader color={"#00A5E8"} size={10} />
+        <h3 className="text-3xl font-bold mt-4">
+          You should complete your profile before create house
+        </h3>
+        <p>
+          Without complete your profile you can't create house, because it's
+          pretty much needs for create that
+        </p>
+        <Link to="dashboard/profile" className="btn btn-sm my-2 btn-primary">
+          GO TO PROFILE
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="p-5 my-5 bg-white rounded font-poppins relative">
