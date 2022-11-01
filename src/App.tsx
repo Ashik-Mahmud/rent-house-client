@@ -11,7 +11,7 @@ import RequireBlog from "./auth/RequireBlog";
 import RequireCustomer from "./auth/RequireCustomer";
 import RequireSupAdmin from "./auth/RequireSupAdmin";
 import RequireUser from "./auth/RequireUser";
-import ScreenLoader from "./components/ScreenLoader";
+import HomeLoader from "./components/HomeLoader";
 import { base_backend_url } from "./configs/config";
 import { setAppOptions } from "./features/AppSlice";
 import About from "./pages/About";
@@ -19,13 +19,15 @@ import Login from "./pages/Authentication/Login";
 import RegisterAuth from "./pages/Authentication/Register";
 import ResetPassword from "./pages/Authentication/ResetPassword";
 import ResetPasswordField from "./pages/Authentication/ResetPasswordField";
-import BlogsDetails from "./pages/Blogs/BlogsDetails";
+
 import Contact from "./pages/Contact";
-import AddHouse from "./pages/Dashboard/AddHouse/AddHouse";
-import AdminHouses from "./pages/Dashboard/AdminHouses/AdminHouses";
 import ApprovedHouses from "./pages/Dashboard/AdminHouses/ApprovedHouses/ApprovedHouses";
 import RejectedHouses from "./pages/Dashboard/AdminHouses/RejectedHouses/RejectedHouses";
 import UnapprovedHouses from "./pages/Dashboard/AdminHouses/UnapprovedHouses/UnapprovedHouses";
+
+import AddHouse from "./pages/Dashboard/AddHouse/AddHouse";
+import AdminHouses from "./pages/Dashboard/AdminHouses/AdminHouses";
+import AdminDashboard from "./pages/Dashboard/Dashboard/AdminDashboard/AdminDashboard";
 import CustomerDashboard from "./pages/Dashboard/Dashboard/CustomerDashboard/CustomerDashboard";
 import HouseHolderDashboard from "./pages/Dashboard/Dashboard/HouseHolderDashboard/HouseHolderDashboard";
 import ManagerDashboard from "./pages/Dashboard/Dashboard/ManagerDashboard/ManagerDashboard";
@@ -52,15 +54,16 @@ import ForHouseHolderRequest from "./pages/Dashboard/RequestFromUsers/ForHouseHo
 import RequestFromUsers from "./pages/Dashboard/RequestFromUsers/RequestFromUsers";
 import Settings from "./pages/Dashboard/Settings/Settings";
 import Users from "./pages/Dashboard/Users/Users";
-import HouseDetails from "./pages/Houses/HouseDetails/HouseDetails";
 import Pricing from "./pages/Pricing";
 import Footer from "./shared/Footer";
 import Header from "./shared/Header";
 import NotFoundPage from "./shared/NotFoundPage";
-const Dashboard = lazy(() => import("./pages/Dashboard/Dashboard"));
-const AdminDashboard = lazy(
-  () => import("./pages/Dashboard/Dashboard/AdminDashboard/AdminDashboard")
+
+const BlogsDetails = lazy(() => import("./pages/Blogs/BlogsDetails"));
+const HouseDetails = lazy(
+  () => import("./pages/Houses/HouseDetails/HouseDetails")
 );
+const Dashboard = lazy(() => import("./pages/Dashboard/Dashboard"));
 const Houses = lazy(() => import("./pages/Houses/Houses"));
 const Reviews = lazy(() => import("./pages/AppReviews/Reviews"));
 const Home = lazy(() => import("./pages/Home/Home"));
@@ -118,7 +121,7 @@ const App = (props: Props) => {
   return (
     <div className="App font-open font-medium bg-cover bg-center bg-slate-50">
       {!location.pathname.includes("dashboard") && <Header />}
-      <Suspense fallback={<ScreenLoader />}>
+      <Suspense fallback={<HomeLoader />}>
         <Routes>
           {/* Pages Routes */}
           <Route path="/" element={<Home />} />

@@ -30,7 +30,7 @@ const ReportCard = ({ report, refetch }: Props) => {
           },
         }
       );
-      if (data.status) {
+      if (data.success) {
         swal("Report Deleted!", {
           icon: "success",
         });

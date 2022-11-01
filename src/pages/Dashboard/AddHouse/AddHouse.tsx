@@ -201,7 +201,7 @@ const AddHouse = (props: Props) => {
   ) {
     return (
       <div className="flex items-center justify-center py-10 flex-col font-poppins sm:w-[30rem] text-center mx-auto gap-3">
-        <PulseLoader color={"#00A5E8"} size={10} />
+        <PulseLoader color={"#36D391"} size={10} />
         <h3 className="text-3xl font-bold mt-4">
           You should complete your profile before create house
         </h3>
