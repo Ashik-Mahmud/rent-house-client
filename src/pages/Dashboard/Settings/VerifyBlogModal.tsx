@@ -68,6 +68,11 @@ const VerifyBlogModal = (props: Props) => {
               You've been selected for a chance to get one year of subscription
               to use Wikipedia for free!
             </p>
+            <p className="bg-yellow-100 text-sm p-3 rounded text-left font-poppins">
+              <b>Note:</b> Before send request make sure your profile is
+              completed with{" "}
+              <b>updated profile image, address, phone number, Facebook Link</b>
+            </p>
             {/* url */}
             <div className="name border  rounded p-3 relative mt-10 flex-1">
               <div className="name-title absolute -top-4 bg-white border rounded p-1">
