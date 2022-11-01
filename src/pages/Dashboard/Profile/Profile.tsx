@@ -11,6 +11,7 @@ import { BiCamera, BiEdit } from "react-icons/bi";
 import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import swal from "sweetalert";
+import GlobalLoader from "../../../components/GlobalLoader";
 import { base_backend_url } from "../../../configs/config";
 import useAuth from "../../../hooks/useAuth";
 import useTitle from "../../../hooks/useTitle";
@@ -25,6 +26,7 @@ const Profile = (props: Props) => {
     user,
     updatedUser: data,
     refetch,
+    isLoading,
   } = useAuth<authUserInterface | any>({});
 
   useTitle(data?.name + " Profile");
@@ -36,6 +38,14 @@ const Profile = (props: Props) => {
       addSuffix: true,
     }
   );
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <GlobalLoader />
+      </div>
+    );
+  }
 
   /* Handle Verification Email */
   /* Handle Verification Email */

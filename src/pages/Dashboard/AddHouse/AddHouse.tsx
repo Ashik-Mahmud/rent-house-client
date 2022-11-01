@@ -75,16 +75,16 @@ const AddHouse = (props: Props) => {
     if (data.previewImage.length === 0)
       return toast.error(`Preview is Image required`);
 
-    if (data.previewImage[0].size > 1000000)
+    if (data?.previewImage[0].size > 1000000)
       return toast.error(`Preview Image size must be in 1 MB`);
 
-    if (data.galleryImage.length === 0)
+    if (data?.galleryImage.length === 0)
       return toast.error(`Image Gallery is  required`);
 
-    if (data.galleryImage.length > 5)
+    if (data?.galleryImage.length > 5)
       return toast.error(`5 Images only for gallery.`);
 
-    const galleryImage = data.galleryImage;
+    const galleryImage = data?.galleryImage;
 
     for (let image in galleryImage) {
       const eachImage = galleryImage[image];

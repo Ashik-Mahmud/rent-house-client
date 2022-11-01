@@ -384,7 +384,7 @@ const Dashboard = (props: Props) => {
     setNotificationCount(AllNotificationCount);
   }, [AllNotificationCount]);
 
-  if (loading) return <GlobalLoader />;
+  if (loading || isLoading) return <GlobalLoader />;
 
   return (
     <>

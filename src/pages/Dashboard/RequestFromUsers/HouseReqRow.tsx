@@ -66,7 +66,7 @@ const HouseReqRow = ({ ind, data, refetch }: Props) => {
             <div className="mask mask-squircle w-12 h-12">
               <img
                 src={
-                  data?.author.profileImage
+                  data?.author?.profileImage
                     ? data?.author?.profileImage
                     : data?.author?.avatar
                 }
