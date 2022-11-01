@@ -32,6 +32,7 @@ import { useQuery } from "react-query";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/store";
 import GlobalLoader from "../../components/GlobalLoader";
+import HomeLoader from "../../components/HomeLoader";
 import { base_backend_url } from "../../configs/config";
 import { logout } from "../../features/AuthSlice";
 import {
@@ -384,7 +385,8 @@ const Dashboard = (props: Props) => {
     setNotificationCount(AllNotificationCount);
   }, [AllNotificationCount]);
 
-  if (loading || isLoading) return <GlobalLoader />;
+  if (isLoading) return <HomeLoader />;
+  if (loading) return <GlobalLoader />;
 
   return (
     <>

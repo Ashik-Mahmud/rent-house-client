@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";
@@ -11,7 +12,7 @@ const ResetPasswordField = (props: Props) => {
   const { user } = useAuth<authUserInterface | any>({});
   const { verified } = useParams();
   const { register, handleSubmit, reset } = useForm();
-
+  const [isShow, setIsShow] = useState<boolean>(false);
   const [isVerified, setIsVerified] = useState<boolean>(false);
   const navigate = useNavigate();
   const [ChangePassword, { data, error, isSuccess, isError }] =
@@ -66,21 +67,27 @@ const ResetPasswordField = (props: Props) => {
           Password is very secure things for everyone. Which one be any
           credential password. So please secure it as like your valuable things
         </p>
-        <div className="input-group my-6 flex items-start gap-3 flex-col">
+        <div className="input-group my-6 flex items-start gap-3 flex-col relative">
           <label htmlFor="newPassword">New Password</label>
           <input
             id="newPassword"
-            type="password"
+            type={isShow ? "text" : "password"}
             placeholder="New Password"
             className="w-full p-5 border rounded focus:outline-gray-200 focus:outline-none "
             {...register("newPassword")}
           />
+          <div
+            className="eye absolute right-6 top-16 cursor-pointer z-10 select-none"
+            onClick={() => setIsShow((state) => !state)}
+          >
+            {isShow ? <BsEyeSlash /> : <BsEye />}
+          </div>
         </div>
         <div className="input-group my-6 flex items-start gap-3 flex-col">
           <label htmlFor="newPassword">Confirm Password</label>
           <input
             id="confirmPassword"
-            type="password"
+            type={isShow ? "text" : "password"}
             placeholder="Confirm Password"
             className="w-full p-5 border rounded focus:outline-gray-200 focus:outline-none "
             {...register("confirmPassword")}

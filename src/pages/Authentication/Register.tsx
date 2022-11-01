@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import PulseLoader from "react-spinners/PulseLoader";
 import useTitle from "../../hooks/useTitle";
@@ -15,7 +16,7 @@ const RegisterAuth = (props: Props) => {
   const [userRole, setUserRole] = useState(false);
   const [registerAuth, { isLoading, error, isSuccess, data }] =
     useRegisterAuthMutation();
-
+  const [isShow, setIsShow] = useState<boolean>(false);
   const navigate = useNavigate();
 
   type registerFormType = {
@@ -170,13 +171,13 @@ const RegisterAuth = (props: Props) => {
                   )}
                 </div>
                 <div className="form-control">
-                  <div className="input-group my-0 flex items-start gap-3 flex-col rounded-none">
+                  <div className="input-group my-0 flex items-start gap-3 flex-col rounded-none relative">
                     <label htmlFor="password">
                       Password <small className="text-error">*</small>
                     </label>
                     <input
                       id="password"
-                      type="password"
+                      type={isShow ? "text" : "password"}
                       placeholder="password"
                       className="w-full p-4 border focus:outline-gray-200 focus:outline-none rounded-none"
                       {...register("password", {
@@ -185,6 +186,12 @@ const RegisterAuth = (props: Props) => {
                         maxLength: 20,
                       })}
                     />
+                    <div
+                      className="eye absolute right-6 top-14 cursor-pointer z-10 select-none"
+                      onClick={() => setIsShow((state) => !state)}
+                    >
+                      {isShow ? <BsEyeSlash /> : <BsEye />}
+                    </div>
                   </div>
 
                   {errors.password?.type === "required" && (
@@ -205,7 +212,7 @@ const RegisterAuth = (props: Props) => {
                     </label>
                     <input
                       id="confirmPassword"
-                      type="password"
+                      type={isShow ? "text" : "password"}
                       placeholder="Confirm password"
                       className="w-full p-4 border focus:outline-gray-200 focus:outline-none rounded-none"
                       {...register("confirmPassword", {

@@ -1,7 +1,8 @@
 import cogoToast from "cogo-toast";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { BiLogIn } from "react-icons/bi";
+import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import { PulseLoader } from "react-spinners";
 import { toast } from "react-toastify";
@@ -27,7 +28,7 @@ const Login = (props: Props) => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
+  const [isShow, setIsShow] = useState<boolean>(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   //Handle Form
@@ -111,17 +112,23 @@ const Login = (props: Props) => {
                   )}
                 </div>
                 <div className="form-control">
-                  <div className="input-group my-0 flex items-start gap-3 flex-col rounded-none">
+                  <div className="input-group my-0 flex items-start gap-3 flex-col rounded-none relative">
                     <label htmlFor="password">
                       Password <small className="text-error">*</small>
                     </label>
                     <input
                       id="password"
-                      type="password"
+                      type={isShow ? "text" : "password"}
                       placeholder="Password"
                       className="w-full p-5 border focus:outline-gray-200 focus:outline-none rounded-none"
                       {...register("password", { required: true })}
                     />
+                    <div
+                      className="eye absolute right-6 top-16 cursor-pointer z-10 select-none"
+                      onClick={() => setIsShow((state) => !state)}
+                    >
+                      {isShow ? <BsEyeSlash /> : <BsEye />}
+                    </div>
                   </div>
                   {errors.password?.type === "required" && (
                     <small className="text-xs text-error font-poppins py-1">

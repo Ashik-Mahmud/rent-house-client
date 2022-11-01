@@ -210,7 +210,7 @@ const AddHouse = (props: Props) => {
           pretty much needs for create that, at least{" "}
           <b>Profile Image, Address, Phone, Facebook Link</b>
         </p>
-        <Link to="dashboard/profile" className="btn btn-sm my-2 btn-primary">
+        <Link to="/dashboard/profile" className="btn btn-sm my-2 btn-primary">
           GO TO PROFILE
         </Link>
       </div>

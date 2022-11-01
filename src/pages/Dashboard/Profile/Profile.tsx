@@ -11,7 +11,7 @@ import { BiCamera, BiEdit } from "react-icons/bi";
 import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import swal from "sweetalert";
-import GlobalLoader from "../../../components/GlobalLoader";
+import HomeLoader from "../../../components/HomeLoader";
 import { base_backend_url } from "../../../configs/config";
 import useAuth from "../../../hooks/useAuth";
 import useTitle from "../../../hooks/useTitle";
@@ -42,7 +42,7 @@ const Profile = (props: Props) => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <GlobalLoader />
+        <HomeLoader />
       </div>
     );
   }
