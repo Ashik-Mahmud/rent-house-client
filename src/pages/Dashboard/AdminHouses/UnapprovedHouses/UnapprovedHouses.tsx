@@ -20,7 +20,7 @@ const UnapprovedHouses = (props: Props) => {
 
   /*  for pagination  */
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [limit, setLimit] = useState<number>(3);
+  const [limit, setLimit] = useState<number>(5);
   const [filter, setFilter] = useState<string>("-createdAt");
   const dispatch = useAppDispatch();
   /* Get Unapproved House */
