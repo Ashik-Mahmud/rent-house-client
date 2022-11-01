@@ -577,10 +577,6 @@ const Dashboard = (props: Props) => {
                     </div>
                   </div>
                 </div>
-                <div
-                  tabIndex={0}
-                  className=" dropdown-content notification-dropdown absolute top-10 -left-40  sm:right-0 w-[20rem] bg-white shadow-lg rounded-md p-5"
-                ></div>
 
                 {!pathname.includes("/dashboard/houses/add") && (
                   <>
