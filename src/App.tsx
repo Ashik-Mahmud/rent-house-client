@@ -11,7 +11,7 @@ import RequireBlog from "./auth/RequireBlog";
 import RequireCustomer from "./auth/RequireCustomer";
 import RequireSupAdmin from "./auth/RequireSupAdmin";
 import RequireUser from "./auth/RequireUser";
-import GlobalLoader from "./components/GlobalLoader";
+import ScreenLoader from "./components/ScreenLoader";
 import { base_backend_url } from "./configs/config";
 import { setAppOptions } from "./features/AppSlice";
 import About from "./pages/About";
@@ -118,7 +118,7 @@ const App = (props: Props) => {
   return (
     <div className="App font-open font-medium bg-cover bg-center bg-slate-50">
       {!location.pathname.includes("dashboard") && <Header />}
-      <Suspense fallback={<GlobalLoader />}>
+      <Suspense fallback={<ScreenLoader />}>
         <Routes>
           {/* Pages Routes */}
           <Route path="/" element={<Home />} />
