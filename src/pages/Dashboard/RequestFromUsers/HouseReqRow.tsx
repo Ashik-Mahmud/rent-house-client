@@ -49,7 +49,7 @@ const HouseReqRow = ({ ind, data, refetch }: Props) => {
         const { data: info } = await AxiosRequest.delete(
           `/cancel-request/${data._id}?authorId=${data?.author?._id}&role=house`
         );
-        cogoToast.success(info.message);
+        cogoToast.success(info?.message);
         refetch();
       }
     } catch (error) {
@@ -70,7 +70,7 @@ const HouseReqRow = ({ ind, data, refetch }: Props) => {
                     ? data?.author?.profileImage
                     : data?.author?.avatar
                 }
-                alt={data?.author.name || "User"}
+                alt={data?.author?.name || "User"}
               />
             </div>
           </div>
@@ -92,8 +92,8 @@ const HouseReqRow = ({ ind, data, refetch }: Props) => {
       </td>
 
       <td>
-        {data?.notes.length > 100
-          ? data?.notes.slice(0, 80) + "..."
+        {data?.notes?.length > 100
+          ? data?.notes?.slice(0, 80) + "..."
           : data?.notes}
       </td>
       <td>

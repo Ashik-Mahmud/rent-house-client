@@ -431,30 +431,30 @@ const Dashboard = (props: Props) => {
                   {data?.role === "user" ? "House Holder" : data?.role}
                 </div>
                 {/* Notification Area */}
-                <div className="notification relative dropdown dropdown-end">
+
+                {/* Notifications Dropdown */}
+                <div className="dropdown dropdown-end">
                   {/* Notification Button */}
                   {data?.role === "user" && (
-                    <label
-                      tabIndex={0}
-                      className="flex items-center gap-2 cursor-pointer"
-                    >
-                      <span className="text-xl">
-                        <BsBell />
-                      </span>
-                      {notificationCount > 0 && (
-                        <span className="text-xs text-white bg-success rounded-full px-1 absolute -right-1 -top-2">
-                          {notificationCount > 9
-                            ? "+9"
-                            : notificationCount || 0}
+                    <label tabIndex={0} className="btn btn-ghost btn-circle">
+                      <div className="indicator">
+                        <span className="text-xl">
+                          <BsBell />
                         </span>
-                      )}
+                        {notificationCount > 0 && (
+                          <span className="badge badge-sm indicator-item badge-success text-white">
+                            {notificationCount > 9
+                              ? "+9"
+                              : notificationCount || 0}
+                          </span>
+                        )}
+                      </div>
                     </label>
                   )}
 
-                  {/* Notifications Dropdown */}
                   <div
                     tabIndex={0}
-                    className=" dropdown-content notification-dropdown absolute top-10 -left-40  sm:right-0 w-[20rem] bg-white shadow-lg rounded-md p-5"
+                    className="mt-3 card card-compact dropdown-content sm:w-96 p-5 bg-base-100 shadow rounded-none"
                   >
                     <div className="notification-list flex flex-col gap-2">
                       {notificationCount > 0 ? (
@@ -462,11 +462,13 @@ const Dashboard = (props: Props) => {
                           {reports?.length > 0 && (
                             <>
                               <div>
-                                <small className="my-2 block">Reports</small>
+                                <span className="my-2 text-sm block">
+                                  Reports
+                                </span>
                                 {reports?.slice(0, 2).map((report: any) => (
                                   <div
                                     key={report?._id}
-                                    className="notification-item flex items-center mb-2 gap-2 bg-gray-100 p-2 rounded"
+                                    className="notification-item flex items-center mb-2 gap-2 bg-gray-100 p-3 rounded"
                                   >
                                     <span className="text-sm">
                                       <BsBell />
@@ -575,6 +577,11 @@ const Dashboard = (props: Props) => {
                     </div>
                   </div>
                 </div>
+                <div
+                  tabIndex={0}
+                  className=" dropdown-content notification-dropdown absolute top-10 -left-40  sm:right-0 w-[20rem] bg-white shadow-lg rounded-md p-5"
+                ></div>
+
                 {!pathname.includes("/dashboard/houses/add") && (
                   <>
                     {role !== "customer" &&
