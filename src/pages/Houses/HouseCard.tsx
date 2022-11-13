@@ -53,7 +53,7 @@ const HouseCard = ({ gridView, house }: Props) => {
       <HouseCardContainer
         className={`card group ${
           !gridView && "card-side flex-1 p-3"
-        }  bg-base-100 shadow-xl rounded border p-1 font-poppins cursor-pointer `}
+        }  bg-base-100  rounded border p-1 font-poppins cursor-pointer `}
       >
         {!gridView && (
           <div className="">

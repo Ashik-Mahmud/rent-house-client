@@ -7,7 +7,7 @@ type Props = {
 
 const BookedHouseCard = ({ house }: Props) => {
   return (
-    <div className="card  bg-base-100 shadow-xl">
+    <div className="card p-2 bg-base-100 shadow-xl rounded-none">
       <figure>
         <img
           src={
@@ -16,9 +16,10 @@ const BookedHouseCard = ({ house }: Props) => {
               : "https://placeimg.com/400/225/arch"
           }
           alt={house?.name}
+          className="w-full"
         />
       </figure>
-      <div className="card-body">
+      <div className="card-body p-2">
         <h2 className="card-title">
           {house?.name || "No Name"}
           <div className="badge badge-success">Booked</div>
@@ -37,12 +38,15 @@ const BookedHouseCard = ({ house }: Props) => {
         </ul>
 
         <div className="mt-5">
-          <Link to={`/house/${house?._id}`} className="btn btn-ghost rounded">
+          <Link
+            to={`/house/${house?._id}`}
+            className="btn btn-ghost rounded btn-sm"
+          >
             View
           </Link>
           <label
             htmlFor={"owners-details-modal" + house?.owner?._id}
-            className="btn btn-ghost rounded"
+            className="bg-blue-200 p-1 px-3 text-blue-500 rounded cursor-pointer ml-2"
           >
             House Holder Details
           </label>

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { BrowserView } from "react-device-detect";
 import toast from "react-hot-toast";
 import { Link, NavLink, useNavigate } from "react-router-dom";
@@ -16,6 +17,8 @@ const Header = (props: Props) => {
     updatedUser: data,
   } = useAuth<authUserInterface | any>({});
 
+  const [scrollSize, setScrollSize] = useState(0);
+
   /* Handle Logout */
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -26,6 +29,16 @@ const Header = (props: Props) => {
     toast.success("Logout Successfully");
     navigate("/login");
   };
+
+  /* Handle Scroll */
+
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      setScrollSize(window.scrollY);
+    });
+  }, [scrollSize]);
+
+  console.log(scrollSize);
 
   const NavbarMenus = (
     <>
@@ -69,7 +82,11 @@ const Header = (props: Props) => {
   );
 
   return (
-    <header className="bg-base-100 py-3 uppercase shadow-lg font-poppins">
+    <header
+      className={`bg-base-100 py-3 uppercase shadow-lg font-poppins  transition-all ${
+        scrollSize > 80 ? " fixed left-0 top-0 w-full z-40" : " relative"
+      }`}
+    >
       <div className="navbar container mx-auto">
         <div className="navbar-start">
           <div className="dropdown">
