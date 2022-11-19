@@ -83,7 +83,7 @@ const Header = (props: Props) => {
 
   return (
     <header
-      className={`bg-base-100 py-3 uppercase shadow-lg font-poppins  transition-all ${
+      className={`bg-base-100 py-3 uppercase shadow-sm font-poppins  transition-all ${
         scrollSize > 80 ? " fixed left-0 top-0 w-full z-40" : " relative"
       }`}
     >
