@@ -38,8 +38,6 @@ const Header = (props: Props) => {
     });
   }, [scrollSize]);
 
-  console.log(scrollSize);
-
   const NavbarMenus = (
     <>
       <li tabIndex={0}>

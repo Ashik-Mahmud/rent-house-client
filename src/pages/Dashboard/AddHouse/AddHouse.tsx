@@ -195,7 +195,7 @@ const AddHouse = (props: Props) => {
   }, [selectCity]);
 
   if (
-    !updatedUser?.address.length ||
+    !updatedUser?.address?.length ||
     !updatedUser?.phone?.length ||
     !updatedUser?.facebookLink?.length
   ) {
