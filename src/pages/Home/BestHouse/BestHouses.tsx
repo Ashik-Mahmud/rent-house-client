@@ -21,7 +21,11 @@ const BestHouses = (props: Props) => {
   }
 
   if (data?.length === 0) {
-    return <div>no best product found.</div>;
+    return (
+      <div className="text-center py-6 text-xl font-bold capitalize">
+        no best product found.
+      </div>
+    );
   }
   return (
     <div className="font-poppins">
