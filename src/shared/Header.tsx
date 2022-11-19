@@ -111,7 +111,7 @@ const Header = (props: Props) => {
               {NavbarMenus}
             </ul>
           </div>
-          <Link to="/" className="btn btn-ghost normal-case text-xl">
+          <Link to="/" className="font-bold uppercase  text-xl">
             {name}
           </Link>
         </div>

@@ -16,9 +16,11 @@ const Hero = (props: Props) => {
   const [address, setAddress] = useState<string>("");
   /* Create Image Slider */
   let images = [
+    "https://cdn.britannica.com/43/93843-050-A1F1B668/White-House-Washington-DC.jpg",
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWw_fKQ6H8mfIq0v-fvyUiJL0osaQODoC2og&usqp=CAU",
-    "https://i.pinimg.com/originals/66/d9/f5/66d9f5afdc5337d3f9eac362b970c426.jpg",
+    "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/da/a4/e3/charles-darwin-s-home.jpg?w=1200&h=-1&s=1",
     "https://www.bhg.com/thmb/SLX8yV-ipXwrrPqUgkeAalYr8zU=/1707x1280/smart/filters:no_upscale():focal(899x639:901x641)/white-modern-house-curved-patio-archway-c0a4a3b3-aa51b24d14d0464ea15d36e05aa85ac9.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/4/44/ONBDOWNhouse.jpg",
   ];
   const [current, setCurrent] = useState(0);
   const length = images.length;
