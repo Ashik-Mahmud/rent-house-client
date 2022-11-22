@@ -112,7 +112,7 @@ const Header = (props: Props) => {
             </ul>
           </div>
           <Link to="/" className="font-bold uppercase  text-xl">
-            {name}
+            {name || "House Rent"}
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">

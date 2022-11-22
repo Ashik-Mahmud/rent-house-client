@@ -13,7 +13,7 @@ const Statistic = (props: Props) => {
     return data?.data;
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <div className="text-center py-10">Loading...</div>;
 
   return (
     <Fade top distance="20px" cascade>
