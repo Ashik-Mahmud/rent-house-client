@@ -18,7 +18,7 @@ const MostLovesHouse = (props: Props) => {
 
   const getMostPopularHouses = async () => {
     const { data } = await axios.get(
-      `${base_backend_url}/api/v1/houses/top-4-houses`,
+      `${base_backend_url}/api/v1/houses/top-3-houses-by-user`,
       {
         headers: {
           Authorization: `Bearer ${user?.token}`,
